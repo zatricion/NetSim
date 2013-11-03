@@ -1,13 +1,14 @@
 //
-//  File.cpp
 //  CS 143
 //
-//  Created by Anish on 11/2/13.
-//  Copyright (c) 2013 Anish. All rights reserved.
-//
+//  Event Generator
+//  * Device
+//   - Host
+//   - Router
+//  * Link
 
 #include "EventGenerator.h"
-#include "Event.h"
+#include "Event.h" // TODO: Write event class
 #include <queue>
 
 class EventGen
@@ -18,9 +19,8 @@ public:
     virtual ~EventGen();
     
     std::string getId() const;
-    virtual
+    virtual 
     virtual void addEvent() = 0;
     virtual Event getEvent() = 0;
     
-    virtual void Method4() = 0;
 };
