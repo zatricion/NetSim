@@ -57,6 +57,15 @@ class Device : public EventGenerator
     
 };
 
+class Host : public Device
+{
+    
+};
+
+class Router : public Device
+{
+    
+};
 
 
 #endif /* defined(__CS_143__File__) */
