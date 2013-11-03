@@ -9,43 +9,42 @@
 
 
 #include "EventGenerator.h"
-#include "Event.h" // TODO: Write event class
-#include "Packet.h" // TODO: Write packet class
-#include <queue>
 
-class EventGenerator
+
+Event EventGenerator::getEvent()
 {
-protected:
-    std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;
-    // TODO: override operator> for event class
-    
-public:
-    virtual ~EventGenerator();
-    
-    std::string getId() const;
+    Event nextEvent = eventHeap.top();
+    eventHeap.pop();
+    return nextEvent;
+}
 
-    virtual void addEvent() = 0;
-    virtual Event getEvent() = 0;
-    
-};
-
-class Link : public EventGenerator
+int EventGenerator::nextTimestamp()
 {
-private:
-    std::queue<Packet>
-    
-};
+    Event nextEvent = eventHeap.top();
+    return nextEvent.timestamp;
+}
 
-class Device : public EventGenerator
+// Link Methods
+
+void Link::giveEvent(Event new_event)
 {
-public:
-    void addEvent() {
-        
+    if (new_event.type == 'packet')
+    {
+        receivePacket(new_event.packet);
+    }
+}
+    
+
+void Link::receivePacket(Packet new_packet)
+{
+    if (buffer_size + new_packet.size < buffer_capacity)
+    {
+        buffer.push(new_packet);
+        buffer_size += new_packet.size;
+    }
+    else
+    {
+        signalDroppedPacket(); // TODO
     }
     
-    Event getEvent() {
-        
-    }
-    
-};
-
+}
