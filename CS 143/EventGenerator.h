@@ -11,42 +11,45 @@
 #define __CS_143__File__
 
 #include <iostream>
-
+#include <string>
 #include "Event.h" // TODO: Write event class
 #include "Packet.h" // TODO: Write packet class
 #include <queue>
 
 class EventGenerator
 {
-public:
-    std::string getId() const;
-    
+public:    
     virtual ~EventGenerator();
     
     // Call this to give the generator an event
     virtual void giveEvent(Event new_event) = 0;
     
     // Call this to get an event from the generator
-    Event getEvent();
+    virtual Event getEvent();
     
     // Call this to get the timestamp of the next event
-    int nextTimestamp() = 0;
+    int nextTimestamp();
     
 protected:
     std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;
     // TODO: override operator> for event class
+    
+private:
+    string const uuid;
     
     
 };
 
 class Link : public EventGenerator
 {
-private:
-    float buffer_capacity;
-    float buffer_size;
-    std::queue<Packet> buffer;
+public:
+    Link::Link(float p_delay, string n1, string n2, string link_id);
     
-    void receivePacket(Packet new_packet);
+private:
+    float prop_delay;
+    string node1;
+    string node2;
+    
 };
 
 class Device : public EventGenerator

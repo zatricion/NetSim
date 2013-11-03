@@ -9,14 +9,8 @@
 
 
 #include "EventGenerator.h"
-
-
-Event EventGenerator::getEvent()
-{
-    Event nextEvent = eventHeap.top();
-    eventHeap.pop();
-    return nextEvent;
-}
+#include "Event.h"
+#include <cassert>
 
 int EventGenerator::nextTimestamp()
 {
@@ -26,25 +20,35 @@ int EventGenerator::nextTimestamp()
 
 // Link Methods
 
+// Constructor
+Link::Link(float p_delay, string n1, string n2, string link_id)
+{
+    prop_delay = p_delay;
+    node1 = n1;
+    node2 = n2;
+    uuid = link_id;
+}
+
+Event Link::getEvent()
+{
+    Event nextEvent = eventHeap.top();
+    eventHeap.pop();
+    return nextEvent;
+}
+
 void Link::giveEvent(Event new_event)
 {
-    if (new_event.type == 'packet')
-    {
-        receivePacket(new_event.packet);
-    }
-}
+    Packet new_packet = new_event.packet;
+    string source = new_event.source;
     
+    // Add propagation delay
+    timestamp = new_event.timestamp + prop_delay;
 
-void Link::receivePacket(Packet new_packet)
-{
-    if (buffer_size + new_packet.size < buffer_capacity)
-    {
-        buffer.push(new_packet);
-        buffer_size += new_packet.size;
-    }
-    else
-    {
-        signalDroppedPacket(); // TODO
-    }
+    assert (source == node1 || source == node2);
+    string destination = (source == node1) ? node2 : node1;
     
+    Event packetEvent = new Event(new_packet, destination, uuid, timestamp);
+    eventHeap.push(packetEvent);
 }
+
+// Device Methods
