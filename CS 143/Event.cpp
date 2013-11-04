@@ -10,7 +10,7 @@
 
 // Constructor
 
-Event::Event(Packet pkt, string dest, string src, int ts)
+Event::Event(Packet pkt, std::string dest, std::string src, int ts)
 {
     packet = pkt;
     destination = dest;

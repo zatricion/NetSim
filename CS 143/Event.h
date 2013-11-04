@@ -15,12 +15,12 @@
 class Event
 {
 public:
-    Event::Event(Packet pkt, string dest, string src, int ts)
+    Event(Packet pkt, std::string dest, std::string src, int ts);
     
     Packet packet;
     int timestamp;
-    string destination;
-    string source;
+    std::string destination;
+    std::string source;
 
     bool operator>(const Event& other) const;
 };

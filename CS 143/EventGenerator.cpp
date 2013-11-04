@@ -21,7 +21,7 @@ int EventGenerator::nextTimestamp()
 // Link Methods
 
 // Constructor
-Link::Link(float p_delay, string n1, string n2, string link_id)
+Link::Link(float p_delay, std::string n1, std::string n2, std::string link_id)
 {
     prop_delay = p_delay;
     node1 = n1;
@@ -39,15 +39,15 @@ Event Link::getEvent()
 void Link::giveEvent(Event new_event)
 {
     Packet new_packet = new_event.packet;
-    string source = new_event.source;
+    std::string source = new_event.source;
     
     // Add propagation delay
-    timestamp = new_event.timestamp + prop_delay;
+    int timestamp = new_event.timestamp + prop_delay;
 
     assert (source == node1 || source == node2);
-    string destination = (source == node1) ? node2 : node1;
+    std::string destination = (source == node1) ? node2 : node1;
     
-    Event packetEvent = new Event(new_packet, destination, uuid, timestamp);
+    Event packetEvent = Event(new_packet, destination, uuid, timestamp);
     eventHeap.push(packetEvent);
 }
 

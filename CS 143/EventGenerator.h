@@ -32,10 +32,7 @@ public:
     
 protected:
     std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;
-    // TODO: override operator> for event class
-    
-private:
-    string const uuid;
+    std::string uuid;
     
     
 };
@@ -43,12 +40,14 @@ private:
 class Link : public EventGenerator
 {
 public:
-    Link::Link(float p_delay, string n1, string n2, string link_id);
+    Link(float p_delay, std::string n1, std::string n2, std::string link_id);
+    void giveEvent(Event new_event);
+    Event getEvent();
     
 private:
     float prop_delay;
-    string node1;
-    string node2;
+    std::string node1;
+    std::string node2;
     
 };
 
@@ -59,6 +58,7 @@ class Device : public EventGenerator
 
 class Host : public Device
 {
+public:
     
 };
 
