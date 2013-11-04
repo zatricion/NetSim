@@ -15,10 +15,10 @@
 class Event
 {
 public:
-    Event(Packet pkt, std::string dest, std::string src, int ts);
+    Event(Packet, std::string, std::string, float);
     
     Packet packet;
-    int timestamp;
+    float timestamp;
     std::string destination;
     std::string source;
 

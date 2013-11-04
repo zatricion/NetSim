@@ -39,12 +39,12 @@
 		F8A9A1FF1825DDBE00F7DAB0 = {
 			isa = PBXGroup;
 			children = (
-				F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */,
 				F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */,
 				2114C5E2182645E5001FEE68 /* Event.h */,
-				21D7E9AB1827677D003FEBF2 /* Packet.cpp */,
 				21D7E9AC1827677D003FEBF2 /* Packet.h */,
+				F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */,
 				2114C5E8182649C9001FEE68 /* Event.cpp */,
+				21D7E9AB1827677D003FEBF2 /* Packet.cpp */,
 				F8A9A2091825DDBE00F7DAB0 /* Products */,
 			);
 			sourceTree = "<group>";
