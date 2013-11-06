@@ -7,20 +7,21 @@
 //   - Router
 //  * Link
 
-#include "EventGenerator.h"
 #include "Event.h" // TODO: Write event class
 #include <queue>
 
-class EventGen
-{
-protected:
-    std::priority_queue<int, std::vector<int>, std::greater<int> > eventHeap;
-public:
-    virtual ~EventGen();
-    
-    std::string getId() const;
-    virtual 
-    virtual void addEvent() = 0;
-    virtual Event getEvent() = 0;
-    
-};
+void EventGenerator::getId() {
+    return id;
+}
+
+void EventGenerator::addEvent(Event* e) {
+    eventHeap.push(e);
+}
+
+void EventGenerator::getTime() {
+    return eventHeap.top()->getTime();
+}
+
+Event* EventGenerator::getEvent() {
+    return eventHeap.pop();
+}
