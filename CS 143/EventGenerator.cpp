@@ -2,25 +2,20 @@
 //  CS 143
 //
 //  Event Generator
+//  * Link
 //  * Device
 //   - Host
 //   - Router
-//  * Link
 
 #include "EventGenerator.h"
-#include "Event.h" // TODO: Write event class
-#include <queue>
+#include "Event.h"
+#include <cassert>
 
-class EventGen
+int EventGenerator::nextTimestamp()
 {
-protected:
-    std::priority_queue<int, std::vector<int>, std::greater<int> > eventHeap;
-public:
-    virtual ~EventGen();
-    
-    std::string getId() const;
-    virtual 
-    virtual void addEvent() = 0;
-    virtual Event getEvent() = 0;
-    
-};
+    Event nextEvent = eventHeap.top();
+    return nextEvent.timestamp;
+}
+
+
+// Device Methods

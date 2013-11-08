@@ -7,11 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21067C0A182C655C008787D1 /* Link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21067C08182C655C008787D1 /* Link.cpp */; };
+		21067C0B182C655C008787D1 /* Link.h in Headers */ = {isa = PBXBuildFile; fileRef = 21067C09182C655C008787D1 /* Link.h */; };
+		21067C0E182C6658008787D1 /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21067C0C182C6658008787D1 /* Device.cpp */; };
+		21067C0F182C6658008787D1 /* Device.h in Headers */ = {isa = PBXBuildFile; fileRef = 21067C0D182C6658008787D1 /* Device.h */; };
+		21067C12182C6705008787D1 /* Router.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21067C10182C6705008787D1 /* Router.cpp */; };
+		21067C13182C6705008787D1 /* Router.h in Headers */ = {isa = PBXBuildFile; fileRef = 21067C11182C6705008787D1 /* Router.h */; };
+		2114C5E3182645E5001FEE68 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 2114C5E2182645E5001FEE68 /* Event.h */; };
+		2114C5E9182649C9001FEE68 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2114C5E8182649C9001FEE68 /* Event.cpp */; };
+		21D7E9AD1827677D003FEBF2 /* Packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21D7E9AB1827677D003FEBF2 /* Packet.cpp */; };
+		21D7E9AE1827677D003FEBF2 /* Packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D7E9AC1827677D003FEBF2 /* Packet.h */; };
 		F8A9A2111825DDE400F7DAB0 /* EventGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */; };
 		F8A9A2121825DDE400F7DAB0 /* EventGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		21067C08182C655C008787D1 /* Link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Link.cpp; sourceTree = "<group>"; };
+		21067C09182C655C008787D1 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
+		21067C0C182C6658008787D1 /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
+		21067C0D182C6658008787D1 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		21067C10182C6705008787D1 /* Router.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Router.cpp; sourceTree = "<group>"; };
+		21067C11182C6705008787D1 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
+		2114C5E2182645E5001FEE68 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		2114C5E8182649C9001FEE68 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
+		21D7E9AB1827677D003FEBF2 /* Packet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Packet.cpp; sourceTree = "<group>"; };
+		21D7E9AC1827677D003FEBF2 /* Packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packet.h; sourceTree = "<group>"; };
 		F8A9A2081825DDBE00F7DAB0 /* libCS 143.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libCS 143.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventGenerator.cpp; sourceTree = "<group>"; };
 		F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventGenerator.h; sourceTree = "<group>"; };
@@ -31,8 +51,18 @@
 		F8A9A1FF1825DDBE00F7DAB0 = {
 			isa = PBXGroup;
 			children = (
-				F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */,
 				F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */,
+				F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */,
+				21067C11182C6705008787D1 /* Router.h */,
+				21067C10182C6705008787D1 /* Router.cpp */,
+				21067C0D182C6658008787D1 /* Device.h */,
+				21067C0C182C6658008787D1 /* Device.cpp */,
+				21067C09182C655C008787D1 /* Link.h */,
+				21067C08182C655C008787D1 /* Link.cpp */,
+				2114C5E2182645E5001FEE68 /* Event.h */,
+				2114C5E8182649C9001FEE68 /* Event.cpp */,
+				21D7E9AC1827677D003FEBF2 /* Packet.h */,
+				21D7E9AB1827677D003FEBF2 /* Packet.cpp */,
 				F8A9A2091825DDBE00F7DAB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +83,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8A9A2121825DDE400F7DAB0 /* EventGenerator.h in Headers */,
+				2114C5E3182645E5001FEE68 /* Event.h in Headers */,
+				21067C0B182C655C008787D1 /* Link.h in Headers */,
+				21067C13182C6705008787D1 /* Router.h in Headers */,
+				21067C0F182C6658008787D1 /* Device.h in Headers */,
+				21D7E9AE1827677D003FEBF2 /* Packet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +143,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8A9A2111825DDE400F7DAB0 /* EventGenerator.cpp in Sources */,
+				21067C0E182C6658008787D1 /* Device.cpp in Sources */,
+				2114C5E9182649C9001FEE68 /* Event.cpp in Sources */,
+				21D7E9AD1827677D003FEBF2 /* Packet.cpp in Sources */,
+				21067C12182C6705008787D1 /* Router.cpp in Sources */,
+				21067C0A182C655C008787D1 /* Link.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +257,7 @@
 				F8A9A20E1825DDBE00F7DAB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
