@@ -10,12 +10,12 @@
 #ifndef __CS_143__File__
 #define __CS_143__File__
 
-#include <iostream>
 #include <string>
 #include "Event.h" // TODO: Write event class
 #include "Packet.h" // TODO: Write packet class
 #include "CongestionAlg.h"
 #include <queue>
+#include <map>
 
 class EventGenerator
 {
@@ -35,60 +35,6 @@ protected:
     std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;
     std::string uuid;
     
-    
-};
-
-class Link : public EventGenerator
-{
-public:
-    Link(float, float, float, std::string, std::string, std::string);
-    void giveEvent(Event);
-    Event getEvent();
-    
-private:
-    // Maximum queue_size
-    float buffer_size;
-    
-    // Delay seen by an incoming packet due to link length
-    float prop_delay;
-    
-    // Queue size at queue_time
-    float queue_size;
-    
-    // Delay seen by an incoming packet due to the queue
-    float queue_delay;
-    
-    // Number of packets sent per time-step
-    float capacity;
-    
-    std::string node1;
-    std::string node2;
-    
-    // Timestamp for which the queue is current
-    float queue_time;
-};
-
-class Device : public EventGenerator
-{
-    void giveEvent(Event);
-    Event getEvent();
-};
-
-class Host : public Device
-{
-public:
-    Host(CongestionAlg, std::string);
-    int window_size;
-    
-    
-    Packet createPacket(std::string);
-    void sendPacket(Packet);
-
-
-};
-
-class Router : public Device
-{
     
 };
 

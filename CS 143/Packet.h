@@ -9,7 +9,6 @@
 #ifndef __CS_143__Packet__
 #define __CS_143__Packet__
 
-#include <iostream>
 #include <string>
 
 class Packet
