@@ -9,8 +9,14 @@
 class Router : public Device
 {
 public:
-    // Routing table maps destination host ids to link idsomm
+    // Routing table maps destination host ids to link ids
     std::map<std::string, std::string> routing_table;
+    
+    // Routing algorithm
+    void updateRouting(Packet);
+    
+    
+    
 };
 
 

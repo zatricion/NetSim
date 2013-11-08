@@ -15,11 +15,8 @@ public:
     Host(CongestionAlg, std::string);
     int window_size;
     
-    std::map
     Packet createPacket(std::string);
     void sendPacket(Packet);
-    
-    
 };
 
 
