@@ -22,14 +22,16 @@ class EventGenerator
 public:    
     virtual ~EventGenerator();
     
+    std::string getId() const;
+    
     // Call this to give the generator an event
-    virtual void giveEvent(Event new_event) = 0;
+    virtual void giveEvent(Event *new_event) = 0;
     
     // Call this to get an event from the generator
-    virtual Event getEvent();
+    virtual Event* getEvent();
     
     // Call this to get the timestamp of the next event
-    int nextTimestamp();
+    int getTime();
     
 protected:
     std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;

@@ -1,6 +1,5 @@
-
-#include <EventGenerator.hh>
-#include <Event.hh>
+#include "EventGenerator.h"
+#include "Event.h"
 
 
 class Handler {

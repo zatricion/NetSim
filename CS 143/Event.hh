@@ -12,4 +12,4 @@ public:
 
 private:
     float time;
-}
+};

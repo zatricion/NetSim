@@ -1,4 +1,4 @@
-
+#include "Handler.h"
 
 void Handler::getMinTime() {
     assert generators.size() > 0;
