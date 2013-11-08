@@ -1,0 +1,42 @@
+//
+//  CS 143
+//
+//  Event Generator
+//  * Link
+//  * Device
+//   - Host
+//   - Router
+
+<<<<<<< HEAD
+#include "EventGenerator.h"
+#include "Event.h"
+#include <cassert>
+
+int EventGenerator::nextTimestamp()
+{
+    Event nextEvent = eventHeap.top();
+    return nextEvent.timestamp;
+}
+
+
+// Device Methods
+=======
+#include "Event.h" // TODO: Write event class
+#include <queue>
+
+void EventGenerator::getId() {
+    return id;
+}
+
+void EventGenerator::addEvent(Event* e) {
+    eventHeap.push(e);
+}
+
+void EventGenerator::getTime() {
+    return eventHeap.top()->getTime();
+}
+
+Event* EventGenerator::getEvent() {
+    return eventHeap.pop();
+}
+>>>>>>> feature/HANDLER
