@@ -25,7 +25,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-Event Link::getEvent()
+Event* Link::getEvent()
 {
     Event nextEvent = eventHeap.top();
     eventHeap.pop();

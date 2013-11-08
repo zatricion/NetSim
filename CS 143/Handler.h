@@ -13,6 +13,7 @@ private:
 public:
     // iterate over generators and find the "most immediate" time
     float getMinTime();
+    
     // iterate over generators, populate currEvents with imm. events
     void populateCurrentEvents(float time);
 

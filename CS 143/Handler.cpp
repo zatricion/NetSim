@@ -1,15 +1,16 @@
 #include "Handler.h"
 
+
 void Handler::getMinTime() {
     assert generators.size() > 0;
-    float minTime = generators.front().getTime();
+    float minTime = generators.front().getNextTime();
     // iterate over EventGenerators
     for (std::vector<EventGenerator>::iterator it = generators.begin(); 
          it != generators.end(); 
          it++) {
         // update min if smaller
         if ((*it)->getTime() < minTime) {
-            minTime = (*it)->getTime();
+            minTime = (*it)->getNextTime();
         }
     }
     return minTime;

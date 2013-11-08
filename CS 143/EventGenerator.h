@@ -31,7 +31,7 @@ public:
     virtual Event* getEvent();
     
     // Call this to get the timestamp of the next event
-    int getTime();
+    int getNextTime();
     
 protected:
     std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;
