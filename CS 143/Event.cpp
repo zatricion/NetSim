@@ -11,7 +11,7 @@ Event::Event(Packet &pkt, std::string dest, std::string src, float ts)
     timestamp = ts;
 }
 
-float Event::getTime() const
+float Event::eventTime() const
 {
     return timestamp;
 }

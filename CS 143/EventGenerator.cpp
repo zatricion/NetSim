@@ -18,6 +18,6 @@ std::string EventGenerator::getId() const
 
 float EventGenerator::getNextTime()
 {
-    return eventHeap.top().getTime();
+    return eventHeap.top().eventTime();
 }
 

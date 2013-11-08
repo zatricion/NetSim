@@ -6,9 +6,10 @@ class Handler {
 
 private:
     // container for "current events"
-    std::vector<Event*:> currEvents;
+    std::vector<std::unique_ptr<Event>> currEvents;
+    
     // container for list of EventGenerators
-    std::vector<EventGenerator*> generators;
+    std::vector<std::unique_ptr<EventGenerator>> generators;
 
 public:
     // iterate over generators and find the "most immediate" time
