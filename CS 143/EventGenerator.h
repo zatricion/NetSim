@@ -25,7 +25,7 @@ public:
     std::string getId() const;
     
     // Call this to give the generator an event
-    virtual void giveEvent(Event *new_event) = 0;
+    virtual void giveEvent(std::unique_ptr<Event> new_event) = 0;
     
     // Call this to get an event from the generator
     virtual std::unique_ptr<Event> getEvent();

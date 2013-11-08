@@ -5,18 +5,8 @@
 
 class Device : public EventGenerator
 {
-    void giveEvent(Event);
-    Event getEvent();
-};
-
-class Host : public Device
-{
-public:
-    Host(CongestionAlg, std::string);
-    int window_size;
-    
-    Packet createPacket(std::string);
-    void sendPacket(Packet);
+    void giveEvent(std::unique_ptr<Event>);
+    std::unique_ptr<Event> getEvent();
 };
 
 

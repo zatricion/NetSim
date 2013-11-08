@@ -33,11 +33,11 @@ std::unique_ptr<Event> Link::getEvent()
     return std::unique_ptr<Event>(&nextEvent);
 }
 
-void Link::giveEvent(Event new_event)
+void Link::giveEvent(std::unique_ptr<Event> new_event)
 {
-    Packet new_packet = new_event.packet;
-    std::string source = new_event.source;
-    float now = new_event.eventTime();
+    Packet new_packet = new_event->packet;
+    std::string source = new_event->source;
+    float now = new_event->eventTime();
     
     queue_size = std::max(0, queue_size - (now - queue_time) * capacity);
     
