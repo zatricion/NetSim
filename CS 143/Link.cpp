@@ -25,7 +25,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-Event* Link::getEvent()
+Event Link::getEvent()
 {
     Event nextEvent = eventHeap.top();
     eventHeap.pop();
@@ -36,7 +36,7 @@ void Link::giveEvent(Event new_event)
 {
     Packet new_packet = new_event.packet;
     std::string source = new_event.source;
-    float now = new_event.timestamp;
+    float now = new_event.getTime();
     
     queue_size = std::max(0, queue_size - (now - queue_time) * capacity);
     

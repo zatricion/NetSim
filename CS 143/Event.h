@@ -7,7 +7,7 @@ class Event
 public:
     Event(Packet &pkt, std::string, std::string, float);
     
-    float getTime();
+    float getTime() const;
     
     Packet packet;
     std::string destination;

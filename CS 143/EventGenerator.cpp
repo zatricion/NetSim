@@ -11,21 +11,13 @@
 #include "Event.h"
 #include <queue>
 
-void EventGenerator::getId()
+std::string EventGenerator::getId() const
 {
-    return id;
+    return uuid;
 }
 
-void EventGenerator::addEvent(Event* e)
+float EventGenerator::getNextTime()
 {
-    eventHeap.push(e);
+    return eventHeap.top().getTime();
 }
 
-void EventGenerator::getNextTime()
-{
-    return eventHeap.top()->getTime();
-}
-
-Event* EventGenerator::getEvent() {
-    return eventHeap.pop();
-}
