@@ -28,7 +28,7 @@ public:
     virtual void giveEvent(Event *new_event) = 0;
     
     // Call this to get an event from the generator
-    virtual Event* getEvent();
+    virtual std::unique_ptr<Event> getEvent();
     
     // Call this to get the timestamp of the next event
     float getNextTime();

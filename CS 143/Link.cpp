@@ -8,6 +8,7 @@
 
 #include "Link.h"
 #include <cassert>
+#include <iostream>
 
 // Link Methods
 
@@ -25,18 +26,18 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-Event Link::getEvent()
+std::unique_ptr<Event> Link::getEvent()
 {
     Event nextEvent = eventHeap.top();
     eventHeap.pop();
-    return nextEvent;
+    return std::unique_ptr<Event>(&nextEvent);
 }
 
 void Link::giveEvent(Event new_event)
 {
     Packet new_packet = new_event.packet;
     std::string source = new_event.source;
-    float now = new_event.getTime();
+    float now = new_event.eventTime();
     
     queue_size = std::max(0, queue_size - (now - queue_time) * capacity);
     

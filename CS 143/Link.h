@@ -17,7 +17,7 @@ class Link : public EventGenerator
 public:
     Link(float, float, float, std::string, std::string, std::string);
     void giveEvent(Event);
-    Event getEvent();
+    std::unique_ptr<Event> getEvent();
     
 private:
     // Maximum queue_size
