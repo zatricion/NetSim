@@ -10,6 +10,8 @@
 #include "EventGenerator.h"
 #include "Event.h"
 #include <cassert>
+#include "Event.h" // TODO: Write event class
+#include <queue>
 
 int EventGenerator::nextTimestamp()
 {
@@ -19,3 +21,18 @@ int EventGenerator::nextTimestamp()
 
 
 // Device Methods
+void EventGenerator::getId() {
+    return id;
+}
+
+void EventGenerator::addEvent(Event* e) {
+    eventHeap.push(e);
+}
+
+void EventGenerator::getTime() {
+    return eventHeap.top()->getTime();
+}
+
+Event* EventGenerator::getEvent() {
+    return eventHeap.pop();
+}
