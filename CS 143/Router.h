@@ -12,7 +12,7 @@ public:
     // Routing table maps destination host ids to link ids
     std::map<std::string, std::string> routing_table;
     
-    // Routing algorithm
+    // Bellman-Ford
     void updateRouting(Packet);
     
     

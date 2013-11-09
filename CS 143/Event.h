@@ -9,6 +9,8 @@ public:
     
     float eventTime() const;
     
+    void handleEvent(std::unique_ptr<Event>);
+    
     Packet packet;
     std::string destination;
     std::string source;
