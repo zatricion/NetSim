@@ -11,8 +11,8 @@
 #define __CS_143__File__
 
 #include <string>
-#include "Event.h" // TODO: Write event class
-#include "Packet.h" // TODO: Write packet class
+#include "Event.h" 
+#include "Packet.h"
 #include "CongestionAlg.h"
 #include <queue>
 #include <map>

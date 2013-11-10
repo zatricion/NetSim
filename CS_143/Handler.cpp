@@ -39,7 +39,7 @@ void Handler::processCurrentEvents() {
          it != currEvents.begin();
          it++) {
         // Each event handles itself.
-        (*it)->handleEvent();
+        (*it)->handleEvent(*it);
     }
 }
 
