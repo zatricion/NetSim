@@ -5,8 +5,7 @@
 #include "CongestionAlg.h"
 #include "Device.h"
 #include "Link.h"
-
-#define DATA_PKT_SIZE 0; // TODO: change this number
+#include "Packet.h"
 
 class Host : public Device
 {
@@ -16,23 +15,30 @@ public:
     // Lets us know where to interleave new flows
     int num_flows;
     
+    // Congestion Control algorithm host runs
+    CongestionAlg congestion_alg;
+    
     // Link this host connects to
     Link& my_link;
     
-    // Packets waiting to be sent
-    std::queue<Packet> packet_queue;
-    
     // Constructor takes a congestion control algorithm and an id string
     Host(CongestionAlg, Link&);
+    
+    // Packets waiting to be sent
+    std::vector<Packet> packet_queue;
     
     // Add event to eventHeap
     void sendPacket(Packet);
     
     // React to an event
-    void giveEvent(std::unique_ptr<Event>);
-    
+    void giveEvent(std::unique_ptr<FlowEvent>);
+    void giveEvent(std::unique_ptr<PacketEvent>);
+
     // Create packets for new flow and interleave them with packet_queue
-    void addFlow(std::string dest, float size);
+    void addFlow(std::string, float, float);
+    
+    // Create Packet_IDS
+    int packet_id;
     
 };
 
