@@ -78,8 +78,8 @@
 			children = (
 				21AB6063182F6CA700F61DDB /* FlowEvent.cpp */,
 				21AB6064182F6CA700F61DDB /* FlowEvent.h */,
-				21AB6065182F6CA700F61DDB /* PacketEvent.cpp */,
 				21AB6066182F6CA700F61DDB /* PacketEvent.h */,
+				21AB6065182F6CA700F61DDB /* PacketEvent.cpp */,
 				21F913CE182C730000089B45 /* Handler.h */,
 				21F913CD182C730000089B45 /* Handler.cpp */,
 				F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */,

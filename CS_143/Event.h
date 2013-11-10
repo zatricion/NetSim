@@ -30,8 +30,7 @@ public:
     
     bool operator>(const Event& other) const;
     
-private:
-    
+protected:
     float timestamp;
 };
 

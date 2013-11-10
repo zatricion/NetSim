@@ -5,11 +5,11 @@
 class PacketEvent : public Event
 {
 public:
-    PacketEvent(Packet &pkt, 
+    PacketEvent(Packet& pkt,
                 std::unique_ptr<EventGenerator> dest,
                 std::unique_ptr<EventGenerator> src,
                 float ts);
 
-    Packet &packet;
+    Packet& packet;
 };
 

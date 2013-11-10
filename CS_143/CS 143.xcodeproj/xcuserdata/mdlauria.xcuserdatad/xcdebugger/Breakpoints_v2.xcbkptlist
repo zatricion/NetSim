@@ -135,7 +135,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "42"
             endingLineNumber = "42"
-            landmarkName = "Link::giveEvent(std::unique_ptr&lt;Event&gt; new_event)"
+            landmarkName = "Link::giveEvent(std::unique_ptr&lt;PacketEvent&gt; new_event)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -231,8 +231,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "11"
             endingLineNumber = "11"
-            landmarkName = "class FlowEvent"
-            landmarkType = "3">
+            landmarkName = "FlowEvent(int ds, std::unique_ptr&lt;EventGenerator&gt; dest, std::unique_ptr&lt;EventGenerator&gt; src, float ts)"
+            landmarkType = "4">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
