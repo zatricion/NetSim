@@ -1,4 +1,3 @@
-
 #include "PacketEvent.h"
 
 // Constructor

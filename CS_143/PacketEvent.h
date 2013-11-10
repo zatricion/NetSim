@@ -1,8 +1,8 @@
-
+#include "EventGenerator.h"
 #include "Packet.h"
 #include <string>
 
-class Event
+class PacketEvent : Event
 {
 public:
     PacketEvent(Packet &pkt, 

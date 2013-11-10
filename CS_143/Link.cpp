@@ -1,11 +1,3 @@
-//
-//  Link.cpp
-//  CS 143
-//
-//  Created by Michael Lauria on 11/7/13.
-//  Copyright (c) 2013 Anish. All rights reserved.
-//
-
 #include "Link.h"
 #include <cassert>
 #include <iostream>
@@ -34,7 +26,7 @@ std::unique_ptr<Event> Link::getEvent()
     return std::unique_ptr<Event>(&nextEvent);
 }
 
-void Link::giveEvent(std::unique_ptr<Event> new_event)
+void Link::giveEvent(std::unique_ptr<PacketEvent> new_event)
 {
     Packet new_packet = new_event->packet;
     std::string source = new_event->source;
