@@ -8,8 +8,7 @@
 #include "Link.h"
 #include "Packet.h"
 #include "MultiQueue.h"
-
-
+#include "FlowEvent.h"
 
 class Host : public Device
 {
@@ -36,7 +35,7 @@ public:
     void giveEvent(std::unique_ptr<PacketEvent>);
 
     // Create packets for new flow and interleave them with packet_queue
-    void addFlow(std::string, float, float);
+    void addFlow(std::string, float);
     
     // Create Packet_IDS
     int packet_id;
