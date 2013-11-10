@@ -22,7 +22,7 @@ bool Event::operator>(const Event& other) const
     return timestamp > other.timestamp;
 }
 
-void Event::handleEvent(std::unique_ptr<Event> e)
+void Event::handleEvent()
 {
     // TODO: handleEvent for info events
     //       Also create other classes that inherit from Event (AckEvent, BfEvent, etc.)

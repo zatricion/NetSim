@@ -5,7 +5,7 @@
 class Event
 {
 public:
-    Event(Packet &pkt, std::string, std::string, float);
+    Event(Packet& pkt, std::string, std::string, float);
     
     float eventTime() const;
     
