@@ -7,8 +7,8 @@
 //   - Host
 //   - Router
 
-#ifndef __CS_143__File__
-#define __CS_143__File__
+#ifndef __CS_143__EventGenerator__
+#define __CS_143__EventGenerator__
 
 #include <string>
 #include "Event.h" 
@@ -41,4 +41,4 @@ protected:
 };
 
 
-#endif /* defined(__CS_143__File__) */
+#endif /* defined(__CS_143__EventGenerator__) */
