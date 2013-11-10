@@ -1,7 +1,6 @@
 #include "Host.h"
 #include <math.h> // ceil
 
-
 static const int INITIAL_WINDOW_SIZE = 0; // TODO: change this number
 static const int DATA_PKT_SIZE = 1; // TODO: change this number
 
@@ -13,7 +12,7 @@ Host::Host(CongestionAlg congestion_algorithm , Link& host_link) : my_link(host_
     packet_id = 0;
 }
 
-void Host::addFlow(std::string dest, float data_size, float time)
+void Host::addFlow(std::string dest, float data_size)
 {
     float temp_num_pkts = data_size / DATA_PKT_SIZE;
     int num_packets = (int) ceil(temp_num_pkts);
@@ -22,7 +21,7 @@ void Host::addFlow(std::string dest, float data_size, float time)
     
     for (int count = 0; count < num_packets; count++){
         std::string pack_id = this->uuid + std::to_string(packet_id);
-        Packet new_packet(pack_id, dest, this->uuid, DATA_PKT_SIZE, time, false, false, count+1);
+        Packet new_packet(pack_id, dest, this->uuid, DATA_PKT_SIZE, false, false, count+1);
         flow.push(new_packet);
         packet_id++;
     }
@@ -33,7 +32,7 @@ void Host::addFlow(std::string dest, float data_size, float time)
 void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 {
     // Add flow
-    addFlow(flow_event->destination, flow_event->data_size(), flow_event->getTime());
+    addFlow(flow_event->destination, flow_event->data_size());
 }
 
 

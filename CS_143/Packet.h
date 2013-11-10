@@ -24,7 +24,7 @@ public:
     Packet();
     
     // Constructor
-    Packet(std::string, std::string, std::string, int, float, bool, bool, int);
+    Packet(std::string, std::string, std::string, int, bool, bool, int);
     
     // Copy Constructor
     Packet(const Packet& other);
