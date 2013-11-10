@@ -5,19 +5,20 @@
 class Event
 {
 public:
-    Event(Packet &pkt, std::string, std::string, float);
-    
+    Event(std::unique_ptr<EventGenerator> dest, 
+	  std::unique_ptr<EventGenerator> src, 
+	  float ts);
+
     float eventTime() const;
     
     void handleEvent();
     
-    Packet packet;
-    std::string destination;
-    std::string source;
+    std::unique_ptr<EventGenerator> destination;
+    std::unique_ptr<EventGenerator> source;
 
     bool operator>(const Event& other) const;
     
 private:
+
     float timestamp;
 };
-
