@@ -7,39 +7,9 @@
 #include "Device.h"
 #include "Link.h"
 #include "Packet.h"
+#include "MultiQueue.h"
 
-// multiple queue class TODO: see if it actually works
-template<typename T> class multiQueue
-{
-public:
-    void addQueue(std::queue<T> q)
-    {
-        mQ.push_back(q);
-    };
-    
-    void deleteQueue()
-    {
-        mQ.erase(mQ.begin() + index);
-    };
-    
-    T pop()
-    {
-        assert (!mQ.empty());
-        if (mQ[index].empty())
-        {
-            deleteQueue();
-            return this->pop();
-        }
-        T res = mQ[index].front();
-        mQ[index].pop();
-        index = (index + 1) % mQ.size;
-        return res;
-    }
-    
-private:
-    std::vector<std::queue<T>> mQ;
-    int index;
-};
+
 
 class Host : public Device
 {
@@ -56,7 +26,7 @@ public:
     Host(CongestionAlg, Link&);
     
     // Packets waiting to be sent
-    multiQueue<Packet> packet_queue;
+    MultiQueue<Packet> packet_queue;
     
     // Add event to eventHeap
     void sendPacket(Packet);
