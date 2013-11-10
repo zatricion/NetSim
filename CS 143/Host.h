@@ -12,7 +12,6 @@ public:
     int window_size;
     
     Packet createPacket(std::string);
-    void sendPacket(Packet);
 };
 
 

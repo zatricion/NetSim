@@ -7,6 +7,8 @@ class Device : public EventGenerator
 {
     void giveEvent(std::unique_ptr<Event>);
     std::unique_ptr<Event> getEvent();
+    
+    void sendPacket(Packet);
 };
 
 
