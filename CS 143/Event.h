@@ -9,7 +9,7 @@ public:
     
     float eventTime() const;
     
-    void handleEvent(std::unique_ptr<Event>);
+    void handleEvent();
     
     Packet packet;
     std::string destination;

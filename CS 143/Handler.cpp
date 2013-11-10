@@ -1,10 +1,11 @@
 #include "Handler.h"
+#include <cassert>
 
 
 float Handler::getMinTime()
 {
-    assert generators.size() > 0;
-    float minTime = generators.front().getNextTime();
+    assert(generators.size() > 0);
+    float minTime = generators.front()->getNextTime();
     // iterate over EventGenerators
     for (std::vector<std::unique_ptr<EventGenerator>>::iterator it = generators.begin();
          it != generators.end();
@@ -38,7 +39,7 @@ void Handler::processCurrentEvents() {
          it != currEvents.begin();
          it++) {
         // Each event handles itself.
-        (*it)->handleEvent;
+        (*it)->handleEvent();
     }
 }
 

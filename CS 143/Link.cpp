@@ -9,6 +9,7 @@
 #include "Link.h"
 #include <cassert>
 #include <iostream>
+#include <algorithm> // std::max
 
 // Link Methods
 
@@ -39,12 +40,15 @@ void Link::giveEvent(std::unique_ptr<Event> new_event)
     std::string source = new_event->source;
     float now = new_event->eventTime();
     
-    queue_size = std::max(0, queue_size - (now - queue_time) * capacity);
+    // Queue size in bits
+    queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
     
-    
-    if (queue_size < buffer_size) {
-        // Add propagation and queue delay
-        queue_delay = queue_size / capacity;
+    if (queue_size + new_packet.size < buffer_size)
+    {
+        
+        queue_delay = (queue_size + new_packet.size) / capacity;
+        
+        // Add propagation and queue delay to current time to get event time
         float timestamp = now + prop_delay + queue_delay;
         
         // Figure out the destination
@@ -54,8 +58,11 @@ void Link::giveEvent(std::unique_ptr<Event> new_event)
         // Add an event to the Link priority queue
         Event packetEvent = Event(new_packet, destination, uuid, timestamp);
         eventHeap.push(packetEvent);
-        queue_size++;
+        
+        // Update queue size
+        queue_size += new_packet.size;
     }
+    
     else
     {
         // TODO: Packets get dropped

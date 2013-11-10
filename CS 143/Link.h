@@ -22,19 +22,20 @@ public:
 private:
 
     // TODO: change capacity etc to bps, then find out how many bits are in front of each packet, add packet size and compute timestamp
-    // Maximum queue_size
+    
+    // Maximum queue_size in bits
     float buffer_size;
     
     // Delay seen by an incoming packet due to link length
     float prop_delay;
     
-    // Queue size at queue_time
+    // Queue size in bits at queue_time
     float queue_size;
     
     // Delay seen by an incoming packet due to the queue
     float queue_delay;
     
-    // Number of packets sent per time-step
+    // Number of bits sent per time-step
     float capacity;
     
     std::string node1;
