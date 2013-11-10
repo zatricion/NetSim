@@ -1,9 +1,18 @@
-//
-//  Host.cpp
-//  CS 143
-//
-//  Created by Michael Lauria on 11/7/13.
-//  Copyright (c) 2013 Anish. All rights reserved.
-//
-
 #include "Host.h"
+
+Host::Host(CongestionAlg control, std::string uuid)
+{
+    
+}
+
+Packet Host::createPacket(<#std::string#> uuid)
+class Host : public Device
+{
+public:
+    int window_size;
+    
+    // Constructor takes a congestion control algorithm and an id string
+    Host(CongestionAlg, std::string);
+    
+    Packet createPacket(std::string);
+};

@@ -5,10 +5,15 @@
 class Event
 {
 public:
+<<<<<<< HEAD
     Event(std::unique_ptr<EventGenerator> dest, 
 	  std::unique_ptr<EventGenerator> src, 
 	  float ts);
 
+=======
+    Event(Packet& pkt, std::string, std::string, float);
+    
+>>>>>>> c5379ad44647621a95ca3ce51f24499e5f716d8e
     float eventTime() const;
     
     void handleEvent();
