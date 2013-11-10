@@ -2,13 +2,13 @@
 #include "Packet.h"
 #include <string>
 
-class PacketEvent : Event
+class PacketEvent : public Event
 {
 public:
     PacketEvent(Packet &pkt, 
-		std::unique_ptr<EventGenerator> dest, 
-		std::unique_ptr<EventGenerator> src, 
-		float ts);
+                std::unique_ptr<EventGenerator> dest,
+                std::unique_ptr<EventGenerator> src,
+                float ts);
 
     Packet &packet;
 };

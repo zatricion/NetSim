@@ -18,7 +18,7 @@ class Link : public EventGenerator
 public:
     Link(float, float, float, std::string, std::string, std::string);
     void giveEvent(std::unique_ptr<Event>);
-    std::unique_ptr<PacketEvent> getEvent();
+    std::unique_ptr<Event> getEvent();
     
 private:
 

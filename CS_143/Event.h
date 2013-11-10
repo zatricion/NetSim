@@ -5,9 +5,9 @@
 class Event
 {
 public:
-    Event(std::unique_ptr<EventGenerator> dest, 
-	  std::unique_ptr<EventGenerator> src, 
-	  float ts);
+    Event(std::unique_ptr<EventGenerator> dest,
+          std::unique_ptr<EventGenerator> src,
+          float ts);
 
     float eventTime() const;
     
