@@ -30,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2103E41A182F61FB0091437C /* MultiQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiQueue.h; sourceTree = "<group>"; };
 		21067C08182C655C008787D1 /* Link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Link.cpp; sourceTree = "<group>"; };
 		21067C09182C655C008787D1 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
 		21067C0C182C6658008787D1 /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 				21067C0C182C6658008787D1 /* Device.cpp */,
 				21067C11182C6705008787D1 /* Router.h */,
 				21067C10182C6705008787D1 /* Router.cpp */,
+				2103E41A182F61FB0091437C /* MultiQueue.h */,
 				215AADD9182CCA2E00F666EC /* Host.h */,
 				215AADD8182CCA2E00F666EC /* Host.cpp */,
 				21067C09182C655C008787D1 /* Link.h */,
