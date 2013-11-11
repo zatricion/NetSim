@@ -22,7 +22,7 @@ public:
     void giveEvent(std::unique_ptr<Event>);
     std::unique_ptr<Event> getEvent();
     
-    static std::string REQUIRED_PARAMETERS [ ] = {"buffer_size", "prop_delay",
+    static std::string REQUIRED_PARAMETERS [ ] = {"id", "buffer_size", "prop_delay",
         		"queue_size", "queue_delay", "capacity", "queue_time", "end_points"};
 
     static std::string NUMERIC_PARAMETERS [ ] = {"buffer_size", "prop_delay",
