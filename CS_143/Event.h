@@ -19,9 +19,7 @@ public:
     Event(std::string dest, std::string src, float ts);
     
     float eventTime() const;
-    
-    void handleEvent(std::unique_ptr<Event> self);
-    
+        
     std::string destination;
     std::string source;
     

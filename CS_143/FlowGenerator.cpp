@@ -16,7 +16,7 @@ FlowGenerator::FlowGenerator(std::vector<std::tuple<std::string, std::string, in
         std::tie (source, dest, size, time) = *it;
         
         // create FlowEvent
-        FlowEvent flow = FlowEvent(source, dest, size, time);
+        FlowEvent flow = FlowEvent(size, source, dest, time);
         
         // add event to eventHeap
         eventHeap.push(flow);
