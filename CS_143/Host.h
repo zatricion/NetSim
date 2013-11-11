@@ -11,18 +11,18 @@
 #include "FlowEvent.h"
 #include "UnackEvent.h"
 #include <unordered_set>
+#include <unordered_map>
 
 class Host : public Device
 {
 public:
-    int window_size;
-    
-    // Congestion Control algorithm host runs
-    CongestionAlg congestion_alg;
     
     // Link this host connects to
     Link& my_link;
     
+    // Associates flow IDs with Flow objects.
+    std::unordered_map<std::string, Flow> flows;
+
     // Constructor takes a congestion control algorithm and an id string
     Host(CongestionAlg, Link&, float);
     

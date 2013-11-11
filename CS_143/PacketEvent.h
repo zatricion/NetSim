@@ -8,6 +8,7 @@
 class PacketEvent : public Event
 {
 public:
+	// the dest is the next place the item goes.
     PacketEvent(Packet& pkt, std::string dest, std::string src, float ts);
 
     Packet& packet;

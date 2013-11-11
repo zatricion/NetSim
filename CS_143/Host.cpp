@@ -14,23 +14,10 @@ Host::Host(CongestionAlg congestion_algorithm , Link& host_link, float rt) : my_
     RTO = rt;
 }
 
-void Host::addFlow(std::string dest, float data_size)
-{
-    float temp_num_pkts = data_size / DATA_PKT_SIZE;
-    int num_packets = (int) ceil(temp_num_pkts);
-    
-    std::queue<Packet> flow;
-    
-    for (int count = 0; count < num_packets; count++){
-        std::string pack_id = this->uuid + std::to_string(packet_id);
-        Packet new_packet(pack_id, dest, this->uuid, DATA_PKT_SIZE, false, false, count+1);
-        flow.push(new_packet);
-        packet_id++;
-    }
-    
-    packet_queue.addQueue(flow);
-}
-
+/*
+ * Add an event to local priority queue.
+ */
+/*
 void Host::sendPacket(Packet new_pack, int time_now)
 {
     // Insert packet to the eventHeap
@@ -44,46 +31,40 @@ void Host::sendPacket(Packet new_pack, int time_now)
     unacknowledged_packets.insert(new_pack.uuid);
     unack_packets++;
 }
+*/
 
+/*
+ * Called when a flow_event is received.
+ */
 void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 {
-    // Create queue of packets for host to make events out of
-    addFlow(flow_event->destination, flow_event->data_size);
-    
-    // Create PacketEvents based on queue of packets based on
-    // number of unacknowledged packets
-    int num_events = window_size - unack_packets;
-    float time_now = flow_event->eventTime();
-    // push PacketEvents onto eventheap
-    for (int pck = 1; pck <= num_events; pck++) {
-        Packet new_pack = packet_queue.pop();
-        time_now +=  float(new_pack.size) / throughput;
-        sendPacket(new_pack, time_now);
-    }
+    // Create a Flow object, and add it to the map of flows.
+    flows.insert(flow_event->flow.id, flow_event->flow);
 }
 
+/**
+ * Called when there is a potentially unacknowledged packet.
+ */
 void Host::giveEvent(std::unique_ptr<UnackEvent> unack_event)
 {
-    Packet new_pack = unack_event->packet;
-    
-    // Check if packet has been acknowledged, if not resend
-    if (unacknowledged_packets.count(new_pack.uuid) != 0)
-        sendPacket(new_pack, unack_event->eventTime());
+	flows.find(unack_event->flow.id).handleUnackEvent();
 }
 
+/**
+ * Called when host receives any packet.
+ */
 void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
 {
     Packet pkt = new_event->packet;
     
     if (pkt.ack)
     {
-        unack_packets--;
-        unacknowledged_packets.erase(pkt.uuid);
-
-        Packet new_packet = new_event->packet;
-        std::string source = new_event->source;
-        float now = new_event->eventTime();
-        int test;
+    	flows.find(new_event->flow.id).handleAck();
+    }
+    else {
+    	// TODO what is pkt.id??
+    	Packet ret(pkt.id, pkt.src, pkt.dest, pkt.s, true, false, pkt.seq_num);
+    	float ts = new_event->eventTime() + 3; //TODO
+    	PacketEvent pEv(ret, my_link.getId(), this->getId(), ts);
     }
 }
-
