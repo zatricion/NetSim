@@ -10,7 +10,6 @@
 #define __CS_143__Event__
 
 #include <iostream>
-#include "EventGenerator.h"
 #include "Packet.h"
 #include <string>
 
