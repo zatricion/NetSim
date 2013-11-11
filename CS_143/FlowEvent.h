@@ -9,8 +9,8 @@
 class FlowEvent : public Event {
 public:
     FlowEvent(int ds,
-              std::unique_ptr<EventGenerator> dest,
-              std::unique_ptr<EventGenerator> src,
+              std::string dest,
+              std::string src,
               float ts);
 
     int data_size;

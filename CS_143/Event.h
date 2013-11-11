@@ -17,16 +17,14 @@
 class Event
 {
 public:
-    Event(std::unique_ptr<EventGenerator> dest,
-          std::unique_ptr<EventGenerator> src,
-          float ts);
+    Event(std::string dest, std::string src, float ts);
     
     float eventTime() const;
     
     void handleEvent(std::unique_ptr<Event> self);
     
-    std::unique_ptr<EventGenerator> destination;
-    std::unique_ptr<EventGenerator> source;
+    std::string destination;
+    std::string source;
     
     bool operator>(const Event& other) const;
     

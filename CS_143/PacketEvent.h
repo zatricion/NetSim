@@ -8,10 +8,7 @@
 class PacketEvent : public Event
 {
 public:
-    PacketEvent(Packet& pkt,
-                std::unique_ptr<EventGenerator> dest,
-                std::unique_ptr<EventGenerator> src,
-                float ts);
+    PacketEvent(Packet& pkt, std::string dest, std::string src, float ts);
 
     Packet& packet;
 };
