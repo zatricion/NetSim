@@ -49,16 +49,6 @@ void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
     }
 }
 
-PacketEvent::PacketEvent(Packet& pkt,
-                         std::unique_ptr<EventGenerator> dest,
-                         std::unique_ptr<EventGenerator> src,
-                         float ts) : packet(pkt)
-{
-    destination = std::move(dest);
-    source = std::move(src);
-    timestamp = ts;
-    packet = pkt;
-}
 
 void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
 {
