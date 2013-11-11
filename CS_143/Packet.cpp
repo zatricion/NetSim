@@ -6,8 +6,10 @@ Packet::Packet()
     final_dest = "none";
     source = "none";
     size = 0;
-    ack = 0;
-    bell_ford = 0;
+    ack  = 0;
+    bf_req_bit = 0;
+    bf_tbl_bit = 0;
+    bf_table = 0;
     sequence_num = -1;
 }
 
@@ -16,7 +18,9 @@ Packet::Packet(std::string id,
                std::string src,
                int s,
                bool a,
-               bool bf,
+               bool bf_request_bit,
+               bool bf_table_bit,
+	       std::map<std::string, std::vector<std::string> > table,
                int seq)
 {
     uuid = id;
@@ -24,7 +28,9 @@ Packet::Packet(std::string id,
     source = src;    
     size = s;
     ack = a;
-    bell_ford = bf;
+    bf_req_bit = bf_request_bit;
+    bf_tbl_bit = bf_table_bit;
+    bf_table = table;
     sequence_num = seq;
 }
 
@@ -35,6 +41,8 @@ Packet::Packet(const Packet& other)
     source = other.source;
     size = other.size;
     ack = other.ack;
-    bell_ford = other.bell_ford;
+    bf_req_bit = other.bf_req_bit;
+    bf_tbl_bit = other.bf_tbl_bit;
+    bf_table = other.bf_table;
     sequence_num = other.sequence_num;
 }
