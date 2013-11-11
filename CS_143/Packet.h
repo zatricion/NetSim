@@ -3,8 +3,7 @@
 
 #include <string>
 
-class Packet
-{
+class Packet {
 public:
     std::string uuid;
     std::string final_dest;
@@ -12,15 +11,21 @@ public:
     
     int size;
     bool ack;
-    bool bell_ford;
+    
+    bool bf_req_bit;
+    bool bf_tbl_bit;
+    // this is a mapping from host_id to path to that host 
+    // (which is vector of node ids)
+    std::map<std::string, std::vector<std::string> > bf_table;
     
     int sequence_num;
-    
+
     // Default Constructor
     Packet();
     
     // Constructor
-    Packet(std::string, std::string, std::string, int, bool, bool, int);
+    Packet(std::string, std::string, std::string, int, bool, bool, bool,
+	   std::map<std::string, std::vector<std::string> >, int);
     
     // Copy Constructor
     Packet(const Packet& other);
