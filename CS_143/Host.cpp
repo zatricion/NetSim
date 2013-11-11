@@ -32,7 +32,7 @@ void Host::addFlow(std::string dest, float data_size)
 void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 {
     // Add flow
-    addFlow(flow_event->destination, flow_event->data_size());
+    addFlow(flow_event->destination, flow_event->data_size);
 }
 
 

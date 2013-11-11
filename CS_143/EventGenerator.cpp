@@ -8,8 +8,6 @@
 //   - Router
 
 #include "EventGenerator.h"
-#include "Event.h"
-#include <queue>
 
 std::string EventGenerator::getId() const
 {

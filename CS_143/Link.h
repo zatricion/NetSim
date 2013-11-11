@@ -12,6 +12,7 @@
 #include <iostream>
 #include "EventGenerator.h"
 #include "PacketEvent.h"
+#include "make_unique.h"
 
 class Link : public EventGenerator
 {
@@ -21,9 +22,6 @@ public:
     std::unique_ptr<Event> getEvent();
     
 private:
-
-    // TODO: change capacity etc to bps, then find out how many bits are in front of each packet, add packet size and compute timestamp
-    
     // Maximum queue_size in bits
     float buffer_size;
     
