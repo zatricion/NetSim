@@ -16,11 +16,17 @@ public:
     void createRouting(Packet);
     
     // add a link to the router
-    void addLink();
+    void addLink(std::string link_id);
     
+    // react to an event
+    void giveEvent(std::unique_ptr<Event>);
+
 private:
     // Routing table maps destination host ids to link ids
     std::map<std::string, std::string> routing_table;
+    
+    // All links connected to this router
+    std::vector<std::string> links;
 };
 
 
