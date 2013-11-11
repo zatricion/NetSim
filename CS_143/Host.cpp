@@ -52,11 +52,15 @@ void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 
 void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
 {
-    if (new_event->type == ackPacket) {
+    Packet pkt = new_event->packet;
+    
+    if (pkt.ack)
+    {
         Packet new_packet = new_event->packet;
         std::string source = new_event->source;
         float now = new_event->eventTime();
     }
+    else if (<#condition#>)
 
 }
 
