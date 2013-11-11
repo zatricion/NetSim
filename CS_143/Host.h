@@ -9,6 +9,7 @@
 #include "Packet.h"
 #include "MultiQueue.h"
 #include "FlowEvent.h"
+#include <unordered_set>
 
 class Host : public Device
 {
@@ -45,6 +46,10 @@ public:
     
     // Throughput
     int throughput;
+    
+    // A set of all the packets it has not received ack's for
+    std::unordered_set<std::string> unacknowledged_packets;
+    
     
 };
 
