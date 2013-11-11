@@ -8,8 +8,9 @@
 #include "Link.h"
 #include "Packet.h"
 #include "MultiQueue.h"
+#include <stdio.h>
 
-
+using namespace std;
 
 class Host : public Device
 {
@@ -20,7 +21,7 @@ public:
     CongestionAlg congestion_alg;
     
     // Link this host connects to
-    Link& my_link;
+    string my_link;
     
     // Constructor takes a congestion control algorithm and an id string
     Host(CongestionAlg, Link&);
@@ -32,11 +33,11 @@ public:
     void sendPacket(Packet);
     
     // React to an event
-    void giveEvent(std::unique_ptr<FlowEvent>);
-    void giveEvent(std::unique_ptr<PacketEvent>);
+    void giveEvent(unique_ptr<FlowEvent>);
+    void giveEvent(unique_ptr<PacketEvent>);
 
     // Create packets for new flow and interleave them with packet_queue
-    void addFlow(std::string, float, float);
+    void addFlow(string, float, float);
     
     // Create Packet_IDS
     int packet_id;

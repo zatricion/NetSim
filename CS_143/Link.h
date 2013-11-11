@@ -12,13 +12,30 @@
 #include <iostream>
 #include "EventGenerator.h"
 
+#include <boost::Any>
+
 class Link : public EventGenerator
 {
+
 public:
     Link(float, float, float, std::string, std::string, std::string);
     void giveEvent(std::unique_ptr<Event>);
     std::unique_ptr<Event> getEvent();
     
+    static std::string REQUIRED_PARAMETERS [ ] = {"buffer_size", "prop_delay",
+        		"queue_size", "queue_delay", "capacity", "queue_time", "end_points"};
+
+    static std::string NUMERIC_PARAMETERS [ ] = {"buffer_size", "prop_delay",
+        		"queue_size", "queue_delay", "capacity", "queue_time"};
+
+    static unordered_map<std::string, boost::Any> attribute_map = {
+    		{"buffer_size", &buffer_size},
+    		{"prop_delay", &prop_delay},
+    		{"queue_size", &queue_size},
+    		{"capacity", &capacity},
+
+    };
+
 private:
 
     // TODO: change capacity etc to bps, then find out how many bits are in front of each packet, add packet size and compute timestamp
