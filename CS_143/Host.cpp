@@ -1,6 +1,6 @@
 #include "Host.h"
 #include <math.h> // ceil
-
+  
 static const int INITIAL_WINDOW_SIZE = 0; // TODO: change this number
 static const int DATA_PKT_SIZE = 1; // TODO: change this number
 
