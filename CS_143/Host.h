@@ -9,6 +9,7 @@
 #include "Packet.h"
 #include "MultiQueue.h"
 #include "FlowEvent.h"
+#include <unordered_set>
 
 class Host : public Device
 {
@@ -28,7 +29,7 @@ public:
     MultiQueue<Packet> packet_queue;
     
     // Add event to eventHeap
-    void sendPacket(Packet);
+    void sendPacket(Packet, int);
     
     // React to an event
     void giveEvent(std::unique_ptr<FlowEvent>);
@@ -45,6 +46,14 @@ public:
     
     // Throughput
     int throughput;
+    
+    // RTO - time to check if a sent packet has been recieved
+    float RTO;
+    
+    // A set of all the packets it has not received ack's for
+    std::unordered_set<std::string> unacknowledged_packets;
+
+    
     
 };
 
