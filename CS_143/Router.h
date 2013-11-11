@@ -9,14 +9,18 @@
 class Router : public Device
 {
 public:
-    // Routing table maps destination host ids to link ids
-    std::map<std::string, std::string> routing_table;
-    
     // Bellman-Ford
     void updateRouting(Packet);
     
+    // create static routing table
+    void createRouting(Packet);
     
+    // add a link to the router
+    void addLink();
     
+private:
+    // Routing table maps destination host ids to link ids
+    std::map<std::string, std::string> routing_table;
 };
 
 
