@@ -1,3 +1,6 @@
+#ifndef __CS_143__Handler__
+#define __CS_143__Handler__
+
 #include "EventGenerator.h"
 #include "Event.h"
 
@@ -24,3 +27,5 @@ public:
     // find the DO ERRYTHANG
     void step();
 };
+
+#endif /* defined(__CS_143__Handler__) */

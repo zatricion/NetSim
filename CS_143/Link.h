@@ -17,13 +17,10 @@ class Link : public EventGenerator
 {
 public:
     Link(float, float, float, std::string, std::string, std::string);
-    void giveEvent(std::unique_ptr<Event>);
+    void giveEvent(std::unique_ptr<PacketEvent>);
     std::unique_ptr<Event> getEvent();
     
 private:
-
-    // TODO: change capacity etc to bps, then find out how many bits are in front of each packet, add packet size and compute timestamp
-    
     // Maximum queue_size in bits
     float buffer_size;
     

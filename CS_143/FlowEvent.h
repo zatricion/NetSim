@@ -1,3 +1,6 @@
+#ifndef __CS_143__FlowEvent__
+#define __CS_143__FlowEvent__
+
 #include "EventGenerator.h"
 #include "Event.h"
 #include "Packet.h"
@@ -13,3 +16,4 @@ public:
     int data_size;
 };
 
+#endif /* defined(__CS_143__FlowEvent__) */

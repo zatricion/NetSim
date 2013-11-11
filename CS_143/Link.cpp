@@ -26,8 +26,10 @@ std::unique_ptr<Event> Link::getEvent()
     return std::unique_ptr<Event>(&nextEvent);
 }
 
-void Link::giveEvent(std::unique_ptr<PacketEvent> new_event)
+void Link::giveEvent(std::unique_ptr<Event> e)
 {
+    Event abcd = *e;
+    PacketEvent new_event = static_cast<PacketEvent>(abcd);
     Packet new_packet = new_event->packet;
     std::string source = new_event->source;
     float now = new_event->eventTime();
@@ -48,7 +50,7 @@ void Link::giveEvent(std::unique_ptr<PacketEvent> new_event)
         std::string destination = (source == node1) ? node2 : node1;
         
         // Add an event to the Link priority queue
-        Event packetEvent = Event(new_packet, destination, uuid, timestamp);
+        PacketEvent packetEvent = PacketEvent(&new_packet, destination, uuid, timestamp);
         eventHeap.push(packetEvent);
         
         // Update queue size
