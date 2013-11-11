@@ -40,6 +40,12 @@ public:
     // Create Packet_IDS
     int packet_id;
     
+    // Unacknowledged Packets
+    int unack_packets;
+    
+    // Throughput
+    int throughput;
+    
 };
 
 

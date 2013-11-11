@@ -11,10 +11,6 @@ public:
     std::string source;
     
     int size;
-    
-    // When the packet was sent
-    float time_created;
-    
     bool ack;
     bool bell_ford;
     

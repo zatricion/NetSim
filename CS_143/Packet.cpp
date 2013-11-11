@@ -6,7 +6,6 @@ Packet::Packet()
     final_dest = "none";
     source = "none";
     size = 0;
-    time_created = 0;
     ack = 0;
     bell_ford = 0;
     sequence_num = -1;

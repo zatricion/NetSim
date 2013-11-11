@@ -13,11 +13,7 @@ public:
     std::map<std::string, std::string> routing_table;
     
     // Bellman-Ford
-    void updateRouting(Packet);
-    
-    
-    
-    
+    void updateRouting(Packet);    
 };
 
 
