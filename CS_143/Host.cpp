@@ -14,6 +14,12 @@ Host::Host(CongestionAlg congestion_algorithm , Link& host_link, float rt) : my_
     RTO = rt;
 }
 
+/**
+ * Add an event to local priority queue.
+ */
+void Host::addEventToLocalQueue(Event e) {
+    eventHeap.push(e);
+}
 /*
  * Add an event to local priority queue.
  */
@@ -24,6 +30,7 @@ void Host::sendPacket(Packet new_pack, int time_now)
     PacketEvent packet_event = PacketEvent(new_pack, new_pack.final_dest, new_pack.source, time_now);
     eventHeap.push(packet_event);
     
+
     // Insert to the eventHeap an event which is triggered once a packet has timed out
     UnackEvent unack_event = UnackEvent(new_pack, this->getId(), this->getId(), time_now + RTO);
     eventHeap.push(unack_event);
@@ -59,12 +66,16 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
     
     if (pkt.ack)
     {
-    	flows.find(new_event->flow.id).handleAck();
+    	flows.find(new_event->flow.id).handleAck(pkt);
     }
+    // We received a packet.  Send an acknowledgment.
     else {
     	// TODO what is pkt.id??
     	Packet ret(pkt.id, pkt.src, pkt.dest, pkt.s, true, false, pkt.seq_num);
-    	float ts = new_event->eventTime() + 3; //TODO
+        //@MaxHorton TODO eventually, we will have to make sure that these
+        //events are not all occurring simulatneously (not violating the link
+        // rate by sending several events to the link in the span of 1ms).
+    	float ts = new_event->eventTime();
     	PacketEvent pEv(ret, my_link.getId(), this->getId(), ts);
     }
 }
