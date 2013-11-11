@@ -19,3 +19,4 @@ float EventGenerator::getNextTime()
     return eventHeap.top().eventTime();
 }
 
+
