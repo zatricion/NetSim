@@ -1,11 +1,3 @@
-//
-//  Event.h
-//  CS 143
-//
-//  Created by Michael Lauria on 11/10/13.
-//  Copyright (c) 2013 Anish. All rights reserved.
-//
-
 #ifndef __CS_143__Event__
 #define __CS_143__Event__
 

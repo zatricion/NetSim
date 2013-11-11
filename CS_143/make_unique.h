@@ -1,11 +1,3 @@
-//
-//  make_unique.h
-//  CS_143
-//
-//  Created by Michael Lauria on 11/10/13.
-//  Copyright (c) 2013 Michael Lauria. All rights reserved.
-//
-
 #ifndef CS_143_make_unique_h
 #define CS_143_make_unique_h
 
