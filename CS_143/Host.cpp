@@ -4,7 +4,7 @@
 static const int INITIAL_WINDOW_SIZE = 0; // TODO: change this number
 static const int DATA_PKT_SIZE = 1; // TODO: change this number
 
-Host::Host(CongestionAlg congestion_algorithm , Link& host_link) : my_link(host_link)
+Host::Host(CongestionAlg congestion_algorithm , Link &host_link) : my_link(host_link)
 {
     window_size = INITIAL_WINDOW_SIZE;
     congestion_alg = congestion_algorithm;
