@@ -9,6 +9,7 @@
 #include "Packet.h"
 #include "MultiQueue.h"
 #include "FlowEvent.h"
+#include "UnackEvent.h"
 #include <unordered_set>
 
 class Host : public Device
@@ -23,7 +24,7 @@ public:
     Link& my_link;
     
     // Constructor takes a congestion control algorithm and an id string
-    Host(CongestionAlg, Link&);
+    Host(CongestionAlg, Link&, float);
     
     // Packets waiting to be sent
     MultiQueue<Packet> packet_queue;
@@ -34,6 +35,7 @@ public:
     // React to an event
     void giveEvent(std::unique_ptr<FlowEvent>);
     void giveEvent(std::unique_ptr<PacketEvent>);
+    void giveEvent(std::unique_ptr<UnackEvent>);
 
     // Create packets for new flow and interleave them with packet_queue
     void addFlow(std::string, float);

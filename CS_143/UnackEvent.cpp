@@ -2,9 +2,9 @@
 
 // Constructor
 
-UnackEvent::UnackEvent(std::string packID, 
+UnackEvent::UnackEvent(Packet& pkt,
 		       std::string dest, std::string src, 
 		       float ts) : Event(dest, src, ts) {
-    packetID = packID;
+    packet = pkt;
 }
 

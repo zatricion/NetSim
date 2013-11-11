@@ -4,7 +4,11 @@
 static const int INITIAL_WINDOW_SIZE = 0; // TODO: change this number
 static const int DATA_PKT_SIZE = 1; // TODO: change this number
 
+<<<<<<< HEAD
+Host::Host(CongestionAlg congestion_algorithm , Link &host_link) : my_link(host_link)
+=======
 Host::Host(CongestionAlg congestion_algorithm , Link& host_link, float rt) : my_link(host_link)
+>>>>>>> HOST
 {
     window_size = INITIAL_WINDOW_SIZE;
     congestion_alg = congestion_algorithm;
@@ -64,26 +68,35 @@ void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 
 void Host::giveEvent(std::unique_ptr<UnackEvent> unack_event)
 {
-    Packet new_pack = unack_event->packet;
+    Packet new_pack = unack_event->pkt;
     
     // Check if packet has been acknowledged, if not resend
     if (unacknowledged_packets.count(new_pack.uuid) != 0)
-        sendPacket(new_pack, unack_event->eventTime());
+        sendPacket(new_pack, unack_event->eventTime);
 }
 
 void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
 {
+<<<<<<< HEAD
     Packet pkt = new_event->packet;
     
     if (pkt.ack)
     {
+=======
+    if (new_event->type == ackPacket) {
         unack_packets--;
-        unacknowledged_packets.erase(pkt.uuid);
+        unacknowledged_packets.erase();
 
+>>>>>>> HOST
         Packet new_packet = new_event->packet;
         std::string source = new_event->source;
         float now = new_event->eventTime();
         
     }
+<<<<<<< HEAD
+    else if (<#condition#>)
+
+=======
+>>>>>>> HOST
 }
 

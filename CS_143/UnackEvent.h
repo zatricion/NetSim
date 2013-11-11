@@ -8,11 +8,11 @@
 
 class UnackEvent : public Event {
 public:
-    UnackEvent(std::string packID,
+    UnackEvent(Packet& pkt,
 	       std::string dest, std::string src,
 	       float ts);
 
-    std::string packetID;
+    Packet packet;
 };
 
 #endif /* defined(__CS_143__UnackEvent__) */
