@@ -21,6 +21,9 @@ public:
     std::map<std::string, std::vector<std::string> > bf_table;
     
     int sequence_num;
+    // If the packet was generated from a Flow in a host, this is the ID of
+    // that flow.
+    std::string flowID;
 
     // Default Constructor
     Packet();
@@ -28,6 +31,10 @@ public:
     // Constructor
     Packet(std::string, std::string, std::string, int, bool, bool, bool,
 	   std::map<std::string , std::vector<std::string> > *, int);
+
+    // Another constructor.
+    Packet(std::string, std::string, std::string, int, bool, bool, bool,
+	   std::map<std::string , std::vector<std::string> > *, int, std::string);
     
     // Copy Constructor
     Packet(const Packet& other);

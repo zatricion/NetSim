@@ -4,18 +4,19 @@
 #include "EventGenerator.h"
 #include "Event.h"
 #include "Packet.h"
+#include "Flow.h"
 #include <string>
 
 class FlowEvent : public Event {
 public:
-    FlowEvent(std::string flowId,
+    FlowEvent(Flow flowobj,
               int ds,
               std::string dest,
               std::string src,
               float ts);
 
     int data_size;
-    std::string id;
+    Flow floww;
 };
 
 #endif /* defined(__CS_143__FlowEvent__) */

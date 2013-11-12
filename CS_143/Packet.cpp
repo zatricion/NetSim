@@ -1,5 +1,6 @@
 #include "Packet.h"
 
+// Default constructor.
 Packet::Packet()
 {
     uuid = "none";
@@ -14,6 +15,7 @@ Packet::Packet()
     sequence_num = -1;
 }
 
+// Constructor for most cases.
 Packet::Packet(std::string id,
                std::string fd,
                std::string src,
@@ -33,7 +35,35 @@ Packet::Packet(std::string id,
     bf_tbl_bit = bf_table_bit;
     bf_table = table;
     sequence_num = seq;
+    flowID = "NONE";
 }
+
+// Constructor for when a packet is generated from a host.  We need the flowID
+// of the flow from which the packet was derived.
+Packet::Packet(std::string id,
+               std::string fd,
+               std::string src,
+               int s,
+               bool a,
+               bool bf_request_bit,
+               bool bf_table_bit,
+	       std::map<std::string, std::vector<std::string> > *table,
+               int seq,
+               std::string id)
+{
+    uuid = id;
+    final_dest = fd;
+    source = src;    
+    size = s;
+    ack = a;
+    bf_req_bit = bf_request_bit;
+    bf_tbl_bit = bf_table_bit;
+    bf_table = table;
+    sequence_num = seq;
+    flowID = id;
+}
+
+
 
 Packet::Packet(const Packet& other)
 {

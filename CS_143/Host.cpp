@@ -1,6 +1,7 @@
 #include "Host.h"
 #include "Flow.h"
 #include <math.h> // ceil
+#include <string>
   
 Host::Host(Link& host_link) : my_link(host_link)
 {
@@ -22,8 +23,8 @@ void Host::addEventToLocalQueue(Event e) {
  */
 void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 {
-    // Create a Flow object, and add it to the map of flows.
-    flows.insert(flow_event->flow.id, flow_event->flow);
+    // Get a flow object, and add it to the map of flows.
+    flows[flow_event->floww.id] = flow_event->floww;
 }
 
 /**
@@ -31,8 +32,8 @@ void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
  */
 void Host::giveEvent(std::unique_ptr<UnackEvent> unack_event)
 {
-	flows.find(unack_event->flow.id).handleUnackEvent(unack_event->packet, unack_event->eventTime());
-        // TODO delete the unack_event
+        Packet p = unack_event->packet;
+	flows[p.flowID].handleUnackEvent(unack_event->packet, unack_event->eventTime());
 }
 
 /**
@@ -44,7 +45,7 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
     
     if (pkt.ack)
     {
-    	flows.find(new_event->flow.id).handleAck(pkt, new_event->eventTime());
+    	flows[pkt.flowID].handleAck(pkt, new_event->eventTime());
     }
     // We received a packet.  Send an acknowledgment.
     else {
