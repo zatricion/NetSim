@@ -30,11 +30,11 @@ public:
     
     // Constructor
     Packet(std::string, std::string, std::string, int, bool, bool, bool,
-	   std::map<std::string , std::vector<std::string> > *, int);
+	   std::map<std::string , std::vector<std::string> > &, int);
 
     // Another constructor.
     Packet(std::string, std::string, std::string, int, bool, bool, bool,
-	   std::map<std::string , std::vector<std::string> > *, int, std::string);
+	   std::map<std::string , std::vector<std::string> > &, int, std::string);
     
     // Copy Constructor
     Packet(const Packet& other);

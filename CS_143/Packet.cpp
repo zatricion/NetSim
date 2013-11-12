@@ -23,7 +23,7 @@ Packet::Packet(std::string id,
                bool a,
                bool bf_request_bit,
                bool bf_table_bit,
-	       std::map<std::string, std::vector<std::string> > *table,
+	       std::map<std::string, std::vector<std::string> > &table,
                int seq)
 {
     uuid = id;
@@ -47,9 +47,9 @@ Packet::Packet(std::string id,
                bool a,
                bool bf_request_bit,
                bool bf_table_bit,
-	       std::map<std::string, std::vector<std::string> > *table,
+	       std::map<std::string, std::vector<std::string> > &table,
                int seq,
-               std::string id)
+               std::string flow_id)
 {
     uuid = id;
     final_dest = fd;
