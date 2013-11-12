@@ -15,7 +15,7 @@ private:
     //std::vector<std::unique_ptr<EventGenerator> > generators;
 
     // Map from generator ID to unique_ptr<EventGenerator>
-    unordered_map<std::string, unique_ptr<EventGenerator> > generatorMap;
+    unordered_map<std::string, unique_ptr<EventGenerator> > genMap;
 
 public:
     // No-argument constructor

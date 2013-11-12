@@ -5,22 +5,19 @@
 // Take ref to an instantiated network object to be added to the simulation
 // Handles getting that object's data
 void Handler::addGenerator(std::unique_ptr<EventGenerator> gen) {
-    generatorMap[gen->getID()] = gen;
+    genMap[gen->getID()] = gen;
 }
 
 
 float Handler::getMinTime() {
-    assert(generators.size() > 0);
-    float minTime = generators.front()->getNextTime();
+    assert(genMap.size() > 0);
+    float minTime = -1;
     // iterate over EventGenerators
-    for (std::vector<std::unique_ptr<EventGenerator> >::iterator it = generators.begin();
-         it != generators.end();
-         it++)
-        {
+    for (auto it = genMap.begin(); it != genMap.end(); it++) {
         // update min if smaller
-        if ((*it)->getNextTime() < minTime) {
-            minTime = (*it)->getNextTime();
-        }
+        float newTime = it->second->getNextTime();
+        if (newTime < minTime || minTime < 0) // gross
+	    minTime = newTime;
     }
     return minTime;
 }
@@ -30,28 +27,21 @@ float Handler::getMinTime() {
 void Handler::populateCurrentEvents(float minTime) {
     // WARNING: will clear out currEvents...is that desired behavior?
     currEvents.clear();
-    for (std::vector<std::unique_ptr<EventGenerator>>::iterator it = generators.begin();
-         it != generators.end(); 
-         it++) {
-        // check to see if current EG has event at desired time
-        // add if so
-        if ((*it)->getNextTime() == minTime)
-            currEvents.push_back((*it)->getEvent());
+    for (auto it = genMap.begin(); it != genMap.end(); it++) {
+        // check to see if current EG has event at desired time, add if so
+        if (it->second->getNextTime() == minTime) 
+            currEvents.push_back(it->second->getEvent());
     }
 }
 
 void Handler::processCurrentEvents() {
-    for (std::vector<std::unique_ptr<Event>>::iterator it = currEvents.begin();
-         it != currEvents.begin();
-         it++) {
+    for (auto it = genMap.begin(); it != genMap.end(); it++) {
         // Each event handles itself.
-        (*it)->handleEvent(*it);
+        it->second->handleEvent(*it);
     }
 }
 
 void Handler::step() {
     populateCurrentEvents(getMinTime());
     processCurrentEvents();
-}   
-
-XS
+}
