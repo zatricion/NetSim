@@ -48,7 +48,11 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
     // We received a packet.  Send an acknowledgment.
     else {
     	// TODO what is pkt.id??
-    	Packet ret(pkt.uuid, pkt.source, pkt.final_dest, pkt.size, true, false, false, NULL, pkt.sequence_num);
+        
+        // Create empty table to pass by reference
+        std::map<std::string, std::vector<std::string> > table;
+        
+    	Packet ret(pkt.uuid, pkt.source, pkt.final_dest, pkt.size, true, false, false, table, pkt.sequence_num);
         //@MaxHorton TODO eventually, we will have to make sure that these
         //events are not all occurring simulatneously (not violating the link
         // rate by sending several events to the link in the span of 1ms).

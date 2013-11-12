@@ -13,10 +13,17 @@
 void CongestionAlg::initialize(Flow *flow) {
     int windowSize = flow->windowSize;
     Host *host = flow->host;
+    
+    
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
+        
+        // Create empty table to pass by reference
+        std::map<std::string, std::vector<std::string> > table;
+
         Packet p(std::to_string(i), flow->destination, flow->source,
-                              flow->packetSize, false, false, false, NULL, i);
+                              flow->packetSize, false, false, false, table, i);
+        
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
         // more changes to get that to work anyway.
@@ -72,8 +79,11 @@ void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
                 break;
             }
         }
+        // Create empty table to pass by reference
+        std::map<std::string, std::vector<std::string> > table;
+        
         Packet p(std::to_string(lowestUnacked), flow->destination,
-                              flow->source, flow->packetSize, false, false, false, NULL,
+                              flow->source, flow->packetSize, false, false, false, table,
                               lowestUnacked);
         PacketEvent pe(host->my_link.getID(), flow->source, time, p);
         host->addEventToLocalQueue(pe);

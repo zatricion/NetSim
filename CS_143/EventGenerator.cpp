@@ -23,5 +23,5 @@ std::unique_ptr<Event> EventGenerator::getEvent()
 {
     Event nextEvent = eventHeap.top();
     eventHeap.pop();
-    return make_unique<Event>(&nextEvent);
+    return make_unique<Event>(nextEvent);
 }
