@@ -2,6 +2,8 @@
 #define __CS_143__Packet__
 
 #include <string>
+#include <map>
+#include <vector>
 
 class Packet {
 public:

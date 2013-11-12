@@ -9,7 +9,8 @@ Packet::Packet()
     ack  = 0;
     bf_req_bit = 0;
     bf_tbl_bit = 0;
-    bf_table = 0;
+    std::map<std::string, std::vector<std::string> > empty_table;
+    bf_table = empty_table;
     sequence_num = -1;
 }
 
