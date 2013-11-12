@@ -1,7 +1,6 @@
 #ifndef __CS_143__Event__
 #define __CS_143__Event__
 
-class Event;
 #include <iostream>
 #include <string>
 

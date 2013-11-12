@@ -4,7 +4,6 @@
 #include <iostream>
 #include "EventGenerator.h"
 #include "PacketEvent.h"
-#include "make_unique.h"
 
 class Link : public EventGenerator
 {
