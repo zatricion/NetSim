@@ -9,7 +9,7 @@
 
 #include "EventGenerator.h"
 
-std::string EventGenerator::getId() const
+std::string EventGenerator::getID() const
 {
     return uuid;
 }

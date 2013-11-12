@@ -12,10 +12,10 @@ private:
     std::vector<std::unique_ptr<Event> > currEvents;
     
     // container for list of EventGenerators
-    std::vector<std::unique_ptr<EventGenerator> > generators;
+    //std::vector<std::unique_ptr<EventGenerator> > generators;
 
     // Map from generator ID to unique_ptr<EventGenerator>
-    unordered_map<std::string, unique_ptr<EventGenerator> > generators;
+    unordered_map<std::string, std::unique_ptr<EventGenerator> > genMap;
 
 public:
     // No-argument constructor
@@ -30,10 +30,13 @@ public:
     // hand off all events in currEvents to wherever they should go
     void processCurrentEvents();
 
-    // find the DO ERRYTHANG
     void step();
 
-    void add_generator(string generator_id, unique_ptr<EventGenerator> generator);
+    // add an instantiated network object to the simulation
+    void addGenerator(std::unique_ptr<EventGenerator> gen);
+
+    // handle an event by passing it to where it should go
+    void handleEvent(std::unique_ptr<Event> event);
 };
 
 #endif /* defined(__CS_143__Handler__) */

@@ -21,7 +21,7 @@ class EventGenerator
 public:    
     virtual ~EventGenerator();
     
-    std::string getId() const;
+    std::string getID() const;
     
     // Call this to give the generator an event
     virtual void giveEvent(std::unique_ptr<Event> new_event) = 0;
