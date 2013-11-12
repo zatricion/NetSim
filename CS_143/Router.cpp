@@ -22,7 +22,7 @@ void Router::giveEvent(std::unique_ptr<PacketEvent> packet_event) {
     Packet pkt = packet_event->packet;
     std::string dest = getRouting(pkt.final_dest);
     // make new event
-    PacketEvent new_event(pkt, dest, getId(), packet_event.ts);
+    PacketEvent new_event(dest, getID(), packet_event->eventTime(), pkt);
     // put on event heap
     eventHeap.push(new_event);
 }
