@@ -33,7 +33,8 @@ public:
     // find the DO ERRYTHANG
     void step();
 
-    void add_generator(string generator_id, unique_ptr<EventGenerator> generator);
+    void add_generator(string generator_id, 
+		       unique_ptr<EventGenerator> generator);
 };
 
 #endif /* defined(__CS_143__Handler__) */
