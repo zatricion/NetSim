@@ -25,9 +25,8 @@ public:
     void giveEvent(std::unique_ptr<PacketEvent>);
 
 private:
-    // TODO: this could probably be an unordered_map
     // Routing table maps destination host ids to link ids
-    std::map<std::string, std::string> routing_table;
+    std::unordered_map<std::string, std::string> routing_table;
     
     // All links connected to this router
     std::vector<std::string> links;

@@ -7,8 +7,7 @@ void Router::addLink(std::string link_id) {
 
 // Add a (host, link) pair indicating which link to route to given a host
 void Router::addRouting(std::string targ_host, std::string targ_link) {
-  routing_table.insert(std::pair<std::string, 
-				 std::string>(targ_host, targ_link));
+  routing_table[targ_host] = targ_link;
 }
 
 // Return the proper link to route to given a host
