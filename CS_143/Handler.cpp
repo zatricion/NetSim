@@ -34,11 +34,15 @@ void Handler::populateCurrentEvents(float minTime) {
     }
 }
 
+// handle all events in current events queue
 void Handler::processCurrentEvents() {
-    for (auto it = genMap.begin(); it != genMap.end(); it++) {
-        // Each event handles itself.
-        it->second->handleEvent(*it);
-    }
+    for (auto it = currEvents.begin(); it != currEvents.end(); it++)
+        handleEvent(*it);
+}
+
+// handle passed event by sending to its destination
+void Handler::handleEvent(std::unique_ptr<Event> event) {
+    genMap[event->destination]->giveEvent(event);
 }
 
 void Handler::step() {
