@@ -3,8 +3,10 @@
 #ifndef __CS_143__Router__
 #define __CS_143__Router__
 
+#include <unordered_map>
 #include <string>
-#include "Device.h"
+#include "Packet.h"
+#include "PacketEvent.h"
 
 class Router : public EventGenerator
 {
@@ -13,7 +15,7 @@ public:
     //void updateRouting(Packet);
     
     // create static routing table
-    void addRouting(Packet);
+    void addRouting(std::string targ_host, std::string targ_link);
     
     // add a link to the router
     void addLink(std::string link_id);
