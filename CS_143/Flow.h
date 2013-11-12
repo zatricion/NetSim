@@ -29,6 +29,9 @@ public:
         // window size
         int windowSize;
         int packetSize;
+        // Time when the flow is generated.  Used to create a small set
+        // of Events.
+        float timeStamp; 
 
 	// Methods:
 	// Constructor

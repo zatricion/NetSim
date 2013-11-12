@@ -1,5 +1,6 @@
 #include "CongestionAlg.h"
 #include "Flow.h"
+#include "Host.h"
 
 // TODO:
 /*
@@ -14,19 +15,19 @@ void CongestionAlg::initialize(Flow *flow) {
     Host *host = flow->host;
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
-        Packet p = new Packet(std::to_string(i), flow->destination, flow->source,
-                              flow->packetSize, false, false, i);
+        Packet p(std::to_string(i), flow->destination, flow->source,
+                              flow->packetSize, false, false, false, NULL, i);
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
         // more changes to get that to work anyway.
         
         // Add the event.
-        PacketEvent e = new PacketEvent(p, flow->link.getId(), flow->source, flow->timeStamp + i);
-        host->addEvent(e);
+        PacketEvent e(host->my_link.getID(), flow->source, flow->timeStamp + i, p);
+        host->addEventToLocalQueue(e);
 
         // Add an event to fire when we are tired of waiting.
-        UnackEvent ue = new UnackEvent(p, flow->link.getId(), flow->source, flow->timeStamp + i + flow->waitTime);
-        host->addEvent(ue);
+        UnackEvent ue(p, host->my_link.getID(), flow->source, flow->timeStamp + i + flow->waitTime);
+        host->addEventToLocalQueue(ue);
     }
 }
 
@@ -34,8 +35,9 @@ void CongestionAlg::initialize(Flow *flow) {
 // event.
 // TODO need eventTime()
 void CongestionAlg::handleUnackEvent(Flow *flow, Packet unacked, float time) {
+    Host *host = flow->host;
     //Packet unacked = e->packet;
-    PacketEvent e = new PacketEvent(unacked, flow->dest, flow->source, time);
+    PacketEvent e(host->my_link.getID(), flow->source, time, unacked);
     // TODO also destroy the UnackEvent;
     // TODO most algorithms will update window size, etc.
 }
@@ -43,12 +45,12 @@ void CongestionAlg::handleUnackEvent(Flow *flow, Packet unacked, float time) {
 // Called when the flow handles an ack.
 void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
     Host *host = flow->host;
-    flow->acknowledgedPackets.emplace(pkt.sequence_num);
+    flow->acknowledgedPackets.insert(pkt.sequence_num);
     
     // After acknowledging the packet, check if there are more packets to send.
-    if (flow->acknowledgedPackets.size() == flow->numPackets) {
+    if ((int) flow->acknowledgedPackets.size() == flow->numPackets) {
         // We are finished.  TODO destroy the flow object.
-        continue;
+        return;
     }
 
     else {
@@ -70,13 +72,13 @@ void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
                 break;
             }
         }
-        Packet p = new Packet(std::string(lowestUnacked), flow->destination,
-                              flow->source, flow->packetSize, false, false,
+        Packet p(std::to_string(lowestUnacked), flow->destination,
+                              flow->source, flow->packetSize, false, false, false, NULL,
                               lowestUnacked);
-        PacketEvent pe = new PacketEvent(p, flow->link.getId(), flow->source, time);
-        host->addEvent(pe);
+        PacketEvent pe(host->my_link.getID(), flow->source, time, p);
+        host->addEventToLocalQueue(pe);
 
-        UnackEvent ue = new UnackEvent(p, flow->link.getId(), flow->source, time + flow->waitTime);
-        host->addEvent(ue);
+        UnackEvent ue(p, host->my_link.getID(), flow->source, time + flow->waitTime);
+        host->addEventToLocalQueue(ue);
     }
 }

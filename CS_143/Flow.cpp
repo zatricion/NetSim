@@ -18,6 +18,7 @@ Flow::Flow(std::string idval, std::string src, std::string dest,
     std::queue<Packet> flow;
     windowSize = winSize;
     packetSize = packetSize;
+    timeStamp = ts;
     
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.
