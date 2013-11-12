@@ -1,9 +1,11 @@
 #ifndef __CS_143_Flow__
 #define __CS_143_Flow__
-
-#include "CongestionAlg.h"
-#include "Host.h"
-
+#include <string>
+#include <unordered_set>
+#include <queue>
+#include "Packet.h"
+class CongestionAlg;
+class Host;
 class Flow {
 public:
         // Host that owns the flow
@@ -24,11 +26,14 @@ public:
         std::queue<Packet> flow;
         // How long the flow will wait before sending another packet.
         float waitTime;
+        // window size
+        int windowSize;
+        int packetSize;
 
 	// Methods:
 	// Constructor
-        Flow(std::string id, std::string src, std::string dest, 
-             CongestionAlgorithm *alg, int numPckts, int packetSize, Host *host,
+        Flow(std::string idval, std::string src, std::string dest, 
+             CongestionAlg *alg, int numPckts, int pktSize, Host *h,
              int winSize, float ts);
         // Called when there is a potentially unacknowledged event.
         // I.e. when we send a packet, we add an UnackEvent to the event heap.  Then,

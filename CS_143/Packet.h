@@ -27,7 +27,7 @@ public:
     
     // Constructor
     Packet(std::string, std::string, std::string, int, bool, bool, bool,
-	   std::map<std::string, std::vector<std::string> >, int);
+	   std::map<std::string , std::vector<std::string> > *, int);
     
     // Copy Constructor
     Packet(const Packet& other);

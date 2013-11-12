@@ -1,4 +1,5 @@
 #include "CongestionAlg.h"
+#include "Flow.h"
 
 // TODO:
 /*
@@ -8,12 +9,12 @@
 
 // Initial call to the Congestion Algorithm.  Occurs only when the Flow object
 // is first created.
-void CongestionAlg::call(Flow *flow) {
+void CongestionAlg::initialize(Flow *flow) {
     int windowSize = flow->windowSize;
     Host *host = flow->host;
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
-        Packet p = new Packet(std::string(i), flow->destination, flow->source,
+        Packet p = new Packet(std::to_string(i), flow->destination, flow->source,
                               flow->packetSize, false, false, i);
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
@@ -32,7 +33,7 @@ void CongestionAlg::call(Flow *flow) {
 // Called when an event was not acknowledged.  Must update fields, resend the
 // event.
 // TODO need eventTime()
-void CongestionAlg::call(Flow *flow, Packet unacked, float time) {
+void CongestionAlg::handleUnackEvent(Flow *flow, Packet unacked, float time) {
     //Packet unacked = e->packet;
     PacketEvent e = new PacketEvent(unacked, flow->dest, flow->source, time);
     // TODO also destroy the UnackEvent;
@@ -40,7 +41,7 @@ void CongestionAlg::call(Flow *flow, Packet unacked, float time) {
 }
 
 // Called when the flow handles an ack.
-void CongestionAlg::call(Flow *flow, Packet pkt, float time) {
+void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
     Host *host = flow->host;
     flow->acknowledgedPackets.emplace(pkt.sequence_num);
     

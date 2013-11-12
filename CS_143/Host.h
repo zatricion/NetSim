@@ -3,11 +3,10 @@
 
 #include <iostream>
 #include <cassert>
-#include "CongestionAlg.h"
 #include "Link.h"
 #include "Packet.h"
-#include "MultiQueue.h"
 #include "FlowEvent.h"
+#include "Flow.h"
 #include "UnackEvent.h"
 #include <unordered_set>
 #include <unordered_map>
@@ -19,7 +18,7 @@ public:
     Link& my_link;
     
     // Associates flow IDs with Flow objects.
-    std::unordered_map<std::string, Flow> flow;
+    std::unordered_map<std::string, Flow> flows;
 
     // Constructor
     Host(Link& host_link);

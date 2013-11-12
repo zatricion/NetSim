@@ -1,35 +1,41 @@
 #include "Flow.h"
+#include "Host.h"
+#include "CongestionAlg.h"
 
 // TODO numPckts deduced from data size and packet size.
 // TODO add window size.  Can move this into the algorithm later if desired.
 // TODO need start timestamp.
-Flow::Flow(std::string id, std::string src, std::string dest,
-           CongestionAlgorithm *alg, int numPckts, int packetSize, Host *host,
+Flow::Flow(std::string idval, std::string src, std::string dest,
+           CongestionAlg *alg, int numPckts, int pktSize, Host *h,
            int winSize, float ts) {
-    windowSize = winSize;
-    timeStamp = ts;
+    host = h;
+    id = idval;
     source = src;
     destination = dest;
     a = alg;
+    numPackets = numPckts;
     std::unordered_set<int> acknowledgedPackets;
+    std::queue<Packet> flow;
+    windowSize = winSize;
+    packetSize = packetSize;
+    
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.
     waitTime = 500.0;
     
-    std::queue<Packet> flow;
     for (int count = 0; count < numPackets; count++) {
         std::string pack_id = this->id + std::to_string(count);
-        Packet new_packet(pack_id, dest, host->getId(), packetSize, false,
-                          false, count);
+        Packet new_packet(pack_id, dest, host->getID(), packetSize, false,
+                          false, false, NULL, count);
         flow.push(new_packet);
     }
-    a.call(this);
+    a->initialize(this);
 }
 
 void Flow::handleUnackEvent(Packet unacked, float time) {
     // TODO absorb ALL this logic into the CongestionAlgorithm
     int seqNum = unacked.sequence_num;
-    if (!unacknowledgedPackets.count(seqNum)) {
+    if (!acknowledgedPackets.count(seqNum)) {
         // We didn't find the item in the set of acknowledged packets.
         // We must resend the packet.
 
@@ -39,12 +45,12 @@ void Flow::handleUnackEvent(Packet unacked, float time) {
 
         // TODO call the CongestionAlgorithm, so it can update.
         // All we have to do is call the congestion algorithm.
-        a.call(this, unacked, time);
+        a->handleUnackEvent(this, unacked, time);
     }
     // else, there's nothing to do.
 }
 
 // Handle an ack received from the flow's destination.
 void Flow::handleAck(Packet p, float time) { // TODO makes more sense if arg is an event, not packet.
-    a.call(this, p, time);
+    a->handleAck(this, p, time);
 }
