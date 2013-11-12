@@ -6,7 +6,6 @@
 Host::Host(Link& host_link) : my_link(host_link)
 {
     my_link = host_link;
-    std::unordered_map<std::string, Flow> flows;
 }
 
 /**
@@ -17,14 +16,13 @@ void Host::addEventToLocalQueue(Event e) {
     eventHeap.push(e);
 }
 
-
 /*
  * Called when a flow_event is received.
  */
 void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 {
     // Get a flow object, and add it to the map of flows.
-    flows[flow_event->floww.id] = flow_event->floww;
+    flows[flow_event->floww->id] = std::move(flow_event->floww);
 }
 
 /**
@@ -33,7 +31,7 @@ void Host::giveEvent(std::unique_ptr<FlowEvent> flow_event)
 void Host::giveEvent(std::unique_ptr<UnackEvent> unack_event)
 {
         Packet p = unack_event->packet;
-	flows[p.flowID].handleUnackEvent(unack_event->packet, unack_event->eventTime());
+	flows[p.flowID]->handleUnackEvent(unack_event->packet, unack_event->eventTime());
 }
 
 /**
@@ -45,7 +43,7 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
     
     if (pkt.ack)
     {
-    	flows[pkt.flowID].handleAck(pkt, new_event->eventTime());
+    	flows[pkt.flowID]->handleAck(pkt, new_event->eventTime());
     }
     // We received a packet.  Send an acknowledgment.
     else {

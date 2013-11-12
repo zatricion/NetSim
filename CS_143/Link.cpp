@@ -20,13 +20,6 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-std::unique_ptr<Event> Link::getEvent()
-{
-    Event nextEvent = eventHeap.top();
-    eventHeap.pop();
-    return make_unique<Event>(&nextEvent);
-}
-
 void Link::giveEvent(std::unique_ptr<Event> e)
 {
     std::unique_ptr<PacketEvent> new_event(static_cast<PacketEvent*>(e.release()));

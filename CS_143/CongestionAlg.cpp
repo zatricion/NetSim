@@ -22,11 +22,11 @@ void CongestionAlg::initialize(Flow *flow) {
         // more changes to get that to work anyway.
         
         // Add the event.
-        PacketEvent e(host->my_link.getID(), flow->source, flow->timeStamp + i, p);
+        PacketEvent e(host->my_link.getID(), flow->source, flow->timestamp + i, p);
         host->addEventToLocalQueue(e);
 
         // Add an event to fire when we are tired of waiting.
-        UnackEvent ue(p, host->my_link.getID(), flow->source, flow->timeStamp + i + flow->waitTime);
+        UnackEvent ue(p, host->my_link.getID(), flow->source, flow->timestamp + i + flow->waitTime);
         host->addEventToLocalQueue(ue);
     }
 }

@@ -9,14 +9,13 @@
 
 class FlowEvent : public Event {
 public:
-    FlowEvent(Flow flowobj,
-              int ds,
+    FlowEvent(std::unique_ptr<Flow> flowobj,
               std::string dest,
               std::string src,
               float ts);
 
     int data_size;
-    Flow floww;
+    std::unique_ptr<Flow> floww;
 };
 
 #endif /* defined(__CS_143__FlowEvent__) */

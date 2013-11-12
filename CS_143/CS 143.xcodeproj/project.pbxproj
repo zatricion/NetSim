@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		21067C0A182C655C008787D1 /* Link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21067C08182C655C008787D1 /* Link.cpp */; };
 		21067C0B182C655C008787D1 /* Link.h in Headers */ = {isa = PBXBuildFile; fileRef = 21067C09182C655C008787D1 /* Link.h */; };
-		21067C0E182C6658008787D1 /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21067C0C182C6658008787D1 /* Device.cpp */; };
-		21067C0F182C6658008787D1 /* Device.h in Headers */ = {isa = PBXBuildFile; fileRef = 21067C0D182C6658008787D1 /* Device.h */; };
 		21067C12182C6705008787D1 /* Router.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21067C10182C6705008787D1 /* Router.cpp */; };
 		21067C13182C6705008787D1 /* Router.h in Headers */ = {isa = PBXBuildFile; fileRef = 21067C11182C6705008787D1 /* Router.h */; };
 		215AADDA182CCA2E00F666EC /* Host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 215AADD8182CCA2E00F666EC /* Host.cpp */; };
@@ -24,6 +22,8 @@
 		21AB606A182F6CA700F61DDB /* PacketEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 21AB6066182F6CA700F61DDB /* PacketEvent.h */; };
 		21BB0DDF182F785F008A653D /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21BB0DDD182F785F008A653D /* Event.cpp */; };
 		21BB0DE0182F785F008A653D /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 21BB0DDE182F785F008A653D /* Event.h */; };
+		21CB31971832D5E5007AF9B4 /* Flow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21CB31951832D5E5007AF9B4 /* Flow.cpp */; };
+		21CB31981832D5E5007AF9B4 /* Flow.h in Headers */ = {isa = PBXBuildFile; fileRef = 21CB31961832D5E5007AF9B4 /* Flow.h */; };
 		21D7E9AD1827677D003FEBF2 /* Packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21D7E9AB1827677D003FEBF2 /* Packet.cpp */; };
 		21D7E9AE1827677D003FEBF2 /* Packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D7E9AC1827677D003FEBF2 /* Packet.h */; };
 		21F1308F182F20CA0072DDBE /* FlowGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21F1308D182F20CA0072DDBE /* FlowGenerator.cpp */; };
@@ -43,8 +43,6 @@
 		2103E41A182F61FB0091437C /* MultiQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiQueue.h; sourceTree = "<group>"; };
 		21067C08182C655C008787D1 /* Link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Link.cpp; sourceTree = "<group>"; };
 		21067C09182C655C008787D1 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
-		21067C0C182C6658008787D1 /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
-		21067C0D182C6658008787D1 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		21067C10182C6705008787D1 /* Router.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Router.cpp; sourceTree = "<group>"; };
 		21067C11182C6705008787D1 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
 		215AADD8182CCA2E00F666EC /* Host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
@@ -58,6 +56,8 @@
 		21AB6066182F6CA700F61DDB /* PacketEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketEvent.h; sourceTree = "<group>"; };
 		21BB0DDD182F785F008A653D /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
 		21BB0DDE182F785F008A653D /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		21CB31951832D5E5007AF9B4 /* Flow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flow.cpp; sourceTree = "<group>"; };
+		21CB31961832D5E5007AF9B4 /* Flow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flow.h; sourceTree = "<group>"; };
 		21D7E9AB1827677D003FEBF2 /* Packet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Packet.cpp; sourceTree = "<group>"; };
 		21D7E9AC1827677D003FEBF2 /* Packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packet.h; sourceTree = "<group>"; };
 		21F1308D182F20CA0072DDBE /* FlowGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlowGenerator.cpp; sourceTree = "<group>"; };
@@ -89,6 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				F865332B1830C77500B12405 /* Makefile */,
+				21CB31961832D5E5007AF9B4 /* Flow.h */,
+				21CB31951832D5E5007AF9B4 /* Flow.cpp */,
 				F865332D1830C77500B12405 /* Test.h */,
 				F865332C1830C77500B12405 /* Test.cpp */,
 				F865332F1830C77500B12405 /* UnackEvent.h */,
@@ -108,8 +110,6 @@
 				21F1308D182F20CA0072DDBE /* FlowGenerator.cpp */,
 				215AADDD182CCA4900F666EC /* CongestionAlg.h */,
 				215AADDC182CCA4900F666EC /* CongestionAlg.cpp */,
-				21067C0D182C6658008787D1 /* Device.h */,
-				21067C0C182C6658008787D1 /* Device.cpp */,
 				21067C11182C6705008787D1 /* Router.h */,
 				21067C10182C6705008787D1 /* Router.cpp */,
 				2103E41A182F61FB0091437C /* MultiQueue.h */,
@@ -142,6 +142,7 @@
 				F8A9A2121825DDE400F7DAB0 /* EventGenerator.h in Headers */,
 				21F13090182F20CA0072DDBE /* FlowGenerator.h in Headers */,
 				215AADDB182CCA2E00F666EC /* Host.h in Headers */,
+				21CB31981832D5E5007AF9B4 /* Flow.h in Headers */,
 				21067C0B182C655C008787D1 /* Link.h in Headers */,
 				21AB606A182F6CA700F61DDB /* PacketEvent.h in Headers */,
 				21067C13182C6705008787D1 /* Router.h in Headers */,
@@ -150,7 +151,6 @@
 				F86533321830C77500B12405 /* Test.h in Headers */,
 				215AADDF182CCA4900F666EC /* CongestionAlg.h in Headers */,
 				21F913D3182C730000089B45 /* Handler.h in Headers */,
-				21067C0F182C6658008787D1 /* Device.h in Headers */,
 				218B92E61830825400CE8315 /* make_unique.h in Headers */,
 				21D7E9AE1827677D003FEBF2 /* Packet.h in Headers */,
 			);
@@ -208,12 +208,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				21AB6067182F6CA700F61DDB /* FlowEvent.cpp in Sources */,
+				21CB31971832D5E5007AF9B4 /* Flow.cpp in Sources */,
 				21BB0DDF182F785F008A653D /* Event.cpp in Sources */,
 				F8A9A2111825DDE400F7DAB0 /* EventGenerator.cpp in Sources */,
 				21F1308F182F20CA0072DDBE /* FlowGenerator.cpp in Sources */,
 				215AADDE182CCA4900F666EC /* CongestionAlg.cpp in Sources */,
 				F86533331830C77500B12405 /* UnackEvent.cpp in Sources */,
-				21067C0E182C6658008787D1 /* Device.cpp in Sources */,
 				21F913D2182C730000089B45 /* Handler.cpp in Sources */,
 				21D7E9AD1827677D003FEBF2 /* Packet.cpp in Sources */,
 				21067C12182C6705008787D1 /* Router.cpp in Sources */,

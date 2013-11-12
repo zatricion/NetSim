@@ -1,24 +1,17 @@
 #include "FlowGenerator.h"
 #include "FlowEvent.h"
 
-FlowGenerator::FlowGenerator(std::vector<std::tuple<std::string, std::string, int, float> > flows)
+FlowGenerator::FlowGenerator(std::vector<Flow> flows)
 {
     // Go through flows, create FlowEvents, push onto eventHeap
-    for (std::vector<std::tuple<std::string, std::string, int, float>>::iterator it = flows.begin();
+    for (std::vector<Flow>::iterator it = flows.begin();
          it != flows.end();
          it++)
     {
-        // unpack flow
-        std::string source;
-        std::string dest;
-        int size;
-        float time;
-        std::tie (source, dest, size, time) = *it;
-        
         // create FlowEvent
-        FlowEvent flow = FlowEvent(size, source, dest, time);
+        FlowEvent flow_event = FlowEvent(make_unique<Flow>(*it), it->destination, it->source, it->timestamp);
         
         // add event to eventHeap
-        eventHeap.push(flow);
+        eventHeap.push(flow_event);
     }
 }

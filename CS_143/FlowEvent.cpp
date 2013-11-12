@@ -2,9 +2,8 @@
 
 // Constructor
 
-FlowEvent::FlowEvent(Flow flowobj, int ds, std::string dest, std::string src, float ts) : Event(dest, src, ts)
+FlowEvent::FlowEvent(std::unique_ptr<Flow> flowobj, std::string dest, std::string src, float ts) : Event(dest, src, ts)
 {
-    floww = flowobj;
-    data_size = ds;
+    floww = std::move(flowobj);
 }
 

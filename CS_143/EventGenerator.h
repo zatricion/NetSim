@@ -10,6 +10,7 @@
 #ifndef __CS_143__EventGenerator__
 #define __CS_143__EventGenerator__
 
+#include "make_unique.h"
 #include <string>
 #include "Event.h" 
 #include <queue>
@@ -24,10 +25,10 @@ public:
     std::string getID() const;
     
     // Call this to give the generator an event
-    virtual void giveEvent(std::unique_ptr<Event> new_event) = 0;
+    virtual void giveEvent(std::unique_ptr<Event>);
     
     // Call this to get an event from the generator
-    virtual std::unique_ptr<Event> getEvent();
+    std::unique_ptr<Event> getEvent();
     
     // Call this to get the timestamp of the next event
     float getNextTime();

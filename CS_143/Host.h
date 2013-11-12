@@ -16,11 +16,13 @@ class Flow;
 class Host : public EventGenerator
 {
 public:
+    using EventGenerator::giveEvent;
+    
     // Link this host connects to
     Link& my_link;
     
     // Associates flow IDs with Flow objects.
-    std::unordered_map<std::string, Flow> flows;
+    std::unordered_map<std::string, std::unique_ptr<Flow> > flows;
 
     // Constructor
     Host(Link& host_link);

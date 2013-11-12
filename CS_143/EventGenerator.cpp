@@ -19,4 +19,9 @@ float EventGenerator::getNextTime()
     return eventHeap.top().eventTime();
 }
 
-
+std::unique_ptr<Event> EventGenerator::getEvent()
+{
+    Event nextEvent = eventHeap.top();
+    eventHeap.pop();
+    return make_unique<Event>(&nextEvent);
+}

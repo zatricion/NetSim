@@ -8,8 +8,8 @@ class CongestionAlg;
 class Host;
 class Flow {
 public:
-        // Host that owns the flow
-        Host *host;
+    // Host that owns the flow
+    Host *host;
         // unique id of the flow on the host.
 	std::string id;
 	// Source of the flow
@@ -31,7 +31,7 @@ public:
         int packetSize;
         // Time when the flow is generated.  Used to create a small set
         // of Events.
-        float timeStamp; 
+        float timestamp;
 
 	// Methods:
 	// Constructor
