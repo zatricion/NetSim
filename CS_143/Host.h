@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cassert>
 #include "CongestionAlg.h"
-#include "Device.h"
 #include "Link.h"
 #include "Packet.h"
 #include "MultiQueue.h"
@@ -13,7 +12,7 @@
 #include <unordered_set>
 #include <unordered_map>
 
-class Host : public Device
+class Host : public EventGenerator
 {
 public:
     // Link this host connects to
@@ -25,6 +24,7 @@ public:
     // Constructor
     Host(Link& host_link);
    
+    // TODO this should be in EventGenerator.cpp.  Why isn't it?
     // Add event to local priority queue.
     void addEventToLocalQueue(Event e);
     

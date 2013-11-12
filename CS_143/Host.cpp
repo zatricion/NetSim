@@ -10,6 +10,7 @@ Host::Host(Link& host_link) : my_link(host_link)
 /**
  * Add an event to local priority queue.
  */
+// TODO this belongs in EventGenerator
 void Host::addEventToLocalQueue(Event e) {
     eventHeap.push(e);
 }

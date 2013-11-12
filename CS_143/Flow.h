@@ -2,6 +2,7 @@
 #define __CS_143_Flow__
 
 #include "CongestionAlg.h"
+#include "Host.h"
 
 class Flow {
 public:
@@ -38,4 +39,4 @@ public:
         void handleAck(Packet p, float time);
 };
 
-#endif /* defined(__CS_143__CongestionAlg__) */
+#endif /* defined(__CS_143_Flow__) */

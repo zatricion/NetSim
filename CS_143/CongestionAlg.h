@@ -1,8 +1,10 @@
 #ifndef __CS_143__CongestionAlg__
 #define __CS_143__CongestionAlg__
 
-#include <iostream>
-#include "Flow.h"
+class Flow.h;
+#include "UnackEvent.h"
+#include "PacketEvent.h"
+//#include "Flow.h"//TODO
 
 class CongestionAlg
 {

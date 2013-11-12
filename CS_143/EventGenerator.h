@@ -12,10 +12,9 @@
 
 #include <string>
 #include "Event.h" 
-#include "Packet.h"
-#include "CongestionAlg.h"
 #include <queue>
 #include <map>
+#include <memory>
 
 class EventGenerator
 {
