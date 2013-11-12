@@ -2,8 +2,9 @@
 
 // Constructor
 
-FlowEvent::FlowEvent(int ds, std::string dest, std::string src, float ts) : Event(dest, src, ts)
+FlowEvent::FlowEvent(std::string flowId, int ds, std::string dest, std::string src, float ts) : Event(dest, src, ts)
 {
+    id = flowId;
     data_size = ds;
 }
 

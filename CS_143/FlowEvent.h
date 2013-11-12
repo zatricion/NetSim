@@ -8,12 +8,14 @@
 
 class FlowEvent : public Event {
 public:
-    FlowEvent(int ds,
+    FlowEvent(std::string flowId,
+              int ds,
               std::string dest,
               std::string src,
               float ts);
 
     int data_size;
+    std::string id;
 };
 
 #endif /* defined(__CS_143__FlowEvent__) */

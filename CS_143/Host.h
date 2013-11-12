@@ -1,6 +1,7 @@
 #ifndef __CS_143__Host__
 #define __CS_143__Host__
 
+class Flow;
 #include <iostream>
 #include <cassert>
 #include "Link.h"

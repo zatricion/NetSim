@@ -1,11 +1,11 @@
-#include "Flow.h"
 #include "Host.h"
+#include "Flow.h"
 #include <math.h> // ceil
   
 Host::Host(Link& host_link) : my_link(host_link)
 {
     my_link = host_link;
-    flow = new std::unordered_map<std::string, Flow>();
+    std::unordered_map<std::string, Flow> flows;
 }
 
 /**
@@ -49,12 +49,12 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
     // We received a packet.  Send an acknowledgment.
     else {
     	// TODO what is pkt.id??
-    	Packet ret(pkt.id, pkt.src, pkt.dest, pkt.s, true, false, pkt.seq_num);
+    	Packet ret(pkt.uuid, pkt.source, pkt.final_dest, pkt.size, true, false, false, NULL, pkt.sequence_num);
         //@MaxHorton TODO eventually, we will have to make sure that these
         //events are not all occurring simulatneously (not violating the link
         // rate by sending several events to the link in the span of 1ms).
     	float ts = new_event->eventTime();
-    	PacketEvent pEv(ret, my_link.getId(), this->getId(), ts);
+    	PacketEvent pEv(my_link.getID(), getID(), ts, ret);
         addEventToLocalQueue(pEv);
     }
 }
