@@ -2,6 +2,7 @@
 #define __CS_143__Device__
 
 #include "EventGenerator.h"
+#include "Packet.h"
 
 class Device : public EventGenerator
 {

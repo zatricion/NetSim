@@ -50,7 +50,7 @@ void Link::giveEvent(std::unique_ptr<Event> e)
         std::string destination = (source == node1) ? node2 : node1;
         
         // Add an event to the Link priority queue
-        PacketEvent packetEvent = PacketEvent(new_packet, destination, uuid, timestamp);
+        PacketEvent packetEvent = PacketEvent(destination, uuid, timestamp, new_packet);
         eventHeap.push(packetEvent);
         
         // Update queue size
