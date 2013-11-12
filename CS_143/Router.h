@@ -6,7 +6,7 @@
 #include <string>
 #include "Device.h"
 
-class Router : public Device
+class Router : public EventGenerator
 {
 public:
     // Bellman-Ford
