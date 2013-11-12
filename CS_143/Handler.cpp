@@ -2,12 +2,18 @@
 #include <cassert>
 
 
-float Handler::getMinTime()
-{
+// Take ref to an instantiated network object to be added to the simulation
+// Handles getting that object's data
+void Handler::addGenerator(std::unique_ptr<EventGenerator> gen) {
+    generatorMap[gen->getID()] = gen;
+}
+
+
+float Handler::getMinTime() {
     assert(generators.size() > 0);
     float minTime = generators.front()->getNextTime();
     // iterate over EventGenerators
-    for (std::vector<std::unique_ptr<EventGenerator>>::iterator it = generators.begin();
+    for (std::vector<std::unique_ptr<EventGenerator> >::iterator it = generators.begin();
          it != generators.end();
          it++)
         {
@@ -48,3 +54,4 @@ void Handler::step() {
     processCurrentEvents();
 }   
 
+XS
