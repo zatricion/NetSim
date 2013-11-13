@@ -13,27 +13,20 @@
 void CongestionAlg::initialize(Flow *flow) {
     int windowSize = flow->windowSize;
     Host *host = flow->host;
-    
-    
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
-        
-        // Create empty table to pass by reference
-        std::map<std::string, std::vector<std::string> > table;
-
         Packet p(std::to_string(i), flow->destination, flow->source,
-                              flow->packetSize, false, false, false, table, i);
-        
+                              flow->packetSize, false, false, false, NULL, i);
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
         // more changes to get that to work anyway.
         
         // Add the event.
-        PacketEvent e(host->my_link.getID(), flow->source, flow->timestamp + i, p);
+        PacketEvent e(host->my_link.getID(), flow->source, flow->timeStamp + i, p);
         host->addEventToLocalQueue(e);
 
         // Add an event to fire when we are tired of waiting.
-        UnackEvent ue(p, host->my_link.getID(), flow->source, flow->timestamp + i + flow->waitTime);
+        UnackEvent ue(p, host->my_link.getID(), flow->source, flow->timeStamp + i + flow->waitTime);
         host->addEventToLocalQueue(ue);
     }
 }
@@ -79,11 +72,8 @@ void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
                 break;
             }
         }
-        // Create empty table to pass by reference
-        std::map<std::string, std::vector<std::string> > table;
-        
         Packet p(std::to_string(lowestUnacked), flow->destination,
-                              flow->source, flow->packetSize, false, false, false, table,
+                              flow->source, flow->packetSize, false, false, false, NULL,
                               lowestUnacked);
         PacketEvent pe(host->my_link.getID(), flow->source, time, p);
         host->addEventToLocalQueue(pe);
