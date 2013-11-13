@@ -17,7 +17,6 @@ void Host::addEventToLocalQueue(Event e) {
     eventHeap.push(e);
 }
 
-
 void Host::giveEvent(std::unique_ptr<Event>) {};
 
 /*
