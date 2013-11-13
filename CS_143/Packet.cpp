@@ -60,7 +60,7 @@ Packet::Packet(std::string id,
     bf_tbl_bit = bf_table_bit;
     bf_table = table;
     sequence_num = seq;
-    flowID = id;
+    flowID = flow_id;
 }
 
 

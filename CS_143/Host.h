@@ -15,9 +15,7 @@ class Flow;
 
 class Host : public EventGenerator
 {
-public:
-    using EventGenerator::giveEvent;
-    
+public:    
     // Link this host connects to
     Link& my_link;
     

@@ -11,8 +11,6 @@
 class Router : public EventGenerator
 {
 public:
-    using EventGenerator::giveEvent;
-    
     // Bellman-Ford
     //void updateRouting(Packet);
     
