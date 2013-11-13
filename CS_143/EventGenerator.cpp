@@ -8,6 +8,7 @@
 //   - Router
 
 #include "EventGenerator.h"
+#include <cassert>
 
 std::string EventGenerator::getID() const
 {
@@ -16,6 +17,7 @@ std::string EventGenerator::getID() const
 
 float EventGenerator::getNextTime()
 {
+    assert(hasEvents());
     return eventHeap.top().eventTime();
 }
 
@@ -26,4 +28,6 @@ std::unique_ptr<Event> EventGenerator::getEvent()
     return make_unique<Event>(nextEvent);
 }
 
-
+bool EventGenerator::hasEvents() {
+    return eventHeap.size() != 0;
+}

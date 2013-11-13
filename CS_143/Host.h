@@ -36,6 +36,7 @@ public:
     void giveEvent(std::unique_ptr<FlowEvent>);
     void giveEvent(std::unique_ptr<PacketEvent>);
     void giveEvent(std::unique_ptr<UnackEvent>);
+    std::string toString();
 };
 
 #endif /* defined(__CS_143__Host__) */

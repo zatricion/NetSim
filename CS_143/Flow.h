@@ -67,6 +67,8 @@ public:
     
     // Called when an ack is received.
     void handleAck(Packet p, float time);
+
+    std::string toString();
 };
 
 #endif /* defined(__CS_143_Flow__) */
