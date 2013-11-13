@@ -11,6 +11,7 @@ int main()
     std::cout << "Testing Object constructors." << std::endl;
     packetTest();
     eventTest();
+    simTest0();
     return 0;
 }
 
@@ -44,6 +45,8 @@ void eventTest()
 
 void simTest0()
 {
+     std::cout << "Preparing to test simulation." << std::endl;
+    
     // test a simulation with just two hosts, one link, one flow
     Handler handler = Handler();
     
@@ -76,5 +79,7 @@ void simTest0()
     handler.addGenerator(make_unique<Host>(host1));
     handler.addGenerator(make_unique<Host>(host2));
     handler.addGenerator(make_unique<FlowGenerator>(flow_g));
+    
+    handler.step();
     
 }
