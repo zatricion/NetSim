@@ -2,6 +2,7 @@
 #include <cassert>
 #include <iostream>
 #include <algorithm> // std::max
+#include "make_unique.h"
 
 
 // Link Methods
@@ -20,12 +21,11 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-void Link::giveEvent(std::unique_ptr<Event> e)
+void Link::giveEvent(std::unique_ptr<PacketEvent> e)
 {
-    std::unique_ptr<PacketEvent> new_event(static_cast<PacketEvent*>(e.release()));
-    Packet new_packet = new_event->packet;
-    std::string source = new_event->source;
-    float now = new_event->eventTime();
+    Packet new_packet = e->packet;
+    std::string source = e->source;
+    float now = e->eventTime();
     
     // Queue size in bits
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);

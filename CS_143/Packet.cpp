@@ -74,4 +74,5 @@ Packet::Packet(const Packet& other)
     bf_tbl_bit = other.bf_tbl_bit;
     bf_table = other.bf_table;
     sequence_num = other.sequence_num;
+    flowID = other.flowID;
 }
