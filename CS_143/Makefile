@@ -17,7 +17,7 @@ Test.o: Test.cpp Packet.h Event.h
 Packet.o: Packet.cpp
 	$(CC) $(CFLAGS) -c $<
     
-Flow.o: Flow.cpp Packet.h
+Flow.o: Flow.cpp Packet.h CongestionAlg.h Host.h
 	$(CC) $(CFLAGS) -c $<
 
 Event.o: Event.cpp

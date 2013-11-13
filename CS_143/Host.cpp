@@ -3,9 +3,10 @@
 #include <math.h> // ceil
 #include <string>
   
-Host::Host(Link& host_link) : my_link(host_link)
+Host::Host(Link& host_link, std::string host_id) : my_link(host_link)
 {
     my_link = host_link;
+    uuid = host_id;
 }
 
 /**
@@ -15,6 +16,9 @@ Host::Host(Link& host_link) : my_link(host_link)
 void Host::addEventToLocalQueue(Event e) {
     eventHeap.push(e);
 }
+
+
+void Host::giveEvent(std::unique_ptr<Event>) {};
 
 /*
  * Called when a flow_event is received.

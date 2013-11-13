@@ -16,6 +16,8 @@ std::string Router::getRouting(std::string targ_host) {
     return routing_table[targ_host];
 }
 
+void Router::giveEvent(std::unique_ptr<Event>) {};
+
 // Make new event with same packet going to proper link
 void Router::giveEvent(std::unique_ptr<PacketEvent> packet_event) {
     // strip necessary info out of packet event 

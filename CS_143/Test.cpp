@@ -52,13 +52,28 @@ void simTest0()
                       "link1");
     
     // create congestion algorithm
-    ccAlg =
-    
-    // add flow
-    Flow flow1 = Flow("flow1", "host1", "host2", ccAlg,
-                      // TODO: enter data in bits, fix Flow class
+    CongestionAlg ccAlg;
     
     // add host1
-    Host host1 = Host(
-    handler.addGenerator(<#std::unique_ptr<EventGenerator> gen#>)
+    Host host1 = Host(link1, "host1");
+    
+    // add host2
+    Host host2 = Host(link1, "host2");
+    
+    
+    // FlowGenerator is dumb, we should just have Flow inherit from EventGenerator
+    // add flow
+    Flow flow1 = Flow("flow1", "host1", "host2", &ccAlg,
+                      (20 * 8 * pow(10, 6)), &host1, 10, 1.0);
+    
+    std::vector<Flow> flow_list;
+    flow_list.push_back(flow1);
+    
+    FlowGenerator flow_g = FlowGenerator(flow_list, "flow_g");
+    
+
+    handler.addGenerator(make_unique<Host>(host1));
+    handler.addGenerator(make_unique<Host>(host2));
+    handler.addGenerator(make_unique<FlowGenerator>(flow_g));
+    handler.addGenerator(make_unique<Host>(host1));
 }

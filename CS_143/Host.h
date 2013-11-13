@@ -23,13 +23,14 @@ public:
     std::unordered_map<std::string, std::unique_ptr<Flow> > flows;
 
     // Constructor
-    Host(Link& host_link);
+    Host(Link& host_link, std::string host_id);
    
     // TODO this should be in EventGenerator.cpp.  Why isn't it?
     // Add event to local priority queue.
     void addEventToLocalQueue(Event e);
     
     // React to an event
+    void giveEvent(std::unique_ptr<Event>);
     void giveEvent(std::unique_ptr<FlowEvent>);
     void giveEvent(std::unique_ptr<PacketEvent>);
     void giveEvent(std::unique_ptr<UnackEvent>);

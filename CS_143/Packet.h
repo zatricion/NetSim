@@ -5,7 +5,8 @@
 #include <map>
 #include <vector>
 
-class Packet {
+class Packet
+{
 public:
     std::string uuid;
     std::string final_dest;
