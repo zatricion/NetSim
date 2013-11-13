@@ -4,11 +4,10 @@
 #include <unordered_set>
 #include <queue>
 #include "Packet.h"
-#include "CongestionAlg.h"
-#include "Host.h"
 
 
 class CongestionAlg;
+class Host;
 
 // packet size is 100KB
 static const int DATA_PKT_SIZE = 100000;

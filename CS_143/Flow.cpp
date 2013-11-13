@@ -1,4 +1,6 @@
 #include "Flow.h"
+#include "Host.h"
+#include "CongestionAlg.h"
 
 // TODO numPckts deduced from data size and packet size.
 // TODO add window size.  Can move this into the algorithm later if desired.

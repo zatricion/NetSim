@@ -2,7 +2,7 @@
 #define __CS_143__Host__
 
 class Flow;
-class FlowEvent;
+//class FlowEvent;
 
 #include <iostream>
 #include <cassert>

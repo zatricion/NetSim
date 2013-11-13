@@ -73,14 +73,8 @@ void simTest0()
     
     handler.addGenerator(make_unique<Link>(link1));
 
-// my tests
     handler.addGenerator(make_unique<Host>(host1));
-// end my tests
-
-
-    // This next line causes an error. //TODO
-    //handler.addGenerator(std::make_unique<Host>(host1));
-    //handler.addGenerator(make_unique<Host>(host2));
-    //handler.addGenerator(make_unique<FlowGenerator>(flow_g));
+    handler.addGenerator(make_unique<Host>(host2));
+    handler.addGenerator(make_unique<FlowGenerator>(flow_g));
     
 }
