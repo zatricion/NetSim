@@ -11,13 +11,20 @@ void Handler::addGenerator(std::unique_ptr<EventGenerator> gen) {
 
 float Handler::getMinTime() {
     assert(genMap.size() > 0);
-    float minTime = -1;
+
+
+    float minTime = -1.0;
     // iterate over EventGenerators
-    for (auto it = genMap.begin(); it != genMap.end(); it++) {
+    //for (auto it = genMap.begin(); it != genMap.end(); it++) {
+    for (auto& it : genMap) {
+
+        // Make sure it has events.  Otherwise move on.
+        if (!it.second->hasEvents()) { continue; }
         // update min if smaller
-        float newTime = it->second->getNextTime();
-        if (newTime < minTime || minTime < 0) // gross
+        float newTime = it.second->getNextTime();
+        if (newTime < minTime || minTime < 0.0) {// gross
 	    minTime = newTime;
+        }
     }
     return minTime;
 }
@@ -29,15 +36,19 @@ void Handler::populateCurrentEvents(float minTime) {
     currEvents.clear();
     for (auto it = genMap.begin(); it != genMap.end(); it++) {
         // check to see if current EG has event at desired time, add if so
-        if (it->second->getNextTime() == minTime) 
+        if (it->second->hasEvents() && it->second->getNextTime() == minTime) {
             currEvents.push_back(it->second->getEvent());
+        }
     }
 }
 
 // handle all events in current events queue
 void Handler::processCurrentEvents() {
-    for (auto it = currEvents.begin(); it != currEvents.end(); it++)
+    //assert(false);
+    for (auto it = currEvents.begin(); it != currEvents.end(); it++) {
+    //for (auto it : currEvents) {
         handleEvent(std::move(*it));
+    }
 }
 
 // handle passed event by sending to its destination

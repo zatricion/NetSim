@@ -70,5 +70,9 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
 
 std::string Host::toString() {
     // ID, all flows, all waiting outgoing messages, etc.
-    return uuid;
+    std::string ret(uuid);
+    for (auto& flowStringPair : flows) {
+        ret += flowStringPair.second.toString() + "\n";
+    }
+    return ret;
 }

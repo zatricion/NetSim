@@ -79,12 +79,17 @@ void simTest0()
     handler.addGenerator(make_unique<Host>(host2));
     handler.addGenerator(make_unique<FlowGenerator>(flow_g));
 
-    //handler.step();
+    std::cout << host1.toString() << std::endl;
+    std::cout << host2.toString() << std::endl;
+    float a = handler.getMinTime();
+    
+    std::cout << handler.getMinTime() << std::endl;
+    std::cout << handler.getMinTime() << std::endl;
+    std::cout << handler.getMinTime() << std::endl;
+    handler.step();
     /* 
     // TODO: should make a verbose version of "step", with a toString method for
     // each EventGenerator, but for now let's not bother.
-    std::cout << host1.toString();
-    std::cout << host2.toString();
     */
     
     std::cout << "Simulator passed tests!" << std::endl;

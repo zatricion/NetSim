@@ -30,6 +30,8 @@ public:
     
     // Call this to get the timestamp of the next event
     float getNextTime();
+
+    bool hasEvents();
     
 protected:
     std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;

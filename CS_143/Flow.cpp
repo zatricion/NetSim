@@ -70,3 +70,7 @@ void Flow::handleUnackEvent(Packet unacked, float time) {
 void Flow::handleAck(Packet p, float time) { // TODO makes more sense if arg is an event, not packet.
     a->handleAck(this, p, time);
 }
+
+std::string Flow::toString() {
+    return id;
+}
