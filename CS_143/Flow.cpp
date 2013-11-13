@@ -2,32 +2,35 @@
 #include "Host.h"
 #include "CongestionAlg.h"
 
+static const int DATA_PKT_SIZE = 100000;
+
 // TODO numPckts deduced from data size and packet size.
 // TODO add window size.  Can move this into the algorithm later if desired.
 // TODO need start timestamp.
 Flow::Flow(std::string idval, std::string src, std::string dest,
-           CongestionAlg *alg, int numPckts, int pktSize, Host *h,
+           CongestionAlg *alg, int data_size, Host *h,
            int winSize, float ts) {
     host = h;
     id = idval;
     source = src;
     destination = dest;
     a = alg;
-    numPackets = numPckts;
+    numPackets = data_size / DATA_PKT_SIZE;
     std::unordered_set<int> acknowledgedPackets;
     std::queue<Packet> flow;
     windowSize = winSize;
-    packetSize = packetSize;
     timeStamp = ts;
     
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.
     waitTime = 500.0;
     
+    std::map<std::string, std::vector<std::string> > table;
+    
     for (int count = 0; count < numPackets; count++) {
         std::string pack_id = this->id + std::to_string(count);
-        Packet new_packet(pack_id, dest, host->getID(), packetSize, false,
-                          false, false, NULL, count);
+        Packet new_packet(pack_id, destination, source, packetSize, false,
+                          false, false, table, count);
         flow.push(new_packet);
     }
     a->initialize(this);

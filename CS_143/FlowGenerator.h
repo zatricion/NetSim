@@ -6,7 +6,7 @@
 #include "EventGenerator.h"
 #include "Flow.h"
 
-class FlowGenerator : EventGenerator
+class FlowGenerator : public EventGenerator
 {
 public:
     // Constructor takes a vector of flows and add FlowEvents to the eventHeap

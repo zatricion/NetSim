@@ -31,12 +31,12 @@ public:
         int packetSize;
         // Time when the flow is generated.  Used to create a small set
         // of Events.
-        float timeStamp; 
+        float timestamp;
 
 	// Methods:
 	// Constructor
         Flow(std::string idval, std::string src, std::string dest, 
-             CongestionAlg *alg, int numPckts, int pktSize, Host *h,
+             CongestionAlg *alg, int data_size, Host *h,
              int winSize, float ts);
         // Called when there is a potentially unacknowledged event.
         // I.e. when we send a packet, we add an UnackEvent to the event heap.  Then,

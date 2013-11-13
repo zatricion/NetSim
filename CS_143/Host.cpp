@@ -3,10 +3,11 @@
 #include <math.h> // ceil
 #include <string>
   
-Host::Host(Link& host_link) : my_link(host_link)
+Host::Host(Link& host_link, std::string link_id) : my_link(host_link)
 {
     my_link = host_link;
     std::unordered_map<std::string, Flow> flows;
+    uuid = link_id;
 }
 
 /**

@@ -66,6 +66,8 @@ void simTest0()
     Flow flow1 = Flow("flow1", "host1", "host2", &ccAlg,
                       (20 * 8 * pow(10, 6)), &host1, 10, 1.0);
     
+
+    
     std::vector<Flow> flow_list;
     flow_list.push_back(flow1);
     
