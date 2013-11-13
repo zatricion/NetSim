@@ -5,7 +5,7 @@ LDFLAGS=-lm
 OBJECTS = Test.o Packet.o Flow.o Event.o UnackEvent.o FlowEvent.o PacketEvent.o EventGenerator.o FlowGenerator.o Router.o Host.o Link.o Handler.o CongestionAlg.o
 SOURCE = Test.cpp
 
-all: simulator clean
+all: simulator
 
 simulator: runtest # TODO this will compile and create the actual program.
                    # For now, we will just generate the test file.
@@ -58,7 +58,7 @@ runtest: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Tests the objects by running the runtest executable.
-test: runtest clean
+test: runtest
 	./runtest
 
 clean:

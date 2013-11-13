@@ -11,6 +11,9 @@ int main()
     std::cout << "Testing Object constructors." << std::endl;
     packetTest();
     eventTest();
+    std::cout << "Testing Simulation." << std::endl;
+    simTest0();
+    std::cout << "Simulation Successful." << std::endl;
     return 0;
 }
 
@@ -60,7 +63,6 @@ void simTest0()
     // add host2
     Host host2 = Host(link1, "host2");
     
-    
     // FlowGenerator is dumb, we should just have Flow inherit from EventGenerator
     // add flow
     Flow flow1 = Flow("flow1", "host1", "host2", &ccAlg,
@@ -76,5 +78,14 @@ void simTest0()
     handler.addGenerator(make_unique<Host>(host1));
     handler.addGenerator(make_unique<Host>(host2));
     handler.addGenerator(make_unique<FlowGenerator>(flow_g));
+
+    //handler.step();
+    /* 
+    // TODO: should make a verbose version of "step", with a toString method for
+    // each EventGenerator, but for now let's not bother.
+    std::cout << host1.toString();
+    std::cout << host2.toString();
+    */
     
+    std::cout << "Simulator passed tests!" << std::endl;
 }

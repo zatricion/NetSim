@@ -67,3 +67,8 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
         addEventToLocalQueue(pEv);
     }
 }
+
+std::string Host::toString() {
+    // ID, all flows, all waiting outgoing messages, etc.
+    return uuid;
+}
