@@ -22,7 +22,7 @@ public:
     Link& my_link;
     
     // Associates flow IDs with Flow objects.
-    std::unordered_map<std::string, std::unique_ptr<Flow> > flows;
+    std::unordered_map<std::string, Flow > flows;
 
     // Constructor
     Host(Link& host_link, std::string host_id);

@@ -55,6 +55,7 @@ public:
 	// Methods:
     
 	// Constructor
+    Flow();
     Flow(std::string idval, std::string src, std::string dest,
              CongestionAlg *alg, int data_size, Host *h,
              int winSize, float ts);

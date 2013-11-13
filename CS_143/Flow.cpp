@@ -3,6 +3,19 @@
 // TODO numPckts deduced from data size and packet size.
 // TODO add window size.  Can move this into the algorithm later if desired.
 // TODO need start timestamp.
+Flow::Flow(){
+    host = NULL;
+    id = "id";
+    source = "source";
+    destination = "destination";
+    a = NULL;
+    numPackets = 0;
+    std::unordered_set<int> acknowledgedPackets;
+    std::queue<Packet> flow;
+    windowSize = 0;
+    timestamp = 0.0;
+}
+
 Flow::Flow(std::string idval, std::string src, std::string dest,
            CongestionAlg *alg, int data_size, Host *h, int winSize, float ts)
 {
