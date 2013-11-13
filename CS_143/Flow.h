@@ -7,6 +7,9 @@
 #include "CongestionAlg.h"
 #include "Host.h"
 
+
+class CongestionAlg;
+
 // packet size is 100KB
 static const int DATA_PKT_SIZE = 100000;
 

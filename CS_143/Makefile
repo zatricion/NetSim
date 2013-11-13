@@ -11,7 +11,7 @@ simulator: runtest # TODO this will compile and create the actual program.
                    # For now, we will just generate the test file.
 
 # Individual Object dependencies
-Test.o: Test.cpp Packet.h Event.h
+Test.o: Test.cpp Packet.h Event.h Handler.h
 	$(CC) $(CFLAGS) -c $<
     
 Packet.o: Packet.cpp

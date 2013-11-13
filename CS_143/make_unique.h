@@ -3,10 +3,10 @@
 
 #include <memory>
 
-template <typename Value, typename ... Arguments>
-std::unique_ptr<Value> make_unique(Arguments && ... arguments_for_constructor)
+template<typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&&... args)
 {
-    return std::unique_ptr<Value>(new Value(std::forward<Arguments>(arguments_for_constructor)...));
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
 #endif

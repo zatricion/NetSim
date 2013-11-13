@@ -71,9 +71,10 @@ void simTest0()
     
     FlowGenerator flow_g = FlowGenerator(flow_list, "flow_g");
     
+    
+    std::unique_ptr<Link> test = make_unique<Link>(link1);
 
-    handler.addGenerator(make_unique<Host>(host1));
-    handler.addGenerator(make_unique<Host>(host2));
-    handler.addGenerator(make_unique<FlowGenerator>(flow_g));
-    handler.addGenerator(make_unique<Host>(host1));
+//    handler.addGenerator(make_unique<Host>(host2));
+//    //handler.addGenerator(make_unique<FlowGenerator>(flow_g));
+//    handler.addGenerator(make_unique<Host>(host1));
 }

@@ -1,6 +1,9 @@
 #ifndef __CS_143__FlowEvent__
 #define __CS_143__FlowEvent__
 
+
+class Host;
+
 #include "EventGenerator.h"
 #include "Event.h"
 #include "Packet.h"

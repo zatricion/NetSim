@@ -1,11 +1,12 @@
 #ifndef __CS_143__CongestionAlg__
 #define __CS_143__CongestionAlg__
 
+class Flow;
 #include "UnackEvent.h"
 #include "PacketEvent.h"
 #include "Flow.h"
 
-class Flow;
+
 
 class CongestionAlg
 {

@@ -18,7 +18,7 @@ private:
 
 public:
     // No-argument constructor
-    Handler();
+    Handler() {};
 
     // iterate over generators and find the "most immediate" time
     float getMinTime();
