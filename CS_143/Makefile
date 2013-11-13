@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-std=c++0x -Wall
+CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm
 
 OBJECTS = Test.o Packet.o Flow.o Event.o UnackEvent.o FlowEvent.o PacketEvent.o EventGenerator.o FlowGenerator.o Router.o Host.o Link.o Handler.o CongestionAlg.o
@@ -58,7 +58,7 @@ runtest: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Tests the objects by running the runtest executable.
-test: runtest clean
+test: runtest
 	./runtest
 
 clean:
