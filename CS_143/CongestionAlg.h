@@ -5,6 +5,8 @@
 #include "PacketEvent.h"
 #include "Flow.h"
 
+class Flow;
+
 class CongestionAlg
 {
 public:
