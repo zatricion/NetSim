@@ -17,9 +17,9 @@ void CongestionAlg::initialize(Flow* flow) {
     
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
-        auto p = std::make_shared<Packet>(std::to_string(i), flow->destination, flow->source,
+        Packet p(std::to_string(i), flow->destination, flow->source,
                               flow->packetSize, false, i);
-        //p.printPacket();
+        p.printPacket();
         
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
@@ -33,10 +33,10 @@ void CongestionAlg::initialize(Flow* flow) {
         auto ue = std::make_shared<UnackEvent>(p, host->getID(), flow->source, flow->timestamp + i + flow->waitTime);
         host->addEventToLocalQueue(ue);
 
-        //std::cout << "Examining top of localQueue" << std::endl;
-//        std::shared_ptr<Event> ee = host->eventHeap.top();
-//
-//        //(std::static_pointer_cast<PacketEvent>(ee))->packet.printPacket();
+        std::cout << "Examining top of localQueue" << std::endl;
+        std::shared_ptr<Event> ee = host->eventHeap.top();
+
+        (std::static_pointer_cast<PacketEvent>(ee))->packet.printPacket();
         //host->eventHeap.top().packet.printPacket();
     }
 }
