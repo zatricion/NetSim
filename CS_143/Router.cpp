@@ -22,8 +22,8 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
     
     // strip necessary info out of packet event 
-    Packet pkt = packet_event.packet;
-    std::string dest = getRouting(pkt.final_dest);
+    std::shared_ptr<Packet> pkt = packet_event.packet;
+    std::string dest = getRouting(pkt->final_dest);
     // make new event
     auto new_event = std::make_shared<PacketEvent>(dest, this->getID(), packet_event.eventTime(), pkt);
     // put on event heap
