@@ -41,8 +41,7 @@ Flow::Flow(std::string idval, std::string src, std::string dest,
     
     for (int count = 0; count < numPackets; count++) {
         std::string pack_id = this->id + std::to_string(count);
-        Packet new_packet(pack_id, destination, source, packetSize, false,
-                          false, false, table, count);
+        Packet new_packet(pack_id, destination, source, packetSize, false, count);
         flow.push(new_packet);
     }
     a->initialize(this);

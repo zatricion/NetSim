@@ -8,11 +8,8 @@ Packet::Packet()
     source = "none";
     size = 0;
     ack  = 0;
-    bf_req_bit = 0;
-    bf_tbl_bit = 0;
-    std::map<std::string, std::vector<std::string> > empty_table;
-    bf_table = empty_table;
     sequence_num = -1;
+    flowID = "NONE";
 }
 
 // Constructor for most cases.
@@ -21,9 +18,6 @@ Packet::Packet(std::string id,
                std::string src,
                int s,
                bool a,
-               bool bf_request_bit,
-               bool bf_table_bit,
-               std::map<std::string, std::vector<std::string> > &table,
                int seq)
 {
     uuid = id;
@@ -31,9 +25,6 @@ Packet::Packet(std::string id,
     source = src;    
     size = s;
     ack = a;
-    bf_req_bit = bf_request_bit;
-    bf_tbl_bit = bf_table_bit;
-    bf_table = table;
     sequence_num = seq;
     flowID = "NONE";
 }
@@ -45,9 +36,6 @@ Packet::Packet(std::string id,
                std::string src,
                int s,
                bool a,
-               bool bf_request_bit,
-               bool bf_table_bit,
-               std::map<std::string, std::vector<std::string> > &table,
                int seq,
                std::string flow_id)
 {
@@ -56,9 +44,6 @@ Packet::Packet(std::string id,
     source = src;
     size = s;
     ack = a;
-    bf_req_bit = bf_request_bit;
-    bf_tbl_bit = bf_table_bit;
-    bf_table = table;
     sequence_num = seq;
     flowID = flow_id;
 }
@@ -70,9 +55,6 @@ Packet::Packet(const Packet& other)
     source = other.source;
     size = other.size;
     ack = other.ack;
-    bf_req_bit = other.bf_req_bit;
-    bf_tbl_bit = other.bf_tbl_bit;
-    bf_table = other.bf_table;
     sequence_num = other.sequence_num;
     flowID = other.flowID;
 }

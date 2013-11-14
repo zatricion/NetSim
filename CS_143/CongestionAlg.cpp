@@ -22,7 +22,7 @@ void CongestionAlg::initialize(Flow *flow) {
         std::map<std::string, std::vector<std::string> > table;
 
         Packet p(std::to_string(i), flow->destination, flow->source,
-                              flow->packetSize, false, false, false, table, i);
+                              flow->packetSize, false, i);
         
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
@@ -33,7 +33,7 @@ void CongestionAlg::initialize(Flow *flow) {
         host->addEventToLocalQueue(std::make_shared<PacketEvent>(e));
 
         // Add an event to fire when we are tired of waiting.
-        UnackEvent ue(p, host->my_link.getID(), flow->source, flow->timestamp + i + flow->waitTime);
+        UnackEvent ue(p, host->getID(), flow->source, flow->timestamp + i + flow->waitTime);
         host->addEventToLocalQueue(std::make_shared<UnackEvent>(ue));
     }
 }
@@ -83,7 +83,7 @@ void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
         std::map<std::string, std::vector<std::string> > table;
         
         Packet p(std::to_string(lowestUnacked), flow->destination,
-                              flow->source, flow->packetSize, false, false, false, table,
+                              flow->source, flow->packetSize, false,
                               lowestUnacked);
         PacketEvent pe(host->my_link.getID(), flow->source, time, p);
         host->addEventToLocalQueue(std::make_shared<PacketEvent>(pe));

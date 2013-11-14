@@ -21,6 +21,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
 
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
+    //printf("HALLOWWWOWOWOW");
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
     Packet new_packet = packet_event.packet;
