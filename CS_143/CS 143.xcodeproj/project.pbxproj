@@ -15,6 +15,7 @@
 		215AADDB182CCA2E00F666EC /* Host.h in Headers */ = {isa = PBXBuildFile; fileRef = 215AADD9182CCA2E00F666EC /* Host.h */; };
 		215AADDE182CCA4900F666EC /* CongestionAlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 215AADDC182CCA4900F666EC /* CongestionAlg.cpp */; };
 		215AADDF182CCA4900F666EC /* CongestionAlg.h in Headers */ = {isa = PBXBuildFile; fileRef = 215AADDD182CCA4900F666EC /* CongestionAlg.h */; };
+		2176F3BA183461E1007969ED /* deref_comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2176F3B9183461E1007969ED /* deref_comp.cpp */; };
 		218B92E61830825400CE8315 /* make_unique.h in Headers */ = {isa = PBXBuildFile; fileRef = 218B92E51830825400CE8315 /* make_unique.h */; };
 		21AB6067182F6CA700F61DDB /* FlowEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21AB6063182F6CA700F61DDB /* FlowEvent.cpp */; };
 		21AB6068182F6CA700F61DDB /* FlowEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 21AB6064182F6CA700F61DDB /* FlowEvent.h */; };
@@ -45,11 +46,12 @@
 		21067C09182C655C008787D1 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
 		21067C10182C6705008787D1 /* Router.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Router.cpp; sourceTree = "<group>"; };
 		21067C11182C6705008787D1 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
-		212291C71834584400EC36CC /* deref_comp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deref_comp.h; sourceTree = "<group>"; };
 		215AADD8182CCA2E00F666EC /* Host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
 		215AADD9182CCA2E00F666EC /* Host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		215AADDC182CCA4900F666EC /* CongestionAlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CongestionAlg.cpp; sourceTree = "<group>"; };
 		215AADDD182CCA4900F666EC /* CongestionAlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongestionAlg.h; sourceTree = "<group>"; };
+		2176F3B818345C88007969ED /* deref_comp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deref_comp.h; sourceTree = "<group>"; };
+		2176F3B9183461E1007969ED /* deref_comp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deref_comp.cpp; sourceTree = "<group>"; };
 		218B92E51830825400CE8315 /* make_unique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = make_unique.h; sourceTree = "<group>"; };
 		21AB6063182F6CA700F61DDB /* FlowEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlowEvent.cpp; sourceTree = "<group>"; };
 		21AB6064182F6CA700F61DDB /* FlowEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlowEvent.h; sourceTree = "<group>"; };
@@ -105,7 +107,8 @@
 				21AB6066182F6CA700F61DDB /* PacketEvent.h */,
 				21AB6065182F6CA700F61DDB /* PacketEvent.cpp */,
 				F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */,
-				212291C71834584400EC36CC /* deref_comp.h */,
+				2176F3B818345C88007969ED /* deref_comp.h */,
+				2176F3B9183461E1007969ED /* deref_comp.cpp */,
 				F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */,
 				21F1308E182F20CA0072DDBE /* FlowGenerator.h */,
 				21F1308D182F20CA0072DDBE /* FlowGenerator.cpp */,
@@ -216,6 +219,7 @@
 				21F1308F182F20CA0072DDBE /* FlowGenerator.cpp in Sources */,
 				215AADDE182CCA4900F666EC /* CongestionAlg.cpp in Sources */,
 				F86533331830C77500B12405 /* UnackEvent.cpp in Sources */,
+				2176F3BA183461E1007969ED /* deref_comp.cpp in Sources */,
 				21F913D2182C730000089B45 /* Handler.cpp in Sources */,
 				21D7E9AD1827677D003FEBF2 /* Packet.cpp in Sources */,
 				21067C12182C6705008787D1 /* Router.cpp in Sources */,

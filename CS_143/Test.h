@@ -1,3 +1,6 @@
+#ifndef __CS_143__Test__
+#define __CS_143__Test__
+
 #include <iostream>
 #include "Packet.h"
 #include "Flow.h"
@@ -19,3 +22,5 @@ int main();
 void packetTest();
 void eventTest();
 void simTest0();
+
+#endif

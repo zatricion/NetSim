@@ -38,10 +38,8 @@ public:
     void addEventToLocalQueue(Event* e);
     
 protected:
-    std::priority_queue<Event*, std::vector<Event*>, DereferenceCompareEvent > eventHeap;
+    std::priority_queue<Event*, std::vector<Event*>, DerefCompareEvent> eventHeap;
     std::string uuid;
-    
-    
 };
 
 

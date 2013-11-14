@@ -52,6 +52,9 @@ Handler.o: Handler.cpp EventGenerator.h Event.h
 
 CongestionAlg.o: CongestionAlg.cpp UnackEvent.h PacketEvent.h Flow.h
 	$(CC) $(CFLAGS) -c $<
+    
+deref_comp.o: deref_comp.cpp
+	$(CC) $(CFLAGS) -c $<
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)
