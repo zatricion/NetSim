@@ -18,16 +18,22 @@ std::string EventGenerator::getID() const
 float EventGenerator::getNextTime()
 {
     assert(hasEvents());
-    return eventHeap.top().eventTime();
+    return eventHeap.top()->eventTime();
 }
 
 std::unique_ptr<Event> EventGenerator::getEvent()
 {
-    Event nextEvent = eventHeap.top();
+    Event nextEvent = *eventHeap.top();
     eventHeap.pop();
     return make_unique<Event>(nextEvent);
 }
 
 bool EventGenerator::hasEvents() {
     return eventHeap.size() != 0;
+}
+
+// Add event to local priority queue.
+void EventGenerator::addEventToLocalQueue(Event* e)
+{
+    eventHeap.push(e);
 }

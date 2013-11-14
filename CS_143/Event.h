@@ -22,4 +22,9 @@ protected:
     float timestamp;
 };
 
+// Override operator to allow eventHeap to order by timestamp
+bool Event::operator>(const Event& other) const {
+    return timestamp > other.timestamp;
+}
+
 #endif /* defined(__CS_143__Event__) */

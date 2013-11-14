@@ -12,7 +12,7 @@ FlowGenerator::FlowGenerator(std::vector<Flow> flows, std::string flow_id)
         FlowEvent flow_event = FlowEvent(make_unique<Flow>(*it), it->destination, it->source, it->timestamp);
         
         // add event to eventHeap
-        eventHeap.push(flow_event);
+        eventHeap.push(&flow_event);
     }
     
     uuid = flow_id;

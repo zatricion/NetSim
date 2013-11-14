@@ -27,10 +27,6 @@ public:
     // Constructor
     Host(Link& host_link, std::string host_id);
    
-    // TODO this should be in EventGenerator.cpp.  Why isn't it?
-    // Add event to local priority queue.
-    void addEventToLocalQueue(std::unique_ptr<Event> e);
-    
     // React to an event
     void giveEvent(std::unique_ptr<Event>);
     void giveEvent(std::unique_ptr<FlowEvent>);

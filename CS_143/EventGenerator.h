@@ -11,6 +11,7 @@
 #define __CS_143__EventGenerator__
 
 #include "make_unique.h"
+#include "deref_comp.h"
 #include <string>
 #include "Event.h" 
 #include <queue>
@@ -33,12 +34,16 @@ public:
 
     bool hasEvents();
     
+    // Add event to local priority queue.
+    void addEventToLocalQueue(Event* e);
+    
 protected:
-    std::priority_queue<Event, std::vector<Event>, std::greater<Event> > eventHeap;
+    std::priority_queue<Event*, std::vector<Event*>, DereferenceCompareEvent > eventHeap;
     std::string uuid;
     
     
 };
+
 
 
 #endif /* defined(__CS_143__EventGenerator__) */

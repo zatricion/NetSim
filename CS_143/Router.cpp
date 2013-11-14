@@ -26,5 +26,5 @@ void Router::giveEvent(std::unique_ptr<PacketEvent> packet_event) {
     // make new event
     PacketEvent new_event(dest, this->getID(), packet_event->eventTime(), pkt);
     // put on event heap
-    eventHeap.push(new_event);
+    eventHeap.push(&new_event);
 }

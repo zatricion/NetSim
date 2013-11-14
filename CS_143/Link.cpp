@@ -44,7 +44,7 @@ void Link::giveEvent(std::unique_ptr<PacketEvent> e)
         
         // Add an event to the Link priority queue
         PacketEvent packetEvent = PacketEvent(destination, uuid, timestamp, new_packet);
-        eventHeap.push(packetEvent);
+        eventHeap.push(&packetEvent);
         
         // Update queue size
         queue_size += new_packet.size;

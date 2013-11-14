@@ -45,6 +45,7 @@
 		21067C09182C655C008787D1 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
 		21067C10182C6705008787D1 /* Router.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Router.cpp; sourceTree = "<group>"; };
 		21067C11182C6705008787D1 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
+		212291C71834584400EC36CC /* deref_comp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deref_comp.h; sourceTree = "<group>"; };
 		215AADD8182CCA2E00F666EC /* Host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
 		215AADD9182CCA2E00F666EC /* Host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		215AADDC182CCA4900F666EC /* CongestionAlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CongestionAlg.cpp; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 				21AB6066182F6CA700F61DDB /* PacketEvent.h */,
 				21AB6065182F6CA700F61DDB /* PacketEvent.cpp */,
 				F8A9A2101825DDE400F7DAB0 /* EventGenerator.h */,
+				212291C71834584400EC36CC /* deref_comp.h */,
 				F8A9A20F1825DDE400F7DAB0 /* EventGenerator.cpp */,
 				21F1308E182F20CA0072DDBE /* FlowGenerator.h */,
 				21F1308D182F20CA0072DDBE /* FlowGenerator.cpp */,
