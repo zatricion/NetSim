@@ -68,5 +68,5 @@ void Packet::printPacket() {
     std::cout << "size:" << std::to_string(size) << std::endl;
     std::cout << "ack:" << std::to_string(ack) << std::endl;
     std::cout << "seq_num:" << std::to_string(sequence_num) << std::endl;
-    std::cout << "flowID:" << sequence_num << std::endl;
+    std::cout << "flowID:" << flowID << std::endl;
 }

@@ -51,9 +51,9 @@ Flow::Flow(std::string idval, std::string src, std::string dest,
     //a->initialize(this);
 }
 
-void Flow::handleUnackEvent(Packet unacked, float time) {
+void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
     // TODO absorb ALL this logic into the CongestionAlgorithm
-    int seqNum = unacked.sequence_num;
+    int seqNum = unacked->sequence_num;
     if (!acknowledgedPackets.count(seqNum)) {
         // We didn't find the item in the set of acknowledged packets.
         // We must resend the packet.
@@ -70,7 +70,7 @@ void Flow::handleUnackEvent(Packet unacked, float time) {
 }
 
 // Handle an ack received from the flow's destination.
-void Flow::handleAck(Packet p, float time) { // TODO makes more sense if arg is an event, not packet.
+void Flow::handleAck(std::shared_ptr<Packet> p, float time) { // TODO makes more sense if arg is an event, not packet.
     a->handleAck(this, p, time);
 }
 

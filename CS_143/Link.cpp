@@ -22,26 +22,22 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
     std::cout << "Link::giveEvent" << std::endl;
-    //printf("HALLOWWWOWOWOW");
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
-    std::cout << "HERE" << std::endl;
-    std::cout << "HERE" << std::endl;
 
     std::string source = packet_event.source;
     float now = packet_event.eventTime();
-    std::cout << "UNREACHED" << std::endl;
     //packet_event.packet.printPacket();
     
     
     // Queue size in bits
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
     
-    if (queue_size + packet_event.packet.size < buffer_size)
+    if (queue_size + packet_event.packet->size < buffer_size)
     {
         std::cout << "It fits in the buffer." << std::endl;
         
-        queue_delay = (queue_size + packet_event.packet.size) / capacity;
+        queue_delay = (queue_size + packet_event.packet->size) / capacity;
         
         // Add propagation and queue delay to current time to get event time
         float timestamp = now + prop_delay + queue_delay;
@@ -55,7 +51,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         eventHeap.push(packetEvent);
         
         // Update queue size
-        queue_size += packet_event.packet.size;
+        queue_size += packet_event.packet->size;
     }
     
     else

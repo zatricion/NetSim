@@ -65,10 +65,10 @@ public:
     // I.e. when we send a packet, we add an UnackEvent to the event heap.  Then,
     // when the event is handled, we check to see if it has been acknowledged.
     // If so, we have a no-op.  If not, resend.
-    void handleUnackEvent(Packet unacked, float time);
+    void handleUnackEvent(std::shared_ptr<Packet> unacked, float time);
     
     // Called when an ack is received.
-    void handleAck(Packet p, float time);
+    void handleAck(std::shared_ptr<Packet> p, float time);
 
     std::string toString();
         

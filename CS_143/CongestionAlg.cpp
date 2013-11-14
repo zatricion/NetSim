@@ -18,7 +18,7 @@ void CongestionAlg::initialize(Flow* flow) {
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
         auto p = std::make_shared<Packet>(std::to_string(i), flow->destination, flow->source,
-                              flow->packetSize, false, i);
+                              flow->packetSize, false, i, flow->id);
         //p.printPacket();
         
         // TODO the timestamps will all be the same, unless we add 
@@ -44,7 +44,7 @@ void CongestionAlg::initialize(Flow* flow) {
 // Called when an event was not acknowledged.  Must update fields, resend the
 // event.
 // TODO need eventTime()
-void CongestionAlg::handleUnackEvent(Flow* flow, Packet& unacked, float time) {
+void CongestionAlg::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
 
     auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), flow->source, time, unacked);
     
@@ -54,9 +54,9 @@ void CongestionAlg::handleUnackEvent(Flow* flow, Packet& unacked, float time) {
 }
 
 // Called when the flow handles an ack.
-void CongestionAlg::handleAck(Flow* flow, Packet& pkt, float time) {
+void CongestionAlg::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     std::shared_ptr<Host> host = flow->host;
-    flow->acknowledgedPackets.insert(pkt.sequence_num);
+    flow->acknowledgedPackets.insert(pkt->sequence_num);
     
     // After acknowledging the packet, check if there are more packets to send.
     if ((int) flow->acknowledgedPackets.size() == flow->numPackets) {
@@ -83,12 +83,11 @@ void CongestionAlg::handleAck(Flow* flow, Packet& pkt, float time) {
                 break;
             }
         }
-        // Create empty table to pass by reference
-        std::map<std::string, std::vector<std::string> > table;
         
-        Packet p(std::to_string(lowestUnacked), flow->destination,
+        auto p = std::make_shared<Packet>(std::to_string(lowestUnacked), flow->destination,
                               flow->source, flow->packetSize, false,
-                              lowestUnacked);
+                              lowestUnacked, flow->id);
+        
         auto pe = std::make_shared<PacketEvent>(host->my_link->getID(), flow->source, time, p);
         host->addEventToLocalQueue(pe);
 
