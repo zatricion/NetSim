@@ -48,8 +48,7 @@ void Host::respondTo(FlowEvent flow_event)
  */
 void Host::respondTo(UnackEvent unack_event)
 {
-    Packet p = unack_event.packet;
-	flows[p.flowID].handleUnackEvent(unack_event.packet, unack_event.eventTime());
+	flows[unack_event.packet.flowID].handleUnackEvent(unack_event.packet, unack_event.eventTime());
 }
 
 /**

@@ -38,9 +38,10 @@ void CongestionAlg::initialize(Flow* flow) {
 // event.
 // TODO need eventTime()
 void CongestionAlg::handleUnackEvent(Flow* flow, Packet& unacked, float time) {
-    std::shared_ptr<Host> host = flow->host;
-    //Packet unacked = e->packet;
-    PacketEvent e(host->my_link->getID(), flow->source, time, unacked);
+
+    auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), flow->source, time, unacked);
+    
+    flow->host->addEventToLocalQueue(e);
     // TODO also destroy the UnackEvent;
     // TODO most algorithms will update window size, etc.
 }

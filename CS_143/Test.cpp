@@ -55,12 +55,9 @@ void simTest0()
     auto flow1 = std::make_shared<Flow>("flow1", "host1", "host2", ccAlg,
                       (20 * 8 * pow(10, 6)), host1, 10, 1.0);
     
-    auto flow2 = std::make_shared<Flow>("flow2", "host1", "host2", ccAlg,
-                      (20 * 8 * pow(10, 6)), host2, 10, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
-    flow_list.push_back(flow2);
     
     auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
     

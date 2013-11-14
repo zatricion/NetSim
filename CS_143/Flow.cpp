@@ -40,9 +40,6 @@ Flow::Flow(std::string idval, std::string src, std::string dest,
     // now, just use a default.
     waitTime = 500.0;
     
-    // Create empty table to pass by reference
-    std::map<std::string, std::vector<std::string> > table;
-    
     for (int count = 0; count < numPackets; count++) {
         std::string pack_id = this->id + std::to_string(count);
         Packet new_packet(pack_id, destination, source, packetSize, false, count);

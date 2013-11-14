@@ -2,6 +2,7 @@
 #define __CS_143_Flow__
 #include <string>
 #include <unordered_set>
+#include <memory>
 #include <queue>
 #include "Packet.h"
 
