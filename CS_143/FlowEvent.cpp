@@ -14,3 +14,8 @@ void FlowEvent::printEvent()
     fprintf(stdout, "Source: %s\n", source.c_str());
     fprintf(stdout, "Destination: %s\n\n", destination.c_str());
 }
+
+std::string FlowEvent::getType()
+{
+    return "FLOW_EVENT";
+}

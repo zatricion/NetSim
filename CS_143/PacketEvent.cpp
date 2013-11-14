@@ -14,3 +14,8 @@ void PacketEvent::printEvent()
     fprintf(stdout, "Destination: %s\n\n", destination.c_str());
     //pkt.printPacket();
 }
+
+std::string PacketEvent::getType()
+{
+    return "PACKET_EVENT";
+}

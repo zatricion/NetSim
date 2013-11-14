@@ -22,3 +22,8 @@ void Event::printEvent()
     fprintf(stdout, "Source: %s\n", source.c_str());
     fprintf(stdout, "Destination: %s\n\n", destination.c_str());
 }
+
+std::string Event::getType()
+{
+    return "EVENT";
+}

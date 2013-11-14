@@ -12,10 +12,31 @@ Host::Host(Link& host_link, std::string host_id) : my_link(host_link)
     std::unordered_map<std::string, Flow > flows;
 }
 
+void Host::giveEvent(std::shared_ptr<Event> e)
+{
+    std::string type = e->getType();
+    if (type == "PACKET_EVENT")
+    {
+            respondTo(*(std::static_pointer_cast<PacketEvent>(e)));
+    }
+    else if (type == "FLOW_EVENT")
+    {
+            respondTo(*(std::static_pointer_cast<FlowEvent>(e)));
+    }
+    else if (type == "UNACK_EVENT")
+    {
+            respondTo(*(std::static_pointer_cast<UnackEvent>(e)));
+    }
+    else
+    {
+        printf("ERROR");
+    }
+}
+
 /*
  * Called when a flow_event is received.
  */
-void Host::giveEvent(FlowEvent flow_event)
+void Host::respondTo(FlowEvent flow_event)
 {
     // Get a flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = *(flow_event.floww);
@@ -24,7 +45,7 @@ void Host::giveEvent(FlowEvent flow_event)
 /**
  * Called when there is a potentially unacknowledged packet.
  */
-void Host::giveEvent(UnackEvent unack_event)
+void Host::respondTo(UnackEvent unack_event)
 {
     Packet p = unack_event.packet;
 	flows[p.flowID].handleUnackEvent(unack_event.packet, unack_event.eventTime());
@@ -33,7 +54,7 @@ void Host::giveEvent(UnackEvent unack_event)
 /**
  * Called when host receives any packet.
  */
-void Host::giveEvent(PacketEvent new_event)
+void Host::respondTo(PacketEvent new_event)
 {
     Packet pkt = new_event.packet;
     

@@ -15,3 +15,8 @@ void UnackEvent::printEvent()
     fprintf(stdout, "Source: %s\n", source.c_str());
     fprintf(stdout, "Destination: %s\n\n", destination.c_str());
 }
+
+std::string UnackEvent::getType()
+{
+    return "UNACK_EVENT";
+}

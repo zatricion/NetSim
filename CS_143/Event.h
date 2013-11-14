@@ -14,6 +14,7 @@ public:
     std::string source;
     
     virtual void printEvent();
+    virtual std::string getType();
     
 protected:
     float timestamp;

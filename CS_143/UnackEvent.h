@@ -15,6 +15,7 @@ public:
     Packet packet;
     
     virtual void printEvent() override;
+    virtual std::string getType() override;
 };
 
 #endif /* defined(__CS_143__UnackEvent__) */

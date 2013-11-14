@@ -19,12 +19,13 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-void Link::giveEvent(PacketEvent e)
+void Link::giveEvent(std::shared_ptr<Event> e)
 {
-    printf("HELLO");
-    Packet new_packet = e.packet;
-    std::string source = e.source;
-    float now = e.eventTime();
+    // Get PacketEvent
+    PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
+    Packet new_packet = packet_event.packet;
+    std::string source = packet_event.source;
+    float now = packet_event.eventTime();
     
     // Queue size in bits
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);

@@ -24,8 +24,7 @@ public:
     std::string getRouting(std::string targ_host);
 
     // react to a packet event
-    void giveEvent(Event) {};
-    void giveEvent(PacketEvent);
+    void giveEvent(std::shared_ptr<Event>);
 
 private:
     // Routing table maps destination host ids to link ids

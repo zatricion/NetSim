@@ -1,4 +1,5 @@
 #include "Handler.h"
+#include "PacketEvent.h"
 #include <iostream>
 #include <cassert>
 
@@ -55,10 +56,9 @@ void Handler::processCurrentEvents() {
 }
 
 // handle passed event by sending to its destination
-void Handler::handleEvent(std::shared_ptr<Event> event) {
-    event->printEvent();
-    //std::printf(genMap[event->destination]->getID().c_str());
-    genMap[event->destination]->giveEvent(*event);
+void Handler::handleEvent(std::shared_ptr<Event> e) {
+    e->printEvent();
+    genMap[e->destination]->giveEvent(e);
 }
 
 void Handler::step() {

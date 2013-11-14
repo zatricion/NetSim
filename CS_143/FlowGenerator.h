@@ -13,7 +13,7 @@ public:
     // Flow format: (source, destination, size, start time)
     FlowGenerator(std::vector<Flow> flows, std::string flow_id);
     
-    void giveEvent(Event) {};
+    void giveEvent(std::shared_ptr<Event>) {};
 };
 
 #endif /* defined(__CS_143__FlowGenerator__) */

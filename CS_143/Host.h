@@ -28,10 +28,13 @@ public:
     Host(Link& host_link, std::string host_id);
    
     // React to an event
-    void giveEvent(Event) {};
-    void giveEvent(FlowEvent);
-    void giveEvent(PacketEvent);
-    void giveEvent(UnackEvent);
+    virtual void giveEvent(std::shared_ptr<Event>) override;
+    
+    // giveEvent helper functions
+    void respondTo(PacketEvent);
+    void respondTo(FlowEvent);
+    void respondTo(UnackEvent);
+    
     std::string toString();
 };
 
