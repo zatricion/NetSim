@@ -16,7 +16,6 @@
 		215AADDE182CCA4900F666EC /* CongestionAlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 215AADDC182CCA4900F666EC /* CongestionAlg.cpp */; };
 		215AADDF182CCA4900F666EC /* CongestionAlg.h in Headers */ = {isa = PBXBuildFile; fileRef = 215AADDD182CCA4900F666EC /* CongestionAlg.h */; };
 		2176F3BA183461E1007969ED /* deref_comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2176F3B9183461E1007969ED /* deref_comp.cpp */; };
-		218B92E61830825400CE8315 /* make_unique.h in Headers */ = {isa = PBXBuildFile; fileRef = 218B92E51830825400CE8315 /* make_unique.h */; };
 		21AB6067182F6CA700F61DDB /* FlowEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21AB6063182F6CA700F61DDB /* FlowEvent.cpp */; };
 		21AB6068182F6CA700F61DDB /* FlowEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 21AB6064182F6CA700F61DDB /* FlowEvent.h */; };
 		21AB6069182F6CA700F61DDB /* PacketEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21AB6065182F6CA700F61DDB /* PacketEvent.cpp */; };
@@ -41,7 +40,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2103E41A182F61FB0091437C /* _MultiQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _MultiQueue.h; sourceTree = "<group>"; };
 		21067C08182C655C008787D1 /* Link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Link.cpp; sourceTree = "<group>"; };
 		21067C09182C655C008787D1 /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Link.h; sourceTree = "<group>"; };
 		21067C10182C6705008787D1 /* Router.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Router.cpp; sourceTree = "<group>"; };
@@ -52,7 +50,6 @@
 		215AADDD182CCA4900F666EC /* CongestionAlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongestionAlg.h; sourceTree = "<group>"; };
 		2176F3B818345C88007969ED /* deref_comp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deref_comp.h; sourceTree = "<group>"; };
 		2176F3B9183461E1007969ED /* deref_comp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deref_comp.cpp; sourceTree = "<group>"; };
-		218B92E51830825400CE8315 /* make_unique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = make_unique.h; sourceTree = "<group>"; };
 		21AB6063182F6CA700F61DDB /* FlowEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlowEvent.cpp; sourceTree = "<group>"; };
 		21AB6064182F6CA700F61DDB /* FlowEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlowEvent.h; sourceTree = "<group>"; };
 		21AB6065182F6CA700F61DDB /* PacketEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PacketEvent.cpp; sourceTree = "<group>"; };
@@ -122,8 +119,6 @@
 				21F913CD182C730000089B45 /* Handler.cpp */,
 				215AADDD182CCA4900F666EC /* CongestionAlg.h */,
 				215AADDC182CCA4900F666EC /* CongestionAlg.cpp */,
-				218B92E51830825400CE8315 /* make_unique.h */,
-				2103E41A182F61FB0091437C /* _MultiQueue.h */,
 				F8A9A2091825DDBE00F7DAB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -156,7 +151,6 @@
 				F86533321830C77500B12405 /* Test.h in Headers */,
 				215AADDF182CCA4900F666EC /* CongestionAlg.h in Headers */,
 				21F913D3182C730000089B45 /* Handler.h in Headers */,
-				218B92E61830825400CE8315 /* make_unique.h in Headers */,
 				21D7E9AE1827677D003FEBF2 /* Packet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

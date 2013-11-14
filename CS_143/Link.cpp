@@ -21,6 +21,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
 
 void Link::giveEvent(std::shared_ptr<PacketEvent> e)
 {
+    printf("HELLO");
     Packet new_packet = e->packet;
     std::string source = e->source;
     float now = e->eventTime();

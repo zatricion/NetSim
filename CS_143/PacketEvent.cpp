@@ -12,4 +12,5 @@ void PacketEvent::printEvent()
     fprintf(stdout, "------------------------\n");
     fprintf(stdout, "Source: %s\n", source.c_str());
     fprintf(stdout, "Destination: %s\n\n", destination.c_str());
+    //pkt.printPacket();
 }
