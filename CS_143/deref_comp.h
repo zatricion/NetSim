@@ -6,7 +6,7 @@
 class DerefCompareEvent
 {
 public:
-    bool operator() (const Event* x, const Event* y);
+    bool operator() (const std::shared_ptr<Event> x, const std::shared_ptr<Event> y);
 };
 
 

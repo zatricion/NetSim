@@ -4,7 +4,7 @@
 
 // Take ref to an instantiated network object to be added to the simulation
 // Handles getting that object's data
-void Handler::addGenerator(std::unique_ptr<EventGenerator> gen) {
+void Handler::addGenerator(std::shared_ptr<EventGenerator> gen) {
     genMap[gen->getID()] = std::move(gen);
 }
 
@@ -54,7 +54,7 @@ void Handler::processCurrentEvents() {
 }
 
 // handle passed event by sending to its destination
-void Handler::handleEvent(std::unique_ptr<Event> event) {
+void Handler::handleEvent(std::shared_ptr<Event> event) {
     event->printEvent();
     genMap[event->destination]->giveEvent(std::move(event));
 }

@@ -9,13 +9,13 @@ FlowGenerator::FlowGenerator(std::vector<Flow> flows, std::string flow_id)
          it++)
     {
         // create FlowEvent
-        FlowEvent flow_event = FlowEvent(make_unique<Flow>(*it), it->destination, it->source, it->timestamp);
+        FlowEvent flow_event = FlowEvent(std::make_shared<Flow>(*it), it->destination, it->source, it->timestamp);
         
         // add event to eventHeap
-        eventHeap.push(&flow_event);
+        eventHeap.push(std::make_shared<FlowEvent>(flow_event));
     }
     
     uuid = flow_id;
 }
 
-void FlowGenerator::giveEvent(std::unique_ptr<Event>) {};
+void FlowGenerator::giveEvent(std::shared_ptr<Event>) {};

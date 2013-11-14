@@ -1,7 +1,6 @@
 #ifndef __CS_143__Event__
 #define __CS_143__Event__
 
-#include <iostream>
 #include <string>
 
 class Event
@@ -14,17 +13,10 @@ public:
     std::string destination;
     std::string source;
     
-    bool operator>(const Event& other) const;
-    
     virtual void printEvent();
     
 protected:
     float timestamp;
 };
-
-// Override operator to allow eventHeap to order by timestamp
-bool Event::operator>(const Event& other) const {
-    return timestamp > other.timestamp;
-}
 
 #endif /* defined(__CS_143__Event__) */

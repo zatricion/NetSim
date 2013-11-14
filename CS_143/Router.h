@@ -24,10 +24,10 @@ public:
     std::string getRouting(std::string targ_host);
     
     // should never be called
-    void giveEvent(std::unique_ptr<Event>);
+    void giveEvent(std::shared_ptr<Event>);
 
     // react to a packet event
-    void giveEvent(std::unique_ptr<PacketEvent>);
+    void giveEvent(std::shared_ptr<PacketEvent>);
 
 private:
     // Routing table maps destination host ids to link ids

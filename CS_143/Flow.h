@@ -18,7 +18,7 @@ public:
     // Host that owns the flow
     Host *host;
     
-    // unique id of the flow on the host.
+    // shared id of the flow on the host.
 	std::string id;
     
 	// Source of the flow

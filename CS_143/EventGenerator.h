@@ -10,7 +10,6 @@
 #ifndef __CS_143__EventGenerator__
 #define __CS_143__EventGenerator__
 
-#include "make_unique.h"
 #include "deref_comp.h"
 #include <string>
 #include "Event.h" 
@@ -24,10 +23,10 @@ public:
     std::string getID() const;
     
     // Call this to give the generator an event
-    virtual void giveEvent(std::unique_ptr<Event>) = 0;
+    virtual void giveEvent(std::shared_ptr<Event>) = 0;
     
     // Call this to get an event from the generator
-    std::unique_ptr<Event> getEvent();
+    std::shared_ptr<Event> getEvent();
     
     // Call this to get the timestamp of the next event
     float getNextTime();
@@ -35,10 +34,10 @@ public:
     bool hasEvents();
     
     // Add event to local priority queue.
-    void addEventToLocalQueue(Event* e);
+    void addEventToLocalQueue(std::shared_ptr<Event> e);
     
 protected:
-    std::priority_queue<Event*, std::vector<Event*>, DerefCompareEvent> eventHeap;
+    std::priority_queue<std::shared_ptr<Event>, std::vector<std::shared_ptr<Event> >, DerefCompareEvent> eventHeap;
     std::string uuid;
 };
 

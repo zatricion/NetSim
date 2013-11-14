@@ -20,7 +20,6 @@
 
 int main();
 void packetTest();
-void eventTest();
 void simTest0();
 
 #endif

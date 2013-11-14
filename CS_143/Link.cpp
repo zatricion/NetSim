@@ -2,8 +2,6 @@
 #include <cassert>
 #include <iostream>
 #include <algorithm> // std::max
-#include "make_unique.h"
-
 
 // Link Methods
 
@@ -21,7 +19,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-void Link::giveEvent(std::unique_ptr<PacketEvent> e)
+void Link::giveEvent(std::shared_ptr<PacketEvent> e)
 {
     Packet new_packet = e->packet;
     std::string source = e->source;
@@ -44,7 +42,7 @@ void Link::giveEvent(std::unique_ptr<PacketEvent> e)
         
         // Add an event to the Link priority queue
         PacketEvent packetEvent = PacketEvent(destination, uuid, timestamp, new_packet);
-        eventHeap.push(&packetEvent);
+        eventHeap.push(std::make_shared<PacketEvent>(packetEvent));
         
         // Update queue size
         queue_size += new_packet.size;

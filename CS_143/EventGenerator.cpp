@@ -21,11 +21,11 @@ float EventGenerator::getNextTime()
     return eventHeap.top()->eventTime();
 }
 
-std::unique_ptr<Event> EventGenerator::getEvent()
+std::shared_ptr<Event> EventGenerator::getEvent()
 {
-    Event nextEvent = *eventHeap.top();
+    std::shared_ptr<Event> nextEvent = std::move(eventHeap.top());
     eventHeap.pop();
-    return make_unique<Event>(nextEvent);
+    return nextEvent;
 }
 
 bool EventGenerator::hasEvents() {
@@ -33,7 +33,7 @@ bool EventGenerator::hasEvents() {
 }
 
 // Add event to local priority queue.
-void EventGenerator::addEventToLocalQueue(Event* e)
+void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e)
 {
     eventHeap.push(e);
 }

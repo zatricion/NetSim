@@ -10,7 +10,6 @@ int main()
     std::cout << "Preparing to test objects." << std::endl;
     std::cout << "Testing Object constructors." << std::endl;
     packetTest();
-    eventTest();
     std::cout << "Testing Simulation." << std::endl;
     simTest0();
     std::cout << "Simulation Successful." << std::endl;
@@ -27,18 +26,6 @@ void packetTest()
 	// Not really anything to test... no methods in Packet.h
 	//assert (p.uuid == "uuid");
 	std::cout << "Packets passed tests!" << std::endl;
-}
-
-/**
- * Simple test of events.
- */
-void eventTest()
-{
-	std::cout << "Testing events...";
-	Event e("destination", "source", 1.5);
-	Event e2("destination", "source", 1.8);
-	assert (e2 > e);
-	std::cout << "Events passed tests!" << std::endl;
 }
 
 /*
@@ -73,11 +60,11 @@ void simTest0()
     
     FlowGenerator flow_g = FlowGenerator(flow_list, "flow_g");
     
-    handler.addGenerator(make_unique<Link>(link1));
+    handler.addGenerator(std::make_shared<Link>(link1));
 
-    handler.addGenerator(make_unique<Host>(host1));
-    handler.addGenerator(make_unique<Host>(host2));
-    handler.addGenerator(make_unique<FlowGenerator>(flow_g));
+    handler.addGenerator(std::make_shared<Host>(host1));
+    handler.addGenerator(std::make_shared<Host>(host2));
+    handler.addGenerator(std::make_shared<FlowGenerator>(flow_g));
     
     while(handler.running())
     {

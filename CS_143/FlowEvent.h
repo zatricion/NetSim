@@ -12,13 +12,13 @@ class Host;
 
 class FlowEvent : public Event {
 public:
-    FlowEvent(std::unique_ptr<Flow> flowobj,
+    FlowEvent(std::shared_ptr<Flow> flowobj,
               std::string dest,
               std::string src,
               float ts);
 
     int data_size;
-    std::unique_ptr<Flow> floww;
+    std::shared_ptr<Flow> floww;
     
     virtual void printEvent() override;
 };
