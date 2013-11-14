@@ -1,4 +1,5 @@
 #include "Packet.h"
+#include <iostream>
 
 // Default constructor.
 Packet::Packet()
@@ -57,4 +58,15 @@ Packet::Packet(const Packet& other)
     ack = other.ack;
     sequence_num = other.sequence_num;
     flowID = other.flowID;
+}
+
+void Packet::printPacket() {
+    std::cout << "PACKET" << std::endl;
+    std::cout << "uuid:" << uuid << std::endl;
+    std::cout << "dest:" << final_dest << std::endl;
+    std::cout << "source:" << source << std::endl;
+    std::cout << "size:" << std::to_string(size) << std::endl;
+    std::cout << "ack:" << std::to_string(ack) << std::endl;
+    std::cout << "seq_num:" << std::to_string(sequence_num) << std::endl;
+    std::cout << "flowID:" << sequence_num << std::endl;
 }

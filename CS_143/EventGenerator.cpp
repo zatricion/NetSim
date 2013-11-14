@@ -9,6 +9,7 @@
 
 #include "EventGenerator.h"
 #include <cassert>
+#include <iostream>
 
 std::string EventGenerator::getID() const
 {
@@ -42,4 +43,8 @@ void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e)
 long EventGenerator::heapSize()
 {
     return eventHeap.size();
+}
+
+void EventGenerator::printHeapSize() {
+    std::cout << std::to_string(eventHeap.size()) << std::endl;
 }

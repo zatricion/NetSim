@@ -12,6 +12,7 @@ void Handler::addGenerator(std::shared_ptr<EventGenerator> gen) {
 
 
 float Handler::getMinTime() {
+    std::cout << "getMinTime" << std::endl;
     assert(genMap.size() > 0);
 
 
@@ -34,6 +35,7 @@ float Handler::getMinTime() {
 
 // iterate over generators, populate currEvents with imm. events
 void Handler::populateCurrentEvents(float minTime) {
+    std::cout << "populateCurrentEvents" << std::endl;
     // WARNING: will clear out currEvents...is that desired behavior?
     currEvents.clear();
     for (auto it = genMap.begin(); it != genMap.end(); it++) {
@@ -46,6 +48,7 @@ void Handler::populateCurrentEvents(float minTime) {
 
 // handle all events in current events queue
 void Handler::processCurrentEvents() {
+    std::cout << "processCurrentEvents" << std::endl;
     not_done = false;
     //assert(false);
     for (auto it = currEvents.begin(); it != currEvents.end(); it++) {
@@ -57,6 +60,7 @@ void Handler::processCurrentEvents() {
 
 // handle passed event by sending to its destination
 void Handler::handleEvent(std::shared_ptr<Event> e) {
+    std::cout << "handleEvent" << std::endl;
     e->printEvent();
     genMap[e->destination]->giveEvent(e);
 }

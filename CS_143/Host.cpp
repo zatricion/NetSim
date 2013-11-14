@@ -41,6 +41,9 @@ void Host::respondTo(FlowEvent flow_event)
     // Get a flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = *(flow_event.floww);
     flows[flow_event.floww->id].initialize();
+    // TODO
+    std::shared_ptr<Event> ee = eventHeap.top();
+    (std::static_pointer_cast<PacketEvent>(ee))->packet.printPacket();
 }
 
 /**
@@ -48,6 +51,7 @@ void Host::respondTo(FlowEvent flow_event)
  */
 void Host::respondTo(UnackEvent unack_event)
 {
+    std::cout << "Host::respondTo UnackEvent" << std::endl;
     Packet p = unack_event.packet;
 	flows[p.flowID].handleUnackEvent(unack_event.packet, unack_event.eventTime());
 }
