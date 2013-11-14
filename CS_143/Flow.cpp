@@ -18,8 +18,12 @@ Flow::Flow(){
     timestamp = 0.0;
 }
 
+std::shared_ptr<Flow> Flow::getptr() {
+    return shared_from_this();
+}
+
 Flow::Flow(std::string idval, std::string src, std::string dest,
-           CongestionAlg *alg, int data_size, Host *h, int winSize, float ts)
+           std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h, int winSize, float ts)
 {
     host = h;
     id = idval;
@@ -60,14 +64,14 @@ void Flow::handleUnackEvent(Packet unacked, float time) {
 
         // TODO call the CongestionAlgorithm, so it can update.
         // All we have to do is call the congestion algorithm.
-        a->handleUnackEvent(this, unacked, time);
+        a->handleUnackEvent(shared_from_this(), unacked, time);
     }
     // else, there's nothing to do.
 }
 
 // Handle an ack received from the flow's destination.
 void Flow::handleAck(Packet p, float time) { // TODO makes more sense if arg is an event, not packet.
-    a->handleAck(this, p, time);
+    a->handleAck(shared_from_this(), p, time);
 }
 
 std::string Flow::toString() {

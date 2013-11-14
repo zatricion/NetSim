@@ -11,7 +11,7 @@ class FlowGenerator : public EventGenerator
 public:
     // Constructor takes a vector of flows and add FlowEvents to the eventHeap
     // Flow format: (source, destination, size, start time)
-    FlowGenerator(std::vector<Flow> flows, std::string flow_id);
+    FlowGenerator(std::vector<std::shared_ptr<Flow> > flows, std::string flow_id);
     
     void giveEvent(std::shared_ptr<Event>) {};
 };

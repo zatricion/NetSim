@@ -2,6 +2,7 @@
 #define __CS_143__Test__
 
 #include <iostream>
+#include <memory>
 #include "Packet.h"
 #include "Flow.h"
 #include "Event.h"

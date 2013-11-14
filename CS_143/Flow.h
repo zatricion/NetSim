@@ -12,11 +12,11 @@ class Host;
 // packet size is 100KB
 static const int DATA_PKT_SIZE = 100000;
 
-class Flow
+class Flow: public std::enable_shared_from_this<Flow>
 {
 public:
     // Host that owns the flow
-    Host *host;
+    std::shared_ptr<Host> host;
     
     // shared id of the flow on the host.
 	std::string id;
@@ -28,7 +28,7 @@ public:
 	std::string destination;
     
 	// Congestion algorithm associated with the flow.
-	CongestionAlg *a;
+	std::shared_ptr<CongestionAlg> a;
     
 	// Total number of packets
 	int numPackets;
@@ -56,7 +56,7 @@ public:
 	// Constructor
     Flow();
     Flow(std::string idval, std::string src, std::string dest,
-             CongestionAlg *alg, int data_size, Host *h,
+             std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
              int winSize, float ts);
     
     // Called when there is a potentially unacknowledged event.
@@ -69,6 +69,8 @@ public:
     void handleAck(Packet p, float time);
 
     std::string toString();
+    
+    std::shared_ptr<Flow> getptr();
 };
 
 #endif /* defined(__CS_143_Flow__) */

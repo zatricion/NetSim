@@ -10,9 +10,9 @@
 
 // Initial call to the Congestion Algorithm.  Occurs only when the Flow object
 // is first created.
-void CongestionAlg::initialize(Flow *flow) {
+void CongestionAlg::initialize(Flow* flow) {
     int windowSize = flow->windowSize;
-    Host *host = flow->host;
+    std::shared_ptr<Host> host = flow->host;
     
     
     // At the outset, add a number of events equal to the window size.
@@ -41,8 +41,8 @@ void CongestionAlg::initialize(Flow *flow) {
 // Called when an event was not acknowledged.  Must update fields, resend the
 // event.
 // TODO need eventTime()
-void CongestionAlg::handleUnackEvent(Flow *flow, Packet unacked, float time) {
-    Host *host = flow->host;
+void CongestionAlg::handleUnackEvent(std::shared_ptr<Flow> flow, Packet& unacked, float time) {
+    std::shared_ptr<Host> host = flow->host;
     //Packet unacked = e->packet;
     PacketEvent e(host->my_link.getID(), flow->source, time, unacked);
     // TODO also destroy the UnackEvent;
@@ -50,8 +50,8 @@ void CongestionAlg::handleUnackEvent(Flow *flow, Packet unacked, float time) {
 }
 
 // Called when the flow handles an ack.
-void CongestionAlg::handleAck(Flow *flow, Packet pkt, float time) {
-    Host *host = flow->host;
+void CongestionAlg::handleAck(std::shared_ptr<Flow> flow, Packet& pkt, float time) {
+    std::shared_ptr<Host> host = flow->host;
     flow->acknowledgedPackets.insert(pkt.sequence_num);
     
     // After acknowledging the packet, check if there are more packets to send.
