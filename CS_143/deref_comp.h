@@ -2,6 +2,7 @@
 #define CS_143_deref_comp_h
 
 #include "Event.h"
+#include <memory>
 
 class DerefCompareEvent
 {
