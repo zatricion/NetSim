@@ -37,3 +37,9 @@ void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e)
 {
     eventHeap.push(e);
 }
+
+
+long EventGenerator::heapSize()
+{
+    return eventHeap.size();
+}

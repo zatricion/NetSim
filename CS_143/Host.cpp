@@ -3,7 +3,7 @@
 #include <math.h> // ceil
 #include <string>
   
-Host::Host(Link& host_link, std::string host_id) : my_link(host_link)
+Host::Host(std::shared_ptr<Link> host_link, std::string host_id) : my_link(host_link)
 {
     my_link = host_link;
     uuid = host_id;
@@ -40,6 +40,7 @@ void Host::respondTo(FlowEvent flow_event)
 {
     // Get a flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = *(flow_event.floww);
+    flows[flow_event.floww->id].initialize();
 }
 
 /**
@@ -74,8 +75,8 @@ void Host::respondTo(PacketEvent new_event)
         //events are not all occurring simulatneously (not violating the link
         // rate by sending several events to the link in the span of 1ms).
     	float ts = new_event.eventTime();
-    	PacketEvent pEv(my_link.getID(), getID(), ts, ret);
-        addEventToLocalQueue(std::make_shared<PacketEvent>(pEv));
+    	auto pEv = std::make_shared<PacketEvent>(my_link->getID(), getID(), ts, ret);
+        addEventToLocalQueue(pEv);
     }
 }
 

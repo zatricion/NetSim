@@ -36,6 +36,8 @@ public:
     // Add event to local priority queue.
     void addEventToLocalQueue(std::shared_ptr<Event> e);
     
+    long heapSize();
+    
 protected:
     std::priority_queue<std::shared_ptr<Event>, std::vector<std::shared_ptr<Event> >, DerefCompareEvent> eventHeap;
     std::string uuid;

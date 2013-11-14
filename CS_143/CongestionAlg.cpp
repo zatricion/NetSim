@@ -17,10 +17,6 @@ void CongestionAlg::initialize(Flow* flow) {
     
     // At the outset, add a number of events equal to the window size.
     for (int i = 0; i < windowSize; i++) {
-        
-        // Create empty table to pass by reference
-        std::map<std::string, std::vector<std::string> > table;
-
         Packet p(std::to_string(i), flow->destination, flow->source,
                               flow->packetSize, false, i);
         
@@ -29,28 +25,28 @@ void CongestionAlg::initialize(Flow* flow) {
         // more changes to get that to work anyway.
         
         // Add the event.
-        PacketEvent e(host->my_link.getID(), flow->source, flow->timestamp + i, p);
-        host->addEventToLocalQueue(std::make_shared<PacketEvent>(e));
+        auto e = std::make_shared<PacketEvent>(host->my_link->getID(), flow->source, flow->timestamp + i, p);
+        host->addEventToLocalQueue(e);
 
         // Add an event to fire when we are tired of waiting.
-        UnackEvent ue(p, host->getID(), flow->source, flow->timestamp + i + flow->waitTime);
-        host->addEventToLocalQueue(std::make_shared<UnackEvent>(ue));
+        auto ue = std::make_shared<UnackEvent>(p, host->getID(), flow->source, flow->timestamp + i + flow->waitTime);
+        host->addEventToLocalQueue(ue);
     }
 }
 
 // Called when an event was not acknowledged.  Must update fields, resend the
 // event.
 // TODO need eventTime()
-void CongestionAlg::handleUnackEvent(std::shared_ptr<Flow> flow, Packet& unacked, float time) {
+void CongestionAlg::handleUnackEvent(Flow* flow, Packet& unacked, float time) {
     std::shared_ptr<Host> host = flow->host;
     //Packet unacked = e->packet;
-    PacketEvent e(host->my_link.getID(), flow->source, time, unacked);
+    PacketEvent e(host->my_link->getID(), flow->source, time, unacked);
     // TODO also destroy the UnackEvent;
     // TODO most algorithms will update window size, etc.
 }
 
 // Called when the flow handles an ack.
-void CongestionAlg::handleAck(std::shared_ptr<Flow> flow, Packet& pkt, float time) {
+void CongestionAlg::handleAck(Flow* flow, Packet& pkt, float time) {
     std::shared_ptr<Host> host = flow->host;
     flow->acknowledgedPackets.insert(pkt.sequence_num);
     
@@ -85,10 +81,10 @@ void CongestionAlg::handleAck(std::shared_ptr<Flow> flow, Packet& pkt, float tim
         Packet p(std::to_string(lowestUnacked), flow->destination,
                               flow->source, flow->packetSize, false,
                               lowestUnacked);
-        PacketEvent pe(host->my_link.getID(), flow->source, time, p);
-        host->addEventToLocalQueue(std::make_shared<PacketEvent>(pe));
+        auto pe = std::make_shared<PacketEvent>(host->my_link->getID(), flow->source, time, p);
+        host->addEventToLocalQueue(pe);
 
-        UnackEvent ue(p, host->my_link.getID(), flow->source, time + flow->waitTime);
-        host->addEventToLocalQueue(std::make_shared<UnackEvent>(ue));
+        auto ue = std::make_shared<UnackEvent>(p, host->my_link->getID(), flow->source, time + flow->waitTime);
+        host->addEventToLocalQueue(ue);
     }
 }

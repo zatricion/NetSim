@@ -38,37 +38,36 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    Link link1 = Link((64 * 8 * 1000.0), 0.01, pow(10, 7), "host1", "host2",
+    auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7), "host1", "host2",
                       "link1");
     
     // create congestion algorithm
-    CongestionAlg ccAlg;
+    auto ccAlg = std::make_shared<CongestionAlg>();
     
     // add host1
-    Host host1 = Host(link1, "host1");
+    auto host1 = std::make_shared<Host>(link1, "host1");
     
     // add host2
-    Host host2 = Host(link1, "host2");
+    auto host2 = std::make_shared<Host>(link1, "host2");
     
     // FlowGenerator is dumb, we should just have Flow inherit from EventGenerator
     // add flow
-    Flow flow1 = Flow("flow1", "host1", "host2", std::make_shared<CongestionAlg>(ccAlg),
-                      (20 * 8 * pow(10, 6)), std::make_shared<Host>(host1), 10, 1.0);
+    auto flow1 = std::make_shared<Flow>("flow1", "host1", "host2", ccAlg,
+                      (20 * 8 * pow(10, 6)), host1, 10, 1.0);
     
-    Flow flow2 = Flow("flow1", "host2", "host1", std::make_shared<CongestionAlg>(ccAlg),
-                      (20 * 8 * pow(10, 6)), std::make_shared<Host>(host1), 10, 1.0);
+    auto flow2 = std::make_shared<Flow>("flow2", "host1", "host2", ccAlg,
+                      (20 * 8 * pow(10, 6)), host2, 10, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
-    flow_list.push_back(std::make_shared<Flow>(flow1));
-    flow_list.push_back(std::make_shared<Flow>(flow2));
+    flow_list.push_back(flow1);
+    flow_list.push_back(flow2);
     
-    FlowGenerator flow_g = FlowGenerator(flow_list, "flow_g");
+    auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
     
-    handler.addGenerator(std::make_shared<Link>(link1));
-
-    handler.addGenerator(std::make_shared<Host>(host1));
-    handler.addGenerator(std::make_shared<Host>(host2));
-    handler.addGenerator(std::make_shared<FlowGenerator>(flow_g));
+    handler.addGenerator(link1);
+    handler.addGenerator(host1);
+    handler.addGenerator(host2);
+    handler.addGenerator(flow_g);
     
     while(handler.running())
     {

@@ -19,13 +19,13 @@ class Host : public EventGenerator
 {
 public:    
     // Link this host connects to
-    Link& my_link;
+    std::shared_ptr<Link> my_link;
     
     // Associates flow IDs with Flow objects.
     std::unordered_map<std::string, Flow > flows;
 
     // Constructor
-    Host(Link& host_link, std::string host_id);
+    Host(std::shared_ptr<Link> host_link, std::string host_id);
    
     // React to an event
     virtual void giveEvent(std::shared_ptr<Event>) override;

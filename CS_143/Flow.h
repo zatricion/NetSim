@@ -12,7 +12,7 @@ class Host;
 // packet size is 100KB
 static const int DATA_PKT_SIZE = 100000;
 
-class Flow: public std::enable_shared_from_this<Flow>
+class Flow
 {
 public:
     // Host that owns the flow
@@ -69,8 +69,8 @@ public:
     void handleAck(Packet p, float time);
 
     std::string toString();
-    
-    std::shared_ptr<Flow> getptr();
+        
+    void initialize();
 };
 
 #endif /* defined(__CS_143_Flow__) */

@@ -44,8 +44,8 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         std::string destination = (source == node1) ? node2 : node1;
         
         // Add an event to the Link priority queue
-        PacketEvent packetEvent = PacketEvent(destination, uuid, timestamp, new_packet);
-        eventHeap.push(std::make_shared<PacketEvent>(packetEvent));
+        auto packetEvent = std::make_shared<PacketEvent>(destination, uuid, timestamp, new_packet);
+        eventHeap.push(packetEvent);
         
         // Update queue size
         queue_size += new_packet.size;

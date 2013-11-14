@@ -9,10 +9,10 @@ FlowGenerator::FlowGenerator(std::vector<std::shared_ptr<Flow> > flows, std::str
          it++)
     {
         // create FlowEvent
-        FlowEvent flow_event = FlowEvent((*it)->getptr(), (*it)->destination, (*it)->source, (*it)->timestamp);
+        auto flow_event = std::make_shared<FlowEvent>(*it, (*it)->destination, (*it)->source, (*it)->timestamp);
         
         // add event to eventHeap
-        eventHeap.push(std::make_shared<FlowEvent>(flow_event));
+        eventHeap.push(flow_event);
     }
     
     uuid = flow_id;
