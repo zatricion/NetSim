@@ -137,7 +137,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "42"
             endingLineNumber = "42"
-            landmarkName = "Link::giveEvent(std::shared_ptr&lt;PacketEvent&gt; e)"
+            landmarkName = "Link::giveEvent(PacketEvent e)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -275,7 +275,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
             endingLineNumber = "29"
-            landmarkName = "Link::giveEvent(std::shared_ptr&lt;PacketEvent&gt; e)"
+            landmarkName = "Link::giveEvent(PacketEvent e)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -291,7 +291,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
             endingLineNumber = "31"
-            landmarkName = "Link::giveEvent(std::shared_ptr&lt;PacketEvent&gt; e)"
+            landmarkName = "Link::giveEvent(PacketEvent e)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -367,7 +367,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
             endingLineNumber = "47"
-            landmarkName = "Host::giveEvent(std::shared_ptr&lt;PacketEvent&gt; new_event)"
+            landmarkName = "Host::giveEvent(PacketEvent new_event)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -559,6 +559,22 @@
             endingLineNumber = "41"
             landmarkName = "class EventGenerator"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Handler.cpp"
+            timestampString = "406092315.985191"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "Handler::handleEvent(std::shared_ptr&lt;Event&gt; event)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

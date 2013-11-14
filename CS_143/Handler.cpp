@@ -58,7 +58,7 @@ void Handler::processCurrentEvents() {
 void Handler::handleEvent(std::shared_ptr<Event> event) {
     event->printEvent();
     //std::printf(genMap[event->destination]->getID().c_str());
-    genMap[event->destination]->giveEvent(std::move(event));
+    genMap[event->destination]->giveEvent(*event);
 }
 
 void Handler::step() {

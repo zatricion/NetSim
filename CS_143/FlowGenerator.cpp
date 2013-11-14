@@ -18,4 +18,3 @@ FlowGenerator::FlowGenerator(std::vector<Flow> flows, std::string flow_id)
     uuid = flow_id;
 }
 
-void FlowGenerator::giveEvent(std::shared_ptr<Event>) {};

@@ -22,12 +22,10 @@ public:
 
     // get proper routing given host id
     std::string getRouting(std::string targ_host);
-    
-    // should never be called
-    void giveEvent(std::shared_ptr<Event>);
 
     // react to a packet event
-    void giveEvent(std::shared_ptr<PacketEvent>);
+    void giveEvent(Event) {};
+    void giveEvent(PacketEvent);
 
 private:
     // Routing table maps destination host ids to link ids

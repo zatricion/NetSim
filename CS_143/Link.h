@@ -10,8 +10,9 @@ class Link : public EventGenerator
 
 public:
     Link(float, float, float, std::string, std::string, std::string);
-    void giveEvent(std::shared_ptr<Event>) {};
-    void giveEvent(std::shared_ptr<PacketEvent>);
+    
+    void giveEvent(PacketEvent);
+    void giveEvent(Event) {printf("");};
     
 private:
     // Maximum queue_size in bits
