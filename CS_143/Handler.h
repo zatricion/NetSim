@@ -15,6 +15,9 @@ private:
 
     // Map from generator ID to unique_ptr<EventGenerator>
     std::unordered_map<std::string, std::unique_ptr<EventGenerator> > genMap;
+    
+    bool not_done = true;
+    
 
 public:
     // No-argument constructor
@@ -36,6 +39,9 @@ public:
 
     // handle an event by passing it to where it should go
     void handleEvent(std::unique_ptr<Event> event);
+    
+    // is currEvents empty?
+    bool running();
 };
 
 #endif /* defined(__CS_143__Handler__) */

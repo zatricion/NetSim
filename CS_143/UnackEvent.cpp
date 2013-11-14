@@ -8,3 +8,10 @@ UnackEvent::UnackEvent(Packet& pkt,
     packet = pkt;
 }
 
+void UnackEvent::printEvent()
+{
+    fprintf(stdout, "\nUNACK EVENT\n");
+    fprintf(stdout, "------------------------\n");
+    fprintf(stdout, "Source: %s\n", source.c_str());
+    fprintf(stdout, "Destination: %s\n\n", destination.c_str());
+}

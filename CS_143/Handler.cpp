@@ -44,19 +44,28 @@ void Handler::populateCurrentEvents(float minTime) {
 
 // handle all events in current events queue
 void Handler::processCurrentEvents() {
+    not_done = false;
     //assert(false);
     for (auto it = currEvents.begin(); it != currEvents.end(); it++) {
     //for (auto it : currEvents) {
+        not_done = true;
         handleEvent(std::move(*it));
     }
 }
 
 // handle passed event by sending to its destination
 void Handler::handleEvent(std::unique_ptr<Event> event) {
+    event->printEvent();
     genMap[event->destination]->giveEvent(std::move(event));
 }
 
 void Handler::step() {
     populateCurrentEvents(getMinTime());
     processCurrentEvents();
+}
+
+
+bool Handler::running()
+{
+    return not_done;
 }

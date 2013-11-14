@@ -16,8 +16,8 @@ Host::Host(Link& host_link, std::string host_id) : my_link(host_link)
  * Add an event to local priority queue.
  */
 // TODO this belongs in EventGenerator
-void Host::addEventToLocalQueue(Event e) {
-    eventHeap.push(e);
+void Host::addEventToLocalQueue(std::unique_ptr<Event> e) {
+    eventHeap.push(*e);
 }
 
 void Host::giveEvent(std::unique_ptr<Event>) {};
@@ -64,7 +64,7 @@ void Host::giveEvent(std::unique_ptr<PacketEvent> new_event)
         // rate by sending several events to the link in the span of 1ms).
     	float ts = new_event->eventTime();
     	PacketEvent pEv(my_link.getID(), getID(), ts, ret);
-        addEventToLocalQueue(pEv);
+        addEventToLocalQueue(make_unique<PacketEvent>(pEv));
     }
 }
 

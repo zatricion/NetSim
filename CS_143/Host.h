@@ -29,7 +29,7 @@ public:
    
     // TODO this should be in EventGenerator.cpp.  Why isn't it?
     // Add event to local priority queue.
-    void addEventToLocalQueue(Event e);
+    void addEventToLocalQueue(std::unique_ptr<Event> e);
     
     // React to an event
     void giveEvent(std::unique_ptr<Event>);

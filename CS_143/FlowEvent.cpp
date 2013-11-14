@@ -7,3 +7,10 @@ FlowEvent::FlowEvent(std::unique_ptr<Flow> flowobj, std::string dest, std::strin
     floww = std::move(flowobj);
 }
 
+void FlowEvent::printEvent()
+{
+    fprintf(stdout, "\nFLOW EVENT\n");
+    fprintf(stdout, "------------------------\n");
+    fprintf(stdout, "Source: %s\n", source.c_str());
+    fprintf(stdout, "Destination: %s\n\n", destination.c_str());
+}

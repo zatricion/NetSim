@@ -16,6 +16,8 @@ public:
     
     bool operator>(const Event& other) const;
     
+    virtual void printEvent();
+    
 protected:
     float timestamp;
 };
