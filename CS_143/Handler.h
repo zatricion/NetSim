@@ -4,6 +4,7 @@
 #include "EventGenerator.h"
 #include "Event.h"
 #include <unordered_map>
+#include "Log.h"
 #include <memory>
 
 

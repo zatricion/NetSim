@@ -21,7 +21,6 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
 
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
-    std::cout << "Link::giveEvent" << std::endl;
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
 
@@ -35,8 +34,6 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     
     if (queue_size + packet_event.packet->size < buffer_size)
     {
-        std::cout << "It fits in the buffer." << std::endl;
-        
         queue_delay = (queue_size + packet_event.packet->size) / capacity;
         
         // Add propagation and queue delay to current time to get event time

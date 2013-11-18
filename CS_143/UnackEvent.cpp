@@ -8,12 +8,13 @@ UnackEvent::UnackEvent(std::shared_ptr<Packet> pkt,
     packet = pkt;
 }
 
-void UnackEvent::printEvent()
+std::string UnackEvent::printEvent()
 {
-    fprintf(stdout, "\nUNACK EVENT\n");
-    fprintf(stdout, "------------------------\n");
-    fprintf(stdout, "Source: %s\n", source.c_str());
-    fprintf(stdout, "Destination: %s\n\n", destination.c_str());
+    std::stringstream fmt;
+    fmt << "{UNACK EVENT: source=" << source << "destination=" <<
+        destination << "}.";
+    return fmt.str();
+
 }
 
 std::string UnackEvent::getType()

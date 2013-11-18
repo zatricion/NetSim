@@ -1,4 +1,5 @@
 #include "Event.h"
+#include <sstream>
 
 // Constructor
 
@@ -15,12 +16,12 @@ float Event::eventTime() const {
 }
 
 
-void Event::printEvent()
+std::string Event::printEvent()
 {
-    fprintf(stdout, "\nEVENT\n");
-    fprintf(stdout, "------------------------\n");
-    fprintf(stdout, "Source: %s\n", source.c_str());
-    fprintf(stdout, "Destination: %s\n\n", destination.c_str());
+    std::stringstream fmt;
+    fmt << "{EVENT: source=" << source << "destination=" <<
+        destination << "}.";
+    return fmt.str();
 }
 
 std::string Event::getType()

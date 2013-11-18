@@ -1,4 +1,5 @@
 #include "PacketEvent.h"
+#include <sstream>
 
 // Constructor
 
@@ -6,13 +7,13 @@ PacketEvent::PacketEvent(std::string dest, std::string src, float ts, std::share
     packet = pkt;
 }
 
-void PacketEvent::printEvent()
+std::string PacketEvent::printEvent()
 {
-    fprintf(stdout, "\nPKT EVENT\n");
-    fprintf(stdout, "------------------------\n");
-    fprintf(stdout, "Source: %s\n", source.c_str());
-    fprintf(stdout, "Destination: %s\n\n", destination.c_str());
-    //pkt.printPacket();
+    std::stringstream fmt;
+    fmt << "{PKT EVENT: source=" << source << "destination=" <<
+        destination << "}.";
+    return fmt.str();
+    
 }
 
 std::string PacketEvent::getType()

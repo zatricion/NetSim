@@ -61,7 +61,7 @@ void Host::respondTo(PacketEvent new_event)
     
     if (pkt->ack)
     {
-        pkt->printPacket();
+        FILE_LOG(logDEBUG) << pkt->printPacket();
     	flows[pkt->flowID]->handleAck(pkt, new_event.eventTime());
     }
     // We received a packet.  Send an acknowledgment.

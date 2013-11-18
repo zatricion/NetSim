@@ -5,6 +5,7 @@
 #include "Event.h"
 #include "Packet.h"
 #include <string>
+#include <sstream>
 
 class UnackEvent : public Event {
 public:
@@ -14,7 +15,7 @@ public:
 
     std::shared_ptr<Packet> packet;
     
-    virtual void printEvent() override;
+    virtual std::string printEvent() override;
     virtual std::string getType() override;
 };
 

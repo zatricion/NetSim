@@ -18,6 +18,7 @@
 #include "CongestionAlg.h"
 #include <cassert>
 #include <cmath>
+#include "Log.h"
 
 int main();
 void packetTest();

@@ -8,6 +8,7 @@
 //   - Router
 
 #include "EventGenerator.h"
+#include "Log.h"
 #include <cassert>
 #include <iostream>
 
@@ -46,5 +47,5 @@ long EventGenerator::heapSize()
 }
 
 void EventGenerator::printHeapSize() {
-    std::cout << std::to_string(eventHeap.size()) << std::endl;
+    FILE_LOG(logDEBUG) << std::to_string(eventHeap.size());
 }

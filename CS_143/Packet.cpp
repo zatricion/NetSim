@@ -1,5 +1,7 @@
 #include "Packet.h"
 #include <iostream>
+#include <string>
+#include <sstream>
 
 // Default constructor.
 Packet::Packet()
@@ -60,13 +62,11 @@ Packet::Packet(const Packet& other)
     flowID = other.flowID;
 }
 
-void Packet::printPacket() {
-    std::cout << "PACKET" << std::endl;
-    std::cout << "uuid:" << uuid << std::endl;
-    std::cout << "dest:" << final_dest << std::endl;
-    std::cout << "source:" << source << std::endl;
-    std::cout << "size:" << std::to_string(size) << std::endl;
-    std::cout << "ack:" << std::to_string(ack) << std::endl;
-    std::cout << "seq_num:" << std::to_string(sequence_num) << std::endl;
-    std::cout << "flowID:" << flowID << std::endl;
+std::string Packet::printPacket() {
+    std::stringstream fmt;
+    fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
+           ", source=" << source << "size=" << size << "ack=" << ack <<
+           "sequence_num=" << sequence_num << ", flowID=" << flowID << "}.";
+    //return std::string_format("{PACKET: uuid=%s, dest=%s, source=%s, size=%d, ack=%d, seq_num=%d, flowID=%s", uuid, final_dest, source, size, ack, sequence_num, flowID);
+    return fmt.str();
 }

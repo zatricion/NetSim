@@ -47,7 +47,7 @@ public:
     
     // Copy Constructor
     Packet(const Packet& other);
-    void printPacket();
+    std::string printPacket();
 };
 
 #endif /* defined(__CS_143__Packet__) */

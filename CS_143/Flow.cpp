@@ -22,7 +22,7 @@ void Flow::initialize() {
     a->initialize(this);
     std::shared_ptr<Event> ee = host->eventHeap.top();
     //
-    (std::static_pointer_cast<PacketEvent>(ee))->packet->printPacket();
+    //(std::static_pointer_cast<PacketEvent>(ee))->packet->printPacket();
 }
 
 Flow::Flow(std::string idval, std::string src, std::string dest,

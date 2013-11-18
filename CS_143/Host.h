@@ -14,6 +14,7 @@ class Flow;
 #include <unordered_set>
 #include <unordered_map>
 #include <string>
+#include "Log.h"
 
 class Host : public EventGenerator
 {
