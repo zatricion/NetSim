@@ -16,15 +16,16 @@ std::string Router::getRouting(std::string targ_host) {
     return routing_table[targ_host];
 }
 
-void Router::giveEvent(std::unique_ptr<Event>) {};
-
 // Make new event with same packet going to proper link
-void Router::giveEvent(std::unique_ptr<PacketEvent> packet_event) {
+void Router::giveEvent(std::shared_ptr<Event> e) {
+    // Get PacketEvent
+    PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
+    
     // strip necessary info out of packet event 
-    Packet pkt = packet_event->packet;
-    std::string dest = getRouting(pkt.final_dest);
+    std::shared_ptr<Packet> pkt = packet_event.packet;
+    std::string dest = getRouting(pkt->final_dest);
     // make new event
-    PacketEvent new_event(dest, getID(), packet_event->eventTime(), pkt);
+    auto new_event = std::make_shared<PacketEvent>(dest, this->getID(), packet_event.eventTime(), pkt);
     // put on event heap
     eventHeap.push(new_event);
 }

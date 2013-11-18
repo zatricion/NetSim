@@ -8,8 +8,11 @@
 class PacketEvent : public Event
 {
 public:
-    Packet& packet;
-    PacketEvent(std::string dest, std::string src, float ts, Packet& pkt);
+	std::shared_ptr<Packet> packet;
+    PacketEvent(std::string dest, std::string src, float ts, std::shared_ptr<Packet> pkt);
+    
+    virtual void printEvent() override;
+    virtual std::string getType() override;
 };
 
 #endif /* defined(__CS_143__PacketEvent__) */

@@ -2,6 +2,8 @@
 #define __CS_143__Host__
 
 class Flow;
+//class FlowEvent;
+
 #include <iostream>
 #include <cassert>
 #include "Link.h"
@@ -17,23 +19,23 @@ class Host : public EventGenerator
 {
 public:
     // Link this host connects to
-    Link& my_link;
+    std::shared_ptr<Link> my_link;
     
     // Associates flow IDs with Flow objects.
-    std::unordered_map<std::string, Flow> flows;
+    std::unordered_map<std::string, std::shared_ptr<Flow> > flows;
 
     // Constructor
-    Host(Link& host_link, std::string link_id);
+    Host(std::shared_ptr<Link> host_link, std::string host_id);
    
-    // TODO this should be in EventGenerator.cpp.  Why isn't it?
-    // Add event to local priority queue.
-    void addEventToLocalQueue(Event e);
-    
     // React to an event
-    void giveEvent(std::unique_ptr<Event>);
-    void giveEvent(std::unique_ptr<FlowEvent>);
-    void giveEvent(std::unique_ptr<PacketEvent>);
-    void giveEvent(std::unique_ptr<UnackEvent>);
+    virtual void giveEvent(std::shared_ptr<Event>) override;
+    
+    // giveEvent helper functions
+    void respondTo(PacketEvent);
+    void respondTo(FlowEvent);
+    void respondTo(UnackEvent);
+    
+    std::string toString();
 };
 
 #endif /* defined(__CS_143__Host__) */

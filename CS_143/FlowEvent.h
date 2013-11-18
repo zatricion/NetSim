@@ -1,6 +1,9 @@
 #ifndef __CS_143__FlowEvent__
 #define __CS_143__FlowEvent__
 
+
+class Host;
+
 #include "EventGenerator.h"
 #include "Event.h"
 #include "Packet.h"
@@ -9,13 +12,16 @@
 
 class FlowEvent : public Event {
 public:
-    FlowEvent(std::unique_ptr<Flow> flowobj,
+    FlowEvent(std::shared_ptr<Flow> flowobj,
               std::string dest,
               std::string src,
               float ts);
 
     int data_size;
-    std::unique_ptr<Flow> floww;
+    std::shared_ptr<Flow> floww;
+    
+    virtual void printEvent() override;
+    virtual std::string getType() override;
 };
 
 #endif /* defined(__CS_143__FlowEvent__) */

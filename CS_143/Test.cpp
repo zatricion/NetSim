@@ -10,7 +10,9 @@ int main()
     std::cout << "Preparing to test objects." << std::endl;
     std::cout << "Testing Object constructors." << std::endl;
     packetTest();
-    eventTest();
+    std::cout << "Testing Simulation." << std::endl;
+    simTest0();
+    std::cout << "Simulation Successful." << std::endl;
     return 0;
 }
 
@@ -26,18 +28,6 @@ void packetTest()
 	std::cout << "Packets passed tests!" << std::endl;
 }
 
-/**
- * Simple test of events.
- */
-void eventTest()
-{
-	std::cout << "Testing events...";
-	Event e("destination", "source", 1.5);
-	Event e2("destination", "source", 1.8);
-	assert (e2 > e);
-	std::cout << "Events passed tests!" << std::endl;
-}
-
 /*
  * Test a simulation
  */
@@ -48,34 +38,44 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    Link link1 = Link((64 * 8 * 1000.0), 0.01, pow(10, 7), "host1", "host2",
+    auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7), "host1", "host2",
                       "link1");
     
     // create congestion algorithm
-    CongestionAlg ccAlg;
+    auto ccAlg = std::make_shared<CongestionAlg>();
     
     // add host1
-    Host host1 = Host(link1, "host1");
+    auto host1 = std::make_shared<Host>(link1, "host1");
     
     // add host2
-    Host host2 = Host(link1, "host2");
-    
+    auto host2 = std::make_shared<Host>(link1, "host2");
     
     // FlowGenerator is dumb, we should just have Flow inherit from EventGenerator
     // add flow
-    Flow flow1 = Flow("flow1", "host1", "host2", &ccAlg,
-                      (20 * 8 * pow(10, 6)), &host1, 10, 1.0);
+    auto flow1 = std::make_shared<Flow>("flow1", "host1", "host2", ccAlg,
+                      (20 * 8 * pow(10, 6)), host1, 10, 1.0);
     
-
     
-    std::vector<Flow> flow_list;
+    std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
+        
+    auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
     
-    FlowGenerator flow_g = FlowGenerator(flow_list, "flow_g");
+    handler.addGenerator(link1);
+    handler.addGenerator(host1);
+    handler.addGenerator(host2);
+    handler.addGenerator(flow_g);
     
+    while(handler.running())
+    {
+        handler.step();
+    }
 
-    handler.addGenerator(make_unique<Host>(host1));
-    handler.addGenerator(make_unique<Host>(host2));
-    handler.addGenerator(make_unique<FlowGenerator>(flow_g));
-    handler.addGenerator(make_unique<Host>(host1));
+    
+    /* 
+    // TODO: should make a verbose version of "step", with a toString method for
+    // each EventGenerator, but for now let's not bother.
+    */
+    
+    std::cout << "Simulator passed tests!" << std::endl;
 }

@@ -8,11 +8,14 @@
 
 class UnackEvent : public Event {
 public:
-    UnackEvent(Packet& pkt,
+    UnackEvent(std::shared_ptr<Packet> pkt,
 	       std::string dest, std::string src,
 	       float ts);
 
-    Packet packet;
+    std::shared_ptr<Packet> packet;
+    
+    virtual void printEvent() override;
+    virtual std::string getType() override;
 };
 
 #endif /* defined(__CS_143__UnackEvent__) */

@@ -3,7 +3,6 @@
 #include <iostream>
 #include <algorithm> // std::max
 
-
 // Link Methods
 
 // Constructor
@@ -20,20 +19,25 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
-void Link::giveEvent(std::unique_ptr<Event> e)
+void Link::giveEvent(std::shared_ptr<Event> e)
 {
-    std::unique_ptr<PacketEvent> new_event(static_cast<PacketEvent*>(e.release()));
-    Packet new_packet = new_event->packet;
-    std::string source = new_event->source;
-    float now = new_event->eventTime();
+    std::cout << "Link::giveEvent" << std::endl;
+    // Get PacketEvent
+    PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
+
+    std::string source = packet_event.source;
+    float now = packet_event.eventTime();
+    //packet_event.packet.printPacket();
+    
     
     // Queue size in bits
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
     
-    if (queue_size + new_packet.size < buffer_size)
+    if (queue_size + packet_event.packet->size < buffer_size)
     {
+        std::cout << "It fits in the buffer." << std::endl;
         
-        queue_delay = (queue_size + new_packet.size) / capacity;
+        queue_delay = (queue_size + packet_event.packet->size) / capacity;
         
         // Add propagation and queue delay to current time to get event time
         float timestamp = now + prop_delay + queue_delay;
@@ -43,11 +47,11 @@ void Link::giveEvent(std::unique_ptr<Event> e)
         std::string destination = (source == node1) ? node2 : node1;
         
         // Add an event to the Link priority queue
-        PacketEvent packetEvent = PacketEvent(destination, uuid, timestamp, new_packet);
+        auto packetEvent = std::make_shared<PacketEvent>(destination, uuid, timestamp, packet_event.packet);
         eventHeap.push(packetEvent);
         
         // Update queue size
-        queue_size += new_packet.size;
+        queue_size += packet_event.packet->size;
     }
     
     else
@@ -57,5 +61,3 @@ void Link::giveEvent(std::unique_ptr<Event> e)
     
     queue_time = now;
 }
-
-

@@ -8,6 +8,8 @@
 //   - Router
 
 #include "EventGenerator.h"
+#include <cassert>
+#include <iostream>
 
 std::string EventGenerator::getID() const
 {
@@ -16,14 +18,33 @@ std::string EventGenerator::getID() const
 
 float EventGenerator::getNextTime()
 {
-    return eventHeap.top().eventTime();
+    assert(hasEvents());
+    return eventHeap.top()->eventTime();
 }
 
-std::unique_ptr<Event> EventGenerator::getEvent()
+std::shared_ptr<Event> EventGenerator::getEvent()
 {
-    Event nextEvent = eventHeap.top();
+    std::shared_ptr<Event> nextEvent = std::move(eventHeap.top());
     eventHeap.pop();
-    return make_unique<Event>(nextEvent);
+    return nextEvent;
+}
+
+bool EventGenerator::hasEvents() {
+    return eventHeap.size() != 0;
+}
+
+// Add event to local priority queue.
+void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e)
+{
+    eventHeap.push(e);
 }
 
 
+long EventGenerator::heapSize()
+{
+    return eventHeap.size();
+}
+
+void EventGenerator::printHeapSize() {
+    std::cout << std::to_string(eventHeap.size()) << std::endl;
+}

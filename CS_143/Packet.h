@@ -15,11 +15,10 @@ public:
     int size;
     bool ack;
     
-    bool bf_req_bit;
     bool bf_tbl_bit;
     // this is a mapping from host_id to path to that host 
     // (which is vector of node ids)
-    std::map<std::string, std::vector<std::string> > bf_table;
+//    std::map<std::string, std::vector<std::string> > bf_table;
     
     int sequence_num;
     // If the packet was generated from a Flow in a host, this is the ID of
@@ -30,15 +29,25 @@ public:
     Packet();
     
     // Constructor
-    Packet(std::string, std::string, std::string, int, bool, bool, bool,
-	   std::map<std::string , std::vector<std::string> > &, int);
+    Packet(std::string id,
+                   std::string fd,
+                   std::string src,
+                   int s,
+                   bool a,
+                   int seq);
 
     // Another constructor.
-    Packet(std::string, std::string, std::string, int, bool, bool, bool,
-	   std::map<std::string , std::vector<std::string> > &, int, std::string);
+    Packet(std::string id,
+                   std::string fd,
+                   std::string src,
+                   int s,
+                   bool a,
+                   int seq,
+                   std::string flow_id);
     
     // Copy Constructor
     Packet(const Packet& other);
+    void printPacket();
 };
 
 #endif /* defined(__CS_143__Packet__) */

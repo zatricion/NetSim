@@ -14,7 +14,16 @@ float Event::eventTime() const {
     return timestamp;
 }
 
-// Override operator to allow eventHeap to order by timestamp
-bool Event::operator>(const Event& other) const {
-    return timestamp > other.timestamp;
+
+void Event::printEvent()
+{
+    fprintf(stdout, "\nEVENT\n");
+    fprintf(stdout, "------------------------\n");
+    fprintf(stdout, "Source: %s\n", source.c_str());
+    fprintf(stdout, "Destination: %s\n\n", destination.c_str());
+}
+
+std::string Event::getType()
+{
+    return "EVENT";
 }
