@@ -37,7 +37,7 @@ Flow::Flow(std::string idval, std::string src, std::string dest,
     std::unordered_set<int> acknowledgedPackets;
     std::queue<Packet> flow;
     windowSize = winSize;
-    timeStamp = ts;
+    timestamp = ts;
     
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.

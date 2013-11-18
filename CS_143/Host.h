@@ -17,7 +17,7 @@ class Flow;
 
 class Host : public EventGenerator
 {
-public:
+public:    
     // Link this host connects to
     std::shared_ptr<Link> my_link;
     

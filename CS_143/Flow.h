@@ -22,29 +22,39 @@ public:
     
     // shared id of the flow on the host.
 	std::string id;
+    
 	// Source of the flow
 	std::string source;
+    
 	// Destination of the flow
 	std::string destination;
+    
 	// Congestion algorithm associated with the flow.
 	std::shared_ptr<CongestionAlg> a;
     
 	// Total number of packets
-	int numPackets; 
-        // Set of all acknowledged packets.
-        std::unordered_set<int> acknowledgedPackets;
-        // Packets that represent the data flow.
-        std::queue<Packet> flow;
-        // How long the flow will wait before sending another packet.
-        float waitTime;
-        // window size
-        int windowSize;
-        int packetSize;
-        // Time when the flow is generated.  Used to create a small set
-        // of Events.
-        float timestamp;
+	int numPackets;
+
+    // Set of all acknowledged packets.
+    std::unordered_set<int> acknowledgedPackets;
+    
+    // Packets that represent the data flow.
+    std::queue<Packet> flow;
+    
+    // How long the flow will wait before sending another packet.
+    float waitTime;
+    
+    // window size
+    int windowSize;
+    
+    int packetSize;
+    
+    // Time when the flow is generated.  Used to create a small set
+    // of Events.
+    float timestamp;
 
 	// Methods:
+    
 	// Constructor
     Flow();
     Flow(std::string idval, std::string src, std::string dest,
