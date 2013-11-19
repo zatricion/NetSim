@@ -1,0 +1,62 @@
+\hypertarget{classHost}{\section{\-Host \-Class \-Reference}
+\label{classHost}\index{\-Host@{\-Host}}
+}
+\-Inheritance diagram for \-Host\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classHost}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classHost_afde96dd6239594d91697006a850bea5b}{{\bfseries \-Host} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ host\-\_\-link, std\-::string host\-\_\-id)}\label{classHost_afde96dd6239594d91697006a850bea5b}
+
+\item 
+\hypertarget{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}{virtual void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$) override}\label{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}
+
+\item 
+void \hyperlink{classHost_a28da4a1168cd8ce7c396f0ba5ced1c66}{respond\-To} (\hyperlink{classPacketEvent}{\-Packet\-Event})
+\item 
+\hypertarget{classHost_adbd4abe19840d56b09499af1158d6081}{void {\bfseries respond\-To} (\hyperlink{classFlowEvent}{\-Flow\-Event})}\label{classHost_adbd4abe19840d56b09499af1158d6081}
+
+\item 
+void \hyperlink{classHost_a64221eb13d89a1bb84f1eb351bc45be4}{respond\-To} (\hyperlink{classUnackEvent}{\-Unack\-Event})
+\item 
+\hypertarget{classHost_aa807c50f690bd2018265504483440c7d}{std\-::string {\bfseries to\-String} ()}\label{classHost_aa807c50f690bd2018265504483440c7d}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classHost_a6b880d3ae2688e05f0617de4c247b84c}{std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ {\bfseries my\-\_\-link}}\label{classHost_a6b880d3ae2688e05f0617de4c247b84c}
+
+\item 
+\hypertarget{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}{std\-::unordered\-\_\-map\*
+$<$ std\-::string, std\-::shared\-\_\-ptr\*
+$<$ \hyperlink{classFlow}{\-Flow} $>$ $>$ {\bfseries flows}}\label{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classHost_a28da4a1168cd8ce7c396f0ba5ced1c66}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
+\index{respond\-To@{respond\-To}!Host@{\-Host}}
+\subsubsection[{respond\-To}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Packet\-Event}}]{new\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a28da4a1168cd8ce7c396f0ba5ced1c66}
+\-Called when host receives any packet. \hypertarget{classHost_a64221eb13d89a1bb84f1eb351bc45be4}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
+\index{respond\-To@{respond\-To}!Host@{\-Host}}
+\subsubsection[{respond\-To}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Unack\-Event}}]{unack\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a64221eb13d89a1bb84f1eb351bc45be4}
+\-Called when there is a potentially unacknowledged packet. 
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\-Host.\-h\item 
+\-Host.\-cpp\end{DoxyCompactItemize}

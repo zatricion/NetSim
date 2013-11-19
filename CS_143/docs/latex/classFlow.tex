@@ -1,0 +1,66 @@
+\hypertarget{classFlow}{\section{\-Flow \-Class \-Reference}
+\label{classFlow}\index{\-Flow@{\-Flow}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFlow_aeb609967880d902a1f8ff8ad9db85862}{{\bfseries \-Flow} (std\-::string idval, std\-::string src, std\-::string dest, std\-::shared\-\_\-ptr$<$ \hyperlink{classCongestionAlg}{\-Congestion\-Alg} $>$ alg, int data\-\_\-size, std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ h, int win\-Size, float ts)}\label{classFlow_aeb609967880d902a1f8ff8ad9db85862}
+
+\item 
+\hypertarget{classFlow_ad7f274b803ded1f3c5b1a4e24e477561}{void {\bfseries handle\-Unack\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ unacked, float time)}\label{classFlow_ad7f274b803ded1f3c5b1a4e24e477561}
+
+\item 
+\hypertarget{classFlow_abb3e75cba1b777a083cfa5bae24c7af0}{void {\bfseries handle\-Ack} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ p, float time)}\label{classFlow_abb3e75cba1b777a083cfa5bae24c7af0}
+
+\item 
+\hypertarget{classFlow_ae330545a178e3800aadb7c3f856b7b94}{std\-::string {\bfseries to\-String} ()}\label{classFlow_ae330545a178e3800aadb7c3f856b7b94}
+
+\item 
+\hypertarget{classFlow_a2fdad818f50e010c5db255abfc5138df}{void {\bfseries initialize} ()}\label{classFlow_a2fdad818f50e010c5db255abfc5138df}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFlow_af45cdc7b3609577eb08cb072e9631809}{std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ {\bfseries host}}\label{classFlow_af45cdc7b3609577eb08cb072e9631809}
+
+\item 
+\hypertarget{classFlow_a8724a8f4ce94cf7bfb0db79e688ed179}{std\-::string {\bfseries id}}\label{classFlow_a8724a8f4ce94cf7bfb0db79e688ed179}
+
+\item 
+\hypertarget{classFlow_a36eb3e23b0804647c30be41835b790b3}{std\-::string {\bfseries source}}\label{classFlow_a36eb3e23b0804647c30be41835b790b3}
+
+\item 
+\hypertarget{classFlow_a536685c38def6cf8b61d0fb0d7e8372d}{std\-::string {\bfseries destination}}\label{classFlow_a536685c38def6cf8b61d0fb0d7e8372d}
+
+\item 
+\hypertarget{classFlow_aaed7f19c7331e59bb123da68239807bc}{std\-::shared\-\_\-ptr$<$ \hyperlink{classCongestionAlg}{\-Congestion\-Alg} $>$ {\bfseries a}}\label{classFlow_aaed7f19c7331e59bb123da68239807bc}
+
+\item 
+\hypertarget{classFlow_a78d725176506b21ce2355b3742ab8c17}{int {\bfseries num\-Packets}}\label{classFlow_a78d725176506b21ce2355b3742ab8c17}
+
+\item 
+\hypertarget{classFlow_a8c9d7d593004b45b1a1a88932598e9ec}{std\-::unordered\-\_\-set$<$ int $>$ {\bfseries acknowledged\-Packets}}\label{classFlow_a8c9d7d593004b45b1a1a88932598e9ec}
+
+\item 
+\hypertarget{classFlow_ae211f68d0d38e1625b06138aa71ff30c}{std\-::queue$<$ \hyperlink{classPacket}{\-Packet} $>$ {\bfseries flow}}\label{classFlow_ae211f68d0d38e1625b06138aa71ff30c}
+
+\item 
+\hypertarget{classFlow_a6b1bc90a9171baefb34683ce49ab4db6}{float {\bfseries wait\-Time}}\label{classFlow_a6b1bc90a9171baefb34683ce49ab4db6}
+
+\item 
+\hypertarget{classFlow_ab567b4507276eeb779a109c459545988}{int {\bfseries window\-Size}}\label{classFlow_ab567b4507276eeb779a109c459545988}
+
+\item 
+\hypertarget{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}{int {\bfseries packet\-Size}}\label{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}
+
+\item 
+\hypertarget{classFlow_ac46a1249858fde4c562938948bfb13aa}{float {\bfseries timestamp}}\label{classFlow_ac46a1249858fde4c562938948bfb13aa}
+
+\end{DoxyCompactItemize}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\-Flow.\-h\item 
+\-Flow.\-cpp\end{DoxyCompactItemize}
