@@ -26,8 +26,6 @@ void Link::giveEvent(std::shared_ptr<Event> e)
 
     std::string source = packet_event.source;
     float now = packet_event.eventTime();
-    //packet_event.packet.printPacket();
-    
     
     // Queue size in bits
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
@@ -57,4 +55,8 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     }
     
     queue_time = now;
+}
+
+float Link::getPropDelay() {
+    return prop_delay;
 }

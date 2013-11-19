@@ -1,78 +1,102 @@
 #include "Flow.h"
 #include "Host.h"
 #include "CongestionAlg.h"
+#include <cassert>
+#include <math.h>
+#include "../Tools/Log.h"
 
-// TODO numPckts deduced from data size and packet size.
-// TODO add window size.  Can move this into the algorithm later if desired.
-// TODO need start timestamp.
+/**
+ * Default constructor.
+ */
 Flow::Flow(){
+    
     host = NULL;
     id = "id";
     source = "source";
     destination = "destination";
     a = NULL;
     numPackets = 0;
-    std::unordered_set<int> acknowledgedPackets;
+    std::set<int> acknowledgedPackets;
     std::queue<Packet> flow;
-    windowSize = 0;
-    timestamp = 0.0;
+    windowSize = -1;
+    timestamp = -1.0;
+    numAcked = 0;
 }
 
+/**
+ * Initializes the data flow.  Calls the congestion algorithm to see what to
+ * do.
+ */
 void Flow::initialize() {
-    
+    FILE_LOG(logDEBUG) << "Initializing data stream from flow with id=" << id;
     a->initialize(this);
-    std::shared_ptr<Event> ee = host->eventHeap.top();
 }
 
-Flow::Flow(std::string idval, std::string src, std::string dest,
-           std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h, int winSize, float ts)
-{
+/**
+ * Constructor
+ */
+Flow::Flow(std::string idval, std::string dest, 
+           std::shared_ptr<CongestionAlg> alg, int data_size, 
+           std::shared_ptr<Host> h, int winSize, float ts) {
     host = h;
     id = idval;
-    source = src;
+    source = h->getID();
     destination = dest;
     a = alg;
-    numPackets = data_size / DATA_PKT_SIZE;
-    std::unordered_set<int> acknowledgedPackets;
-    std::queue<Packet> flow;
+    numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
+    std::set<int> unAckedPackets;
     windowSize = winSize;
     timestamp = ts;
     
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.
     waitTime = 500.0;
-    
-    for (int count = 0; count < numPackets; count++) {
-        std::string pack_id = this->id + std::to_string(count);
-        Packet new_packet(pack_id, destination, source, packetSize, false, count);
-        flow.push(new_packet);
-    }
-    //a->initialize(this);
+    numAcked = 0;
 }
 
+/**
+ * When a packet has not been acknowledged after waitTime, this method is
+ * called, to determine what to do.  Another copy of the packet will be sent,
+ * then the CongestionAlgorithm will update the fields.
+ * 
+ * @param unacked the unacknowledged packet
+ * @param time the time at which the event is thrown.  This should be roughly
+ * waitTime after the initial packet was sent.
+ */
 void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
-    // TODO absorb ALL this logic into the CongestionAlgorithm
+    FILE_LOG(logDEBUG4) << "Flow is handling an UnackEvent.  FlowID=" << id;
+
     int seqNum = unacked->sequence_num;
-    if (!acknowledgedPackets.count(seqNum)) {
-        // We didn't find the item in the set of acknowledged packets.
-        // We must resend the packet.
-
-        // Old code (belongs in a.call()) // TODO
-        //Packet new_pack = unack_event->packet;
-        //sendPacket(new_pack, unack_event->eventTime());
-
-        // TODO call the CongestionAlgorithm, so it can update.
-        // All we have to do is call the congestion algorithm.
+    // If the packet has not been acknowledged...
+    if (unAckedPackets.count(seqNum)) {
+        FILE_LOG(logDEBUG) << "Packet unacknowledged.  Better resend.";
         a->handleUnackEvent(this, unacked, time);
     }
-    // else, there's nothing to do.
+    FILE_LOG(logDEBUG) << "Ack had already been received.";
+    // Otherwise, do nothing.
 }
 
-// Handle an ack received from the flow's destination.
-void Flow::handleAck(std::shared_ptr<Packet> p, float time) { // TODO makes more sense if arg is an event, not packet.
+/**
+ * When an ack is received from the flow's destination, this method is called,
+ * to determine what to do.  The CongestionAlgorithm decides.
+ *
+ * @param p the ack packet
+ * @param time the time at which the ack is received
+ */
+void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
+    FILE_LOG(logDEBUG) << "Ack received by flow with id=" << id;
+    assert(p->ack);
     a->handleAck(this, p, time);
 }
 
+/**
+ * Represent the packed as a string.
+ *
+ * @return a string representing the packet
+ */
 std::string Flow::toString() {
-    return id;
+    std::stringstream fmt;
+    // TODO get the unAckedPackets to print nicely.
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", windowSize=" << windowSize << ", packetSize=" << packetSize << ", timestamp=" << timestamp << ", numAcked=" << numAcked << "}";
+    return fmt.str();
 }

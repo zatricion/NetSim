@@ -62,11 +62,10 @@ Packet::Packet(const Packet& other)
     flowID = other.flowID;
 }
 
-std::string Packet::printPacket() {
+std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
-           ", source=" << source << "size=" << size << "ack=" << ack <<
-           "sequence_num=" << sequence_num << ", flowID=" << flowID << "}.";
-    //return std::string_format("{PACKET: uuid=%s, dest=%s, source=%s, size=%d, ack=%d, seq_num=%d, flowID=%s", uuid, final_dest, source, size, ack, sequence_num, flowID);
+           ", source=" << source << ", size=" << size << ", ack=" << ack <<
+           ", sequence_num=" << sequence_num << ", flowID=" << flowID << "}.";
     return fmt.str();
 }

@@ -12,6 +12,8 @@ public:
     Link(float, float, float, std::string, std::string, std::string);
     
     virtual void giveEvent(std::shared_ptr<Event>) override;
+
+    float getPropDelay();
     
 private:
     // Maximum queue_size in bits

@@ -14,7 +14,6 @@ FlowGenerator::FlowGenerator(std::vector<std::shared_ptr<Flow> > flows, std::str
         // add event to eventHeap
         eventHeap.push(flow_event);
     }
-    
     uuid = flow_id;
 }
 

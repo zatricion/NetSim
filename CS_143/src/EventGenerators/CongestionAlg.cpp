@@ -1,97 +1,121 @@
 #include "CongestionAlg.h"
 #include "Flow.h"
 #include "Host.h"
+#include <cassert>
 
-// TODO:
-/*
- * CongestionAlg will be an abstract class from which all other algorithms
+/**
+ * TODO CongestionAlg will be an abstract class from which all other algorithms
  * inherit.  For now, we create a "dumb" sample algorithm.
  */
 
-// Initial call to the Congestion Algorithm.  Occurs only when the Flow object
-// is first created.
+/**
+ * Initial call to the congestion algorithm.  It is only called once.  It
+ * populates the host's event queue with packets.
+ *
+ * @param flow the pointer to the flow that called the CongestionAlgorithm.
+ */
 void CongestionAlg::initialize(Flow* flow) {
     int windowSize = flow->windowSize;
     std::shared_ptr<Host> host = flow->host;
     
-    
     // At the outset, add a number of events equal to the window size.
-    for (int i = 0; i < windowSize; i++) {
-        auto p = std::make_shared<Packet>(std::to_string(i), flow->destination, flow->source,
-                              flow->packetSize, false, i, flow->id);
-        //p.printPacket();
-        
+    // Unless window size is less than number of packest.
+    int end = std::min(windowSize, flow->numPackets);
+    for (int i = 0; i < end; i++) {
+        // The packet corresponding to the sent data.
+        // TODO what should the IDs be?  Why do they even have IDs?
+        auto p = std::make_shared<Packet>(std::to_string(i), flow->destination,
+            flow->source, flow->packetSize, false, i, flow->id);
+
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need
         // more changes to get that to work anyway.
-        
-        // Add the event.
-        auto e = std::make_shared<PacketEvent>(host->my_link->getID(), flow->source, flow->timestamp + i, p);
+
+        // Make and add the event.
+        auto e = std::make_shared<PacketEvent>(host->my_link->getID(),
+            flow->source, flow->timestamp + i, p);
         host->addEventToLocalQueue(e);
 
-        // Add an event to fire when we are tired of waiting.
-        auto ue = std::make_shared<UnackEvent>(p, host->getID(), flow->source, flow->timestamp + i + flow->waitTime);
-        host->addEventToLocalQueue(ue);
+        // These packets should be added to the unAckedPackets
+        flow->unAckedPackets.insert(i);
 
-        //std::cout << "Examining top of localQueue" << std::endl;
-//        std::shared_ptr<Event> ee = host->eventHeap.top();
-//
-//        //(std::static_pointer_cast<PacketEvent>(ee))->packet.printPacket();
-        //host->eventHeap.top().packet.printPacket();
+        // Add an UnackEvent to fire when we are tired of waiting for an ack.
+        auto ue = std::make_shared<UnackEvent>(p, host->getID(), flow->source,
+            flow->timestamp + i * host->my_link->getPropDelay() + flow->waitTime);
+        host->addEventToLocalQueue(ue);
     }
+    FILE_LOG(logDEBUG) << "Initialized data stream.  Flow:" << flow->toString();
 }
 
-// Called when an event was not acknowledged.  Must update fields, resend the
-// event.
-// TODO need eventTime()
-void CongestionAlg::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
 
-    auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), flow->source, time, unacked);
+/**
+ * Called when a packet has not been acknowledged for waitTime.
+ * 
+ * @param flow a pointer to the flow object that called the CongestionAlg
+ * @param unacked the unacknowledged packet
+ * @param time the time at which the unackedEvent was thrown
+ */
+void CongestionAlg::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
+    // the new PacketEvent to be queued
+    auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
+        flow->source, time, unacked);
     
     flow->host->addEventToLocalQueue(e);
-    // TODO also destroy the UnackEvent;
-    // TODO most algorithms will update window size, etc.
+    FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow:" << flow->toString();
+    // TODO update window size, etc.
 }
 
-// Called when the flow handles an ack.
+
+/**
+ * Called when an ack has been received for a particular flow.
+ *
+ * @param flow a pointer to the flow object that called the CongestionAlg
+ * @param pkt the ack packet
+ * @param time the time at which the event was received
+ */
 void CongestionAlg::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     std::shared_ptr<Host> host = flow->host;
-    flow->acknowledgedPackets.insert(pkt->sequence_num);
-    
-    // After acknowledging the packet, check if there are more packets to send.
-    if ((int) flow->acknowledgedPackets.size() == flow->numPackets) {
-        // We are finished.  TODO destroy the flow object.
+
+    if (flow->numAcked == flow->numPackets || 
+        flow->unAckedPackets.count(pkt->sequence_num) == 0) {
+        // First case: we are already done (received all ACKs).  Do nothing.
+        // Send case: this packet was already acknowledged.  Do nothing.
+        FILE_LOG(logDEBUG) << "Handled Ack with no-op.";
         return;
     }
 
-    else {
-        // Update the window size.  TODO
+    flow->numAcked += 1;
+    flow->unAckedPackets.erase(pkt->sequence_num);
 
-        // TODO this is super ghetto.  Shouldn't've used an unordered set.
-        // Also this isn't a real algorithm so whatever.
-        int lowestUnacked = flow->numPackets;
-        for (int i = 0; i < flow->numPackets; i++) {
+    // Update the window size.  TODO
 
-            // TODO: in real life, we want to send the lowest numbered packet
-            // that hasn't been sent yet.
-            // This requires keeping track of unackowledgedPackets in another
-            // unordered set (i.e. sent packets that haven't been acked.).
-            // Since I didn't create that object, we will (for now) just
-            // send the lowest packet that hasn't been acknowledged.
-            if (!flow->acknowledgedPackets.count(i)) {
-                lowestUnacked = i;
-                break;
-            }
-        }
-        
-        auto p = std::make_shared<Packet>(std::to_string(lowestUnacked), flow->destination,
-                              flow->source, flow->packetSize, false,
-                              lowestUnacked, flow->id);
-        
-        auto pe = std::make_shared<PacketEvent>(host->my_link->getID(), flow->source, time, p);
-        host->addEventToLocalQueue(pe);
+    // Find the next packet to send.  It should be the packet with the
+    // lowest number, that has NOT been sent yet.
+    int nextToSend = *(flow->unAckedPackets.rbegin()) + 1;
+    FILE_LOG(logDEBUG) << "Will send packet with sequence_num=" << nextToSend;
 
-        auto ue = std::make_shared<UnackEvent>(p, host->my_link->getID(), flow->source, time + flow->waitTime);
-        host->addEventToLocalQueue(ue);
-    }
+    // ensure that it has a valid number.  Valid numbers are 
+    // {0, ..., flow->numPackets - 1}
+    assert (nextToSend < flow->numPackets);
+
+    // Create the packet, send it
+    auto p = std::make_shared<Packet>(std::to_string(nextToSend), 
+        flow->destination, flow->source, flow->packetSize, false,
+        nextToSend, flow->id);
+    
+    auto pe = std::make_shared<PacketEvent>(host->my_link->getID(),
+        flow->source, time, p);
+    host->addEventToLocalQueue(pe);
+
+    flow->unAckedPackets.insert(nextToSend);
+
+    // Add another UnackEvent to the queue.
+    auto ue = std::make_shared<UnackEvent>(p, host->my_link->getID(), 
+        flow->source, time + flow->waitTime);
+    host->addEventToLocalQueue(ue);
+    FILE_LOG(logDEBUG) << "Handled new ack.  Flow:" << flow->toString();
 }
+//TODO other considerations:
+// sometimes we will add more than one event, upon receiving an ack (if our
+// window size changes.  I don't think we will ever add an event without
+// receiving an ack, right...?
