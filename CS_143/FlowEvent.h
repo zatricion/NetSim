@@ -4,10 +4,10 @@
 
 class Host;
 
-#include "EventGenerator.h"
+#include "EventGenerators/EventGenerator.h"
 #include "Event.h"
 #include "Packet.h"
-#include "Flow.h"
+#include "EventGenerators/Flow.h"
 #include <string>
 
 class FlowEvent : public Event {

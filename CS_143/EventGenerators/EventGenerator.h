@@ -10,9 +10,9 @@
 #ifndef __CS_143__EventGenerator__
 #define __CS_143__EventGenerator__
 
-#include "deref_comp.h"
+#include "../deref_comp.h"
 #include <string>
-#include "Event.h" 
+#include "../Event.h" 
 #include <queue>
 #include <map>
 #include <memory>

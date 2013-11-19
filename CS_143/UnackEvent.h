@@ -1,7 +1,7 @@
 #ifndef __CS_143__UnackEvent__
 #define __CS_143__UnackEvent__
 
-#include "EventGenerator.h"
+#include "EventGenerators/EventGenerator.h"
 #include "Event.h"
 #include "Packet.h"
 #include <string>

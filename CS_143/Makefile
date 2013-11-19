@@ -1,4 +1,4 @@
-CC=g++-4.7
+CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm
 
@@ -17,7 +17,7 @@ Test.o: Test.cpp Test.h Packet.h Event.h Handler.h
 Packet.o: Packet.cpp Packet.h
 	$(CC) $(CFLAGS) -c $<
     
-Flow.o: Flow.cpp Flow.h Packet.h CongestionAlg.h Host.h
+Flow.o: EventGenerators/Flow.cpp EventGenerators/Flow.h Packet.h EventGenerators/CongestionAlg.h EventGenerators/Host.h
 	$(CC) $(CFLAGS) -c $<
 
 Event.o: Event.cpp Event.h
@@ -26,31 +26,31 @@ Event.o: Event.cpp Event.h
 UnackEvent.o: UnackEvent.cpp UnackEvent.h Packet.h Event.h
 	$(CC) $(CFLAGS) -c $<
 
-FlowEvent.o: FlowEvent.cpp FlowEvent.h Packet.h Event.h Flow.h
+FlowEvent.o: FlowEvent.cpp FlowEvent.h Packet.h Event.h EventGenerators/Flow.h
 	$(CC) $(CFLAGS) -c $<
     
-PacketEvent.o: PacketEvent.cpp PacketEvent.h Packet.h EventGenerator.h
+PacketEvent.o: PacketEvent.cpp PacketEvent.h Packet.h EventGenerators/EventGenerator.h
 	$(CC) $(CFLAGS) -c $<
 
-EventGenerator.o: EventGenerator.cpp EventGenerator.h Event.h deref_comp.h
+EventGenerator.o: EventGenerators/EventGenerator.cpp EventGenerators/EventGenerator.h Event.h deref_comp.h
 	$(CC) $(CFLAGS) -c $<
 
-FlowGenerator.o: FlowGenerator.cpp FlowGenerator.h EventGenerator.h Flow.h
+FlowGenerator.o: EventGenerators/FlowGenerator.cpp EventGenerators/FlowGenerator.h EventGenerators/EventGenerator.h EventGenerators/Flow.h
 	$(CC) $(CFLAGS) -c $<
 
-Router.o: Router.cpp Router.h Packet.h PacketEvent.h
+Router.o: EventGenerators/Router.cpp EventGenerators/Router.h Packet.h PacketEvent.h
 	$(CC) $(CFLAGS) -c $<
 
-Host.o: Host.cpp Host.h Link.h Packet.h FlowEvent.h Flow.h UnackEvent.h
+Host.o: EventGenerators/Host.cpp EventGenerators/Host.h EventGenerators/Link.h Packet.h FlowEvent.h EventGenerators/Flow.h UnackEvent.h
 	$(CC) $(CFLAGS) -c $<
     
-Link.o: Link.cpp Link.h EventGenerator.h PacketEvent.h
+Link.o: EventGenerators/Link.cpp EventGenerators/Link.h EventGenerators/EventGenerator.h PacketEvent.h
 	$(CC) $(CFLAGS) -c $<
 
-Handler.o: Handler.cpp Handler.h EventGenerator.h Event.h
+Handler.o: Handler.cpp Handler.h EventGenerators/EventGenerator.h Event.h
 	$(CC) $(CFLAGS) -c $<
 
-CongestionAlg.o: CongestionAlg.cpp CongestionAlg.h UnackEvent.h PacketEvent.h Flow.h
+CongestionAlg.o: EventGenerators/CongestionAlg.cpp EventGenerators/CongestionAlg.h UnackEvent.h PacketEvent.h EventGenerators/Flow.h
 	$(CC) $(CFLAGS) -c $<
     
 deref_comp.o: deref_comp.cpp deref_comp.h Event.h
