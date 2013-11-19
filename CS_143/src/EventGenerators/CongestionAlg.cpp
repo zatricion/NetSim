@@ -84,7 +84,24 @@ void CongestionAlg::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float tim
         return;
     }
 
-    flow->numAcked += 1;
+    // Case: we have no new things to send, but haven't received all the
+    // other acks yet.
+    // TODO combine this with above statement.
+
+    FILE_LOG(logDEBUG) << "flow->numAcked=" << flow->numAcked;
+    FILE_LOG(logDEBUG) << "flow->unAckedPackets.size()=" << flow->unAckedPackets.size();
+    if (flow->numAcked + (int) flow->unAckedPackets.size() == flow->numPackets) {
+        if (flow->unAckedPackets.count(pkt->sequence_num) == 0) {
+            // Packet was already acked.  Do nothing.
+        }
+        else {
+            flow->numAcked = flow->numAcked + 1;
+            flow->unAckedPackets.erase(pkt->sequence_num);
+        }
+        return;
+    }
+            
+    flow->numAcked = flow->numAcked + 1;
     flow->unAckedPackets.erase(pkt->sequence_num);
 
     // Update the window size.  TODO

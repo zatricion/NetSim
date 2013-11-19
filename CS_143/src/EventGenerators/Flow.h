@@ -53,7 +53,7 @@ public:
     float timestamp;
 
     // number of packets that have been acknowledged
-    bool numAcked;
+    int numAcked;
 
     // Constructors
     Flow();

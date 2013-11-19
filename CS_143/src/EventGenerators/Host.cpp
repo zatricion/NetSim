@@ -52,7 +52,6 @@ void Host::respondTo(FlowEvent flow_event) {
     FILE_LOG(logDEBUG) << "Host with id=" << uuid << " received a FlowEvent.";
     // Get a flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = flow_event.floww;
-    printf("%s", (flows[flow_event.floww->id])->toString().c_str());
     flows[flow_event.floww->id]->initialize();
 }
 
