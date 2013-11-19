@@ -1,5 +1,5 @@
 #include "FlowGenerator.h"
-#include "../FlowEvent.h"
+#include "../EventHandling/FlowEvent.h"
 
 FlowGenerator::FlowGenerator(std::vector<std::shared_ptr<Flow> > flows, std::string flow_id)
 {

@@ -2,8 +2,8 @@ CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm
 
-OBJECTS = Test.o Packet.o Flow.o Event.o UnackEvent.o FlowEvent.o PacketEvent.o EventGenerator.o FlowGenerator.o Router.o Host.o Link.o Handler.o CongestionAlg.o deref_comp.o
-SOURCE = Test.cpp
+OBJECTS = build/Test.o build/Packet.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o
+SOURCE = src/IO/Test.cpp
 
 all: simulator
 
@@ -11,50 +11,50 @@ simulator: runtest # TODO this will compile and create the actual program.
                    # For now, we will just generate the test file.
 
 # Individual Object dependencies
-Test.o: Test.cpp Test.h Packet.h Event.h Handler.h
-	$(CC) $(CFLAGS) -c $<
+build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h
+	$(CC) $(CFLAGS) -c $< -o build/Test.o 
     
-Packet.o: Packet.cpp Packet.h
-	$(CC) $(CFLAGS) -c $<
+build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h
+	$(CC) $(CFLAGS) -c $< -o build/Packet.o
     
-Flow.o: EventGenerators/Flow.cpp EventGenerators/Flow.h Packet.h EventGenerators/CongestionAlg.h EventGenerators/Host.h
-	$(CC) $(CFLAGS) -c $<
+build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/CongestionAlg.h src/EventGenerators/Host.h
+	$(CC) $(CFLAGS) -c $< -o build/Flow.o
 
-Event.o: Event.cpp Event.h
-	$(CC) $(CFLAGS) -c $<
+build/Event.o: src/EventHandling/Event.cpp src/EventHandling/Event.h
+	$(CC) $(CFLAGS) -c $< -o build/Event.o
     
-UnackEvent.o: UnackEvent.cpp UnackEvent.h Packet.h Event.h
-	$(CC) $(CFLAGS) -c $<
+build/UnackEvent.o: src/EventHandling/UnackEvent.cpp src/EventHandling/UnackEvent.h src/EventHandling/Packet.h src/EventHandling/Event.h
+	$(CC) $(CFLAGS) -c $< -o build/UnackEvent.o
 
-FlowEvent.o: FlowEvent.cpp FlowEvent.h Packet.h Event.h EventGenerators/Flow.h
-	$(CC) $(CFLAGS) -c $<
+build/FlowEvent.o: src/EventHandling/FlowEvent.cpp src/EventHandling/FlowEvent.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventGenerators/Flow.h
+	$(CC) $(CFLAGS) -c $< -o build/FlowEvent.o
     
-PacketEvent.o: PacketEvent.cpp PacketEvent.h Packet.h EventGenerators/EventGenerator.h
-	$(CC) $(CFLAGS) -c $<
+build/PacketEvent.o: src/EventHandling/PacketEvent.cpp src/EventHandling/PacketEvent.h src/EventHandling/Packet.h src/EventGenerators/EventGenerator.h
+	$(CC) $(CFLAGS) -c $< -o build/PacketEvent.o
 
-EventGenerator.o: EventGenerators/EventGenerator.cpp EventGenerators/EventGenerator.h Event.h deref_comp.h
-	$(CC) $(CFLAGS) -c $<
+build/EventGenerator.o: src/EventGenerators/EventGenerator.cpp src/EventGenerators/EventGenerator.h src/EventHandling/Event.h src/Tools/deref_comp.h
+	$(CC) $(CFLAGS) -c $< -o build/EventGenerator.o
 
-FlowGenerator.o: EventGenerators/FlowGenerator.cpp EventGenerators/FlowGenerator.h EventGenerators/EventGenerator.h EventGenerators/Flow.h
-	$(CC) $(CFLAGS) -c $<
+build/FlowGenerator.o: src/EventGenerators/FlowGenerator.cpp src/EventGenerators/FlowGenerator.h src/EventGenerators/EventGenerator.h src/EventGenerators/Flow.h
+	$(CC) $(CFLAGS) -c $< -o build/FlowGenerator.o
 
-Router.o: EventGenerators/Router.cpp EventGenerators/Router.h Packet.h PacketEvent.h
-	$(CC) $(CFLAGS) -c $<
+build/Router.o: src/EventGenerators/Router.cpp src/EventGenerators/Router.h src/EventHandling/Packet.h src/EventHandling/PacketEvent.h
+	$(CC) $(CFLAGS) -c $< -o build/Router.o
 
-Host.o: EventGenerators/Host.cpp EventGenerators/Host.h EventGenerators/Link.h Packet.h FlowEvent.h EventGenerators/Flow.h UnackEvent.h
-	$(CC) $(CFLAGS) -c $<
+build/Host.o: src/EventGenerators/Host.cpp src/EventGenerators/Host.h src/EventGenerators/Link.h src/EventHandling/Packet.h src/EventHandling/FlowEvent.h src/EventGenerators/Flow.h src/EventHandling/UnackEvent.h
+	$(CC) $(CFLAGS) -c $< -o build/Host.o
     
-Link.o: EventGenerators/Link.cpp EventGenerators/Link.h EventGenerators/EventGenerator.h PacketEvent.h
-	$(CC) $(CFLAGS) -c $<
+build/Link.o: src/EventGenerators/Link.cpp src/EventGenerators/Link.h src/EventGenerators/EventGenerator.h src/EventHandling/PacketEvent.h
+	$(CC) $(CFLAGS) -c $< -o build/Link.o
 
-Handler.o: Handler.cpp Handler.h EventGenerators/EventGenerator.h Event.h
-	$(CC) $(CFLAGS) -c $<
+build/Handler.o: src/EventHandling/Handler.cpp src/EventHandling/Handler.h src/EventGenerators/EventGenerator.h src/EventHandling/Event.h
+	$(CC) $(CFLAGS) -c $< -o build/Handler.o
 
-CongestionAlg.o: EventGenerators/CongestionAlg.cpp EventGenerators/CongestionAlg.h UnackEvent.h PacketEvent.h EventGenerators/Flow.h
-	$(CC) $(CFLAGS) -c $<
+build/CongestionAlg.o: src/EventGenerators/CongestionAlg.cpp src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
+	$(CC) $(CFLAGS) -c $< -o build/CongestionAlg.o
     
-deref_comp.o: deref_comp.cpp deref_comp.h Event.h
-	$(CC) $(CFLAGS) -c $<
+build/deref_comp.o: src/Tools/deref_comp.cpp src/Tools/deref_comp.h src/EventHandling/Event.h
+	$(CC) $(CFLAGS) -c $< -o build/deref_comp.o
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)
@@ -65,4 +65,4 @@ test: runtest
 	./runtest
 
 clean:
-	rm *.o
+	rm build/*.o

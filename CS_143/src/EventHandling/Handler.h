@@ -1,10 +1,10 @@
 #ifndef __CS_143__Handler__
 #define __CS_143__Handler__
 
-#include "EventGenerators/EventGenerator.h"
+#include "../EventGenerators/EventGenerator.h"
 #include "Event.h"
 #include <unordered_map>
-#include "Log.h"
+#include "../Tools/Log.h"
 #include <memory>
 
 

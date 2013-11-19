@@ -1,7 +1,7 @@
 #ifndef CS_143_deref_comp_h
 #define CS_143_deref_comp_h
 
-#include "Event.h"
+#include "../EventHandling/Event.h"
 #include <memory>
 
 

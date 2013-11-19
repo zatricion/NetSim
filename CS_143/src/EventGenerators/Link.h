@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "EventGenerator.h"
-#include "../PacketEvent.h"
+#include "../EventHandling/PacketEvent.h"
 
 class Link : public EventGenerator
 {

@@ -8,7 +8,7 @@
 //   - Router
 
 #include "EventGenerator.h"
-#include "../Log.h"
+#include "../Tools/Log.h"
 #include <cassert>
 #include <iostream>
 

@@ -5,8 +5,8 @@
 
 #include <unordered_map>
 #include <string>
-#include "../Packet.h"
-#include "../PacketEvent.h"
+#include "../EventHandling/Packet.h"
+#include "../EventHandling/PacketEvent.h"
 
 class Router : public EventGenerator
 {

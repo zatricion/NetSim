@@ -1,7 +1,7 @@
 #ifndef __CS_143__PacketEvent__
 #define __CS_143__PacketEvent__
 
-#include "EventGenerators/EventGenerator.h"
+#include "../EventGenerators/EventGenerator.h"
 #include "Packet.h"
 #include <string>
 
