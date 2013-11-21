@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8FDF25C7-9793-48D4-8512-1179688B9F29</string>
+	<key>IDESourceControlProjectName</key>
+	<string>NetSim</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9B8705FB-6569-4096-8210-EE190C12D6AB</key>
+		<string>https://github.com/zatricion/NetSim.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CS_143/NetSim/NetSim.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9B8705FB-6569-4096-8210-EE190C12D6AB</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/zatricion/NetSim.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9B8705FB-6569-4096-8210-EE190C12D6AB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9B8705FB-6569-4096-8210-EE190C12D6AB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>NetSim</string>
+		</dict>
+	</array>
+</dict>
+</plist>
