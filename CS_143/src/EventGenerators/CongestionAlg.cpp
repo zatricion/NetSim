@@ -1,13 +1,4 @@
 #include "CongestionAlg.h"
-#include "Flow.h"
-#include "Host.h"
-#include <cassert>
-
-/**
- * TODO CongestionAlg will be an abstract class from which all other algorithms
- * inherit.  For now, we create a "dumb" sample algorithm.
- */
-
 /**
  * Initial call to the congestion algorithm.  It is only called once.  It
  * populates the host's event queue with packets.

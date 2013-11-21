@@ -4,6 +4,8 @@
 #include "../EventHandling/UnackEvent.h"
 #include "../EventHandling/PacketEvent.h"
 #include "Flow.h"
+#include "Host.h"
+#include <cassert>
 
 class CongestionAlg
 {
