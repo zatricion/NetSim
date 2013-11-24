@@ -38,7 +38,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		21D880A118429FF600AE1863 /* NetSim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = NetSim; path = /Users/mdlauria/NetSim/CS_143/build/Debug/NetSim; sourceTree = "<absolute>"; };
 		21D880AF1842A01B00AE1863 /* CongestionAlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CongestionAlg.cpp; sourceTree = "<group>"; };
 		21D880B01842A01B00AE1863 /* CongestionAlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongestionAlg.h; sourceTree = "<group>"; };
 		21D880B11842A01B00AE1863 /* EventGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventGenerator.cpp; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		21D880D11842A01B00AE1863 /* deref_comp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deref_comp.cpp; sourceTree = "<group>"; };
 		21D880D21842A01B00AE1863 /* deref_comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deref_comp.h; sourceTree = "<group>"; };
 		21D880D31842A01B00AE1863 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
+		21D880E41842AAA700AE1863 /* NetSim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = NetSim; path = /Users/mdlauria/NetSim/CS_143/build/Debug/NetSim; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +183,7 @@
 			);
 			name = NetSim;
 			productName = NetSim;
-			productReference = 21D880A118429FF600AE1863 /* NetSim */;
+			productReference = 21D880E41842AAA700AE1863 /* NetSim */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
