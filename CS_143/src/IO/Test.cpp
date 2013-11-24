@@ -44,16 +44,8 @@ void simTest0()
     
     // add link1
     auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
-                                        "host1", "router1", "link1");
-    // add link2
-    auto link2 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
-                                        "router1", "host2", "link2");
-    
-    // add router1
-    auto router1 = std::make_shared<Router>((64 * 8 * 1000.0), 0.01, pow(10, 7),
-                                        "host1", "router1", "link1");
-    
-    auto ccAlg = std::make_shared<CongestionAlg>();
+                                        "host1", "host2", "link1");
+    auto ccAlg = std::make_shared<TCPReno>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
