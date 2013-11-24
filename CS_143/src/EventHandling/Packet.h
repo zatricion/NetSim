@@ -18,7 +18,7 @@ public:
     bool bf_tbl_bit;
     // this is a mapping from host_id to path to that host 
     // (which is vector of node ids)
-//    std::map<std::string, std::vector<std::string> > bf_table;
+    std::map<std::string, std::vector<std::string> > bf_table;
     
     int sequence_num;
     // If the packet was generated from a Flow in a host, this is the ID of
