@@ -1,10 +1,10 @@
 # OS-Generated files #
 ######################
-CS 143/CS 143.xcodeproj/project.xcworkspace/xcuserdata/mdlauria.xcuserdatad/UserInterfaceState.xcuserstate
 .DS_Store
-CS\ 143/.DS_Store
 runtest
 test.log
+NetSim.xcodeproj/*
+
 
 # Temp files #
 ##############
