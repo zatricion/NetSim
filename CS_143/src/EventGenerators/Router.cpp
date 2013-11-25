@@ -1,7 +1,10 @@
 #include "Router.h"
 
 // Constructor
-Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links) {
+Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id) {
+    // set id
+    uuid = router_id;
+    
     // initialize table
     for (const auto& it : host_list) {
         std::vector<std::string> empty_path;

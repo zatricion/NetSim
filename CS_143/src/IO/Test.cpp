@@ -16,7 +16,7 @@ int main()
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest0();
+    simTest1();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
 }
@@ -99,6 +99,15 @@ void simTest1()
     auto host2 = std::make_shared<Host>(link5, "host2");
     
     // create host list
+    std::vector<std::string> host_list;
+    host_list.push_back(host1->getID());
+    host_list.push_back(host2->getID());
+    
+    // create routers
+    auto router1 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link0, link1, link2}, "router1");
+    auto router2 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link1, link3}, "router2");
+    auto router3 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link2, link4}, "router3");
+    auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4");
     
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
@@ -120,7 +129,11 @@ void simTest1()
     handler.addGenerator(host1);
     handler.addGenerator(host2);
     
-    
+    handler.addGenerator(router1);
+    handler.addGenerator(router2);
+    handler.addGenerator(router3);
+    handler.addGenerator(router4);
+
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";

@@ -17,7 +17,7 @@ class Router : public EventGenerator
 {
 public:
     // Constructor
-    Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links);
+    Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id);
     
     // Bellman-Ford
     void updateRouting(Packet::bf_type, std::string);
