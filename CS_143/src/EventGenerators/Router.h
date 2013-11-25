@@ -20,13 +20,13 @@ public:
     Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links);
     
     // Bellman-Ford
-    void updateRouting(Packet::bf_type);
+    void updateRouting(Packet::bf_type, std::string);
     
     // create static routing table
     void addRouting(std::string targ_host, std::string next_link_id, float dist, std::vector<std::string> path);
     
     // add a link to the router
-    void addLink(std::string link_id);
+    void addLink(std::shared_ptr<Link> link);
 
     // get proper routing given host id
     std::string getRouting(std::string targ_host);
@@ -39,7 +39,7 @@ private:
     Packet::bf_type routing_table;
     
     // All links connected to this router
-    std::vector<std::string> links;
+    std::unordered_map<std::string, std::shared_ptr<Link> > links;
 };
 
 

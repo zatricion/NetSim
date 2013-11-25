@@ -98,6 +98,8 @@ void simTest1()
     auto host1 = std::make_shared<Host>(link0, "host1");
     auto host2 = std::make_shared<Host>(link5, "host2");
     
+    // create host list
+    
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
                                         (20 * 8 * pow(10, 6)), host1, 10, 0.5);
