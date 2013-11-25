@@ -24,11 +24,16 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
         }
     }
     // add bf packetEvents to eventHeap
+    broadcastTable(0.0);
+}
+
+// broadcast BF table to all connected routers
+void Router::broadcastTable(float timestamp) {
     for (const auto& it : links) {
         // get connected router
         std::string other_node = it.second->getOtherNode(this->getID());
         auto pkt = std::make_shared<Packet>("bf_pkt_" + this->getID(), other_node, this->getID(), BF_PKT_SIZE, false, 0, "NONE", true, routing_table);
-        auto bf_event = std::make_shared<PacketEvent>(it.first, this->getID(), 0.0, pkt);
+        auto bf_event = std::make_shared<PacketEvent>(it.first, this->getID(), timestamp, pkt);
         eventHeap.push(bf_event);
     }
 }
@@ -81,7 +86,8 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     std::shared_ptr<Packet> pkt = packet_event.packet;
     
     if (pkt->bf_tbl_bit) {
-        updateRouting(pkt->bf_table, pkt->source);
+        updateRouting(pkt->bf_table, packet_event.source);
+        broadcastTable(packet_event.eventTime() + 0.1);
     }
     else {
         std::string dest = getRouting(pkt->final_dest);

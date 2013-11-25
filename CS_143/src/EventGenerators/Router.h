@@ -22,7 +22,10 @@ public:
     // Bellman-Ford
     void updateRouting(Packet::bf_type, std::string);
     
-    // create static routing table
+    // Broadcast routing table
+    void broadcastTable(float timestamp);
+    
+    // add route to routing table
     void addRouting(std::string targ_host, std::string next_link_id, float dist, std::vector<std::string> path);
     
     // add a link to the router
