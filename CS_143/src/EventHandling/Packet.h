@@ -25,17 +25,6 @@ public:
     // that flow.
     std::string flowID;
 
-    // Default Constructor
-    Packet();
-    
-    // Constructor
-    Packet(std::string id,
-                   std::string fd,
-                   std::string src,
-                   int s,
-                   bool a,
-                   int seq);
-
     // Another constructor.
     Packet(std::string id,
                    std::string fd,
