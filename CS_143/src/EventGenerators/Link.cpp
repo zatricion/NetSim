@@ -38,7 +38,6 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     
     // Queue size in bits
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
-    
     if (queue_size + packet_event.packet->size < buffer_size)
     {
         queue_delay = (queue_size + packet_event.packet->size) / capacity;
@@ -61,6 +60,9 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     else
     {
         // TODO: Packets get dropped
+    }
+    if (this->getID() == "link1" || this->getID() == "link2") {
+        printf("Link_id: %s, Total_Delay: %f, Time: %f\n", uuid.c_str(), queue_delay + prop_delay, now);
     }
     
     queue_time = now;

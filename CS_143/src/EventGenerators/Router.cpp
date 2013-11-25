@@ -79,10 +79,12 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id) {
         }
         
         // DEBUG
+        if (this->getID() == "router1" && host_id == "host2") {
         std::string r_str = "Router: " + this->getID() + "\n";
-        std::string delay_str = "Link: " + link_id + " Link_delay " + std::to_string(total_delay) + "\n";
+        std::string delay_str = "Host: " + host_id + " Link: " + std::get<0>(routing_table["host2"]) + " Link_delay " + std::to_string(std::get<1>(routing_table["host2"])) + "\n";
         myFile << r_str;
         myFile << delay_str;
+        }
         // DEBUG
         
     }
