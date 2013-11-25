@@ -137,9 +137,11 @@ void simTest1()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    while(handler.running())
+    int i = 10000;
+    while(i > 0) // handler.running()
     {
         handler.step();
+        i--;
     }
     
     FILE_LOG(logINFO) << "Simulator passed tests!";

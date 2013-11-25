@@ -1,4 +1,5 @@
 #include "Router.h"
+#include <fstream>
 
 // Constructor
 Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id) {
@@ -56,6 +57,12 @@ std::string Router::getRouting(std::string targ_host) {
 
 void Router::updateRouting(Packet::bf_type bf_table, std::string link_id) {
     float link_delay = links[link_id]->getTotalDelay();
+    
+    // DEBUG
+    std::ofstream myFile;
+    myFile.open("link_test.txt", std::ios::out | std::ios::app);
+    // DEBUG
+    
     for (const auto& it : bf_table) {
         std::string host_id = it.first;
         float total_delay = link_delay + std::get<1>(it.second);
@@ -64,17 +71,26 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id) {
             // to avoid cycles
             std::vector<std::string> other_path = std::get<2>(it.second);
             if (std::find(other_path.begin(), other_path.end(), this->getID()) == other_path.end()) {
-                // other router
-                std::string other_node = links[link_id]->getOtherNode(this->getID());
                 // create new path
                 other_path.push_back(this->getID());
-                // create tuple
-                auto new_route = std::make_tuple(other_node, total_delay, other_path);
                 // replace old route with new route
-                routing_table[host_id] = new_route;
+                addRouting(host_id, link_id, total_delay, other_path);
             }
         }
+        
+        // DEBUG
+        std::string r_str = "Router: " + this->getID() + "\n";
+        std::string delay_str = "Link: " + link_id + " Link_delay " + std::to_string(total_delay) + "\n";
+        myFile << r_str;
+        myFile << delay_str;
+        // DEBUG
+        
     }
+    
+    // DEBUG
+    myFile.close();
+    // DEBUG
+    
 }
 
 // Deal with PacketEvents
@@ -87,6 +103,19 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     
     if (pkt->bf_tbl_bit) {
         updateRouting(pkt->bf_table, packet_event.source);
+        
+        // DEBUG
+        std::ofstream myFile;
+        myFile.open("router_test.txt", std::ios::out | std::ios::app);
+        std::string r_str = "Router: " + this->getID() + "\n";
+        myFile << r_str;
+        for (const auto& it : routing_table) {
+            std::string test_str = "Host " + it.first + " Next_Dest " + std::get<0>(it.second) +"\n";
+            myFile << test_str.c_str();
+        }
+        myFile.close();
+        // DEBUG
+        
         broadcastTable(packet_event.eventTime() + 0.1);
     }
     else {
