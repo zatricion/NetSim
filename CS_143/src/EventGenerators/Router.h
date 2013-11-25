@@ -5,17 +5,23 @@
 
 #include <unordered_map>
 #include <string>
+#include <algorithm>
+#include <limits>
 #include "../EventHandling/Packet.h"
 #include "../EventHandling/PacketEvent.h"
+#include "Host.h"
 
 class Router : public EventGenerator
 {
 public:
+    // Constructor
+    Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links);
+    
     // Bellman-Ford
     //void updateRouting(Packet);
     
     // create static routing table
-    void addRouting(std::string targ_host, std::string targ_link);
+    void addRouting(std::string targ_host, std::string next_link_id, float dist, std::vector<std::string> path);
     
     // add a link to the router
     void addLink(std::string link_id);
@@ -27,8 +33,8 @@ public:
     void giveEvent(std::shared_ptr<Event>);
 
 private:
-    // Routing table maps destination host ids to link ids
-    std::unordered_map<std::string, std::string> routing_table;
+    // Routing table maps destination host ids to (id of next link, total distance of path, path)
+    std::unordered_map<std::string, std::tuple<std::string, float, std::vector<std::string> > > routing_table;
     
     // All links connected to this router
     std::vector<std::string> links;

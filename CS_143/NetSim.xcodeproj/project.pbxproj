@@ -67,7 +67,6 @@
 		21D880CA1842A01B00AE1863 /* UnackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnackEvent.cpp; sourceTree = "<group>"; };
 		21D880CB1842A01B00AE1863 /* UnackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnackEvent.h; sourceTree = "<group>"; };
 		21D880CD1842A01B00AE1863 /* Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test.cpp; sourceTree = "<group>"; };
-		21D880CE1842A01B00AE1863 /* Test.cpp.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test.cpp.orig; sourceTree = "<group>"; };
 		21D880CF1842A01B00AE1863 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
 		21D880D11842A01B00AE1863 /* deref_comp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deref_comp.cpp; sourceTree = "<group>"; };
 		21D880D21842A01B00AE1863 /* deref_comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deref_comp.h; sourceTree = "<group>"; };
@@ -150,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				21D880CD1842A01B00AE1863 /* Test.cpp */,
-				21D880CE1842A01B00AE1863 /* Test.cpp.orig */,
 				21D880CF1842A01B00AE1863 /* Test.h */,
 			);
 			path = IO;

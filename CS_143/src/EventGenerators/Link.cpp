@@ -19,6 +19,15 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_size = 0;
 }
 
+
+float Link::getTotalDelay() {
+    return queue_delay + prop_delay;
+}
+
+std::string Link::getOtherNode(std::string my_node) {
+    return (my_node == node1) ? node2 : node1;
+}
+
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
     // Get PacketEvent

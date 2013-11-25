@@ -38,10 +38,10 @@ void Handler::populateCurrentEvents(float minTime) {
     FILE_LOG(logDEBUG) << "Populating current events.";
     // WARNING: will clear out currEvents...is that desired behavior?
     currEvents.clear();
-    for (auto it = genMap.begin(); it != genMap.end(); it++) {
+    for (const auto& it : genMap) {
         // check to see if current EG has event at desired time, add if so
-        if (it->second->hasEvents() && it->second->getNextTime() == minTime) {
-            currEvents.push_back(it->second->getEvent());
+        if (it.second->hasEvents() && it.second->getNextTime() == minTime) {
+            currEvents.push_back(it.second->getEvent());
         }
     }
 }
@@ -50,11 +50,9 @@ void Handler::populateCurrentEvents(float minTime) {
 void Handler::processCurrentEvents() {
     FILE_LOG(logDEBUG) << "Processing current events.";
     not_done = false;
-    //assert(false);
-    for (auto it = currEvents.begin(); it != currEvents.end(); it++) {
-    //for (auto it : currEvents) {
+    for (auto& it : currEvents) {
         not_done = true;
-        handleEvent(std::move(*it));
+        handleEvent(std::move(it));
     }
 }
 

@@ -15,6 +15,10 @@ public:
 
     float getPropDelay();
     
+    float getTotalDelay();
+    
+    std::string getOtherNode(std::string);
+    
 private:
     // Maximum queue_size in bits
     float buffer_size;
