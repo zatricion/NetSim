@@ -44,7 +44,13 @@ std::string Router::getRouting(std::string targ_host) {
     return std::get<0>(routing_table[targ_host]);
 }
 
-// Make new event with same packet going to proper link
+void Router::updateRouting(Packet::bf_type bf_table) {
+    for (const auto& it : bf_table) {
+        routing_table;
+    }
+}
+
+// Deal with PacketEvents
 void Router::giveEvent(std::shared_ptr<Event> e) {
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
