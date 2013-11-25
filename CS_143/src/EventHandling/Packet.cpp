@@ -11,7 +11,9 @@ Packet::Packet(std::string id,
                int s,
                bool a,
                int seq,
-               std::string flow_id)
+               std::string flow_id,
+               bool bf,
+               bf_type bf_t)
 {
     uuid = id;
     final_dest = fd;
@@ -20,6 +22,8 @@ Packet::Packet(std::string id,
     ack = a;
     sequence_num = seq;
     flowID = flow_id;
+    bf_tbl_bit = bf;
+    bf_table = bf_t;
 }
 
 // Copy Constructor
@@ -32,12 +36,14 @@ Packet::Packet(const Packet& other)
     ack = other.ack;
     sequence_num = other.sequence_num;
     flowID = other.flowID;
+    bf_tbl_bit = other.bf_tbl_bit;
+    bf_table = other.bf_table;
 }
 
 std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
            ", source=" << source << ", size=" << size << ", ack=" << ack <<
-           ", sequence_num=" << sequence_num << ", flowID=" << flowID << "}.";
+           ", sequence_num=" << sequence_num << ", flowID=" << flowID << " bf_tbl_bit=" << bf_tbl_bit << "}.";
     return fmt.str();
 }

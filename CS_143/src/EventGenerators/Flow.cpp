@@ -21,6 +21,7 @@ Flow::Flow(){
     windowSize = -1;
     timestamp = -1.0;
     numAcked = 0;
+    packetSize = DATA_PKT_SIZE;
 }
 
 /**

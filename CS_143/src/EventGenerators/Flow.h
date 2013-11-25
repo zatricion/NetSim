@@ -12,8 +12,8 @@
 class CongestionAlg;
 class Host;
 
-// packet size is 100KB
-static const int DATA_PKT_SIZE = 100000;
+// data packet size is 1KB
+static const int DATA_PKT_SIZE = 1024 * 8;
 
 class Flow
 {

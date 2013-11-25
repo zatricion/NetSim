@@ -87,7 +87,7 @@ void Host::respondTo(PacketEvent new_event) {
     // We received a packet.  Send an acknowledgment.
     else {
     	auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
-            pkt->final_dest, pkt->size, true, pkt->sequence_num, pkt->flowID);
+            pkt->final_dest, ACK_PKT_SIZE, true, pkt->sequence_num, pkt->flowID);
         //@MaxHorton TODO eventually, we will have to make sure that these
         //events are not all occurring simulatneously (not violating the link
         // rate by sending several events to the link in the span of 1ms).

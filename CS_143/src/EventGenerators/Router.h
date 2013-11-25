@@ -11,6 +11,8 @@
 #include "../EventHandling/PacketEvent.h"
 #include "Host.h"
 
+static const int BF_PKT_SIZE = 1024 * 8;
+
 class Router : public EventGenerator
 {
 public:
@@ -18,7 +20,7 @@ public:
     Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links);
     
     // Bellman-Ford
-    //void updateRouting(Packet);
+    void updateRouting(Packet::bf_type);
     
     // create static routing table
     void addRouting(std::string targ_host, std::string next_link_id, float dist, std::vector<std::string> path);
@@ -34,7 +36,7 @@ public:
 
 private:
     // Routing table maps destination host ids to (id of next link, total distance of path, path)
-    std::unordered_map<std::string, std::tuple<std::string, float, std::vector<std::string> > > routing_table;
+    Packet::bf_type routing_table;
     
     // All links connected to this router
     std::vector<std::string> links;

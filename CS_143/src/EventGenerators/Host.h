@@ -16,6 +16,8 @@ class Flow;
 #include <string>
 #include "../Tools/Log.h"
 
+static const int ACK_PKT_SIZE = 64 * 8;
+
 class Host : public EventGenerator
 {
 public:    

@@ -15,6 +15,16 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
             std::vector<std::string> path {it->getID()};
             addRouting(other_node, it->getID(), it->getTotalDelay(), path);
         }
+        // add only ids of links that connect to routers
+        else {
+            addLink(it->getID());
+        }
+    }
+    // add bf packetEvents to eventHeap
+    for (const auto& it : links) {
+        auto pkt = std::make_shared<Packet>("bf_pkt_" + this->getID(), it, this->getID(), BF_PKT_SIZE, false, 0, "NONE", true, routing_table);
+        auto bf_event = std::make_shared<PacketEvent>(it, this->getID(), 0.0, pkt);
+        eventHeap.push(bf_event);
     }
 }
 
@@ -39,11 +49,18 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
     
-    // strip necessary info out of packet event 
+    // strip necessary info out of packet event
     std::shared_ptr<Packet> pkt = packet_event.packet;
-    std::string dest = getRouting(pkt->final_dest);
-    // make new event
-    auto new_event = std::make_shared<PacketEvent>(dest, this->getID(), packet_event.eventTime(), pkt);
-    // put on event heap
-    eventHeap.push(new_event);
+    
+    if (pkt->bf_tbl_bit) {
+        updateRouting(pkt->bf_table);
+    }
+    else {
+        std::string dest = getRouting(pkt->final_dest);
+        // make new event
+        auto new_event = std::make_shared<PacketEvent>(dest, this->getID(), packet_event.eventTime(), pkt);
+        // put on event heap
+        eventHeap.push(new_event);
+    }
 }
+
