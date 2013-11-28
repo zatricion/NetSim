@@ -65,7 +65,7 @@ runtest: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Tests the objects by running the runtest executable.
-test: runtest
+test: clean runtest
 	./runtest
 
 clean:

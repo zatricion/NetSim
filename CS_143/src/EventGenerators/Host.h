@@ -25,6 +25,9 @@ public:
     // Associates flow IDs with Flow objects.
     std::unordered_map<std::string, std::shared_ptr<Flow> > flows;
 
+    // Keeps track of what information has been received by which flows.
+    std::unordered_map<std::string, std::pair<std::set<int>, Phase>> recvd;
+
     // Constructor
     Host(std::shared_ptr<Link> host_link, std::string host_id);
    
@@ -35,6 +38,7 @@ public:
     void respondTo(PacketEvent);
     void respondTo(FlowEvent);
     void respondTo(UnackEvent);
+    void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
     
     std::string toString();
 };

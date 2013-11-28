@@ -16,7 +16,7 @@ void CongestionAlg::initialize(Flow* flow) {
         // The packet corresponding to the sent data.
         // TODO what should the IDs be?  Why do they even have IDs?
         auto p = std::make_shared<Packet>(std::to_string(i), flow->destination,
-            flow->source, flow->packetSize, false, i, flow->id);
+            flow->source, flow->packetSize, false, i, flow->id, false, false);
 
         // TODO the timestamps will all be the same, unless we add 
         // some value.  This should be i times the link delay, but we need

@@ -12,6 +12,7 @@
 class CongestionAlg;
 class Host;
 
+enum Phase {SYN, DATA, FIN, DONE};
 // packet size is 100KB
 static const int DATA_PKT_SIZE = 100000;
 
@@ -54,6 +55,9 @@ public:
 
     // number of packets that have been acknowledged
     int numAcked;
+
+    // The current phase we are in.
+    Phase phase;
 
     // Constructors
     Flow();

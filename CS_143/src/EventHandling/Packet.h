@@ -14,6 +14,8 @@ public:
     
     int size;
     bool ack;
+    bool syn;
+    bool fin;
     
     bool bf_tbl_bit;
     // this is a mapping from host_id to path to that host 
@@ -43,7 +45,9 @@ public:
                    int s,
                    bool a,
                    int seq,
-                   std::string flow_id);
+                   std::string flow_id,
+                   bool sync,
+                   bool finish);
     
     // Copy Constructor
     Packet(const Packet& other);

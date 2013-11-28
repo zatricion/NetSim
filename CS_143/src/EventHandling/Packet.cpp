@@ -13,6 +13,8 @@ Packet::Packet()
     ack  = 0;
     sequence_num = -1;
     flowID = "NONE";
+    syn = 0;
+    fin = 0;
 }
 
 // Constructor for most cases.
@@ -30,6 +32,8 @@ Packet::Packet(std::string id,
     ack = a;
     sequence_num = seq;
     flowID = "NONE";
+    syn = 0;
+    fin = 0;
 }
 
 // Constructor for when a packet is generated from a host.  We need the flowID
@@ -40,7 +44,9 @@ Packet::Packet(std::string id,
                int s,
                bool a,
                int seq,
-               std::string flow_id)
+               std::string flow_id,
+               bool sync,
+               bool finish)
 {
     uuid = id;
     final_dest = fd;
@@ -49,6 +55,8 @@ Packet::Packet(std::string id,
     ack = a;
     sequence_num = seq;
     flowID = flow_id;
+    syn = sync;
+    fin = finish;
 }
 
 Packet::Packet(const Packet& other)
@@ -60,12 +68,14 @@ Packet::Packet(const Packet& other)
     ack = other.ack;
     sequence_num = other.sequence_num;
     flowID = other.flowID;
+    syn = other.syn;
+    fin = other.fin;
 }
 
 std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
            ", source=" << source << ", size=" << size << ", ack=" << ack <<
-           ", sequence_num=" << sequence_num << ", flowID=" << flowID << "}.";
+           ", sequence_num=" << sequence_num << ", flowID=" << flowID << ", syn=" << syn << ", fin=" << fin << "}.";
     return fmt.str();
 }

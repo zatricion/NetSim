@@ -69,7 +69,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     // Create the packet, send it
     auto p = std::make_shared<Packet>(std::to_string(nextToSend), 
         flow->destination, flow->source, flow->packetSize, false,
-        nextToSend, flow->id);
+        nextToSend, flow->id, false, false);
     
     auto pe = std::make_shared<PacketEvent>(host->my_link->getID(),
         flow->source, time, p);

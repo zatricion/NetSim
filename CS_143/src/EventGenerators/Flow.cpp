@@ -21,6 +21,7 @@ Flow::Flow(){
     windowSize = -1;
     timestamp = -1.0;
     numAcked = 0;
+    phase = SYN;
 }
 
 /**
@@ -52,6 +53,7 @@ Flow::Flow(std::string idval, std::string dest,
     // now, just use a default.
     waitTime = 500.0;
     numAcked = 0;
+    phase = SYN;
 }
 
 /**
