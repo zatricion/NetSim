@@ -1,4 +1,5 @@
 #include "TCPReno.h"
+#include <algorithm>
 /**
  * Called when a packet has not been acknowledged for waitTime.
  * 
@@ -27,8 +28,23 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     std::shared_ptr<Host> host = flow->host;
 
+    // TODO depracate numAcked.  It's numPackets - unSent.size() - unAcked.size()
+    // Take the diff of the sets.  Set the flow->unAckedPackets to be
+    std::set<int> diff;
+    std::set<int> unAcked = flow->unAckedPackets;
+    std::set<int> acked = pkt->ackSet;
+    std::set_difference(unAcked.begin(), unAcked.end(), acked.begin(), acked.end(), std::inserter(diff, diff.end()));
+    // Set the unAckedPackets to be the difference.
+    flow->unAckedPackets = diff;
+    // Send more packets if applicable.
+    sendManyPackets(flow);
+
+
+
+    /*
     if (flow->numAcked == flow->numPackets || 
         flow->unAckedPackets.count(pkt->sequence_num) == 0) {
+
         // First case: we are already done (received all ACKs).  Do nothing.
         // Send case: this packet was already acknowledged.  Do nothing.
         FILE_LOG(logDEBUG) << "Handled Ack with no-op.";
@@ -57,6 +73,10 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
 
     // Update the window size.  TODO
 
+    sendManyPackets(flow);
+
+    */
+    /*
     // Find the next packet to send.  It should be the packet with the
     // lowest number, that has NOT been sent yet.
     int nextToSend = *(flow->unAckedPackets.rbegin()) + 1;
@@ -81,6 +101,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     auto ue = std::make_shared<UnackEvent>(p, host->my_link->getID(), 
         flow->source, time + flow->waitTime);
     host->addEventToLocalQueue(ue);
+    */
     FILE_LOG(logDEBUG) << "Handled new ack.  Flow:" << flow->toString();
 }
 //TODO other considerations:

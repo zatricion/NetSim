@@ -15,6 +15,7 @@ Packet::Packet()
     flowID = "NONE";
     syn = 0;
     fin = 0;
+    std::set<int> ackSet;
 }
 
 // Constructor for most cases.
@@ -34,6 +35,7 @@ Packet::Packet(std::string id,
     flowID = "NONE";
     syn = 0;
     fin = 0;
+    std::set<int> ackSet;
 }
 
 // Constructor for when a packet is generated from a host.  We need the flowID
@@ -57,6 +59,7 @@ Packet::Packet(std::string id,
     flowID = flow_id;
     syn = sync;
     fin = finish;
+    std::set<int> ackSet;
 }
 
 Packet::Packet(const Packet& other)
@@ -70,6 +73,7 @@ Packet::Packet(const Packet& other)
     flowID = other.flowID;
     syn = other.syn;
     fin = other.fin;
+    ackSet = other.ackSet;
 }
 
 std::string Packet::toString() {

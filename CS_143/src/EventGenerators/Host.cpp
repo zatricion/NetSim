@@ -96,6 +96,7 @@ void Host::respondTo(UnackEvent unack_event) {
     }
 
     else {
+        // It's a data packet.
         FILE_LOG(logDEBUG) << "Host with id=" << uuid << " received an UnackEvent.";
         // Find the appropriate flow, and have it handle the event.
         flows[p->flowID]->handleUnackEvent(p, time);
@@ -121,6 +122,7 @@ void Host::respondTo(PacketEvent new_event) {
         if (pkt->ack) {
             // received syn.ack.  First, we send an ack.  Then, we start            // sending data, and set the mode of the flow to DATA.
             if (flows[pkt->flowID]->phase != DATA) {
+                FILE_LOG(logDEBUG) << "Received a first SYNACK.  On host:" << toString();
                 // This is the first SYN.ACK received.
                 flows[pkt->flowID]->phase = DATA;
                 auto ack = std::make_shared<Packet>("ACK", pkt->source, uuid,
@@ -129,7 +131,9 @@ void Host::respondTo(PacketEvent new_event) {
                     uuid, time, ack);
                 addEventToLocalQueue(pEV);
 
+                FILE_LOG(logDEBUG) << "pre init" << flows[pkt->flowID]->unSentPackets.size();
                 flows[pkt->flowID]->initialize();
+                FILE_LOG(logDEBUG) << "post init" << flows[pkt->flowID]->unSentPackets.size();
             }
         }
         else {
@@ -164,17 +168,16 @@ void Host::respondTo(PacketEvent new_event) {
             // from the source telling us it got our SYNACK.  We don't even have
             // anything to dequeue.
         }
-
-
-
     }
     // We received a packet.  Send an acknowledgment.
     else {
+        recvd[pkt->flowID].first.insert(pkt->sequence_num);
     	auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
             pkt->final_dest, pkt->size, true, pkt->sequence_num, pkt->flowID, false, false);
         //@MaxHorton TODO eventually, we will have to make sure that these
         //events are not all occurring simulatneously (not violating the link
         // rate by sending several events to the link in the span of 1ms).
+        ret->ackSet = recvd[pkt->flowID].first;
     	float ts = new_event.eventTime();
     	auto pEv = std::make_shared<PacketEvent>(my_link->getID(), getID(), ts, ret);
         addEventToLocalQueue(pEv);

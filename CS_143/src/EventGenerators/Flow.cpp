@@ -10,6 +10,7 @@
  */
 Flow::Flow(){
     
+    FILE_LOG(logDEBUG) << "DEFAULT CONSTRUCTING FLOW.";
     host = NULL;
     id = "id";
     source = "source";
@@ -22,6 +23,7 @@ Flow::Flow(){
     timestamp = -1.0;
     numAcked = 0;
     phase = SYN;
+    unSentPackets = std::set<int>();
 }
 
 /**
@@ -30,6 +32,7 @@ Flow::Flow(){
  */
 void Flow::initialize() {
     FILE_LOG(logDEBUG) << "Initializing data stream from flow with id=" << id;
+    FILE_LOG(logDEBUG) << "jjj" << unSentPackets.size();
     a->initialize(this);
 }
 
@@ -54,6 +57,11 @@ Flow::Flow(std::string idval, std::string dest,
     waitTime = 500.0;
     numAcked = 0;
     phase = SYN;
+    unSentPackets = std::set<int>();
+    for (int i = 0; i < numPackets; i++) {
+        unSentPackets.insert(i);
+    }
+    FILE_LOG(logDEBUG) << "USPSize=" << unSentPackets.size();
 }
 
 /**
@@ -99,6 +107,6 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
 std::string Flow::toString() {
     std::stringstream fmt;
     // TODO get the unAckedPackets to print nicely.
-    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", windowSize=" << windowSize << ", packetSize=" << packetSize << ", timestamp=" << timestamp << ", numAcked=" << numAcked << "}";
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", windowSize=" << windowSize << ", packetSize=" << packetSize << ", timestamp=" << timestamp << ", numAcked=" << numAcked << ", USPSize=" << unSentPackets.size() << "}";
     return fmt.str();
 }

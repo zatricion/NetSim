@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <set>
 
 class Packet
 {
@@ -26,6 +27,7 @@ public:
     // If the packet was generated from a Flow in a host, this is the ID of
     // that flow.
     std::string flowID;
+    std::set<int> ackSet;
 
     // Default Constructor
     Packet();

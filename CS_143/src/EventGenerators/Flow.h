@@ -59,6 +59,9 @@ public:
     // The current phase we are in.
     Phase phase;
 
+    // The unsent packets.
+    std::set<int> unSentPackets;
+
     // Constructors
     Flow();
     Flow(std::string idval, std::string dest,
