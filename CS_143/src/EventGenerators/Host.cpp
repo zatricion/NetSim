@@ -53,7 +53,15 @@ void Host::respondTo(FlowEvent flow_event) {
     FILE_LOG(logDEBUG) << "Host with id=" << uuid << " received a FlowEvent.";
     // Get a flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = flow_event.floww;
-    flows[flow_event.floww->id]->initialize();
+
+    // Instead of initializing, we want to start the handshake.
+    auto syn = std::make_shared<Packet>("SYN", flow_event.floww->destination,
+        flow_event.floww->source, flow_event.floww->packetSize, false, -1, 
+        flow_event.floww->id, true, false);
+    sendAndQueueResend(syn, flow_event.eventTime(), 500);
+    
+
+    //flows[flow_event.floww->id]->initialize(); TODO
 }
 
 
@@ -146,7 +154,19 @@ void Host::respondTo(PacketEvent new_event) {
 
     if (pkt->ack)
     {
-    	flows[pkt->flowID]->handleAck(pkt, new_event.eventTime());
+        // There are two cases.
+        if (flows.count(pkt->flowID)) {
+    	    flows[pkt->flowID]->handleAck(pkt, new_event.eventTime());
+        }
+        else {
+            assert(recvd.count(pkt->flowID));
+            // TODO we don't need to do anything.  We just received an ACK
+            // from the source telling us it got our SYNACK.  We don't even have
+            // anything to dequeue.
+        }
+
+
+
     }
     // We received a packet.  Send an acknowledgment.
     else {
