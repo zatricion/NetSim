@@ -59,11 +59,10 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     
     else
     {
-        // TODO: Packets get dropped
     }
-    if (this->getID() == "link1" || this->getID() == "link2") {
-        printf("Link_id: %s, Total_Delay: %f, Time: %f\n", uuid.c_str(), queue_delay + prop_delay, now);
-    }
+//    if (this->getID() == "link1") {
+//       printf("Link_id: %s, Total_Delay: %f, Queue_size: %f, Time: %f\n", uuid.c_str(), queue_delay + prop_delay, queue_size, now);
+//    }
     
     queue_time = now;
 }

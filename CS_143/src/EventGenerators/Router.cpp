@@ -55,18 +55,22 @@ std::string Router::getRouting(std::string targ_host) {
     return std::get<0>(routing_table[targ_host]);
 }
 
-void Router::updateRouting(Packet::bf_type bf_table, std::string link_id) {
+void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::string router) {
     float link_delay = links[link_id]->getTotalDelay();
     
     // DEBUG
     std::ofstream myFile;
     myFile.open("link_test.txt", std::ios::out | std::ios::app);
     // DEBUG
-    
+    printRouting(routing_table, this->getID());
     for (const auto& it : bf_table) {
         std::string host_id = it.first;
         float total_delay = link_delay + std::get<1>(it.second);
-        if (total_delay < std::get<1>(routing_table[host_id])) {
+        float curr_delay = std::get<1>(routing_table[host_id]);
+        
+        //printf("Checking Routing Tables\n");
+        if (total_delay < curr_delay) {
+//            printf("Updating Routing Table\n");
             // check to see if current router is already in other router path
             // to avoid cycles
             std::vector<std::string> other_path = std::get<2>(it.second);
@@ -81,7 +85,8 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id) {
         // DEBUG
         if (this->getID() == "router1" && host_id == "host2") {
         std::string r_str = "Router: " + this->getID() + "\n";
-        std::string delay_str = "Host: " + host_id + " Link: " + std::get<0>(routing_table["host2"]) + " Link_delay " + std::to_string(std::get<1>(routing_table["host2"])) + "\n";
+        std::string delay_str =
+            "Host: " + host_id + " Link: " + std::get<0>(routing_table["host2"]) + " Old Link_delay " + std::to_string(curr_delay) + " Alt Delay " + std::to_string(total_delay) + "\n";
         myFile << r_str;
         myFile << delay_str;
         }
@@ -89,6 +94,8 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id) {
         
     }
     
+    printRouting(bf_table, router);
+    printRouting(routing_table, this->getID() + "_after");
     // DEBUG
     myFile.close();
     // DEBUG
@@ -102,9 +109,8 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     
     // strip necessary info out of packet event
     std::shared_ptr<Packet> pkt = packet_event.packet;
-    
     if (pkt->bf_tbl_bit) {
-        updateRouting(pkt->bf_table, packet_event.source);
+        updateRouting(pkt->bf_table, packet_event.source, pkt->source);
         
         // DEBUG
         std::ofstream myFile;
@@ -130,5 +136,29 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
             eventHeap.push(new_event);
         }
     }
+}
+
+void Router::printRouting(Packet::bf_type r_table, std::string router) {
+    std::ofstream myFile;
+    myFile.open("routing_table_test.txt", std::ios::out | std::ios::app);
+    std::string r_str = "\nRouter: " + router + "\n";
+    myFile << r_str;
+    myFile << "Size of table: " + std::to_string(r_table.size()) + "\n";
+    for (const auto& it : r_table) {
+        std::string host_id = it.first;
+        float curr_delay = std::get<1>(routing_table[host_id]);
+        std::string link_id = std::get<0>(routing_table[host_id]);
+        std::vector<std::string> other_path = std::get<2>(it.second);
+        std::string path = "";
+        for (const auto& p : other_path){
+            path += p + " ";
+        }
+        std::string host_row_str =
+            "Host: " + host_id + "\nLink_ID: " + link_id + "\nLink_delay: " + std::to_string(curr_delay) + "\nOther Path: " + path + "\n";
+        
+        myFile << host_row_str + "\n";
+    }
+    myFile << "===============\n";
+    myFile.close();
 }
 

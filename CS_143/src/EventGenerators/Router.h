@@ -20,7 +20,7 @@ public:
     Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id);
     
     // Bellman-Ford
-    void updateRouting(Packet::bf_type, std::string);
+    void updateRouting(Packet::bf_type, std::string, std::string);
     
     // Broadcast routing table
     void broadcastTable(float timestamp);
@@ -36,6 +36,8 @@ public:
 
     // react to a packet event
     void giveEvent(std::shared_ptr<Event>);
+    
+    void printRouting(Packet::bf_type, std::string);
 
 private:
     // Routing table maps destination host ids to (id of next link, total distance of path, path)
