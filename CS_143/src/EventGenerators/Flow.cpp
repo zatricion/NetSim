@@ -24,6 +24,8 @@ Flow::Flow(){
     numAcked = 0;
     phase = SYN;
     unSentPackets = std::set<int>();
+    renoPhase = SLOWSTART;
+    ssthresh = 20; //TODO pick this.
 }
 
 /**
@@ -51,6 +53,12 @@ Flow::Flow(std::string idval, std::string dest,
     unAckedPackets = std::set<int>();
     windowSize = winSize;
     timestamp = ts;
+    ssthresh = 20;
+    // TODO this CANNOT be merged with unAckedPackets, it serves a separate
+    // purpose.  Don't delete this.  For real, don't delete it.
+    // Maps a packet's sequence number to the number of acks received for that
+    // packet.
+    multiplicityOfAcksReceived = std::map<int, int>();
     
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.

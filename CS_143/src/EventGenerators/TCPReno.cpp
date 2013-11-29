@@ -43,6 +43,36 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
 
 
     /*
+    // Update window size:
+    if (flow->renoPhase == SLOWSTART) { // TODO make sure it was a new ack.
+        flow->windowSize = flow->windowSize + 1;
+        if (flow->windowSize > flow->ssthresh) {
+            flow->renoPhase = CONGESTIONAVOIDANCE;
+            // TODO throw an update event.
+        }
+    }
+
+    
+    else if (flow->renoPhase == CONGESTIONAVOIDANCE) {
+        int seqnum = pkt->sequence_num;
+        if (flow->multiplicityOfAcksReceived.count(seqnum) == 0) {
+            flow->multiplicityOfAcksReceived[seqnum] = 0;
+        }
+        flow->multiplicityOfAcksReceived[seqnum] += 1;
+        if (flow->multiplicityOfAcksReceived[seqnum] >= 4) {
+            flow->multiplicityOfAcksReceived.clear();
+            flow->windowSize /= 2;
+            flow->ssthresh = flow->windowSize;
+            flow->renoPhase = FASTRECOVERY;
+            // TODO this whole algorithm sort of expects GO BACK N, but we're
+            // doing selective acks...  Make sure that things like this are
+            // working properly.
+            // For now, we plow onward.
+        }
+    */
+            
+
+    /*
     if (flow->numAcked == flow->numPackets || 
         flow->unAckedPackets.count(pkt->sequence_num) == 0) {
 

@@ -13,6 +13,7 @@ class CongestionAlg;
 class Host;
 
 enum Phase {SYN, DATA, FIN, DONE};
+enum RenoPhase {SLOWSTART, CONGESTIONAVOIDANCE, FASTRECOVERY};
 // packet size is 100KB
 static const int DATA_PKT_SIZE = 100000;
 
@@ -59,8 +60,17 @@ public:
     // The current phase we are in.
     Phase phase;
 
+    // The phase that the TCP Reno alg. is in.
+    RenoPhase renoPhase;
+
     // The unsent packets.
     std::set<int> unSentPackets;
+
+    //
+    int ssthresh;
+
+    // Keeps track of number of times different acks have been received.
+    std::map<int, int> multiplicityOfAcksReceived;
 
     // Constructors
     Flow();
