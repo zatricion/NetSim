@@ -33,11 +33,19 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     FILE_LOG(logDEBUG) << "Handling an ack.  Packet " << pkt->toString();
     int seqNum = pkt->sequence_num;
 
-    if (seqNum == flow->numPackets - 1) {
+    if (seqNum == flow->numPackets) {
+        // We received an ack that requests a nonexistent packet.  I.e. we sent
+        // the 100th packet (with seqNum 99), and this ack says "100", but there
+        // is no 100th packet to send.  So we're done.
+
+        // We're done sending packets.  Move the window outside of the bounds
+        // of the packets.
+        flow->windowStart = seqNum;
+        flow->windowEnd = seqNum;
         // TODO we need to use FINs, but for now, reaching this point seems
         // like a noble enough goal.
         FILE_LOG(logDEBUG) << "DONE WITH DATA FLOW."; // We might not actually be done.
-        // We appear to still be getting more events after this.
+        // We appear to still be getting more events after this.  TODO
         flow->phase = FIN;
         return;
     }

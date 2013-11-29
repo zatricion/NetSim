@@ -83,7 +83,19 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
 void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
     FILE_LOG(logDEBUG) << "Ack received by flow with id=" << id;
     assert(p->ack);
-    a->handleAck(this, p, time);
+    if (phase == DATA) {
+        a->handleAck(this, p, time);
+    }
+    else if (phase == FIN || phase == DONE) {
+        // TODO
+        if (p->fin) {
+            // TODO
+        }
+        else {
+            FILE_LOG(logDEBUG) << "Received a non-fin ack when in the FIN" <<
+                " or DONE phase.  Do nothing.";
+        }
+    }
 }
 
 
@@ -104,7 +116,7 @@ std::string Flow::toString() {
     setString << "}";
     std::string setElems = setString.str();
 
-    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << "}";
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
     return fmt.str();
 }
 
