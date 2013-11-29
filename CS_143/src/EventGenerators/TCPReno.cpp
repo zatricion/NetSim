@@ -69,6 +69,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // slow start.
             flow->multiplicity = 0;
             flow->renoPhase = FASTRECOVERY;
+            flow->fastWindowEnd = flow->windowEnd;
             flow->frCount += 1;
 
             int oldWindowEnd = flow->windowEnd;
@@ -85,8 +86,11 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
                 flow->unSentPackets.insert(i);
             }
 
-            // Now, we want to do a fast retransmit.
-            for (int i = flow->windowStart; i <= flow->windowEnd; i++) {
+            // Now, we want to do a fast retransmit.  Not clear to me if we
+            // resend all packets, or just the first.  It might just be first.
+            // Hence, the funny "loop"
+            //for (int i = flow->windowStart; i <= flow->windowEnd; i++) {
+            for (int i = flow->windowStart; i == flow->windowStart; i++) {
                 // TODO not 0.
                 auto p = std::make_shared<Packet>("FRETRANS", flow->destination,
                     flow->source, 0, false, i, flow->id, false, false);
@@ -118,7 +122,10 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     } // end CONGESTIONAVOIDANCE block;
 
     else if (flow->renoPhase == FASTRECOVERY) {
-        if (seqNum <= flow->windowEnd && seqNum > flow->windowStart) {
+        //if (seqNum <= flow->windowEnd && seqNum > flow->windowStart) {
+        if (seqNum > flow->fastWindowEnd) {
+            // We have received acks for everything in the window.  Recovery
+            // was successful.
             flow->renoPhase = CONGESTIONAVOIDANCE;
             flow->cavCount += 1;
 
@@ -130,6 +137,10 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // Now, do what we normally would in the CONGESTIONAVOIDANCE phase.
             handleAck(flow, pkt, time);
         }
+        // Otherwise, we haven't received acks for everything in the window.
+        // continue to wait for more acks or the TimeoutEvent, whichever comes
+        // first.  (We don't want to congest the network by sending more packets
+        // at this time).  TODO are we supposed to send packets?  It's unclear.
     }
 }
 

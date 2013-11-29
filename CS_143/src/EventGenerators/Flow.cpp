@@ -41,6 +41,7 @@ Flow::Flow(std::string idval, std::string dest,
     windowEnd = winSize - 1;
     cavCount = 0;
     frCount = 0;
+    fastWindowEnd = -1;
 }
 
 

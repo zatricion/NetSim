@@ -73,6 +73,9 @@ public:
     // Counter for TCPReno.
     int cavCount;
 
+    // Counter for TCPReno.
+    int fastWindowEnd;
+
     // Constructors
     Flow(std::string idval, std::string dest,
              std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
