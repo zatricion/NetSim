@@ -72,6 +72,15 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
     // update the delays of the links in our path before updating paths
     updateTableWeights(bf_table);
     
+    // update neighboring links
+    for (const auto& li : links) {
+        float delay = li.second->getTotalDelay();
+        for (auto& bf : routing_table) {
+            bf.second.updateLinkWeight(li.first, delay);
+        }
+    }
+    
+    printRouting(routing_table, this->getID() + "_table_update");
     // Delay of link to other router
     float link_delay = links[link_id]->getTotalDelay();
     
@@ -128,9 +137,8 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
 void Router::updateTableWeights(Packet::bf_type other_table) {
     for (const auto& it : other_table) {
         std::string host_id = it.first;
-        Path this_path = routing_table[host_id];
         Path other_path = it.second;
-        this_path.updateAll(other_path);
+        routing_table[host_id].updateAll(other_path);
     }
 }
 
