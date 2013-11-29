@@ -27,7 +27,6 @@ Host::Host(std::shared_ptr<Link> host_link, std::string host_id) :
  * @param e the event to be processed
  */
 void Host::giveEvent(std::shared_ptr<Event> e) {
-    FILE_LOG(logDEBUG4) << "Host with id=" << uuid << " received an event.";
     std::string type = e->getType();
     if (type == "PACKET_EVENT") {
         respondTo(*(std::static_pointer_cast<PacketEvent>(e)));

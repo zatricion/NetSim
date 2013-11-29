@@ -11,12 +11,14 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
+    FILE_LOG(logDEBUG) << "Handling UnackEvent for packet " << 
+        unacked->toString() << ".  Flow:" << flow->toString();
     auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
         flow->source, time, unacked);
     
     // TODO this is the correct behavior, right?
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
-    FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow:" << flow->toString();
+    FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << flow->toString();
 }
 
 
@@ -28,13 +30,15 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
  * @param time the time at which the event was received
  */
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
-    // TODO the fast recovery part is not exactly correct.
+    FILE_LOG(logDEBUG) << "Handling an ack.  Packet " << pkt->toString();
     int seqNum = pkt->sequence_num;
 
     if (seqNum == flow->numPackets - 1) {
         // TODO we need to use FINs, but for now, reaching this point seems
         // like a noble enough goal.
-        FILE_LOG(logDEBUG) << "DONE WITH DATA FLOW.";
+        FILE_LOG(logDEBUG) << "DONE WITH DATA FLOW."; // We might not actually be done.
+        // We appear to still be getting more events after this.
+        flow->phase = FIN;
         return;
     }
 
@@ -145,8 +149,10 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
 }
 
 void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
+    FILE_LOG(logDEBUG) << "handling RenoUpdate.";
     if (cavCount == flow->cavCount &&
-        flow->renoPhase == CONGESTIONAVOIDANCE) {
+        flow->renoPhase == CONGESTIONAVOIDANCE &&
+        flow->phase == DATA) {
         
         // Increase the window size by 1
         flow->windowEnd = std::min(flow->windowEnd + 1, flow->numPackets - 1);
@@ -160,6 +166,7 @@ void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
 }
 
 void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
+    FILE_LOG(logDEBUG) << "handling TimeoutEvent.";
     if (frCount == flow->frCount &&
         flow->renoPhase == FASTRECOVERY) {
         // Reduce window size to 1

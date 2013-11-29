@@ -55,8 +55,6 @@ Flow::Flow(std::string idval, std::string dest,
  * waitTime after the initial packet was sent.
  */
 void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
-    FILE_LOG(logDEBUG4) << "Flow is handling an UnackEvent.  FlowID=" << id;
-
     int seqNum = unacked->sequence_num;
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
@@ -90,7 +88,7 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
 
 
 /**
- * Represent the packed as a string.
+ * Represent the packet as a string.
  *
  * @return a string representing the packet
  */
@@ -102,8 +100,6 @@ std::string Flow::toString() {
     for (auto it = unSentPackets.begin(); it != unSentPackets.end(); it++) {
         setString << *it << ", ";
         if (*it % 20 == 0) { setString << "\n"; }
-        //std::cout << "read";
-        //std::cout << *it;
     }
     setString << "}";
     std::string setElems = setString.str();
