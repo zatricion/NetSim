@@ -20,7 +20,10 @@ static const int DATA_PKT_SIZE = 100000;
 class Flow
 {
 public:
+    // Using go back N, this is the start of the window (inclusive).
     int windowStart;
+
+    // Using go back N, this is the end of the window (inclusive).
     int windowEnd;
     // Host that owns the flow
     std::shared_ptr<Host> host;
@@ -40,24 +43,14 @@ public:
     // Total number of packets in the flow.
     int numPackets;
 
-    // set of all packets that have been sent, but not acknowledged
-    std::set<int> unAckedPackets;
-
     // How long the flow will wait before sending another packet.
     float waitTime;
-
-    // window size
-    int windowSize;
 
     // packet size
     int packetSize;
 
-    // Time when the flow is generated.  Used to create a small set
-    // of Events.
+    // Time when the flow is generated.
     float timestamp;
-
-    // number of packets that have been acknowledged
-    int numAcked;
 
     // The current phase we are in.
     Phase phase;
@@ -68,15 +61,13 @@ public:
     // The unsent packets.
     std::set<int> unSentPackets;
 
-    //
+    // Counter for TCPReno.
     int ssthresh;
 
-    // Keeps track of number of times different acks have been received.
-    std::map<int, int> multiplicityOfAcksReceived;
+    // Counter for TCPReno.
     int multiplicity;
 
     // Constructors
-    Flow();
     Flow(std::string idval, std::string dest,
              std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
              int winSize, float ts);
@@ -92,7 +83,7 @@ public:
 
     std::string toString();
         
-    void initialize();
+    void initialize(float time);
 };
 
 #endif /* defined(__CS_143_Flow__) */
