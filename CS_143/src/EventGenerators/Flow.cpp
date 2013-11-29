@@ -17,7 +17,7 @@ Flow::Flow(){
     destination = "destination";
     a = NULL;
     numPackets = 0;
-    std::set<int> acknowledgedPackets;
+    //acknowledgedPackets = std::set<int>();
     std::queue<Packet> flow;
     windowSize = -1;
     timestamp = -1.0;
@@ -48,7 +48,7 @@ Flow::Flow(std::string idval, std::string dest,
     destination = dest;
     a = alg;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    std::set<int> unAckedPackets;
+    unAckedPackets = std::set<int>();
     windowSize = winSize;
     timestamp = ts;
     
@@ -80,9 +80,13 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
     // If the packet has not been acknowledged...
     if (unAckedPackets.count(seqNum)) {
         FILE_LOG(logDEBUG) << "Packet unacknowledged.  Better resend.";
+        FILE_LOG(logDEBUG) << "Packet was:" << unacked->toString();
         a->handleUnackEvent(this, unacked, time);
     }
-    FILE_LOG(logDEBUG) << "Ack had already been received.";
+    else {
+        FILE_LOG(logDEBUG) << "Ack had already been received.";
+        FILE_LOG(logDEBUG) << "unSentPackets.size()=" << unSentPackets.size();
+    }
     // Otherwise, do nothing.
 }
 
@@ -105,8 +109,29 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
  * @return a string representing the packet
  */
 std::string Flow::toString() {
+    
     std::stringstream fmt;
+    std::stringstream setString;
+    setString << "{unSentPackets: ";
+    for (auto it = unSentPackets.begin(); it != unSentPackets.end(); it++) {
+        setString << *it << ", ";
+        if (*it % 20 == 0) { setString << "\n"; }
+        //std::cout << "read";
+        //std::cout << *it;
+    }
+    setString << "}";
+    std::string setElems = setString.str();
+
+    std::stringstream unAckedString; 
+    unAckedString << "{unAckedPackets: ";
+    for (auto it = unAckedPackets.begin(); it != unAckedPackets.end(); it++) {
+        unAckedString << *it << ", ";
+        if (*it % 20 == 0) { unAckedString << "\n"; }
+    }
+    unAckedString << "}";
+    std::string unAckedElems = unAckedString.str();
+
     // TODO get the unAckedPackets to print nicely.
-    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", windowSize=" << windowSize << ", packetSize=" << packetSize << ", timestamp=" << timestamp << ", numAcked=" << numAcked << ", USPSize=" << unSentPackets.size() << "}";
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", windowSize=" << windowSize << ", packetSize=" << packetSize << ", timestamp=" << timestamp << ", numAcked=" << numAcked << ", " << setElems << ", " << unAckedElems << "}";
     return fmt.str();
 }

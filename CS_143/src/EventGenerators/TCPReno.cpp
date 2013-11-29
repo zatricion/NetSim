@@ -39,6 +39,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     // Send more packets if applicable.
     sendManyPackets(flow);
 
+    FILE_LOG(logDEBUG) << "Handled new ack, sequence_num=" << pkt->sequence_num << ".  Flow:" << flow->toString();
 
 
     /*
@@ -101,8 +102,8 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     auto ue = std::make_shared<UnackEvent>(p, host->my_link->getID(), 
         flow->source, time + flow->waitTime);
     host->addEventToLocalQueue(ue);
-    */
     FILE_LOG(logDEBUG) << "Handled new ack.  Flow:" << flow->toString();
+    */
 }
 //TODO other considerations:
 // sometimes we will add more than one event, upon receiving an ack (if our

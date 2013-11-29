@@ -153,17 +153,21 @@ void Host::respondTo(PacketEvent new_event) {
     }
 
     else {
-    // Non-syn packet.
+    // Data packet.
 
 
-    if (pkt->ack)
-    {
+    if (pkt->ack) {
+        FILE_LOG(logDEBUG) << "Received an ack.";
         // There are two cases.
         if (flows.count(pkt->flowID)) {
+            // The receiver of the ack is the sending end of the flow.
     	    flows[pkt->flowID]->handleAck(pkt, new_event.eventTime());
         }
         else {
+            // The receiver of the ack is the receiving end of the flow.
+            // Do nothing.
             assert(recvd.count(pkt->flowID));
+            FILE_LOG(logDEBUG) << "Handled ack with noop.";
             // TODO we don't need to do anything.  We just received an ACK
             // from the source telling us it got our SYNACK.  We don't even have
             // anything to dequeue.
