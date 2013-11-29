@@ -40,12 +40,9 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
     if (queue_size + packet_event.packet->size < buffer_size)
     {
-        queue_delay = (queue_size + packet_event.packet->size) / capacity;
-        if (this->getID() == "link1")
-            std::cout << "Link 1 Delay " << getTotalDelay() << std::endl;
-        
-        if (this->getID() == "link2")
-            std::cout << "Link 2 Delay " << getTotalDelay() << std::endl;
+//        queue_delay = (queue_size + packet_event.packet->size) / capacity;
+//        if (this->getID() == "link0")
+//            std::cout << "Link 0 Delay " << getTotalDelay() << " Time: " << now << std::endl;
         
         // Add propagation and queue delay to current time to get event time
         float timestamp = now + prop_delay + queue_delay;
@@ -64,6 +61,9 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     
     else
     {
+        if (this->getID() == "link0") {
+            printf("DROPPED PKT");
+        }
     }
 //    if (this->getID() == "link1") {
 //       printf("Link_id: %s, Total_Delay: %f, Queue_size: %f, Time: %f\n", uuid.c_str(), queue_delay + prop_delay, queue_size, now);

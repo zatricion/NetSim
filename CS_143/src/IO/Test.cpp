@@ -78,7 +78,7 @@ void simTest1()
     Handler handler = Handler();
     
     // add links
-    auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
+    auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 0.25 * pow(10, 3),
                                         "host1", "router1", "link0");
     auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
                                         "router1", "router2", "link1");

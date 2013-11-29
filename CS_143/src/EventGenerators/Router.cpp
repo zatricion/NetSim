@@ -21,10 +21,7 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
             path.updateLinkWeight(it->getID(), it->getTotalDelay());
             addRouting(other_node, path);
         }
-        // add only links that connect to routers
-        else {
-            addLink(it);
-        }
+        addLink(it);
     }
     // add bf packetEvents to eventHeap
     broadcastTable(0.0);
@@ -42,6 +39,9 @@ void Router::broadcastTable(float timestamp) {
     // send BF table
     for (const auto& it : links) {
         // get connected router
+//        if (this->getID() == "router1" && it.first == "link2") {
+//            printf("Link 0 delay = %f\n", it.second->getTotalDelay());
+//        }
         std::string other_node = it.second->getOtherNode(this->getID());
         auto pkt = std::make_shared<Packet>("bf_pkt_" + this->getID(), other_node, this->getID(), BF_PKT_SIZE, false, 0, "NONE", true, routing_table);
         auto bf_event = std::make_shared<PacketEvent>(it.first, this->getID(), timestamp, pkt);

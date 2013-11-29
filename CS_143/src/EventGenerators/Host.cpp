@@ -80,7 +80,10 @@ void Host::respondTo(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
     FILE_LOG(logDEBUG) << "Packet contents:" << pkt->toString();
     
-    if (pkt->ack)
+    if (pkt->bf_tbl_bit) {
+        // DO NOTHING
+    }
+    else if (pkt->ack)
     {
     	flows[pkt->flowID]->handleAck(pkt, new_event.eventTime());
     }
