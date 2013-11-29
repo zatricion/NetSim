@@ -28,6 +28,7 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
  * @param time the time at which the event was received
  */
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
+    // TODO the fast recovery part is not exactly correct.
     int seqNum = pkt->sequence_num;
 
     if (seqNum == flow->numPackets - 1) {
@@ -75,7 +76,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // Halve the window size.
             int windowSize = flow->windowEnd - flow->windowStart + 1;
             windowSize /= 2;
-            flow->windowEnd = flow->windowStart + windowSize;
+            flow->windowEnd = flow->windowStart + windowSize - 1;
 
             // All the packets that were just cut out of the transmission
             // window need to be added to the list of unsent packets, so they
@@ -110,7 +111,6 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // after adjusting the window bounds.
         
             int windowSize = flow->windowEnd - flow->windowStart + 1;
-            // increase window size by 1
             flow->windowStart = seqNum;
             flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
             sendManyPackets(flow, time);
@@ -151,8 +151,17 @@ void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
 void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
     if (frCount == flow->frCount &&
         flow->renoPhase == FASTRECOVERY) {
-        // Couldn't recover.
-        //flow->
-        std::cout << "FROWN"; // TODO you implemented these update things a bit wrong.
+        // Reduce window size to 1
+        int oldWindowEnd = flow->windowEnd;
+        int windowSize = 1;
+        flow->windowEnd = flow->windowStart + windowSize - 1;
+        // All the packets that were just cut out of the transmission
+        // window need to be added to the list of unsent packets, so they
+        // aren't forgotten.
+        for (int i = flow->windowEnd + 1; i <= oldWindowEnd; i++) {
+            flow->unSentPackets.insert(i);
+        }
+
+        flow->renoPhase = SLOWSTART;
     }
 }
