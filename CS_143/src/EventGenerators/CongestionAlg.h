@@ -12,7 +12,7 @@ class CongestionAlg
 public:
     // TODO these names suck.
     void initialize(Flow* flow);
-    void sendManyPackets(Flow* flow);
+    void sendManyPackets(Flow* flow, float time);
     virtual void handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) = 0;
     virtual void handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) = 0;
 };

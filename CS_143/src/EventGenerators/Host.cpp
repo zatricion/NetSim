@@ -40,6 +40,7 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
     }
     else {
         assert (false);
+        // This should be where we add code for reno update events.
     }
 }
 
@@ -168,6 +169,7 @@ void Host::respondTo(PacketEvent new_event) {
             // Do nothing.
             assert(recvd.count(pkt->flowID));
             FILE_LOG(logDEBUG) << "Handled ack with noop.";
+            // TODO should never happen for data packets.
             // TODO we don't need to do anything.  We just received an ACK
             // from the source telling us it got our SYNACK.  We don't even have
             // anything to dequeue.
@@ -175,9 +177,10 @@ void Host::respondTo(PacketEvent new_event) {
     }
     // We received a packet.  Send an acknowledgment.
     else {
+        // TODO choose the sequence number more carefully.
         recvd[pkt->flowID].first.insert(pkt->sequence_num);
     	auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
-            pkt->final_dest, pkt->size, true, pkt->sequence_num, pkt->flowID, false, false);
+            pkt->final_dest, pkt->size, true, pkt->sequence_num + 1, pkt->flowID, false, false);
         //@MaxHorton TODO eventually, we will have to make sure that these
         //events are not all occurring simulatneously (not violating the link
         // rate by sending several events to the link in the span of 1ms).

@@ -1,4 +1,5 @@
 #include "TCPReno.h"
+#include "../EventHandling/TCPRenoUpdateEvent.h"
 #include <algorithm>
 /**
  * Called when a packet has not been acknowledged for waitTime.
@@ -8,7 +9,6 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
-    // the new PacketEvent to be queued
     auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
         flow->source, time, unacked);
     
@@ -27,19 +27,89 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
  */
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     std::shared_ptr<Host> host = flow->host;
+    int seqNum = pkt->sequence_num;
+    if (seqNum == flow->numPackets - 1) {
+        // TODO
+        FILE_LOG(logDEBUG) << "DONEEEEE.";
+        return;
+    }
 
-    // TODO depracate numAcked.  It's numPackets - unSent.size() - unAcked.size()
-    // Take the diff of the sets.  Set the flow->unAckedPackets to be
-    std::set<int> diff;
-    std::set<int> unAcked = flow->unAckedPackets;
-    std::set<int> acked = pkt->ackSet;
-    std::set_difference(unAcked.begin(), unAcked.end(), acked.begin(), acked.end(), std::inserter(diff, diff.end()));
-    // Set the unAckedPackets to be the difference.
-    flow->unAckedPackets = diff;
-    // Send more packets if applicable.
-    sendManyPackets(flow);
+    if (flow->renoPhase == SLOWSTART) {
+        int windowSize = flow->windowEnd - flow->windowStart + 1;
+        // increase window size by 1
+        windowSize += 1;
+        flow->windowStart = seqNum;
+        flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
+        sendManyPackets(flow, time);
+        if (windowSize > flow->ssthresh) {
+            flow->renoPhase = CONGESTIONAVOIDANCE;
+        }
+        return;
+    }
+
+    else if (flow->renoPhase == CONGESTIONAVOIDANCE) {
+    if (seqNum == flow->windowStart) {
+        flow->multiplicity += 1;
+        if (flow->multiplicity >= 3) { // TODO make sure you're in correct state
+            flow->multiplicity = 0;
+            flow->renoPhase = FASTRECOVERY;
+            int oldWindowEnd = flow->windowEnd;
+            int windowSize = flow->windowEnd - flow->windowStart + 1;
+            windowSize /= 2;
+            flow->windowSize /= 2;
+            flow->windowEnd = flow->windowStart + windowSize;
+            // All the packets that were just cut out of the transmission
+            // window need to be added to the list of unsent packets, so they
+            // aren't forgotten.
+            for (int i = flow->windowEnd + 1; i <= oldWindowEnd; i++) {
+                flow->unSentPackets.insert(i);
+            }
+            // Now, we want to do a fast retransmit.
+            for (int i = flow->windowStart; i <= flow->windowEnd; i++) {
+                auto p = std::make_shared<Packet>("FRETRANS", flow->destination, flow->source, 0, false, i, flow->id, false, false); //TODO not 0
+                auto pEV = std::make_shared<PacketEvent>(flow->host->my_link->getID(), flow->host->getID(), time, p);
+                flow->host->addEventToLocalQueue(pEV);
+                // Don't add resend.
+            }
+
+            // TODO increase windowsize by 1 every rtt.
+            auto timeout = std::make_shared<TCPRenoUpdateEvent>(flow->host->getID(), flow->host->getID(), time, flow->windowStart);
+            flow->host->addEventToLocalQueue(timeout);
+        }
+        else {
+            
+        int windowSize = flow->windowEnd - flow->windowStart + 1;
+        // increase window size by 1
+        flow->windowStart = seqNum;
+        flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
+        sendManyPackets(flow, time);
+        if (windowSize > flow->ssthresh) {
+            flow->renoPhase = CONGESTIONAVOIDANCE;
+        }
+        }
+        return;
+    }}
+
+    else if (flow->renoPhase == FASTRECOVERY) {
+        flow->renoPhase = CONGESTIONAVOIDANCE;
+        return;
+    }
+            
+
 
     FILE_LOG(logDEBUG) << "Handled new ack, sequence_num=" << pkt->sequence_num << ".  Flow:" << flow->toString();
+
+
+    // Take the diff of the sets.  Set the flow->unAckedPackets to be
+    //std::set<int> diff;
+    //std::set<int> unAcked = flow->unAckedPackets;
+    //std::set<int> acked = pkt->ackSet;
+    //std::set_difference(unAcked.begin(), unAcked.end(), acked.begin(), acked.end(), std::inserter(diff, diff.end()));
+    // Set the unAckedPackets to be the difference.
+    //flow->unAckedPackets = diff;
+    // Send more packets if applicable.
+    //sendManyPackets(flow);
+
 
 
     /*

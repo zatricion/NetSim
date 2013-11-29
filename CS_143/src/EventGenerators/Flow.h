@@ -20,6 +20,8 @@ static const int DATA_PKT_SIZE = 100000;
 class Flow
 {
 public:
+    int windowStart;
+    int windowEnd;
     // Host that owns the flow
     std::shared_ptr<Host> host;
 
@@ -71,6 +73,7 @@ public:
 
     // Keeps track of number of times different acks have been received.
     std::map<int, int> multiplicityOfAcksReceived;
+    int multiplicity;
 
     // Constructors
     Flow();

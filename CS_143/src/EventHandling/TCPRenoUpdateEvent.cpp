@@ -3,14 +3,15 @@
 
 // Constructor
 
-TCPRenoUpdateEvent::TCPRenoUpdateEvent(std::string dest, std::string src, float ts) : Event(dest, src, ts) {
+TCPRenoUpdateEvent::TCPRenoUpdateEvent(std::string dest, std::string src, float ts, int start) : Event(dest, src, ts) {
+    windowStart = start;
 }
 
 std::string TCPRenoUpdateEvent::printEvent()
 {
     std::stringstream fmt;
     fmt << "{TCPRenoUpdateEVENT: source=" << source << "destination=" <<
-        destination << "}.";
+        destination << ", start=" << windowStart << "}.";
     return fmt.str();
 }
 

@@ -7,8 +7,9 @@
 class TCPRenoUpdateEvent : public Event
 {
 public:
-    TCPRenoUpdateEvent(std::string dest, std::string src, float ts);
+    TCPRenoUpdateEvent(std::string dest, std::string src, float ts, int start);
 //    Event(std::string dest, std::string src, float ts);
+    int windowStart;
     
     virtual std::string printEvent();
     virtual std::string getType();

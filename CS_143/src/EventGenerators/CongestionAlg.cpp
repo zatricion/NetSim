@@ -12,7 +12,8 @@ void CongestionAlg::initialize(Flow* flow) {
     // At the outset, add a number of events equal to the window size.
     // Unless window size is less than number of packets.
     FILE_LOG(logDEBUG) << "Initializing flow:" << flow->toString();
-    sendManyPackets(flow);
+    // TODO
+    sendManyPackets(flow, 500);
     
 /*
     int end = std::min(windowSize, flow->numPackets);
@@ -47,7 +48,24 @@ void CongestionAlg::initialize(Flow* flow) {
  * Sends packets until the unAckedPackets list has a length equal to the window
  * size.
  */
-void CongestionAlg::sendManyPackets(Flow* flow) {
+void CongestionAlg::sendManyPackets(Flow* flow, float time) {
+    // TODO 
+    // Send every packet within the transmission window that has never been
+    // sent before.
+    for (int i = flow->windowStart; i <= flow->windowEnd; i++) {
+        if (flow->unSentPackets.count(i) == 1) {
+            // He has not been sent before.  Let's send him, and queue a resend.
+        flow->unSentPackets.erase(i);
+        auto p = std::make_shared<Packet>(std::to_string(i), flow->destination, flow->source, flow->packetSize, false, i, flow->id, false, false);
+        // TODO what time should they be at??  We're fucked.
+        flow->host->sendAndQueueResend(p, time, flow->waitTime);
+    }
+}
+
+
+
+    /*
+
     FILE_LOG(logDEBUG) << "unAckedPackets.size() " << flow->unAckedPackets.size();
     FILE_LOG(logDEBUG) << "unSentPackets.size() " << flow->unSentPackets.size();
     while ((int) flow->unAckedPackets.size() < flow->windowSize && flow->unSentPackets.size() > 0) {
@@ -77,4 +95,5 @@ void CongestionAlg::sendManyPackets(Flow* flow) {
     FILE_LOG(logDEBUG) << "Done sending packet.  AFTERWARDS:";
     FILE_LOG(logDEBUG) << "unAckedPackets.size() " << flow->unAckedPackets.size();
     FILE_LOG(logDEBUG) << "unSentPackets.size() " << flow->unSentPackets.size();
+    */
 }

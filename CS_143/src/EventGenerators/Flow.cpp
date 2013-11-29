@@ -34,7 +34,6 @@ Flow::Flow(){
  */
 void Flow::initialize() {
     FILE_LOG(logDEBUG) << "Initializing data stream from flow with id=" << id;
-    FILE_LOG(logDEBUG) << "jjj" << unSentPackets.size();
     a->initialize(this);
 }
 
@@ -59,6 +58,7 @@ Flow::Flow(std::string idval, std::string dest,
     // Maps a packet's sequence number to the number of acks received for that
     // packet.
     multiplicityOfAcksReceived = std::map<int, int>();
+    multiplicity = 0;
     
     // TODO this should be calculated by the algorithm, or something.  For
     // now, just use a default.
@@ -70,6 +70,8 @@ Flow::Flow(std::string idval, std::string dest,
         unSentPackets.insert(i);
     }
     FILE_LOG(logDEBUG) << "USPSize=" << unSentPackets.size();
+    windowStart = 0;
+    windowEnd = windowSize - 1;
 }
 
 /**
@@ -86,14 +88,18 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
 
     int seqNum = unacked->sequence_num;
     // If the packet has not been acknowledged...
-    if (unAckedPackets.count(seqNum)) {
+    //if (unAckedPackets.count(seqNum)) {
+    if (seqNum >= windowStart) {
+        // For go back N, just retransmit, as long as the packet is within
+        // the window.
+        assert(seqNum <= windowEnd);
         FILE_LOG(logDEBUG) << "Packet unacknowledged.  Better resend.";
         FILE_LOG(logDEBUG) << "Packet was:" << unacked->toString();
         a->handleUnackEvent(this, unacked, time);
     }
     else {
         FILE_LOG(logDEBUG) << "Ack had already been received.";
-        FILE_LOG(logDEBUG) << "unSentPackets.size()=" << unSentPackets.size();
+        //FILE_LOG(logDEBUG) << "unSentPackets.size()=" << unSentPackets.size();
     }
     // Otherwise, do nothing.
 }
