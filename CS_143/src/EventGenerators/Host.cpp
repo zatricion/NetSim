@@ -38,6 +38,14 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
     else if (type == "UNACK_EVENT") {
         respondTo(*(std::static_pointer_cast<UnackEvent>(e)));
     }
+    else if (type == "TCP_RENO_UPDATE_EVENT") {
+        TCPRenoUpdateEvent t = *(std::static_pointer_cast<TCPRenoUpdateEvent>(e));
+        flows[t.flowID]->handleRenoUpdate(t.congAvCount, t.eventTime());
+    }
+    else if (type == "TIMEOUT_EVENT") {
+        TimeoutEvent t = *(std::static_pointer_cast<TimeoutEvent>(e));
+        flows[t.flowID]->handleTimeout(t.fastRecoveryCount, t.eventTime());
+    }
     else {
         assert (false);
         // This should be where we add code for reno update events.  TODO

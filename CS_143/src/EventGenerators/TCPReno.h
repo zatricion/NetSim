@@ -15,6 +15,8 @@ class TCPReno : public CongestionAlg
 public:
     void handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) override;
     void handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) override;
+    void handleTimeout(Flow* flow, int frCount, float time);
+    void handleRenoUpdate(Flow* flow, int cavCount, float time);
 };
 
 #endif /* defined(__CS_143__TCP_Reno__) */

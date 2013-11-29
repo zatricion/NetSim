@@ -67,6 +67,12 @@ public:
     // Counter for TCPReno.
     int multiplicity;
 
+    // Counter for TCPReno.
+    int frCount;
+
+    // Counter for TCPReno.
+    int cavCount;
+
     // Constructors
     Flow(std::string idval, std::string dest,
              std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
@@ -77,6 +83,8 @@ public:
     // when the event is handled, we check to see if it has been acknowledged.
     // If so, we have a no-op.  If not, resend.
     void handleUnackEvent(std::shared_ptr<Packet> unacked, float time);
+    void handleRenoUpdate(int cavCount, float time);
+    void handleTimeout(int frCount, float time);
     
     // Called when an ack is received.
     void handleAck(std::shared_ptr<Packet> p, float time);

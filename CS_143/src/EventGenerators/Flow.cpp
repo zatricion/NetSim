@@ -1,6 +1,7 @@
 #include "Flow.h"
 #include "Host.h"
 #include "CongestionAlg.h"
+#include "TCPReno.h"
 #include <cassert>
 #include <math.h>
 #include "../Tools/Log.h"
@@ -38,6 +39,8 @@ Flow::Flow(std::string idval, std::string dest,
     }
     windowStart = 0;
     windowEnd = winSize - 1;
+    cavCount = 0;
+    frCount = 0;
 }
 
 
@@ -106,4 +109,13 @@ std::string Flow::toString() {
 
     fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << "}";
     return fmt.str();
+}
+
+void Flow::handleRenoUpdate(int cavCount, float time) {
+
+    (std::static_pointer_cast<TCPReno>(a))->handleRenoUpdate(this, cavCount, time);
+}
+
+void Flow::handleTimeout(int frCount, float time) {
+    (std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
 }

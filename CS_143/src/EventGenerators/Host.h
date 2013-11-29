@@ -11,6 +11,8 @@ class Flow;
 #include "../EventHandling/FlowEvent.h"
 #include "Flow.h"
 #include "../EventHandling/UnackEvent.h"
+#include "../EventHandling/TCPRenoUpdateEvent.h"
+#include "../EventHandling/TimeoutEvent.h"
 #include <unordered_set>
 #include <unordered_map>
 #include <string>

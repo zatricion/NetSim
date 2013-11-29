@@ -2,7 +2,7 @@ CC=g++-4.8
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm
 
-OBJECTS = build/Test.o build/Packet.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o
+OBJECTS = build/Test.o build/Packet.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o
 SOURCE = src/IO/Test.cpp
 
 all: simulator
@@ -61,6 +61,9 @@ build/TCPReno.o: src/EventGenerators/TCPReno.cpp src/EventGenerators/TCPReno.h s
 
 build/TCPRenoUpdateEvent.o: src/EventHandling/TCPRenoUpdateEvent.cpp src/EventHandling/TCPRenoUpdateEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/TCPRenoUpdateEvent.o
+
+build/TimeoutEvent.o: src/EventHandling/TimeoutEvent.cpp src/EventHandling/TimeoutEvent.h
+	$(CC) $(CFLAGS) -c $< -o build/TimeoutEvent.o
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)

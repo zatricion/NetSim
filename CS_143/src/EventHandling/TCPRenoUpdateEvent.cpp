@@ -3,19 +3,22 @@
 
 // Constructor
 
-TCPRenoUpdateEvent::TCPRenoUpdateEvent(std::string dest, std::string src, float ts, int start) : Event(dest, src, ts) {
-    windowStart = start;
+TCPRenoUpdateEvent::TCPRenoUpdateEvent(std::string dest, std::string src,
+    float ts, int cavCount, std::string id) : Event(dest, src, ts) {
+
+    congAvCount = cavCount;
+    flowID = id;
 }
 
 std::string TCPRenoUpdateEvent::printEvent()
 {
     std::stringstream fmt;
     fmt << "{TCPRenoUpdateEVENT: source=" << source << "destination=" <<
-        destination << ", start=" << windowStart << "}.";
+        destination << ", start=" << congAvCount << "}.";
     return fmt.str();
 }
 
 std::string TCPRenoUpdateEvent::getType()
 {
-    return "TCPRenoUpdateEVENT";
+    return "TCP_RENO_UPDATE_EVENT";
 }

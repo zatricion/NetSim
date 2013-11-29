@@ -7,9 +7,10 @@
 class TCPRenoUpdateEvent : public Event
 {
 public:
-    TCPRenoUpdateEvent(std::string dest, std::string src, float ts, int start);
+    TCPRenoUpdateEvent(std::string dest, std::string src, float ts, int cavCount, std::string id);
 //    Event(std::string dest, std::string src, float ts);
-    int windowStart;
+    int congAvCount;
+    std::string flowID;
     
     virtual std::string printEvent();
     virtual std::string getType();

@@ -1,4 +1,5 @@
 #include "TCPReno.h"
+#include "../EventHandling/TimeoutEvent.h"
 #include "../EventHandling/TCPRenoUpdateEvent.h"
 #include <algorithm>
 
@@ -47,8 +48,13 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         sendManyPackets(flow, time);
         if (windowSize > flow->ssthresh) {
             flow->renoPhase = CONGESTIONAVOIDANCE;
+            flow->cavCount += 1;
+            // Create an update event, in which the window size
+            // increments once every RTT.
+            auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
+                flow->source, time + flow->waitTime, flow->cavCount, flow->id);
+            flow->host->addEventToLocalQueue(up);
         }
-        return;
     }
 
     else if (flow->renoPhase == CONGESTIONAVOIDANCE) {
@@ -62,6 +68,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // slow start.
             flow->multiplicity = 0;
             flow->renoPhase = FASTRECOVERY;
+            flow->frCount += 1;
 
             int oldWindowEnd = flow->windowEnd;
 
@@ -92,9 +99,9 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // Now, we add a timeout event.  If we don't get any acks from our
             // fast retransmit, the timeout event will fire and we go back to
             // slow start.
-            auto timeout = std::make_shared<TCPRenoUpdateEvent>(
+            auto timeout = std::make_shared<TimeoutEvent>(
                 flow->host->getID(), flow->host->getID(), time, 
-                flow->windowStart);
+                flow->frCount, flow->id);
             flow->host->addEventToLocalQueue(timeout);
         }
 
@@ -107,24 +114,45 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             flow->windowStart = seqNum;
             flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
             sendManyPackets(flow, time);
-            if (windowSize > flow->ssthresh) {
-                flow->renoPhase = CONGESTIONAVOIDANCE;
-            }
         }
-        return;
     } // end CONGESTIONAVOIDANCE block;
 
     else if (flow->renoPhase == FASTRECOVERY) {
-        flow->renoPhase = CONGESTIONAVOIDANCE;
-        return;
+        if (seqNum <= flow->windowEnd && seqNum > flow->windowStart) {
+            flow->renoPhase = CONGESTIONAVOIDANCE;
+            flow->cavCount += 1;
+
+            // Set up updates for every RTT
+            auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
+                flow->source, time + flow->waitTime, flow->cavCount, flow->id);
+            flow->host->addEventToLocalQueue(up);
+
+            // Now, do what we normally would in the CONGESTIONAVOIDANCE phase.
+            handleAck(flow, pkt, time);
+        }
     }
-            
-
-
-    FILE_LOG(logDEBUG) << "Handled new ack, sequence_num=" << pkt->sequence_num << ".  Flow:" << flow->toString();
-
 }
-//TODO other considerations:
-// sometimes we will add more than one event, upon receiving an ack (if our
-// window size changes.  I don't think we will ever add an event without
-// receiving an ack, right...?
+
+void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
+    if (cavCount == flow->cavCount &&
+        flow->renoPhase == CONGESTIONAVOIDANCE) {
+        
+        // Increase the window size by 1
+        flow->windowEnd = std::min(flow->windowEnd + 1, flow->numPackets - 1);
+        sendManyPackets(flow, time);
+        
+        // Schedule another update
+        auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
+            flow->source, time + flow->waitTime, flow->cavCount, flow->id);
+        flow->host->addEventToLocalQueue(up);
+    }
+}
+
+void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
+    if (frCount == flow->frCount &&
+        flow->renoPhase == FASTRECOVERY) {
+        // Couldn't recover.
+        //flow->
+        std::cout << "FROWN"; // TODO you implemented these update things a bit wrong.
+    }
+}
