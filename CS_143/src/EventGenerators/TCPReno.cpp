@@ -42,11 +42,17 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         // of the packets.
         flow->windowStart = seqNum;
         flow->windowEnd = seqNum;
-        // TODO we need to use FINs, but for now, reaching this point seems
-        // like a noble enough goal.
+
         FILE_LOG(logDEBUG) << "DONE WITH DATA FLOW."; // We might not actually be done.
         // We appear to still be getting more events after this.  TODO
         flow->phase = FIN;
+        // We need to send a FIN to the other host.
+        auto fin = std::make_shared<Packet>("FIN", flow->destination,
+            flow->source, pkt->size, false, -1, flow->id, false, true);
+        auto finEvent = std::make_shared<PacketEvent>(
+            flow->host->my_link->getID(), flow->host->getID(), time, fin);
+        flow->host->addEventToLocalQueue(finEvent);
+            
         return;
     }
 
