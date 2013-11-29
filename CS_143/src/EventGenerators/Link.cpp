@@ -44,6 +44,9 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         if (this->getID() == "link1")
             std::cout << "Link 1 Delay " << getTotalDelay() << std::endl;
         
+        if (this->getID() == "link2")
+            std::cout << "Link 2 Delay " << getTotalDelay() << std::endl;
+        
         // Add propagation and queue delay to current time to get event time
         float timestamp = now + prop_delay + queue_delay;
         

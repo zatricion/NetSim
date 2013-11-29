@@ -10,6 +10,7 @@
 #include "../EventHandling/Packet.h"
 #include "../EventHandling/PacketEvent.h"
 #include "Host.h"
+#include "Path.h"
 
 static const int BF_PKT_SIZE = 1024 * 8;
 
@@ -26,7 +27,7 @@ public:
     void broadcastTable(float timestamp);
     
     // add route to routing table
-    void addRouting(std::string targ_host, std::string next_link_id, float dist, std::vector<std::string> path);
+    void addRouting(std::string targ_host, Path path);
     
     // add a link to the router
     void addLink(std::shared_ptr<Link> link);

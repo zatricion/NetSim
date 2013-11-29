@@ -5,11 +5,12 @@
 #include <map>
 #include <vector>
 #include <unordered_map>
+#include "../EventGenerators/Path.h"
 
 class Packet
 {
 public:
-    typedef std::unordered_map<std::string, std::tuple<std::string, float, std::vector<std::string> > > bf_type;
+    typedef std::unordered_map<std::string, Path>  bf_type;
     
     std::string uuid;
     std::string final_dest;

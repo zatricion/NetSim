@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm
 
-OBJECTS = build/Test.o build/Packet.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o
 SOURCE = src/IO/Test.cpp
 
 all: simulator
@@ -11,10 +11,13 @@ simulator: runtest # TODO this will compile and create the actual program.
                    # For now, we will just generate the test file.
 
 # Individual Object dependencies
-build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h
+build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Test.o 
+
+build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h  
+	$(CC) $(CFLAGS) -c $< -o build/Path.o 
     
-build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h
+build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Packet.o
     
 build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/CongestionAlg.h src/EventGenerators/Host.h
