@@ -69,17 +69,17 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
 
     printRouting(routing_table, this->getID() + "_before");
     
+    // Delay of link to other router
+    float link_delay = links[link_id]->getTotalDelay();
+    
     for (const auto& it : bf_table) {
         std::string host_id = it.first;
         
         Path other_path = it.second;
         
-        // Delay of link to other router
-        float link_delay = links[link_id]->getTotalDelay();
-        
         // Delay along the other path
         float other_delay = other_path.getTotalDelay();
-
+        
         // Delay along the current path
         float curr_delay = routing_table[host_id].getTotalDelay();
         
