@@ -36,6 +36,8 @@ public:
     
     void updateLinkWeight(std::string link, float delay);
     
+    void updateAll(const Path& other);
+    
     bool hasCycle(std::string link);
     
     std::string getNextLink() const;

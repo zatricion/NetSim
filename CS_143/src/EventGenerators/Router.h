@@ -38,6 +38,9 @@ public:
     // react to a packet event
     void giveEvent(std::shared_ptr<Event>);
     
+    // update the link weights in a routing table
+    void updateTableWeights(Packet::bf_type);
+    
     void printRouting(Packet::bf_type, std::string);
 
 private:

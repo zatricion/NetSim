@@ -40,7 +40,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
     if (queue_size + packet_event.packet->size < buffer_size)
     {
-//        queue_delay = (queue_size + packet_event.packet->size) / capacity;
+        queue_delay = (queue_size + packet_event.packet->size) / capacity;
 //        if (this->getID() == "link0")
 //            std::cout << "Link 0 Delay " << getTotalDelay() << " Time: " << now << std::endl;
         

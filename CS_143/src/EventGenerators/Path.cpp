@@ -32,6 +32,16 @@ void Path::updateLinkWeight(std::string link, float delay) {
     }
 };
 
+void Path::updateAll(const Path& other) {
+    for (auto &it : link_vec) {
+        for (auto &ot : other.link_vec) {
+            if (std::get<0>(it) == std::get<0>(ot)) {
+                std::get<1>(it) = std::get<1>(ot);
+            }
+        }
+    }
+};
+
 bool Path::hasCycle(std::string link) {
     for (auto &it : link_vec) {
         if (std::get<0>(it) == link) {
