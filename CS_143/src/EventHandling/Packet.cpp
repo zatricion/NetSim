@@ -13,8 +13,7 @@ Packet::Packet(std::string id,
                int seq,
                std::string flow_id,
                bool sync,
-               bool finish)
-               std::string flow_id,
+               bool finish,
                bool bf,
                bf_type bf_t)
 {

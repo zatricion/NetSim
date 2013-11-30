@@ -164,8 +164,11 @@ void Host::respondTo(PacketEvent new_event) {
     FILE_LOG(logDEBUG1) << "Packet contents:" << pkt->toString();
     float time = new_event.eventTime();
     
-
-    if (pkt->syn) {
+    if (pkt->bf_tbl_bit) {
+        // Do nothing
+    }
+    
+    else if (pkt->syn) {
         if (pkt->ack) {
             // received syn.ack.  First, we send an ack.  Then, we start
             // sending data, and set the mode of the flow to DATA.
@@ -291,7 +294,7 @@ void Host::respondTo(PacketEvent new_event) {
             }
     	    auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
                 pkt->final_dest, ACK_SIZE, true, ackNum, 
-                pkt->flowID, false, false);
+                pkt->flowID, false, false, false);
             ret->ackSet = recvd[pkt->flowID].first;
     	    float ts = new_event.eventTime();
     	    auto pEv = std::make_shared<PacketEvent>(my_link->getID(), getID(),

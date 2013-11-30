@@ -43,8 +43,7 @@ public:
                    int seq,
                    std::string flow_id,
                    bool sync,
-                   bool finish);
-                   std::string flow_id,
+                   bool finish,
                    bool bf = false,
                    bf_type bf_table = bf_type());
     

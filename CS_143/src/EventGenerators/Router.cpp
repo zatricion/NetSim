@@ -44,7 +44,16 @@ void Router::broadcastTable(float timestamp) {
 //            printf("Link 0 delay = %f\n", it.second->getTotalDelay());
 //        }
         std::string other_node = it.second->getOtherNode(this->getID());
-        auto pkt = std::make_shared<Packet>("bf_pkt_" + this->getID(), other_node, this->getID(), BF_PKT_SIZE, false, 0, "NONE", true, routing_table);
+        auto pkt = std::make_shared<Packet>("bf_pkt_" + this->getID(),
+                                            other_node, this->getID(),
+                                            BF_PKT_SIZE,
+                                            false,
+                                            0,
+                                            "NONE",
+                                            false,
+                                            false,
+                                            true,
+                                            routing_table);
         auto bf_event = std::make_shared<PacketEvent>(it.first, this->getID(), timestamp, pkt);
         eventHeap.push(bf_event);
     }
