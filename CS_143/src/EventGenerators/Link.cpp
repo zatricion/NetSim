@@ -29,8 +29,11 @@ std::string Link::getOtherNode(std::string my_node) {
 }
 
 void Link::logLinkRate(float time) {
-    auto it = std::begin(packets_on_link);
-    while (it != std::end(packets_on_link)) {
+    if (packets_on_link.empty()) {
+        return;
+    }
+    auto it = packets_on_link.begin();
+    for( ; it != packets_on_link.end(); ++it) {
         int packet_size = std::get<0>(*it);
         float on_link_time = std::get<1>(*it);
         float off_link_time = std::get<2>(*it);
