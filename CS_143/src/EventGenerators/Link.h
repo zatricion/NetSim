@@ -19,6 +19,8 @@ public:
     
     std::string getOtherNode(std::string);
     
+    void logLinkRate(float);
+    
 private:
     // Maximum queue_size in bits
     float buffer_size;
@@ -39,7 +41,10 @@ private:
     std::string node2;
     
     // Timestamp for which the queue is current
-    float queue_time;
+    float link_time;
+    
+    // Tuples (pkt_size, on_link_time, off_link_time)
+    std::vector<std::tuple<int, float, float> > packets_on_link;
 };
 
 #endif /* defined(__CS_143__Link__) */

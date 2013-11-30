@@ -68,7 +68,7 @@ std::string Router::getRouting(std::string targ_host) {
 
 void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::string router) { // router is for debugging
 
-    printRouting(routing_table, this->getID() + "_before");
+//    printRouting(routing_table, this->getID() + "_before");
     
     // update the delays of the links in our path before updating paths
     updateTableWeights(bf_table);
@@ -81,7 +81,9 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
         }
     }
     
-    printRouting(routing_table, this->getID() + "_table_update");
+    if (this->getID() == "router1" || this->getID() == "router4") {
+        printRouting(routing_table, this->getID() + "_table_update");
+    }
     // Delay of link to other router
     float link_delay = links[link_id]->getTotalDelay();
     
@@ -107,8 +109,10 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
         }
     }
     
-    printRouting(bf_table, router);
-    printRouting(routing_table, this->getID() + "_after");
+    if (this->getID() == "router1" || this->getID() == "router4") {
+        printRouting(bf_table, router);
+        printRouting(routing_table, this->getID() + "_after");
+    }
 }
 
 // Deal with PacketEvents

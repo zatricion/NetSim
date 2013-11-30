@@ -14,7 +14,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     node2 = n2;
     uuid = link_id;
     buffer_size = buf_size;
-    queue_time = 0;
+    link_time = 0;
     queue_delay = 0;
     queue_size = 0;
 }
@@ -28,6 +28,35 @@ std::string Link::getOtherNode(std::string my_node) {
     return (my_node == node1) ? node2 : node1;
 }
 
+void Link::logLinkRate(float time) {
+    auto it = std::begin(packets_on_link);
+    while (it != std::end(packets_on_link)) {
+        int packet_size = std::get<0>(*it);
+        float on_link_time = std::get<1>(*it);
+        float off_link_time = std::get<2>(*it);
+        
+        // If the previous time we logged this is greater than the off_link time,
+        // just remove this
+        if (off_link_time < link_time) {
+            it = packets_on_link.erase(it);
+        }
+        // Otherwise we add the number of bits sent between now and link_time to our counter
+        else if (on_link_time <= time) {
+            float start = std::max(link_time, on_link_time);
+            float end = std::min(time, off_link_time);
+            
+            float bits_sent = packet_size * ((end - start) / (off_link_time - on_link_time));
+            
+            // calculate link rate
+            float link_rate = bits_sent / (time - link_time);
+            
+            // TODO: Johno, log this instead of returning
+            // return std::make_tuple(link_rate, time);
+        }
+    }
+
+}
+
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
     // Get PacketEvent
@@ -37,7 +66,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     float now = packet_event.eventTime();
     
     // Queue size in bits
-    queue_size = std::max<float>(0, queue_size - (now - queue_time) * capacity);
+    queue_size = std::max<float>(0, queue_size - (now - link_time) * capacity);
     if (queue_size + packet_event.packet->size < buffer_size)
     {
         queue_delay = (queue_size + packet_event.packet->size) / capacity;
@@ -55,21 +84,23 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         auto packetEvent = std::make_shared<PacketEvent>(destination, uuid, timestamp, packet_event.packet);
         eventHeap.push(packetEvent);
         
+        // Add packet to packets_on_link
+        packets_on_link.push_back(std::make_tuple(packet_event.packet->size, now + queue_delay, timestamp));
+        
         // Update queue size
         queue_size += packet_event.packet->size;
+        
+        // Log the link rate
+        logLinkRate(now);
     }
     
     else
     {
-        if (this->getID() == "link0") {
-            printf("DROPPED PKT");
-        }
+        // TODO: Johno, Log dropped pkts for each link
     }
-//    if (this->getID() == "link1") {
-//       printf("Link_id: %s, Total_Delay: %f, Queue_size: %f, Time: %f\n", uuid.c_str(), queue_delay + prop_delay, queue_size, now);
-//    }
     
-    queue_time = now;
+    // Update link_time
+    link_time = now;
 }
 
 float Link::getPropDelay() {

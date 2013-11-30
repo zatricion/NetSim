@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
             endingLineNumber = "49"
-            landmarkName = "Router::addRouting(std::string host_id, std::string next_link_id, float dist, std::vector&lt;std::string&gt; path)"
+            landmarkName = "Router::broadcastTable(float timestamp)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -86,7 +86,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/EventGenerators/Link.cpp"
@@ -110,9 +110,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "Router::printRouting(Packet::bf_type r_table, std::string router)"
-            landmarkType = "5">
+            endingLineNumber = "146">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -126,8 +124,22 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "Router::printRouting(Packet::bf_type r_table, std::string router)"
+            endingLineNumber = "147">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/EventGenerators/Router.cpp"
+            timestampString = "407387706.094074"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "Router::Router(std::vector&lt;std::string&gt; host_list, std::vector&lt;std::shared_ptr&lt;Link&gt; &gt; neighboring_links, std::string router_id, std::vector&lt;std::shared_ptr&lt;Link&gt; &gt; d_links)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
