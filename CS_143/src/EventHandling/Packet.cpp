@@ -3,41 +3,6 @@
 #include <string>
 #include <sstream>
 
-// Default constructor.
-Packet::Packet()
-{
-    uuid = "none";
-    final_dest = "none";
-    source = "none";
-    size = 0;
-    ack  = 0;
-    sequence_num = -1;
-    flowID = "NONE";
-    syn = 0;
-    fin = 0;
-    std::set<int> ackSet;
-}
-
-// Constructor for most cases.
-Packet::Packet(std::string id,
-               std::string fd,
-               std::string src,
-               int s,
-               bool a,
-               int seq)
-{
-    uuid = id;
-    final_dest = fd;
-    source = src;    
-    size = s;
-    ack = a;
-    sequence_num = seq;
-    flowID = "NONE";
-    syn = 0;
-    fin = 0;
-    std::set<int> ackSet;
-}
-
 // Constructor for when a packet is generated from a host.  We need the flowID
 // of the flow from which the packet was derived.
 Packet::Packet(std::string id,
@@ -49,6 +14,9 @@ Packet::Packet(std::string id,
                std::string flow_id,
                bool sync,
                bool finish)
+               std::string flow_id,
+               bool bf,
+               bf_type bf_t)
 {
     uuid = id;
     final_dest = fd;
@@ -60,8 +28,11 @@ Packet::Packet(std::string id,
     syn = sync;
     fin = finish;
     std::set<int> ackSet;
+    bf_tbl_bit = bf;
+    bf_table = bf_t;
 }
 
+// Copy Constructor
 Packet::Packet(const Packet& other)
 {
     uuid = other.uuid;
@@ -74,12 +45,14 @@ Packet::Packet(const Packet& other)
     syn = other.syn;
     fin = other.fin;
     ackSet = other.ackSet;
+    bf_tbl_bit = other.bf_tbl_bit;
+    bf_table = other.bf_table;
 }
 
 std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
            ", source=" << source << ", size=" << size << ", ack=" << ack <<
-           ", sequence_num=" << sequence_num << ", flowID=" << flowID << ", syn=" << syn << ", fin=" << fin << "}.";
+           ", sequence_num=" << sequence_num << ", flowID=" << flowID << " bf_tbl_bit=" << bf_tbl_bit << "}.";
     return fmt.str();
 }

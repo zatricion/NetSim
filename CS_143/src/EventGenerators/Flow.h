@@ -18,6 +18,8 @@ static const int DATA_PKT_SIZE = 1024;
 static const int ACK_SIZE = 64;
 static const int SYN_SIZE = 64;
 static const int FIN_SIZE = 64;
+// data packet size is 1KB
+static const int DATA_PKT_SIZE = 1024 * 8;
 
 class Flow
 {

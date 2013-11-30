@@ -16,7 +16,7 @@ int main()
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest0();
+    simTest1();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
 }
@@ -68,5 +68,81 @@ void simTest0()
         handler.step();
     }
 
+    FILE_LOG(logINFO) << "Simulator passed tests!";
+}
+
+
+void simTest1()
+{
+    FILE_LOG(logDEBUG) << "Constructing Network Objects.";
+    Handler handler = Handler();
+    
+    // add links
+    auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
+                                        "host1", "router1", "link0");
+    auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+                                        "router1", "router2", "link1");
+    auto link2 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+                                        "router1", "router3", "link2");
+    auto link3 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+                                        "router2", "router4", "link3");
+    auto link4 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+                                        "router3", "router4", "link4");
+    auto link5 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
+                                        "router4", "host2", "link5");
+    
+    // add congestion control algorithm
+    auto ccAlg = std::make_shared<TCPReno>();
+    
+    // add hosts
+    auto host1 = std::make_shared<Host>(link0, "host1");
+    auto host2 = std::make_shared<Host>(link5, "host2");
+    
+    // create host list
+    std::vector<std::string> host_list;
+    host_list.push_back(host1->getID());
+    host_list.push_back(host2->getID());
+    
+    // create routers
+    auto router1 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link0, link1, link2}, "router1", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    auto router2 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link1, link3}, "router2", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    auto router3 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link2, link4}, "router3", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    
+    // add flow
+    auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
+                                        (20 * 8 * pow(10, 6)), host1, 10, 0.5);
+    
+    std::vector<std::shared_ptr<Flow> > flow_list;
+    flow_list.push_back(flow1);
+    
+    auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
+    
+    FILE_LOG(logDEBUG) << "Adding Network Objects to handler.";
+    handler.addGenerator(link0);
+    handler.addGenerator(link1);
+    handler.addGenerator(link2);
+    handler.addGenerator(link3);
+    handler.addGenerator(link4);
+    handler.addGenerator(link5);
+    
+    handler.addGenerator(host1);
+    handler.addGenerator(host2);
+    
+    handler.addGenerator(router1);
+    handler.addGenerator(router2);
+    handler.addGenerator(router3);
+    handler.addGenerator(router4);
+
+    handler.addGenerator(flow_g);
+    
+    FILE_LOG(logDEBUG) << "Running simulation.";
+    int i = 1000;
+    while(i > 0) // handler.running()
+    {
+        handler.step();
+        i--;
+    }
+    
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

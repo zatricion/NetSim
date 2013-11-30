@@ -36,10 +36,10 @@ float Handler::getMinTime() {
 void Handler::populateCurrentEvents(float minTime) {
     // WARNING: will clear out currEvents...is that desired behavior?
     currEvents.clear();
-    for (auto it = genMap.begin(); it != genMap.end(); it++) {
+    for (const auto& it : genMap) {
         // check to see if current EG has event at desired time, add if so
-        if (it->second->hasEvents() && it->second->getNextTime() == minTime) {
-            currEvents.push_back(it->second->getEvent());
+        if (it.second->hasEvents() && it.second->getNextTime() == minTime) {
+            currEvents.push_back(it.second->getEvent());
         }
     }
 }
@@ -47,11 +47,9 @@ void Handler::populateCurrentEvents(float minTime) {
 // handle all events in current events queue
 void Handler::processCurrentEvents() {
     not_done = false;
-    //assert(false);
-    for (auto it = currEvents.begin(); it != currEvents.end(); it++) {
-    //for (auto it : currEvents) {
+    for (auto& it : currEvents) {
         not_done = true;
-        handleEvent(std::move(*it));
+        handleEvent(std::move(it));
     }
 }
 

@@ -5,21 +5,33 @@
 
 #include <unordered_map>
 #include <string>
+#include <algorithm>
+#include <limits>
 #include "../EventHandling/Packet.h"
 #include "../EventHandling/PacketEvent.h"
 #include <sstream>
+#include "Host.h"
+#include "Path.h"
+
+static const int BF_PKT_SIZE = 1024 * 8;
 
 class Router : public EventGenerator
 {
 public:
-    // Bellman-Ford
-    //void updateRouting(Packet);
+    // Constructor
+    Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id, std::vector<std::shared_ptr<Link> > debug_links);
     
-    // create static routing table
-    void addRouting(std::string targ_host, std::string targ_link);
+    // Bellman-Ford
+    void updateRouting(Packet::bf_type, std::string, std::string);
+    
+    // Broadcast routing table
+    void broadcastTable(float timestamp);
+    
+    // add route to routing table
+    void addRouting(std::string targ_host, Path path);
     
     // add a link to the router
-    void addLink(std::string link_id);
+    void addLink(std::shared_ptr<Link> link);
 
     // get proper routing given host id
     std::string getRouting(std::string targ_host);
@@ -27,13 +39,20 @@ public:
     // react to a packet event
     void giveEvent(std::shared_ptr<Event>);
     std::string toString();
+    
+    // update the link weights in a routing table
+    void updateTableWeights(Packet::bf_type);
+    
+    void printRouting(Packet::bf_type, std::string);
 
 private:
-    // Routing table maps destination host ids to link ids
-    std::unordered_map<std::string, std::string> routing_table;
+    // Routing table maps destination host ids to (id of next link, total distance of path, path)
+    Packet::bf_type routing_table;
     
     // All links connected to this router
-    std::vector<std::string> links;
+    std::unordered_map<std::string, std::shared_ptr<Link> > links;
+    
+    std::vector<std::shared_ptr<Link> > debug_links;
 };
 
 

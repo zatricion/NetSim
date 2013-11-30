@@ -24,5 +24,6 @@
 int main();
 void packetTest();
 void simTest0();
+void simTest1();
 
 #endif
