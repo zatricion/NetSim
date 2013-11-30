@@ -2,9 +2,10 @@
 #include <fstream>
 
 // Constructor
-Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id) {
+Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id, std::vector<std::shared_ptr<Link> > d_links) {
     // set id
     uuid = router_id;
+    debug_links = d_links;
     
     // initialize table
     for (const auto& it : host_list) {
@@ -148,6 +149,9 @@ void Router::printRouting(Packet::bf_type r_table, std::string router) {
     std::string r_str = "\nRouter: " + router + "\n";
     myFile << r_str;
     myFile << "Size of table: " + std::to_string(r_table.size()) + "\n";
+    for (const auto& q : debug_links) {
+        myFile << q->getID().c_str() << " delay: " << std::to_string(q->getTotalDelay()) + "\n";
+    }
     for (const auto& it : r_table) {
         std::string host_id = it.first;
         Path other_path = it.second;

@@ -78,7 +78,7 @@ void simTest1()
     Handler handler = Handler();
     
     // add links
-    auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 0.25 * pow(10, 3),
+    auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
                                         "host1", "router1", "link0");
     auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
                                         "router1", "router2", "link1");
@@ -104,10 +104,10 @@ void simTest1()
     host_list.push_back(host2->getID());
     
     // create routers
-    auto router1 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link0, link1, link2}, "router1");
-    auto router2 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link1, link3}, "router2");
-    auto router3 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link2, link4}, "router3");
-    auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4");
+    auto router1 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link0, link1, link2}, "router1", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    auto router2 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link1, link3}, "router2", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    auto router3 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link2, link4}, "router3", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
+    auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
     
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,

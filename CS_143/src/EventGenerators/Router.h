@@ -18,7 +18,7 @@ class Router : public EventGenerator
 {
 public:
     // Constructor
-    Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id);
+    Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id, std::vector<std::shared_ptr<Link> > debug_links);
     
     // Bellman-Ford
     void updateRouting(Packet::bf_type, std::string, std::string);
@@ -49,6 +49,8 @@ private:
     
     // All links connected to this router
     std::unordered_map<std::string, std::shared_ptr<Link> > links;
+    
+    std::vector<std::shared_ptr<Link> > debug_links;
 };
 
 
