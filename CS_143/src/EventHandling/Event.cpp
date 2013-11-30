@@ -16,7 +16,7 @@ float Event::eventTime() const {
 }
 
 
-std::string Event::printEvent()
+std::string Event::toString()
 {
     std::stringstream fmt;
     fmt << "{EVENT: source=" << source << "destination=" <<

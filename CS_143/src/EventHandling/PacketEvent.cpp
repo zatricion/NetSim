@@ -7,11 +7,12 @@ PacketEvent::PacketEvent(std::string dest, std::string src, float ts, std::share
     packet = pkt;
 }
 
-std::string PacketEvent::printEvent()
+std::string PacketEvent::toString()
 {
     std::stringstream fmt;
-    fmt << "{PKT EVENT: source=" << source << "destination=" <<
-        destination << "}.";
+    fmt << "{PKT EVENT: source=" << source << ", destination=" <<
+        destination << ", timestamp=" << timestamp << ", packet=" << 
+        packet->toString() << "}.";
     return fmt.str();
     
 }

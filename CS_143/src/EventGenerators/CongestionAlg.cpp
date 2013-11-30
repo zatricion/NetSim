@@ -24,7 +24,7 @@ void CongestionAlg::sendManyPackets(Flow* flow, float time) {
             // He has not been sent before.  Let's send him, and queue a resend.
             flow->unSentPackets.erase(i);
             auto p = std::make_shared<Packet>(std::to_string(i), 
-                flow->destination, flow->source, flow->packetSize,
+                flow->destination, flow->source, DATA_PKT_SIZE,
                 false, i, flow->id, false, false);
         flow->host->sendAndQueueResend(p, time, flow->waitTime);
         }

@@ -2,6 +2,7 @@
 #include <cassert>
 #include <iostream>
 #include <algorithm> // std::max
+#include <sstream>
 
 // Link Methods
 
@@ -59,4 +60,10 @@ void Link::giveEvent(std::shared_ptr<Event> e)
 
 float Link::getPropDelay() {
     return prop_delay;
+}
+
+std::string Link::toString() {
+    std::stringstream fmt;
+    fmt << "{LINK: uuid=" << uuid << ", prop_delay=" << prop_delay << ", capacity=" << capacity << ", node1=" << node1 << ", node2=" << ", buffer_size=" << buffer_size << "}";
+    return fmt.str();
 }

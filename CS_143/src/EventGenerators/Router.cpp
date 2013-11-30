@@ -29,3 +29,9 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     // put on event heap
     eventHeap.push(new_event);
 }
+
+std::string Router::toString() {
+    std::stringstream fmt;
+    fmt << "{Router: uuid=" << uuid << "}";
+    return fmt.str();
+}

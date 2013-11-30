@@ -10,15 +10,14 @@ TCPRenoUpdateEvent::TCPRenoUpdateEvent(std::string dest, std::string src,
     flowID = id;
 }
 
-std::string TCPRenoUpdateEvent::printEvent()
-{
+std::string TCPRenoUpdateEvent::toString() {
     std::stringstream fmt;
-    fmt << "{TCPRenoUpdateEVENT: source=" << source << "destination=" <<
-        destination << ", start=" << congAvCount << "}.";
+    fmt << "{TCPRenoUpdateEVENT: source=" << source << ", destination=" <<
+        destination << ", start=" << congAvCount << ", timestamp=" << timestamp
+        << "}.";
     return fmt.str();
 }
 
-std::string TCPRenoUpdateEvent::getType()
-{
+std::string TCPRenoUpdateEvent::getType() {
     return "TCP_RENO_UPDATE_EVENT";
 }

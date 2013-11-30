@@ -11,7 +11,7 @@
  * do.
  */
 void Flow::initialize(float time) {
-    FILE_LOG(logDEBUG) << "Initializing data stream from flow with id=" << id;
+    FILE_LOG(logDEBUG1) << "Initializing data stream from flow with id=" << id;
     a->initialize(this, time);
 }
 
@@ -63,12 +63,13 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
     if (seqNum >= windowStart && seqNum <= windowEnd) {
         // For go back N, just retransmit, as long as the packet is within
         // the window.
-        FILE_LOG(logDEBUG) << "Packet unacknowledged.  Better resend.";
-        FILE_LOG(logDEBUG) << "Packet was:" << unacked->toString();
+        FILE_LOG(logDEBUG1) << "Packet unacknowledged.  Better resend.";
+        FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
+            ", time=" << time;
         a->handleUnackEvent(this, unacked, time);
     }
     else {
-        FILE_LOG(logDEBUG) << "No action on UnackEvent.";
+        FILE_LOG(logDEBUG1) << "No action on UnackEvent.";
     }
 }
 
@@ -81,20 +82,17 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param time the time at which the ack is received
  */
 void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
-    FILE_LOG(logDEBUG) << "Ack received by flow with id=" << id;
+    FILE_LOG(logDEBUG1) << "Ack received by flow with id=" << id;
     assert(p->ack);
     if (phase == DATA) {
         a->handleAck(this, p, time);
     }
     else if (phase == FIN || phase == DONE) {
-        // TODO
-        if (p->fin) {
-            // TODO
-        }
-        else {
-            FILE_LOG(logDEBUG) << "Received a non-fin ack when in the FIN" <<
+            FILE_LOG(logDEBUG1) << "Received a non-fin ack when in the FIN" <<
                 " or DONE phase.  Do nothing.";
-        }
+    }
+    else {
+        assert(false); // SYNACKs should not call this function.
     }
 }
 
@@ -105,7 +103,7 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
  * @return a string representing the packet
  */
 std::string Flow::toString() {
-    
+
     std::stringstream fmt;
     std::stringstream setString;
     setString << "{unSentPackets: ";
@@ -121,7 +119,6 @@ std::string Flow::toString() {
 }
 
 void Flow::handleRenoUpdate(int cavCount, float time) {
-
     (std::static_pointer_cast<TCPReno>(a))->handleRenoUpdate(this, cavCount, time);
 }
 

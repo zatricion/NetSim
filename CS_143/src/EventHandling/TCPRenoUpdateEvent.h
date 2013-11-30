@@ -12,7 +12,7 @@ public:
     int congAvCount;
     std::string flowID;
     
-    virtual std::string printEvent();
+    virtual std::string toString();
     virtual std::string getType();
     
 protected:

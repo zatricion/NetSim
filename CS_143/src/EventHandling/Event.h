@@ -13,7 +13,7 @@ public:
     std::string destination;
     std::string source;
     
-    virtual std::string printEvent();
+    virtual std::string toString();
     virtual std::string getType();
     
 protected:

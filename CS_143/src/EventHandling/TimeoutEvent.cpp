@@ -11,8 +11,8 @@ TimeoutEvent::TimeoutEvent(std::string dest, std::string src, float ts, int frCo
 std::string TimeoutEvent::printEvent()
 {
     std::stringstream fmt;
-    fmt << "{TimeoutEvent: source=" << source << "destination=" <<
-        destination << ", start=" << fastRecoveryCount << "}.";
+    fmt << "{TimeoutEvent: source=" << source << ", destination=" <<
+        destination << ", start=" << fastRecoveryCount << ", timestamp=" << timestamp << "}.";
     return fmt.str();
 }
 

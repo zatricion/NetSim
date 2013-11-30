@@ -8,11 +8,11 @@ FlowEvent::FlowEvent(std::shared_ptr<Flow> flowobj, std::string dest, std::strin
     floww = std::move(flowobj);
 }
 
-std::string FlowEvent::printEvent()
+std::string FlowEvent::toString()
 {
     std::stringstream fmt;
-    fmt << "{PKT EVENT: source=" << source << "destination=" <<
-        destination << "}.";
+    fmt << "{FLOW_EVENT: source=" << source << ", destination=" <<
+        destination << ", timestamp=" << timestamp << "}.";
     return fmt.str();
 }
 

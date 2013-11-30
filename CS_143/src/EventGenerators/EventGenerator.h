@@ -24,7 +24,7 @@ public:
     
     // Call this to give the generator an event
     virtual void giveEvent(std::shared_ptr<Event>) = 0;
-    
+
     // Call this to get an event from the generator
     std::shared_ptr<Event> getEvent();
     

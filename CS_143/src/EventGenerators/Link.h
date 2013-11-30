@@ -14,6 +14,7 @@ public:
     virtual void giveEvent(std::shared_ptr<Event>) override;
 
     float getPropDelay();
+    std::string toString();
     
 private:
     // Maximum queue_size in bits

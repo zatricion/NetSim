@@ -14,8 +14,10 @@ class Host;
 
 enum Phase {SYN, DATA, FIN, DONE};
 enum RenoPhase {SLOWSTART, CONGESTIONAVOIDANCE, FASTRECOVERY};
-// packet size is 100KB
-static const int DATA_PKT_SIZE = 100000;
+static const int DATA_PKT_SIZE = 1024;
+static const int ACK_SIZE = 64;
+static const int SYN_SIZE = 64;
+static const int FIN_SIZE = 64;
 
 class Flow
 {

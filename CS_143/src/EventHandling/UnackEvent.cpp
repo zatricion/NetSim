@@ -8,16 +8,14 @@ UnackEvent::UnackEvent(std::shared_ptr<Packet> pkt,
     packet = pkt;
 }
 
-std::string UnackEvent::printEvent()
-{
+std::string UnackEvent::toString() {
     std::stringstream fmt;
     fmt << "{UNACK EVENT: source=" << source << "destination=" <<
-        destination << "}.";
+        destination << ", timestamp=" << timestamp << ", packet=" <<
+        packet->toString() << "}.";
     return fmt.str();
-
 }
 
-std::string UnackEvent::getType()
-{
+std::string UnackEvent::getType() {
     return "UNACK_EVENT";
 }

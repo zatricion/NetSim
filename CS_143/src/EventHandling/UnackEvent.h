@@ -15,7 +15,7 @@ public:
 
     std::shared_ptr<Packet> packet;
     
-    virtual std::string printEvent() override;
+    virtual std::string toString() override;
     virtual std::string getType() override;
 };
 

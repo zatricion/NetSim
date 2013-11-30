@@ -11,14 +11,14 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
-    FILE_LOG(logDEBUG) << "Handling UnackEvent for packet " << 
+    FILE_LOG(logDEBUG1) << "Handling UnackEvent for packet " << 
         unacked->toString() << ".  Flow:" << flow->toString();
     auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
         flow->source, time, unacked);
     
     // TODO this is the correct behavior, right?
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
-    FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << flow->toString();
+    FILE_LOG(logDEBUG1) << "Handled UnackEvent.  Flow " << flow->toString();
 }
 
 
@@ -30,7 +30,7 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
  * @param time the time at which the event was received
  */
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
-    FILE_LOG(logDEBUG) << "Handling an ack.  Packet " << pkt->toString();
+    FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
     int seqNum = pkt->sequence_num;
 
     if (seqNum == flow->numPackets) {
@@ -43,12 +43,12 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         flow->windowStart = seqNum;
         flow->windowEnd = seqNum;
 
-        FILE_LOG(logDEBUG) << "DONE WITH DATA FLOW."; // We might not actually be done.
+        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW."; // We might not actually be done.
         // We appear to still be getting more events after this.  TODO
         flow->phase = FIN;
         // We need to send a FIN to the other host.
         auto fin = std::make_shared<Packet>("FIN", flow->destination,
-            flow->source, pkt->size, false, -1, flow->id, false, true);
+            flow->source, FIN_SIZE, false, -1, flow->id, false, true);
         auto finEvent = std::make_shared<PacketEvent>(
             flow->host->my_link->getID(), flow->host->getID(), time, fin);
         flow->host->addEventToLocalQueue(finEvent);
@@ -111,7 +111,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             for (int i = flow->windowStart; i == flow->windowStart; i++) {
                 // TODO not 0.
                 auto p = std::make_shared<Packet>("FRETRANS", flow->destination,
-                    flow->source, 0, false, i, flow->id, false, false);
+                    flow->source, DATA_PKT_SIZE, false, i, flow->id, false, false);
                 auto pEV = std::make_shared<PacketEvent>(
                     flow->host->my_link->getID(), flow->host->getID(), time, p);
                 flow->host->addEventToLocalQueue(pEV);
@@ -163,7 +163,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
 }
 
 void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
-    FILE_LOG(logDEBUG) << "handling RenoUpdate.";
+    FILE_LOG(logDEBUG1) << "handling RenoUpdate.";
     if (cavCount == flow->cavCount &&
         flow->renoPhase == CONGESTIONAVOIDANCE &&
         flow->phase == DATA) {
@@ -180,7 +180,7 @@ void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
 }
 
 void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
-    FILE_LOG(logDEBUG) << "handling TimeoutEvent.";
+    FILE_LOG(logDEBUG1) << "handling TimeoutEvent.";
     if (frCount == flow->frCount &&
         flow->renoPhase == FASTRECOVERY) {
         // Reduce window size to 1

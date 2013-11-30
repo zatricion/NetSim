@@ -7,6 +7,7 @@
 #include <string>
 #include "../EventHandling/Packet.h"
 #include "../EventHandling/PacketEvent.h"
+#include <sstream>
 
 class Router : public EventGenerator
 {
@@ -25,6 +26,7 @@ public:
 
     // react to a packet event
     void giveEvent(std::shared_ptr<Event>);
+    std::string toString();
 
 private:
     // Routing table maps destination host ids to link ids

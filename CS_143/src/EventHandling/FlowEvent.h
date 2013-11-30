@@ -20,7 +20,7 @@ public:
     int data_size;
     std::shared_ptr<Flow> floww;
     
-    virtual std::string printEvent() override;
+    virtual std::string toString() override;
     virtual std::string getType() override;
 };
 

@@ -58,13 +58,13 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
  * @param flow_event the flow event received
  */
 void Host::respondTo(FlowEvent flow_event) {
-    FILE_LOG(logDEBUG) << "Host with id=" << uuid << " received a FlowEvent.";
+    FILE_LOG(logDEBUG1) << "Host with id=" << uuid << " received a FlowEvent.";
     // Get a flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = flow_event.floww;
 
     // Here, we want to start the SYN handshake.
     auto syn = std::make_shared<Packet>("SYN", flow_event.floww->destination,
-        flow_event.floww->source, flow_event.floww->packetSize, false, -1, 
+        flow_event.floww->source, SYN_SIZE, false, -1, 
         flow_event.floww->id, true, false);
     float waitTime = flow_event.floww->waitTime;
     sendAndQueueResend(syn, flow_event.eventTime(), waitTime);
@@ -83,7 +83,7 @@ void Host::respondTo(UnackEvent unack_event) {
     std::string flowString = p->flowID;
 
     if (p->syn) {
-        FILE_LOG(logDEBUG) << "Host with id=" << uuid << 
+        FILE_LOG(logDEBUG1) << "Host with id=" << uuid << 
             "received SYN unackEvent.";
         if (p->ack) {
             // This shouldn't happen.  The SYN.ACKs shouldn't throw
@@ -95,7 +95,7 @@ void Host::respondTo(UnackEvent unack_event) {
             // which occurs if our proper flow is no longer in "SYN" mode.
             assert(flows.count(flowString) > 0);
             if (flows[flowString]->phase == SYN) {
-                FILE_LOG(logDEBUG) << "Resending SYN";
+                FILE_LOG(logDEBUG1) << "Resending SYN";
                 // We need to resend.
                 sendAndQueueResend(p, time, 500); //TODO 500 is the waitTime
             }
@@ -103,7 +103,7 @@ void Host::respondTo(UnackEvent unack_event) {
     }
 
     else if (p->fin) {
-        FILE_LOG(logDEBUG) << "Host with id=" << uuid <<
+        FILE_LOG(logDEBUG1) << "Host with id=" << uuid <<
             "received FIN unackEvent.";
         if (p->ack) {
             // We received an unack event for a FINACK.
@@ -119,7 +119,7 @@ void Host::respondTo(UnackEvent unack_event) {
                 // The host is the sending end of the flow.
                 if (flows[p->flowID]->phase == DONE) {
                     // Do nothing.  We already had the FINACK.
-                    FILE_LOG(logDEBUG) << "Unack event for FIN handled with " <<
+                    FILE_LOG(logDEBUG1) << "Unack event for FIN handled with " <<
                         "noop";
                 }
                 else {
@@ -132,7 +132,7 @@ void Host::respondTo(UnackEvent unack_event) {
                 assert(recvd.count(p->flowID));
                 if (recvd[p->flowID].second == DONE) {
                     // Do nothing.  We already had the FINACK.
-                    FILE_LOG(logDEBUG) << "Unack event for FIN handled with " <<
+                    FILE_LOG(logDEBUG1) << "Unack event for FIN handled with " <<
                         "noop";
                 }
                 else {
@@ -145,7 +145,7 @@ void Host::respondTo(UnackEvent unack_event) {
 
     else {
         // It's a data packet.
-        FILE_LOG(logDEBUG) << "Host with id=" << uuid << " received an UnackEvent.";
+        FILE_LOG(logDEBUG1) << "Host with id=" << uuid << " received an UnackEvent.";
         // Find the appropriate flow, and have it handle the event.
         flows[p->flowID]->handleUnackEvent(p, time);
     }
@@ -159,9 +159,9 @@ void Host::respondTo(UnackEvent unack_event) {
  */
 void Host::respondTo(PacketEvent new_event) {
 
-    FILE_LOG(logDEBUG) << "Host with id=" << uuid << " received a PacketEvent.";
+    FILE_LOG(logDEBUG1) << "Host with id=" << uuid << " received a PacketEvent.";
     std::shared_ptr<Packet> pkt = new_event.packet;
-    FILE_LOG(logDEBUG) << "Packet contents:" << pkt->toString();
+    FILE_LOG(logDEBUG1) << "Packet contents:" << pkt->toString();
     float time = new_event.eventTime();
     
 
@@ -170,12 +170,12 @@ void Host::respondTo(PacketEvent new_event) {
             // received syn.ack.  First, we send an ack.  Then, we start
             // sending data, and set the mode of the flow to DATA.
             if (flows[pkt->flowID]->phase != DATA) {
-                FILE_LOG(logDEBUG) << "Received a first SYNACK.  On host:" 
+                FILE_LOG(logDEBUG1) << "Received a first SYNACK.  On host:" 
                     << toString();
                 // This is the first SYN.ACK received.
                 flows[pkt->flowID]->phase = DATA;
                 auto ack = std::make_shared<Packet>("ACK", pkt->source, uuid,
-                    pkt->size, true, -1, pkt->flowID, false, false);
+                    ACK_SIZE, true, -1, pkt->flowID, false, false);
                 auto pEV = std::make_shared<PacketEvent>(my_link->getID(), 
                     uuid, time, ack);
                 addEventToLocalQueue(pEV);
@@ -193,7 +193,7 @@ void Host::respondTo(PacketEvent new_event) {
                 recvd[pkt->flowID] = 
                     std::pair<std::set<int>, Phase>(std::set<int>(), DATA);
                 auto synack = std::make_shared<Packet>("SYNACK", pkt->source,
-                    uuid, pkt->size, true, -1, pkt->flowID, true, false);
+                    uuid, SYN_SIZE, true, -1, pkt->flowID, true, false);
                 auto pEV = std::make_shared<PacketEvent>(my_link->getID(), 
                     uuid, time, synack);
                 addEventToLocalQueue(pEV);
@@ -201,7 +201,7 @@ void Host::respondTo(PacketEvent new_event) {
         }
     }
 
-    if (pkt->fin) {
+    else if (pkt->fin) {
         if (pkt->ack) {
             // Received a FIN.ACK.  Set the connection to DONE.
             if (flows.count(pkt->flowID)) {
@@ -225,7 +225,7 @@ void Host::respondTo(PacketEvent new_event) {
                 assert(flows[pkt->flowID]->phase == FIN ||
                        flows[pkt->flowID]->phase == DONE);
                 auto finack = std::make_shared<Packet>("FINACK", pkt->source,
-                    uuid, pkt->size, true, -1, pkt->flowID, false, true);
+                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true);
                 auto finAckEvent = std::make_shared<PacketEvent>(my_link->getID(),
                     uuid, new_event.eventTime(), finack);
                 addEventToLocalQueue(finAckEvent);
@@ -241,7 +241,7 @@ void Host::respondTo(PacketEvent new_event) {
                     // reschedule an unackEvent for the FIN.
                     recvd[pkt->flowID].second = FIN;
                     auto fin = std::make_shared<Packet>("FIN", pkt->source,
-                        uuid, pkt->size, false, -1, pkt->flowID, false, true);
+                        uuid, FIN_SIZE, false, -1, pkt->flowID, false, true);
                     // TODO we need to store wait times for each recvd object
                     // in addition to the other stuff we already have.
                     sendAndQueueResend(fin, new_event.eventTime(), 500);
@@ -256,7 +256,7 @@ void Host::respondTo(PacketEvent new_event) {
                 assert(recvd[pkt->flowID].second == FIN ||
                        recvd[pkt->flowID].second == DONE);
                 auto finack = std::make_shared<Packet>("FINACK", pkt->source,
-                    uuid, pkt->size, true, -1, pkt->flowID, false, true);
+                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true);
                 auto finAckEvent = std::make_shared<PacketEvent>(my_link->getID(),
                     uuid, new_event.eventTime(), finack);
                 addEventToLocalQueue(finAckEvent);
@@ -267,7 +267,7 @@ void Host::respondTo(PacketEvent new_event) {
     else {
         // Not a syn or a fin.
         if (pkt->ack) {
-            FILE_LOG(logDEBUG) << "Received an ack.";
+            FILE_LOG(logDEBUG1) << "Received an ack.";
             // There are two cases.
             if (flows.count(pkt->flowID)) {
                 // The receiver of the ack is the sending end of the flow.
@@ -277,20 +277,28 @@ void Host::respondTo(PacketEvent new_event) {
                 // The receiver of the ack is the receiving end of the flow.
                 // Do nothing.
                 assert(recvd.count(pkt->flowID));
-                FILE_LOG(logDEBUG) << "Handled ack with noop.";
+                FILE_LOG(logDEBUG1) << "Handled ack with noop.";
             }
         }
         else {
             // We received a packet.  Send an acknowledgment.
             recvd[pkt->flowID].first.insert(pkt->sequence_num);
+            // Find out what our sequence number should be.
+            int ackNum = 0;
+            for (auto it = recvd[pkt->flowID].first.begin(); it != recvd[pkt->flowID].first.end(); it ++) {
+                if (*it > ackNum) { break; }
+                ackNum += 1;
+            }
     	    auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
-                pkt->final_dest, pkt->size, true, pkt->sequence_num + 1, 
+                pkt->final_dest, ACK_SIZE, true, ackNum, 
                 pkt->flowID, false, false);
             ret->ackSet = recvd[pkt->flowID].first;
     	    float ts = new_event.eventTime();
     	    auto pEv = std::make_shared<PacketEvent>(my_link->getID(), getID(),
                 ts, ret);
             addEventToLocalQueue(pEv);
+            FILE_LOG(logDEBUG1) << "Host with id=" << uuid << " sent an ack: "
+                << ret->toString() << "at time=" << new_event.eventTime();
         }
     }
 }
@@ -305,6 +313,7 @@ std::string Host::toString() {
     // ID, all flows, all waiting outgoing messages, etc.
     // TODO this implementation sucks
     std::string ret(uuid);
+    // TODO wtf is this nonsense.
     for (auto& flowStringPair : flows) {
         ret += flowStringPair.second->toString() + "\n";
     }

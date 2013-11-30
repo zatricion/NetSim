@@ -11,7 +11,7 @@ int main()
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
     // TODO is it okay to change this later?  Preprocessor...
-    FILELog::ReportingLevel() = logDEBUG4;
+    FILELog::ReportingLevel() = logDEBUG;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
@@ -49,7 +49,7 @@ void simTest0()
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                      (8 * pow(10, 6)), host1, 10, 1.0);
+                      (8 * pow(10, 4)), host1, 10, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
