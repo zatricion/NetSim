@@ -49,7 +49,7 @@ void Link::logLinkRate(float time) {
             float bits_sent = packet_size * ((end - start) / (off_link_time - on_link_time));
             
             // calculate link rate
-            float link_rate = bits_sent / (time - link_time);
+            float link_rate = (bits_sent / (time - link_time)) / pow(10, 6);
             
             // add the link rate to the plotter
             sim_plotter.logLinkRate(this->getID(),
