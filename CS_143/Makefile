@@ -1,4 +1,4 @@
-CC=g++-4.8
+CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm
 
