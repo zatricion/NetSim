@@ -1,8 +1,8 @@
 CC=g++
 CFLAGS=-std=c++0x -g -Wall
-LDFLAGS=-lm
+LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
 
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o
 SOURCE = src/IO/Test.cpp
 
 all: simulator
@@ -67,6 +67,9 @@ build/TCPRenoUpdateEvent.o: src/EventHandling/TCPRenoUpdateEvent.cpp src/EventHa
 
 build/TimeoutEvent.o: src/EventHandling/TimeoutEvent.cpp src/EventHandling/TimeoutEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/TimeoutEvent.o
+
+build/Plotter.o: src/IO/Plotter.cpp src/IO/Plotter.h src/IO/gnuplot-iostream.h
+	$(CC) $(CFLAGS) -c $< -o build/Plotter.o
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)

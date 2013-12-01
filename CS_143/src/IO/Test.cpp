@@ -144,5 +144,8 @@ void simTest1()
         i--;
     }
     
+    // output link rate plot
+    sim_plotter.plotLinkRate();
+    
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

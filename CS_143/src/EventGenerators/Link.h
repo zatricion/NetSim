@@ -5,6 +5,10 @@
 #include "EventGenerator.h"
 #include "../EventHandling/PacketEvent.h"
 #include <list>
+#include "../IO/Plotter.h"
+#include <cassert>
+#include <algorithm> // std::max
+#include <sstream>
 
 class Link : public EventGenerator
 {

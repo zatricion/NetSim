@@ -20,6 +20,7 @@
 #include <cassert>
 #include <cmath>
 #include "../Tools/Log.h"
+#include "../IO/Plotter.h"
 
 int main();
 void packetTest();

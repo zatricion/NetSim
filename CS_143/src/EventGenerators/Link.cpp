@@ -1,8 +1,5 @@
 #include "Link.h"
-#include <cassert>
-#include <iostream>
-#include <algorithm> // std::max
-#include <sstream>
+
 
 // Link Methods
 
@@ -54,11 +51,11 @@ void Link::logLinkRate(float time) {
             // calculate link rate
             float link_rate = bits_sent / (time - link_time);
             
-            // TODO: Johno, log this instead of returning
-            // return std::make_tuple(link_rate, time);
+            // add the link rate to the plotter
+            sim_plotter.logLinkRate(this->getID(),
+                                    std::make_tuple(time, link_rate));
         }
     }
-
 }
 
 void Link::giveEvent(std::shared_ptr<Event> e)
