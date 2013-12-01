@@ -25,12 +25,15 @@ void Plotter::plot(plot_data data) {
     for (auto& it : data) {
         cmd +=  "'-' with points title '" + it.first + "', ";
     }
+    
+    // pop off last two character (i.e. ', ') or doesn't seem to work
+    cmd.erase(cmd.begin() + cmd.size() - 2);
     cmd += "\n";
     gp << cmd;
 
     for (auto& it : data) {
         
-//        std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
+        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
        
         gp.send1d(it.second);
     }
