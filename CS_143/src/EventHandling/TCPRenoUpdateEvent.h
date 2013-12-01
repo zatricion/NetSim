@@ -12,8 +12,8 @@ public:
     int congAvCount;
     std::string flowID;
     
-    virtual std::string toString();
-    virtual std::string getType();
+    virtual std::string toString() override;
+    virtual std::string getType() override;
     
 protected:
     float timestamp;

@@ -8,7 +8,7 @@ TimeoutEvent::TimeoutEvent(std::string dest, std::string src, float ts, int frCo
     flowID = id;
 }
 
-std::string TimeoutEvent::printEvent()
+std::string TimeoutEvent::toString()
 {
     std::stringstream fmt;
     fmt << "{TimeoutEvent: source=" << source << ", destination=" <<
