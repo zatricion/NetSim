@@ -80,6 +80,9 @@ public:
 
     // Counter for TCPReno.
     int fastWindowEnd;
+    float A;
+    float D;
+    float b;
 
     // Constructors
     Flow(std::string idval, std::string dest,

@@ -25,7 +25,7 @@ void CongestionAlg::sendManyPackets(Flow* flow, float time) {
             flow->unSentPackets.erase(i);
             auto p = std::make_shared<Packet>(std::to_string(i), 
                 flow->destination, flow->source, DATA_PKT_SIZE,
-                false, i, flow->id, false, false);
+                false, i, flow->id, false, false, time);
         flow->host->sendAndQueueResend(p, time, flow->waitTime);
         }
     }

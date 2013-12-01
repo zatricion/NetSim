@@ -42,6 +42,9 @@ Flow::Flow(std::string idval, std::string dest,
     cavCount = 0;
     frCount = 0;
     fastWindowEnd = -1;
+    A = waitTime;
+    D = waitTime;
+    b = .5;
 }
 
 
@@ -85,6 +88,12 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
     FILE_LOG(logDEBUG1) << "Ack received by flow with id=" << id;
     assert(p->ack);
     if (phase == DATA) {
+        // Update the A, D, waitTime;
+        float RTT = time - p->timestamp;
+        A = A * (1.0 - b) + b * RTT;
+        D = (1.0 - b) * D + b * abs(RTT - A);
+        waitTime = A + 4 * D;
+        FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         a->handleAck(this, p, time);
     }
     else if (phase == FIN || phase == DONE) {

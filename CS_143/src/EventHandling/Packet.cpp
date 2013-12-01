@@ -15,7 +15,8 @@ Packet::Packet(std::string id,
                bool sync,
                bool finish,
                bool bf,
-               bf_type bf_t)
+               bf_type bf_t,
+               float ts)
 {
     uuid = id;
     final_dest = fd;
@@ -29,7 +30,38 @@ Packet::Packet(std::string id,
     std::set<int> ackSet;
     bf_tbl_bit = bf;
     bf_table = bf_t;
+    timestamp = ts;
 }
+
+Packet::Packet(std::string id,
+               std::string fd,
+               std::string src,
+               int s,
+               bool a,
+               int seq,
+               std::string flow_id,
+               bool sync,
+               bool finish,
+               float ts)
+{
+    uuid = id;
+    final_dest = fd;
+    source = src;
+    size = s;
+    ack = a;
+    sequence_num = seq;
+    flowID = flow_id;
+    syn = sync;
+    fin = finish;
+    std::set<int> ackSet;
+    bf_tbl_bit = false;
+    bf_table = bf_type();
+    timestamp = ts;
+}
+
+
+
+
 
 // Copy Constructor
 Packet::Packet(const Packet& other)
