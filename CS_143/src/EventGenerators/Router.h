@@ -28,7 +28,7 @@ public:
     void broadcastTable(float timestamp);
     
     // add route to routing table
-    void addRouting(std::string targ_host, Path path);
+    void addRouting(std::string targ_host, std::shared_ptr<Path> path);
     
     // add a link to the router
     void addLink(std::shared_ptr<Link> link);

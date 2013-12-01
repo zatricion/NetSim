@@ -80,13 +80,13 @@ void simTest1()
     // add links
     auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
                                         "host1", "router1", "link0");
-    auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+    auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
                                         "router1", "router2", "link1");
-    auto link2 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+    auto link2 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
                                         "router1", "router3", "link2");
-    auto link3 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+    auto link3 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
                                         "router2", "router4", "link3");
-    auto link4 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 3),
+    auto link4 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
                                         "router3", "router4", "link4");
     auto link5 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
                                         "router4", "host2", "link5");

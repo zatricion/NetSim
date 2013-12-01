@@ -5,13 +5,14 @@
 #include <map>
 #include <vector>
 #include <set>
+#include <memory>
 #include <unordered_map>
 #include "../EventGenerators/Path.h"
 
 class Packet
 {
 public:
-    typedef std::unordered_map<std::string, Path>  bf_type;
+    typedef std::unordered_map<std::string, std::shared_ptr<Path> >  bf_type;
     
     std::string uuid;
     std::string final_dest;

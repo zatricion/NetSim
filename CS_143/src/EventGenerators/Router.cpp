@@ -9,7 +9,7 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
     
     // initialize table
     for (const auto& it : host_list) {
-        Path empty_path;
+        auto empty_path = std::make_shared<Path>();
         addRouting(it, empty_path);
     }
     // find adjacent hosts and add them to table
@@ -18,8 +18,8 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
         // if the link connects to a host
         if (std::find(host_list.begin(), host_list.end(), other_node) != host_list.end()) {
             // create path of just the link that goes to the host
-            Path path = Path(it->getID());
-            path.updateLinkWeight(it->getID(), it->getTotalDelay());
+            auto path = std::make_shared<Path>(it->getID());
+            path->updateLinkWeight(it->getID(), it->getTotalDelay());
             addRouting(other_node, path);
         }
         addLink(it);
@@ -34,7 +34,7 @@ void Router::broadcastTable(float timestamp) {
     for (const auto& it : links) {
         float delay = it.second->getTotalDelay();
         for (auto& bf : routing_table) {
-            bf.second.updateLinkWeight(it.first, delay);
+            bf.second->updateLinkWeight(it.first, delay);
         }
     }
     // send BF table
@@ -65,14 +65,14 @@ void Router::addLink(std::shared_ptr<Link> link) {
 }
 
 // Add a host_id -> (next_link_id, dist, path) tuple indicating which link to route to given a host, along with bellman-ford info
-void Router::addRouting(std::string host_id, Path path) {
+void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
     routing_table[host_id] = path;
 }
 
 // Return the proper link to route to given a host
 std::string Router::getRouting(std::string targ_host) {
     // should probably do some error checking
-    return routing_table[targ_host].getNextLink();
+    return routing_table[targ_host]->getNextLink();
 }
 
 void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::string router) { // router is for debugging
@@ -86,42 +86,44 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
     for (const auto& li : links) {
         float delay = li.second->getTotalDelay();
         for (auto& bf : routing_table) {
-            bf.second.updateLinkWeight(li.first, delay);
+            bf.second->updateLinkWeight(li.first, delay);
         }
     }
     
-    if (this->getID() == "router1" || this->getID() == "router4") {
-        printRouting(routing_table, this->getID() + "_table_update");
-    }
+//    if (this->getID() == "router1" || this->getID() == "router4") {
+//        printRouting(routing_table, this->getID() + "_table_update");
+//    }
+    
     // Delay of link to other router
     float link_delay = links[link_id]->getTotalDelay();
     
     for (const auto& it : bf_table) {
         std::string host_id = it.first;
         
-        Path other_path = it.second;
+        std::shared_ptr<Path> other_path = it.second;
         
         // Delay along the other path
-        float other_delay = other_path.getTotalDelay();
+        float other_delay = other_path->getTotalDelay();
         
         // Delay along the current path
-        float curr_delay = routing_table[host_id].getTotalDelay();
+        float curr_delay = routing_table[host_id]->getTotalDelay();
         
         if (link_delay + other_delay < curr_delay) {
             // check to see if current router is already in other router path
             // to avoid cycles
-            if (!other_path.hasCycle(link_id)) {
+            if (!other_path->hasCycle(link_id)) {
                 // replace old path with new path
-                other_path.addLink(link_id, link_delay);
+                other_path->addLink(link_id, link_delay);
                 addRouting(host_id, other_path);
             }
         }
     }
     
-    if (this->getID() == "router1" || this->getID() == "router4") {
-        printRouting(bf_table, router);
-        printRouting(routing_table, this->getID() + "_after");
-    }
+    printRouting(routing_table, this->getID());
+//    if (this->getID() == "router1" || this->getID() == "router4") {
+//        printRouting(bf_table, router);
+//        printRouting(routing_table, this->getID() + "_after");
+//    }
 }
 
 // Deal with PacketEvents
@@ -151,8 +153,7 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
 void Router::updateTableWeights(Packet::bf_type other_table) {
     for (const auto& it : other_table) {
         std::string host_id = it.first;
-        Path other_path = it.second;
-        routing_table[host_id].updateAll(other_path);
+        routing_table[host_id]->updateAll(*it.second);
     }
 }
 
@@ -167,7 +168,7 @@ void Router::printRouting(Packet::bf_type r_table, std::string router) {
     }
     for (const auto& it : r_table) {
         std::string host_id = it.first;
-        Path other_path = it.second;
+        Path other_path = *it.second;
         float curr_delay = other_path.getTotalDelay();
         std::string link_id = other_path.getNextLink();
         std::string path_str = other_path.to_string();
