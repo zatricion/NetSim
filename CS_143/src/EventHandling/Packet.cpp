@@ -24,8 +24,7 @@ Packet::Packet(std::string id,
                std::string src,
                int s,
                bool a,
-               int seq)
-{
+               int seq) {
     uuid = id;
     final_dest = fd;
     source = src;    
@@ -48,8 +47,8 @@ Packet::Packet(std::string id,
                int seq,
                std::string flow_id,
                bool sync,
-               bool finish)
-{
+               bool finish,
+               float ts) {
     uuid = id;
     final_dest = fd;
     source = src;
@@ -60,10 +59,10 @@ Packet::Packet(std::string id,
     syn = sync;
     fin = finish;
     std::set<int> ackSet;
+    timestamp = ts;
 }
 
-Packet::Packet(const Packet& other)
-{
+Packet::Packet(const Packet& other) {
     uuid = other.uuid;
     final_dest = other.final_dest;
     source = other.source;
@@ -80,6 +79,6 @@ std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
            ", source=" << source << ", size=" << size << ", ack=" << ack <<
-           ", sequence_num=" << sequence_num << ", flowID=" << flowID << ", syn=" << syn << ", fin=" << fin << "}.";
+           ", sequence_num=" << sequence_num << ", flowID=" << flowID << ", syn=" << syn << ", fin=" << fin << ", timestamp=" << timestamp << "}.";
     return fmt.str();
 }

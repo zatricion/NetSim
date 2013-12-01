@@ -43,13 +43,13 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    auto link1 = std::make_shared<Link>((64 * 64 * 64 * 8 * 1000.0), 0.001, pow(10, 7),
+    auto link1 = std::make_shared<Link>(8 * 1024.0, 0.1, pow(10, 7),
                                         "host1", "host2", "link1");
     auto ccAlg = std::make_shared<TCPReno>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                      (8 * pow(10, 4)), host1, 10, 1.0);
+                      (80 * pow(10, 4)), host1, 10, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);

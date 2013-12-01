@@ -48,7 +48,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         flow->phase = FIN;
         // We need to send a FIN to the other host.
         auto fin = std::make_shared<Packet>("FIN", flow->destination,
-            flow->source, FIN_SIZE, false, -1, flow->id, false, true);
+            flow->source, FIN_SIZE, false, -1, flow->id, false, true, time);
         auto finEvent = std::make_shared<PacketEvent>(
             flow->host->my_link->getID(), flow->host->getID(), time, fin);
         flow->host->addEventToLocalQueue(finEvent);
@@ -70,6 +70,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             flow->cavCount += 1;
             // Create an update event, in which the window size
             // increments once every RTT.
+            // TODO why is time stamp on these printed wrong.
             auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
                 flow->source, time + flow->waitTime, flow->cavCount, flow->id);
             flow->host->addEventToLocalQueue(up);
@@ -111,7 +112,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             for (int i = flow->windowStart; i == flow->windowStart; i++) {
                 // TODO not 0.
                 auto p = std::make_shared<Packet>("FRETRANS", flow->destination,
-                    flow->source, DATA_PKT_SIZE, false, i, flow->id, false, false);
+                    flow->source, DATA_PKT_SIZE, false, i, flow->id, false, false, time);
                 auto pEV = std::make_shared<PacketEvent>(
                     flow->host->my_link->getID(), flow->host->getID(), time, p);
                 flow->host->addEventToLocalQueue(pEV);

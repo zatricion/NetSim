@@ -65,7 +65,7 @@ void Host::respondTo(FlowEvent flow_event) {
     // Here, we want to start the SYN handshake.
     auto syn = std::make_shared<Packet>("SYN", flow_event.floww->destination,
         flow_event.floww->source, SYN_SIZE, false, -1, 
-        flow_event.floww->id, true, false);
+        flow_event.floww->id, true, false, flow_event.eventTime());
     float waitTime = flow_event.floww->waitTime;
     sendAndQueueResend(syn, flow_event.eventTime(), waitTime);
 }
@@ -174,8 +174,16 @@ void Host::respondTo(PacketEvent new_event) {
                     << toString();
                 // This is the first SYN.ACK received.
                 flows[pkt->flowID]->phase = DATA;
+
+                float RTT = new_event.eventTime() - pkt->timestamp;
+                flows[pkt->flowID]->A = RTT;
+                flows[pkt->flowID]->D = RTT;
+                flows[pkt->flowID]->waitTime = flows[pkt->flowID]->A + 4 * flows[pkt->flowID]->D;
+
+                FILE_LOG(logDEBUG) << "WAITTIME=" << flows[pkt->flowID]->waitTime;
                 auto ack = std::make_shared<Packet>("ACK", pkt->source, uuid,
-                    ACK_SIZE, true, -1, pkt->flowID, false, false);
+                    ACK_SIZE, true, -1, pkt->flowID, false, false,
+                    pkt->timestamp);
                 auto pEV = std::make_shared<PacketEvent>(my_link->getID(), 
                     uuid, time, ack);
                 addEventToLocalQueue(pEV);
@@ -193,7 +201,8 @@ void Host::respondTo(PacketEvent new_event) {
                 recvd[pkt->flowID] = 
                     std::pair<std::set<int>, Phase>(std::set<int>(), DATA);
                 auto synack = std::make_shared<Packet>("SYNACK", pkt->source,
-                    uuid, SYN_SIZE, true, -1, pkt->flowID, true, false);
+                    uuid, SYN_SIZE, true, -1, pkt->flowID, true, false,
+                    pkt->timestamp);
                 auto pEV = std::make_shared<PacketEvent>(my_link->getID(), 
                     uuid, time, synack);
                 addEventToLocalQueue(pEV);
@@ -225,7 +234,8 @@ void Host::respondTo(PacketEvent new_event) {
                 assert(flows[pkt->flowID]->phase == FIN ||
                        flows[pkt->flowID]->phase == DONE);
                 auto finack = std::make_shared<Packet>("FINACK", pkt->source,
-                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true);
+                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true,
+                    pkt->timestamp);
                 auto finAckEvent = std::make_shared<PacketEvent>(my_link->getID(),
                     uuid, new_event.eventTime(), finack);
                 addEventToLocalQueue(finAckEvent);
@@ -241,7 +251,8 @@ void Host::respondTo(PacketEvent new_event) {
                     // reschedule an unackEvent for the FIN.
                     recvd[pkt->flowID].second = FIN;
                     auto fin = std::make_shared<Packet>("FIN", pkt->source,
-                        uuid, FIN_SIZE, false, -1, pkt->flowID, false, true);
+                        uuid, FIN_SIZE, false, -1, pkt->flowID, false, true,
+                        new_event.eventTime());
                     // TODO we need to store wait times for each recvd object
                     // in addition to the other stuff we already have.
                     sendAndQueueResend(fin, new_event.eventTime(), 500);
@@ -256,7 +267,8 @@ void Host::respondTo(PacketEvent new_event) {
                 assert(recvd[pkt->flowID].second == FIN ||
                        recvd[pkt->flowID].second == DONE);
                 auto finack = std::make_shared<Packet>("FINACK", pkt->source,
-                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true);
+                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true,
+                    pkt->timestamp);
                 auto finAckEvent = std::make_shared<PacketEvent>(my_link->getID(),
                     uuid, new_event.eventTime(), finack);
                 addEventToLocalQueue(finAckEvent);
@@ -291,7 +303,7 @@ void Host::respondTo(PacketEvent new_event) {
             }
     	    auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
                 pkt->final_dest, ACK_SIZE, true, ackNum, 
-                pkt->flowID, false, false);
+                pkt->flowID, false, false, pkt->timestamp);
             ret->ackSet = recvd[pkt->flowID].first;
     	    float ts = new_event.eventTime();
     	    auto pEv = std::make_shared<PacketEvent>(my_link->getID(), getID(),

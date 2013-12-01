@@ -28,6 +28,7 @@ public:
     // that flow.
     std::string flowID;
     std::set<int> ackSet;
+    float timestamp;
 
     // Default Constructor
     Packet();
@@ -49,7 +50,8 @@ public:
                    int seq,
                    std::string flow_id,
                    bool sync,
-                   bool finish);
+                   bool finish,
+                   float ts);
     
     // Copy Constructor
     Packet(const Packet& other);
