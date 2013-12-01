@@ -137,7 +137,7 @@ void simTest1()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    int i = 1000;
+    int i = 10000;
     while(i > 0) // handler.running()
     {
         handler.step();
