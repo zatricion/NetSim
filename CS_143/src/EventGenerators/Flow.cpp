@@ -29,7 +29,7 @@ Flow::Flow(std::string idval, std::string dest,
     destination = dest;
     a = alg;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    ssthresh = 20;
+    ssthresh = 99999;
     multiplicity = 0;
     waitTime = 500.0;
     phase = SYN;

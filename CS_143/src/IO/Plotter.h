@@ -33,6 +33,7 @@ public:
     void plot(plot_data data);
     void plot2(plot_data data);
     void plot3(plot_data data);
+    void hist(plot_data data);
     
 private:
     plot_data link_rate;

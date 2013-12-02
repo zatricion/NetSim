@@ -161,7 +161,7 @@ void simTest2()
     
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
+                                        (20 * 8 * pow(10, 6)), host1, 1, 0.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -193,8 +193,8 @@ void simTest2()
     
     // output link rate plot
     sim_plotter.plotLinkRate();
-    sim_plotter.plotBufferOccupancy();
-    sim_plotter.plotFlowRTT();
+//    sim_plotter.plotBufferOccupancy();
+//    sim_plotter.plotFlowRTT();
     sim_plotter.plotFlowWindowSize();
     
     FILE_LOG(logINFO) << "Simulator passed tests!";

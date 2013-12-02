@@ -107,10 +107,12 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         // Update queue size
         queue_size += packet_event.packet->size;
         
-        // Log the link rate
-        logLinkRate(now);
+
         
         if (this->getID() == "link1" || this->getID() == "link2"){
+            // Log the link rate
+            logLinkRate(now);
+            
             // Log queue size
             logBufferOccupancy(now, queue_size);
         }

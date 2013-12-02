@@ -35,9 +35,7 @@ void Plotter::plot(plot_data data) {
     Gnuplot gp;
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
-
-    gp << "set xrange [5:10]\nset yrange [0:1000000]\n";
-
+    
     std::string cmd = "plot ";
 
     for (auto& it : data) {
@@ -61,8 +59,6 @@ void Plotter::plot2(plot_data data) {
     Gnuplot gp;
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
-
-    gp << "set xrange [5:10]\nset yrange [0:1]\n";
 
     std::string cmd = "plot ";
 
@@ -89,8 +85,6 @@ void Plotter::plot3(plot_data data) {
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
 
-    gp << "set xrange [5:10]\nset yrange [0:20]\n";
-
     std::string cmd = "plot ";
 
     for (auto& it : data) {
@@ -106,6 +100,30 @@ void Plotter::plot3(plot_data data) {
         
         //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
        
+        gp.send1d(it.second);
+    }
+}
+
+void Plotter::hist(plot_data data) {
+    Gnuplot gp;
+    
+    //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+    
+    std::string cmd = "plot ";
+    
+    for (auto& it : data) {
+        cmd +=  "'-' using (0.0):(0.5) smooth freq with points title '" + it.first + "', ";
+    }
+    
+    // pop off last two character (i.e. ', ') or doesn't seem to work
+    cmd.erase(cmd.begin() + cmd.size() - 2);
+    cmd += "\n";
+    gp << cmd;
+    
+    for (auto& it : data) {
+        
+        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
+        
         gp.send1d(it.second);
     }
 }
