@@ -134,9 +134,17 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     
     // strip necessary info out of packet event
     std::shared_ptr<Packet> pkt = packet_event.packet;
+    
+    float now = packet_event.eventTime();
     if (pkt->bf_tbl_bit) {
         updateRouting(pkt->bf_table, packet_event.source, pkt->source);
         broadcastTable(packet_event.eventTime() + 5);
+
+        if (now - router_time > wait_time) {
+            broadcastTable(now);
+            router_time = now;
+            wait_time = std::min(5.0, wait_time + 0.1);
+        }
     }
     else {
         std::string dest = getRouting(pkt->final_dest);
