@@ -15,6 +15,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     link_time = 0;
     queue_delay = 0;
     queue_size = 0;
+    buffer_occupancy = 0;
 }
 
 
@@ -51,11 +52,26 @@ void Link::logLinkRate(float time) {
             // calculate link rate
             float link_rate = (bits_sent / (time - link_time)) / pow(10, 6);
             
+//            if (this->getID() == "link1") {
+//                std::cout << "bits_sent: " << bits_sent << " link_rate: " << link_rate << std::endl;
+//            }
+            
             // add the link rate to the plotter
             sim_plotter.logLinkRate(this->getID(),
                                     std::make_tuple(time, link_rate));
         }
     }
+}
+
+// Log queue size
+void Link::logBufferOccupancy(float time, float queue_size) {
+    float queueKbps = queue_size * pow(10, 3);
+    if (this->getID() == "link1") {
+        std::cout << "buffer_size: " << queueKbps << std::endl;
+    }
+
+    sim_plotter.logBufferOccupancy(this->getID(),
+                            std::make_tuple(time, queueKbps));
 }
 
 void Link::giveEvent(std::shared_ptr<Event> e)
@@ -93,15 +109,23 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         
         // Log the link rate
         logLinkRate(now);
+        
+        if (this->getID() == "link1" || this->getID() == "link2"){
+            // Log queue size
+            logBufferOccupancy(now, queue_size);
+        }
     }
     
     else
     {
-        // TODO: Johno, Log dropped pkts for each link
+        // Packet has been dropped
+        
     }
     
     // Update link_time
     link_time = now;
+    
+    
 }
 
 float Link::getPropDelay() {

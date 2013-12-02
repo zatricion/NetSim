@@ -137,7 +137,7 @@ void simTest1()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    int i = 10000;
+    int i = 1000000;
     while(i > 0) // handler.running()
     {
         handler.step();
@@ -145,7 +145,8 @@ void simTest1()
     }
     
     // output link rate plot
-    sim_plotter.plotLinkRate();
+//    sim_plotter.plotLinkRate();
+    sim_plotter.plotBufferOccupancy();
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

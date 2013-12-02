@@ -27,6 +27,10 @@ public:
     
     void logLinkRate(float);
     
+    void logBufferOccupancy(float, float);
+    
+    void packetLoss(float);
+    
 private:
     // Maximum queue_size in bits
     float buffer_size;
@@ -51,6 +55,9 @@ private:
     
     // Tuples (pkt_size, on_link_time, off_link_time)
     std::list<std::tuple<int, float, float> > packets_on_link;
+    
+    // Number of packets on buffer
+    int buffer_occupancy;
 };
 
 #endif /* defined(__CS_143__Link__) */

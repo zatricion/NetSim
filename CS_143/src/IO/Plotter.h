@@ -17,10 +17,17 @@ public:
     
     void plotLinkRate();
     
+    void logBufferOccupancy(std::string link_name,
+                     std::tuple<float, float> buffer_data);
+    
+    void plotBufferOccupancy();
+    
     void plot(plot_data data);
     
 private:
     plot_data link_rate;
+    plot_data BufferOccupancy;
+    
 };
 
 extern Plotter sim_plotter;

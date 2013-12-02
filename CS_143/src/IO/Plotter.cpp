@@ -15,10 +15,18 @@ void Plotter::logLinkRate(std::string name,
     
 }
 
+void Plotter::logBufferOccupancy(std::string name,
+                          std::tuple<float, float> rate_data) {
+    BufferOccupancy[name].push_back(rate_data);
+    
+}
+
 void Plotter::plot(plot_data data) {
     Gnuplot gp;
     
-    gp << "set xrange [0:50]\nset yrange [0:10]\n";
+//    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+
+    gp << "set xrange [0:3]\nset yrange [0:1000000000]\n";
 
     std::string cmd = "plot ";
 
@@ -41,4 +49,8 @@ void Plotter::plot(plot_data data) {
 
 void Plotter::plotLinkRate() {
     Plotter::plot(link_rate);
+}
+
+void Plotter::plotBufferOccupancy() {
+    Plotter::plot(BufferOccupancy);
 }
