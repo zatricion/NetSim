@@ -36,7 +36,7 @@ void Plotter::plot(plot_data data) {
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
 
-    gp << "set xrange [0:3]\nset yrange [0:1000000000]\n";
+    gp << "set xrange [5:10]\nset yrange [0:1000000000]\n";
 
     std::string cmd = "plot ";
 
@@ -62,7 +62,7 @@ void Plotter::plot2(plot_data data) {
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
 
-    gp << "set xrange [0:3]\nset yrange [0:1]\n";
+    gp << "set xrange [5:10]\nset yrange [0:1]\n";
 
     std::string cmd = "plot ";
 
@@ -89,7 +89,7 @@ void Plotter::plot3(plot_data data) {
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
 
-    gp << "set xrange [0:3]\nset yrange [0:20]\n";
+    gp << "set xrange [5:10]\nset yrange [0:20]\n";
 
     std::string cmd = "plot ";
 

@@ -128,17 +128,17 @@ void simTest2()
     Handler handler = Handler();
     
     // add links
-    auto link0 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
+    auto link0 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
                                         "host1", "router1", "link0");
-    auto link1 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
+    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
                                         "router1", "router2", "link1");
-    auto link2 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
+    auto link2 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
                                         "router1", "router3", "link2");
-    auto link3 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
+    auto link3 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
                                         "router2", "router4", "link3");
-    auto link4 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, pow(10, 7),
+    auto link4 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
                                         "router3", "router4", "link4");
-    auto link5 = std::make_shared<Link>((64 * 8 * 1000.0), 0.01, 1.25 * pow(10, 7),
+    auto link5 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
                                         "router4", "host2", "link5");
     
     // add congestion control algorithm
@@ -161,7 +161,7 @@ void simTest2()
     
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                                        (20 * 8 * pow(10, 6)), host1, 10, 0.5);
+                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -187,7 +187,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    while(handler.getMinTime() < 3.0)     {
+    while(handler.getMinTime() < 10.0)     {
         handler.step();
     }
     
