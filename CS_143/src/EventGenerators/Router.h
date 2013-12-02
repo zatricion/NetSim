@@ -53,6 +53,12 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Link> > links;
     
     std::vector<std::shared_ptr<Link> > debug_links;
+    
+    // Time last bf_table sent from this router
+    float router_time;
+    
+    // Time to wait between bf packet broadcasts
+    float wait_time = 0.1;
 };
 
 
