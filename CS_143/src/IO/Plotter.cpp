@@ -21,6 +21,11 @@ void Plotter::logBufferOccupancy(std::string name,
     
 }
 
+void Plotter::logFlowRTT(std::string name,
+                         std::tuple<float, float> rate_data) {
+    flowRTT[name].push_back(rate_data);
+}
+
 void Plotter::plot(plot_data data) {
     Gnuplot gp;
     
@@ -53,4 +58,8 @@ void Plotter::plotLinkRate() {
 
 void Plotter::plotBufferOccupancy() {
     Plotter::plot(BufferOccupancy);
+}
+
+void Plotter::plotFlowRTT() {
+    Plotter::plot(flowRTT);
 }

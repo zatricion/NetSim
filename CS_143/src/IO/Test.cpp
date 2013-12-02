@@ -194,6 +194,7 @@ void simTest2()
     // output link rate plot
     sim_plotter.plotLinkRate();
     sim_plotter.plotBufferOccupancy();
+    sim_plotter.plotFlowRTT();
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }
