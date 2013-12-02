@@ -45,6 +45,7 @@ public:
     
     void printRouting(Packet::bf_type, std::string);
 
+
 private:
     // Routing table maps destination host ids to (id of next link, total distance of path, path)
     Packet::bf_type routing_table;
