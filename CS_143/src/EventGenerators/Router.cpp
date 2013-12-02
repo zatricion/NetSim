@@ -100,10 +100,10 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
     for (const auto& it : bf_table) {
         std::string host_id = it.first;
         
-        std::shared_ptr<Path> other_path = it.second;
+        Path other_path = *it.second;
         
         // Delay along the other path
-        float other_delay = other_path->getTotalDelay();
+        float other_delay = other_path.getTotalDelay();
         
         // Delay along the current path
         float curr_delay = routing_table[host_id]->getTotalDelay();
@@ -111,10 +111,11 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
         if (link_delay + other_delay < curr_delay) {
             // check to see if current router is already in other router path
             // to avoid cycles
-            if (!other_path->hasCycle(link_id)) {
+            if (!other_path.hasCycle(link_id)) {
                 // replace old path with new path
-                other_path->addLink(link_id, link_delay);
-                addRouting(host_id, other_path);
+                other_path.addLink(link_id, link_delay);
+                auto new_path = std::make_shared<Path>(other_path);
+                addRouting(host_id, new_path);
             }
         }
     }

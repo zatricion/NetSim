@@ -50,7 +50,7 @@ void Link::logLinkRate(float time) {
             float bits_sent = packet_size * ((end - start) / (off_link_time - on_link_time));
             
             // calculate link rate
-            float link_rate = (bits_sent / (time - link_time)) / pow(10, 6);
+            float link_rate = (bits_sent / (time - link_time)); // / pow(10, 6);
             
 //            if (this->getID() == "link1") {
 //                std::cout << "bits_sent: " << bits_sent << " link_rate: " << link_rate << std::endl;
@@ -66,9 +66,9 @@ void Link::logLinkRate(float time) {
 // Log queue size
 void Link::logBufferOccupancy(float time, float queue_size) {
     float queueKbps = queue_size * pow(10, 3);
-    if (this->getID() == "link1") {
-        std::cout << "buffer_size: " << queueKbps << std::endl;
-    }
+//    if (this->getID() == "link1") {
+//        std::cout << "buffer_size: " << queueKbps << std::endl;
+//    }
 
     sim_plotter.logBufferOccupancy(this->getID(),
                             std::make_tuple(time, queueKbps));
