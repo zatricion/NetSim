@@ -189,3 +189,26 @@ void Router::printRouting(Packet::bf_type r_table, std::string router) {
     myFile.close();
 }
 
+std::string Router::toString() {
+    std::stringstream str;
+    str << "Router: " + this->getID() + "\n";
+    str << "Size of table: " << std::to_string(routing_table.size()) + "\n";
+    for (const auto& q : debug_links) {
+        str << q->getID().c_str() << " delay: " << std::to_string(q->getTotalDelay()) + "\n";
+    }
+    
+    for (const auto& it : routing_table) {
+        std::string host_id = it.first;
+        Path other_path = *it.second;
+        float curr_delay = other_path.getTotalDelay();
+        std::string link_id = other_path.getNextLink();
+        std::string path_str = other_path.to_string();
+        
+        std::string host_row_str =
+            "Host: " + host_id + "\nLink_ID: " + link_id + "\nLink_delay: " + std::to_string(curr_delay) + "\nOther Path: " + path_str + "\n";
+        
+        str << host_row_str + "\n";
+    }
+    return str.str();
+}
+ 

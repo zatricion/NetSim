@@ -66,9 +66,9 @@ void Link::logLinkRate(float time) {
 // Log queue size
 void Link::logBufferOccupancy(float time, float queue_size) {
     float queueKbps = queue_size * pow(10, 3);
-//    if (this->getID() == "link1") {
-//        std::cout << "buffer_size: " << queueKbps << std::endl;
-//    }
+    //if (this->getID() == "link1") {
+        //std::cout << "buffer_size: " << queueKbps << std::endl;
+    //}
 
     sim_plotter.logBufferOccupancy(this->getID(),
                             std::make_tuple(time, queueKbps));

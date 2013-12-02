@@ -103,6 +103,9 @@ public:
     std::string toString();
         
     void initialize(float time);
+
+    void logFlowRTT(float time, float RTT);
+    void logFlowWindowSize(float time, int windowSize);
 };
 
 #endif /* defined(__CS_143_Flow__) */

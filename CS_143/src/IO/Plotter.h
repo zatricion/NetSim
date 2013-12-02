@@ -21,12 +21,24 @@ public:
                      std::tuple<float, float> buffer_data);
     
     void plotBufferOccupancy();
-    
+
+    void logFlowRTT(std::string name,
+                     std::tuple<float, float> rate_data);
+    void plotFlowRTT();
+
+    void logFlowWindowSize(std::string name,
+                     std::tuple<float, float> rate_data);
+    void plotFlowWindowSize();
+ 
     void plot(plot_data data);
+    void plot2(plot_data data);
+    void plot3(plot_data data);
     
 private:
     plot_data link_rate;
     plot_data BufferOccupancy;
+    plot_data flowRTT;
+    plot_data flowWindowSize;
     
 };
 

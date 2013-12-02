@@ -94,6 +94,7 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D;
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
+        logFlowRTT(time, RTT);
         a->handleAck(this, p, time);
     }
     else if (phase == FIN || phase == DONE) {
@@ -133,4 +134,16 @@ void Flow::handleRenoUpdate(int cavCount, float time) {
 
 void Flow::handleTimeout(int frCount, float time) {
     (std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
+}
+
+void Flow::logFlowRTT(float time, float RTT) {
+    FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
+    sim_plotter.logFlowRTT(id,
+        std::make_tuple(time, RTT));
+}
+
+void Flow::logFlowWindowSize(float time, int windowSize) {
+    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (float) windowSize;
+    sim_plotter.logFlowWindowSize(id,
+        std::make_tuple(time, (float) windowSize));
 }

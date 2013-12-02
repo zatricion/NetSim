@@ -49,3 +49,7 @@ long EventGenerator::heapSize()
 void EventGenerator::printHeapSize() {
     FILE_LOG(logDEBUG) << std::to_string(eventHeap.size());
 }
+
+std::string EventGenerator::toString() {
+    return "TODO";
+}

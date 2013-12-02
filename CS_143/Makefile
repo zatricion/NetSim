@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-std=c++0x -std=c++11 -stdlib=libc++  -g -Wall
+CFLAGS=-std=c++0x  -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
 
 OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o

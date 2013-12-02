@@ -41,6 +41,8 @@ public:
     std::priority_queue<std::shared_ptr<Event>, std::vector<std::shared_ptr<Event> >, std::greater<std::shared_ptr<Event>> > eventHeap;
     std::string uuid;
     void printHeapSize();
+
+    std::string toString();
 };
 
 
