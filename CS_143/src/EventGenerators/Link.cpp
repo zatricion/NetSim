@@ -50,7 +50,7 @@ void Link::logLinkRate(float time) {
             float bits_sent = packet_size * ((end - start) / (off_link_time - on_link_time));
             
             // calculate link rate
-            float link_rate = (bits_sent / (time - link_time)) / pow(10, 6);
+            float link_rate = (bits_sent / (time - link_time)); // / pow(10, 6);
             
 //            if (this->getID() == "link1") {
 //                std::cout << "bits_sent: " << bits_sent << " link_rate: " << link_rate << std::endl;
