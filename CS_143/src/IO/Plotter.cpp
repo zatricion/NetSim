@@ -57,6 +57,60 @@ void Plotter::plot(plot_data data) {
     }
 }
 
+void Plotter::plot2(plot_data data) {
+    Gnuplot gp;
+    
+//    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+
+    gp << "set xrange [0:3]\nset yrange [0:1]\n";
+
+    std::string cmd = "plot ";
+
+    for (auto& it : data) {
+        cmd +=  "'-' with points title '" + it.first + "', ";
+    }
+    
+    // pop off last two character (i.e. ', ') or doesn't seem to work
+    cmd.erase(cmd.begin() + cmd.size() - 2);
+    cmd += "\n";
+    gp << cmd;
+
+    for (auto& it : data) {
+        
+        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
+       
+        gp.send1d(it.second);
+    }
+}
+
+
+void Plotter::plot3(plot_data data) {
+    Gnuplot gp;
+    
+//    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+
+    gp << "set xrange [0:3]\nset yrange [0:20]\n";
+
+    std::string cmd = "plot ";
+
+    for (auto& it : data) {
+        cmd +=  "'-' with points title '" + it.first + "', ";
+    }
+    
+    // pop off last two character (i.e. ', ') or doesn't seem to work
+    cmd.erase(cmd.begin() + cmd.size() - 2);
+    cmd += "\n";
+    gp << cmd;
+
+    for (auto& it : data) {
+        
+        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
+       
+        gp.send1d(it.second);
+    }
+}
+
+
 void Plotter::plotLinkRate() {
     Plotter::plot(link_rate);
 }
@@ -66,9 +120,9 @@ void Plotter::plotBufferOccupancy() {
 }
 
 void Plotter::plotFlowRTT() {
-    Plotter::plot(flowRTT);
+    Plotter::plot2(flowRTT);
 }
 
 void Plotter::plotFlowWindowSize() {
-    Plotter::plot(flowWindowSize);
+    Plotter::plot3(flowWindowSize);
 }
