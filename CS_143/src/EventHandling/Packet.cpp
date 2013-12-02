@@ -84,6 +84,6 @@ std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
            ", source=" << source << ", size=" << size << ", ack=" << ack <<
-           ", sequence_num=" << sequence_num << ", flowID=" << flowID << " bf_tbl_bit=" << bf_tbl_bit << "}.";
+           ", sequence_num=" << sequence_num << ", flowID=" << flowID << " bf_tbl_bit=" << bf_tbl_bit << ", timestamp=" << timestamp << "}.";
     return fmt.str();
 }
