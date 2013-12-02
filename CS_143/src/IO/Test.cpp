@@ -195,6 +195,7 @@ void simTest2()
     sim_plotter.plotLinkRate();
     sim_plotter.plotBufferOccupancy();
     sim_plotter.plotFlowRTT();
+    sim_plotter.plotFlowWindowSize();
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

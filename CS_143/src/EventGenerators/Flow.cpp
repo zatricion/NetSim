@@ -137,6 +137,13 @@ void Flow::handleTimeout(int frCount, float time) {
 }
 
 void Flow::logFlowRTT(float time, float RTT) {
+    FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
     sim_plotter.logFlowRTT(id,
         std::make_tuple(time, RTT));
+}
+
+void Flow::logFlowWindowSize(float time, int windowSize) {
+    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (float) windowSize;
+    sim_plotter.logFlowWindowSize(id,
+        std::make_tuple(time, (float) windowSize));
 }

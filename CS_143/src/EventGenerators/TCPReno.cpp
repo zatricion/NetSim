@@ -160,6 +160,8 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         // first.  (We don't want to congest the network by sending more packets
         // at this time).  TODO are we supposed to send packets?  It's unclear.
     }
+    // log the window size.
+    flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
 }
 
 void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
@@ -177,6 +179,7 @@ void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
             flow->source, time + flow->waitTime, flow->cavCount, flow->id);
         flow->host->addEventToLocalQueue(up);
     }
+    flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
 }
 
 void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
@@ -196,4 +199,5 @@ void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
 
         flow->renoPhase = SLOWSTART;
     }
+    flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
 }
