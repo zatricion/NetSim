@@ -1,5 +1,8 @@
 /* Parses records containing a number and zero or more subrecords */
 %{
+//#ifndef __NETINPUT_H_GUARD__
+//#define __NETINPUT_H_GUARD__
+
 #include <stdint.h>
 #include <FlexLexer.h>
 #include <string>
@@ -8,23 +11,24 @@
 #include <memory>
 #include <map>
 #include <iostream>
-//#include "../EventHandling/Packet.h"
-//#include "../EventHandling/Event.h"
-//#include "../EventHandling/UnackEvent.h"
-//#include "../EventHandling/FlowEvent.h"
+#include "../EventHandling/Packet.h"
+#include "../EventHandling/Event.h"
+#include "../EventHandling/UnackEvent.h"
+#include "../EventHandling/FlowEvent.h"
 #include "../EventGenerators/Flow.h"
-//#include "../EventHandling/PacketEvent.h"
+#include "../EventHandling/PacketEvent.h"
 #include "../EventGenerators/EventGenerator.h"
 #include "../EventGenerators/FlowGenerator.h"
 #include "../EventGenerators/Router.h"
 #include "../EventGenerators/Host.h"
 #include "../EventGenerators/Link.h"
 #include "../EventHandling/Handler.h"
-//#include "../EventGenerators/CongestionAlg.h"
+#include "../EventGenerators/CongestionAlg.h"
 #include "../EventGenerators/TCPReno.h"
 #include "../EventGenerators/TCPVegas.h"
 #include "NetInput.h"
 
+//#endif
 
 int yyerror(const char *s);
 int yylex();
@@ -95,17 +99,22 @@ host: HOSTTOK STR STR {
 // Router(vector<string> host_list, 
 //        vector<shared_ptr<Link> > neighboring_links, 
 //        string router_id)
+//        ALSO REMEMBER d_links
 router: ROUTERTOK list list STR {
+  
   //std::cout << "ROUTER: " << $4 << std::endl;
   // construct string vector from host_list
   std::vector<std::string> host_list = old_str_list; // copied???
   // construct shared_ptr<Link> vector from neighboring_links
   std::vector<std::shared_ptr<Link> > neighboring_links;
+  std::vector<std::shared_ptr<Link> > d_links;
   for (auto &it : str_list) {
     neighboring_links.push_back(link_map[it]);
   }
+
   // make router
-  auto router = std::make_shared<Router>(host_list, neighboring_links, $4);
+  auto router = std::make_shared<Router>(host_list, neighboring_links, 
+                                         $4, d_links);
   // give to handler
   h.addGenerator(router);
 };
