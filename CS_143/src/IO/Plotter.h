@@ -35,13 +35,8 @@ public:
               float runtime,
               std::string title,
               std::string xlabel,
-              std::string ylabel);
-    
-    void hist(plot_data data,
-              float runtime,
-              std::string title,
-              std::string xlabel,
-              std::string ylabel);
+              std::string ylabel,
+              std::string type = "points");
     
     void plotLinkRate(float);
     void plotBufferOccupancy(float);

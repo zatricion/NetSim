@@ -58,6 +58,12 @@ private:
     
     // Number of packets on buffer
     int buffer_occupancy;
+    
+    // Packets dropped in current bin of time
+    int num_dropped = 0;
+    
+    // Last time dropped packets were logged
+    float dropped_time = 0.0;
 };
 
 #endif /* defined(__CS_143__Link__) */
