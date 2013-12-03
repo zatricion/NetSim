@@ -189,7 +189,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 10.0;
+    float runtime = 5.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }

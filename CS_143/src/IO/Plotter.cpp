@@ -40,7 +40,8 @@ void Plotter::plot(plot_data data,
                    float runtime,
                    std::string title,
                    std::string xlabel,
-                   std::string ylabel) {
+                   std::string ylabel,
+                   std::string type) {
     Gnuplot gp;
     
     std::string range = "set xrange [0:" + std::to_string(runtime) + "]\n";
@@ -58,7 +59,7 @@ void Plotter::plot(plot_data data,
     std::string cmd = "plot ";
 
     for (auto& it : data) {
-        cmd +=  "'-' with points title '" + it.first + "', ";
+        cmd +=  "'-' with " + type + " title '" + it.first + "', ";
     }
     
     // pop off last two character (i.e. ', ') or doesn't seem to work
@@ -74,45 +75,6 @@ void Plotter::plot(plot_data data,
     }
 }
 
-void Plotter::hist(plot_data data,
-                   float runtime,
-                   std::string title,
-                   std::string xlabel,
-                   std::string ylabel) {
-    Gnuplot gp;
-    
-    std::string range = "set xrange [0:" + std::to_string(runtime) + "]\n";
-    
-    std::string t = "set title '" + title + "'\n";
-    std::string x = "set xlabel '" + xlabel + "'\n";
-    std::string y = "set ylabel '" + ylabel + "'\n";
-    
-    gp << range;
-    
-    gp << t;
-    gp << x;
-    gp << y;
-    
-    std::string cmd = "plot ";
-    
-    for (auto& it : data) {
-        cmd +=  "'-' using (0.0):(0.1) smooth freq with points title '" + it.first + "', ";
-    }
-    
-    // pop off last two character (i.e. ', ') or doesn't seem to work
-    cmd.erase(cmd.begin() + cmd.size() - 2);
-    cmd += "\n";
-    gp << cmd;
-    
-    for (auto& it : data) {
-        
-        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
-        
-        gp.send1d(it.second);
-    }
-}
-
-
 void Plotter::plotLinkRate(float runtime) {
     Plotter::plot(linkRate,
                   runtime,
@@ -122,7 +84,7 @@ void Plotter::plotLinkRate(float runtime) {
 void Plotter::plotBufferOccupancy(float runtime) {
     Plotter::plot(BufferOccupancy,
                   runtime,
-                  "Buffer Occupancy", "Time (s)", "Queue Size (bits)");
+                  "Buffer Occupancy", "Time (s)", "Queue Size (bits)", "lines");
 }
 
 void Plotter::plotFlowRTT(float runtime) {
@@ -138,7 +100,7 @@ void Plotter::plotFlowWindowSize(float runtime) {
 }
 
 void Plotter::plotPacketLoss(float runtime) {
-    Plotter::hist(packetLoss,
+    Plotter::plot(packetLoss,
                   runtime,
-                  "Packet Loss", "Time (s)", "Number of Packets");
+                  "Packet Loss", "Time (s)", "Number of Packets", "lines");
 }

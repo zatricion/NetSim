@@ -118,8 +118,15 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     }
     
     else {
-        // Packet has been dropped
-        sim_plotter.logPacketLoss(this->getID(), std::make_tuple(now, 1.0));
+        if (this->getID() == "link1" || this->getID() == "link2"){
+            // Packet has been dropped
+            num_dropped++;
+            if (now - dropped_time > 0.1) {
+                sim_plotter.logPacketLoss(this->getID(), std::make_tuple(now, num_dropped));
+                num_dropped = 0;
+                dropped_time = now;
+            }
+        }
     }
     
     // Update link_time
