@@ -51,7 +51,7 @@ private:
     std::string node2;
     
     // Timestamp for which the queue is current
-    float link_time;
+    float link_time = 0.0;
     
     // Tuples (pkt_size, on_link_time, off_link_time)
     std::list<std::tuple<int, float, float> > packets_on_link;
