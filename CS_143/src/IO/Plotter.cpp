@@ -69,7 +69,7 @@ void Plotter::plot(plot_data data,
     std::string cmd = "plot ";
 
     for (auto& it : data) {
-        cmd +=  "'-' with " + type + " title '" + it.first + "', ";
+        cmd +=  "'-' smooth bezier with " + type + " title '" + it.first + "', ";
     }
     
     // pop off last two character (i.e. ', ') or doesn't seem to work

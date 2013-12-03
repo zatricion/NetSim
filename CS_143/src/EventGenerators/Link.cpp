@@ -61,7 +61,8 @@ void Link::logLinkRate(float time) {
     float link_rate = (total_bits / (time - link_time)); // / pow(10, 6);
     
     // add the link rate to the plotter
-    if (time - updateTime < .1) {
+
+    if (time - updateTime < .005) {
         tempLR = std::max(tempLR, link_rate);
     }
     else {
