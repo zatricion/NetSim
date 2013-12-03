@@ -84,6 +84,10 @@ public:
     float D;
     float b;
 
+    float vegasConstAlpha;
+    float vegasConstBeta;
+    float minRTT;
+
     // Constructors
     Flow(std::string idval, std::string dest,
              std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
@@ -95,6 +99,7 @@ public:
     // If so, we have a no-op.  If not, resend.
     void handleUnackEvent(std::shared_ptr<Packet> unacked, float time);
     void handleRenoUpdate(int cavCount, float time);
+    void handleVegasUpdate(float time);
     void handleTimeout(int frCount, float time);
     
     // Called when an ack is received.

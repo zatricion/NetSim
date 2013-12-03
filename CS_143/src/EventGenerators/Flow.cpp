@@ -2,6 +2,7 @@
 #include "Host.h"
 #include "CongestionAlg.h"
 #include "TCPReno.h"
+#include "TCPVegas.h"
 #include <cassert>
 #include <math.h>
 #include "../Tools/Log.h"
@@ -29,9 +30,9 @@ Flow::Flow(std::string idval, std::string dest,
     destination = dest;
     a = alg;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    ssthresh = 99999;
+    ssthresh = 9999999;
     multiplicity = 0;
-    waitTime = 500.0;
+    waitTime = .5;
     phase = SYN;
     unSentPackets = std::set<int>();
     for (int i = 0; i < numPackets; i++) {
@@ -95,6 +96,11 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
         waitTime = A + 4 * D;
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
+
+        vegasConstAlpha = 1.0 / RTT;
+        vegasConstBeta = 3.0 / RTT;
+        minRTT = RTT;
+        
         a->handleAck(this, p, time);
     }
     else if (phase == FIN || phase == DONE) {
@@ -130,6 +136,10 @@ std::string Flow::toString() {
 
 void Flow::handleRenoUpdate(int cavCount, float time) {
     (std::static_pointer_cast<TCPReno>(a))->handleRenoUpdate(this, cavCount, time);
+}
+
+void Flow::handleVegasUpdate(float time) {
+    (std::static_pointer_cast<TCPVegas>(a))->handleVegasUpdate(this, time);
 }
 
 void Flow::handleTimeout(int frCount, float time) {

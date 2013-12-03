@@ -41,13 +41,16 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
         TCPRenoUpdateEvent t = *(std::static_pointer_cast<TCPRenoUpdateEvent>(e));
         flows[t.flowID]->handleRenoUpdate(t.congAvCount, t.eventTime());
     }
+    else if (type == "TCP_VEGAS_UPDATE_EVENT") {
+        TCPVegasUpdateEvent t = *(std::static_pointer_cast<TCPVegasUpdateEvent>(e));
+        flows[t.flowID]->handleVegasUpdate(t.eventTime());
+    }
     else if (type == "TIMEOUT_EVENT") {
         TimeoutEvent t = *(std::static_pointer_cast<TimeoutEvent>(e));
         flows[t.flowID]->handleTimeout(t.fastRecoveryCount, t.eventTime());
     }
     else {
         assert (false);
-        // This should be where we add code for reno update events.  TODO
     }
 }
 
@@ -105,7 +108,7 @@ void Host::respondTo(UnackEvent unack_event) {
             if (flows[flowString]->phase == SYN) {
                 FILE_LOG(logDEBUG1) << "Resending SYN";
                 // We need to resend.
-                sendAndQueueResend(p, time, 500); //TODO 500 is the waitTime
+                sendAndQueueResend(p, time, flows[flowString]->waitTime);
             }
         }
     }
@@ -281,8 +284,6 @@ void Host::respondTo(PacketEvent new_event) {
                 // the receiving end knows that the flow is over.
                 
                 if (recvd[pkt->flowID].second == DATA) {
-                    // TODO set phase to FIN, and send our first FIN, and
-                    // reschedule an unackEvent for the FIN.
                     recvd[pkt->flowID].second = FIN;
                     auto fin = std::make_shared<Packet>("FIN",
                                                         pkt->source, // final destination
@@ -297,7 +298,8 @@ void Host::respondTo(PacketEvent new_event) {
                     
                     // TODO we need to store wait times for each recvd object
                     // in addition to the other stuff we already have.
-                    sendAndQueueResend(fin, new_event.eventTime(), 500);
+                    // or we can just do this lolz
+                    sendAndQueueResend(fin, new_event.eventTime(), 1);
                 }
 
                 // Regardless of whether we were already in the FIN state or
