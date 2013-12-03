@@ -44,7 +44,7 @@ public:
     void respondTo(FlowEvent flow_event);
     void respondTo(UnackEvent unack_event);
     void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
-    void send(std::shared_ptr<Packet> pkt, float time, float delay);
+    void send(std::shared_ptr<Packet> pkt, float time);
 
     void respondToSynUnackEvent(UnackEvent unack_event);
     void respondToFinUnackEvent(UnackEvent unack_event);
