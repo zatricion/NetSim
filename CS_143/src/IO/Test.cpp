@@ -142,7 +142,7 @@ void simTest2()
                                         "router4", "host2", "link5");
     
     // add congestion control algorithm
-    auto ccAlg = std::make_shared<TCPVegas>();
+    auto ccAlg = std::make_shared<TCPReno>();
     
     // add hosts
     auto host1 = std::make_shared<Host>(link0, "host1");
