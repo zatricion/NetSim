@@ -44,7 +44,7 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    auto link1 = std::make_shared<Link>((64 * 64 * 64 * 8 * 1000.0), 0.001, pow(10, 7),
+    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
                                         "host1", "host2", "link1");
     auto ccAlg = std::make_shared<TCPReno>();
     auto host1 = std::make_shared<Host>(link1, "host1");
@@ -77,7 +77,6 @@ void simTest0()
     sim_plotter.plotFlowRTT(runtime);
     sim_plotter.plotFlowWindowSize(runtime);
     sim_plotter.plotPacketLoss(runtime);
- 
 }
 
 /*
@@ -157,7 +156,7 @@ void simTest2()
                                         "router4", "host2", "link5");
     
     // add congestion control algorithm
-    auto ccAlg = std::make_shared<TCPReno>();
+    auto ccAlg = std::make_shared<TCPVegas>();
     
     // add hosts
     auto host1 = std::make_shared<Host>(link0, "host1");
@@ -176,7 +175,7 @@ void simTest2()
     
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
+                                        (20 * 8 * pow(10, 6)), host1, 1, 0.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -202,7 +201,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 30.0;
+    float runtime = 20.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }
@@ -213,6 +212,8 @@ void simTest2()
     sim_plotter.plotFlowRTT(runtime);
     sim_plotter.plotFlowWindowSize(runtime);
     sim_plotter.plotPacketLoss(runtime);
+    sim_plotter.plotPacketDelay(runtime);
+    sim_plotter.plotFlowRate(runtime);
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

@@ -17,6 +17,7 @@ Host::Host(std::shared_ptr<Link> host_link, std::string host_id) :
     my_link = host_link;
     uuid = host_id;
     std::unordered_map<std::string, Flow > flows;
+    std::unordered_map<std::string, float> host_update_time;
     std::unordered_map<std::string, std::pair<std::set<int>, Phase>> recvd;
 }
 
@@ -188,6 +189,9 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
         flows[pkt->flowID]->vegasConstAlpha = 1.0 / RTT;
         flows[pkt->flowID]->vegasConstBeta = 3.0 / RTT;
         flows[pkt->flowID]->minRTT = RTT;
+        
+        // Initialize the data flow.
+        flows[pkt->flowID]->initialize(new_event.eventTime());
 
         // Initialize the data flow, now that the variables are set.
         flows[pkt->flowID]->initialize(new_event.eventTime());
@@ -315,6 +319,7 @@ void Host::respondTo(PacketEvent new_event) {
             // Note that if the host is the receiving end, do nothing.
             // This is because when we receive the ACK from the SYNACK,
             // we do nothing.
+            
         }
         if (!pkt->ack) {
             // We received a packet.  Send an acknowledgment.
@@ -339,6 +344,19 @@ void Host::respondTo(PacketEvent new_event) {
                                                 pkt->timestamp);
             
             send(ret, time);
+            
+            float pktDelay = time - pkt->timestamp;
+            logPacketDelay(time, pktDelay, pkt->flowID);
+            
+            // Log flow rate in between time we last got flow data to now
+            auto got = host_update_time.find(pkt->flowID);
+            if (got == host_update_time.end()) {
+                host_update_time[pkt->flowID] = pkt->timestamp;
+            }
+            float timePassed = time - host_update_time[pkt->flowID];
+            float rate = pkt->size / timePassed;
+            logFlowRate(time + (timePassed / 2), rate, pkt->flowID);
+            host_update_time[pkt->flowID] = time;
         }
     }
 }
@@ -374,9 +392,18 @@ void Host::send(std::shared_ptr<Packet> pkt, float time) {
  * @param delay the packet will be sent at time + delay
  */
 void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
-    //auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
-    //addEventToLocalQueue(pEV);
     send(pkt, time);
+
     auto uEV = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
     addEventToLocalQueue(uEV);
+}
+
+void Host::logPacketDelay(float time, float packetDelay, std::string flowID) {
+    FILE_LOG(logDEBUG) << "logPacketDelay: " << time << ", " << (float) packetDelay;
+    sim_plotter.logPacketDelay(flowID, std::make_tuple(time, (float)packetDelay));
+}
+
+void Host::logFlowRate(float time, float rate, std::string flowID) {
+    FILE_LOG(logDEBUG) << "logFlowRate: " << time << ", " << (float) rate;
+    sim_plotter.logFlowRate(flowID, std::make_tuple(time, (float) rate));
 }
