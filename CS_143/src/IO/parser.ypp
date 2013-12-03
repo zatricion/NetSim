@@ -182,7 +182,7 @@ int yylex() {
 
 
 //void parse(std::istream &datafile) {
-Handler& parse(std::istream &datafile, Handler &h) {
+void parse(std::istream &datafile, Handler &h) {
    // Construct the lexer.
    lexer = new yyFlexLexer(&datafile);
    // Run the parser.
@@ -192,6 +192,4 @@ Handler& parse(std::istream &datafile, Handler &h) {
    }
 
    delete lexer;
-   // return handler
-   return h;
 }
