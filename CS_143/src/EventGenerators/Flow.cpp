@@ -122,8 +122,7 @@ std::string Flow::toString() {
     std::string setElems = setString.str();
 
     fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
-    return fmt.str();
-}
+    return fmt.str(); }
 
 void Flow::handleRenoUpdate(int cavCount, float time) {
     (std::static_pointer_cast<TCPReno>(a))->handleRenoUpdate(this, cavCount, time);

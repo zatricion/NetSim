@@ -36,6 +36,16 @@ void Plotter::logPacketLoss(std::string name,
     packetLoss[name].push_back(rate_data);
 }
 
+void Plotter::logPacketDelay(std::string name,
+                            std::tuple<float, float> rate_data) {
+    packetDelay[name].push_back(rate_data);
+}
+
+void Plotter::logFlowRate(std::string name,
+                            std::tuple<float, float> rate_data) {
+    flowRate[name].push_back(rate_data);
+}
+
 void Plotter::plot(plot_data data,
                    float runtime,
                    std::string title,
@@ -68,9 +78,6 @@ void Plotter::plot(plot_data data,
     gp << cmd;
 
     for (auto& it : data) {
-        
-        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
-       
         gp.send1d(it.second);
     }
 }
@@ -103,4 +110,15 @@ void Plotter::plotPacketLoss(float runtime) {
     Plotter::plot(packetLoss,
                   runtime,
                   "Packet Loss", "Time (s)", "Number of Packets", "lines");
+}
+
+void Plotter::plotPacketDelay(float runtime) {
+    Plotter::plot(packetDelay,
+                  runtime,
+                  "Packet Delay", "Time (s)", "Packet Delay (s)", "lines");
+}
+void Plotter::plotFlowRate(float runtime) {
+    Plotter::plot(flowRate,
+                  runtime,
+                  "Flow Rate", "Time (s)", "Flow Rate (bps)", "lines");
 }
