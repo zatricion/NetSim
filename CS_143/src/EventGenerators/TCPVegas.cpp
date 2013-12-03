@@ -74,20 +74,26 @@ void TCPVegas::handleVegasUpdate(Flow *flow, float time) {
 
     int windowSize = flow->windowEnd - flow->windowStart + 1;
     FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
+    std::cout << "BEFORE: windowSize=" << windowSize << std::endl;
+
     
     float testValue = (windowSize / flow->minRTT) - (windowSize / flow->A);
-    
+    std::cout << "TEST= " << testValue << std::endl;
     // apply Vegas update
-    if (testValue < flow->vegasConstAlpha) {
-        windowSize += (1 / flow->A);
+    if (testValue < (flow->vegasConstAlpha / flow->minRTT)) {
+        windowSize += 1;
     }
-    else if (testValue > flow->vegasConstBeta) {
-        windowSize -= (1 / flow->A);
+    else if (testValue > (flow->vegasConstBeta / flow->minRTT)) {
+        windowSize -= 1;
     }
     // Otherwise leave window size alone
     
+    windowSize = std::max(1, windowSize);
+    
     flow->windowEnd = windowSize + flow->windowStart - 1;
     std::cout << "New Window End= " << flow->windowEnd << std::endl;
+    std::cout << "AFTER: windowSize=" << windowSize << std::endl;
+
     std::cout << "------------" << std::endl;
 
 

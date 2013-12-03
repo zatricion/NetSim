@@ -142,7 +142,7 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
         FILE_LOG(logDEBUG) << "Scheduling BF Resend";
         broadcastTable(now);
         auto b = std::make_shared<BFResendEvent>(uuid, uuid, now + wait_time);
-        wait_time = std::min(5.0, wait_time + 0.1);
+        wait_time = std::min(5.0, wait_time + 0.2);
         addEventToLocalQueue(b);
         return;
     }
