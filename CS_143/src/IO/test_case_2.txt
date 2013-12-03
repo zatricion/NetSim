@@ -6,23 +6,23 @@
 #      string n1, 
 #      string n2, 
 #      string link_id)
-link 1048576 0.01 1000000 router1 router2 link1
-link 1048576 0.01 1000000 router2 router3 link2
-link 1048576 0.01 1000000 router3 router4 link3
-link 1048576 0.01 1250000 router1 s2      link4
-link 1048576 0.01 1250000 router1 s1      link5
-link 1048576 0.01 1250000 router2 t2      link6
-link 1048576 0.01 1250000 router3 s3      link7
-link 1048576 0.01 1250000 router4 t1      link8
-link 1048576 0.01 1250000 router4 t3      link9
+link 1048576 0.01 10000000 router1 router2 link1
+link 1048576 0.01 10000000 router2 router3 link2
+link 1048576 0.01 10000000 router3 router4 link3
+link 1048576 0.01 12500000 router1 s2      link4
+link 1048576 0.01 12500000 router1 s1      link5
+link 1048576 0.01 12500000 router2 t2      link6
+link 1048576 0.01 12500000 router3 s3      link7
+link 1048576 0.01 12500000 router4 t1      link8
+link 1048576 0.01 12500000 router4 t3      link9
 
 # Host(shared_ptr<Link> host_link, 
 #      string host_id)
 host link5 s1
 host link4 s2
-host link2 s3
-host link3 t1
-host link1 t2
+host link7 s3
+host link8 t1
+host link6 t2
 host link9 t3
 
 # Router(vector<string> host_list, 

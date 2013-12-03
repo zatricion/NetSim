@@ -127,9 +127,10 @@ void simTest1()
 void simTest2()
 {
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
-    //Handler handler;// = Handler();
-    Handler& handler = read_input();
-    //handler = read_input();
+    //Handler handler = Handler();
+    Handler handler;
+    //Handler& handler = read_input();
+    handler = read_input();
     
     /*
     // add links
@@ -193,7 +194,7 @@ void simTest2()
     */
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 10.0;
+    float runtime = 70.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }

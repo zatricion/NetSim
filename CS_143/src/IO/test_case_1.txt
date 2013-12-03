@@ -6,12 +6,12 @@
 #      string n1, 
 #      string n2, 
 #      string link_id)
-link 524288 0.01 1250000 host1   router1 link0
-link 524288 0.01 1000000 router1 router2 link1
-link 524288 0.01 1000000 router1 router3 link2
-link 524288 0.01 1000000 router2 router4 link3
-link 524288 0.01 1000000 router3 router4 link4
-link 524288 0.01 1250000 router4 host2   link5
+link 524288 0.01 12500000 host1   router1 link0
+link 524288 0.01 10000000 router1 router2 link1
+link 524288 0.01 10000000 router1 router3 link2
+link 524288 0.01 10000000 router2 router4 link3
+link 524288 0.01 10000000 router3 router4 link4
+link 524288 0.01 12500000 router4 host2   link5
 
 # Host(shared_ptr<Link> host_link, 
 #      string host_id)
