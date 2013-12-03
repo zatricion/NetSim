@@ -11,7 +11,7 @@ Plotter sim_plotter = Plotter();
 
 void Plotter::logLinkRate(std::string name,
                           std::tuple<float, float> rate_data) {
-    link_rate[name].push_back(rate_data);
+    linkRate[name].push_back(rate_data);
     
 }
 
@@ -29,6 +29,11 @@ void Plotter::logFlowRTT(std::string name,
 void Plotter::logFlowWindowSize(std::string name,
                          std::tuple<float, float> rate_data) {
     flowWindowSize[name].push_back(rate_data);
+}
+
+void Plotter::logPacketLoss(std::string name,
+                             std::tuple<float, float> rate_data) {
+    packetLoss[name].push_back(rate_data);
 }
 
 void Plotter::plot(plot_data data,
@@ -69,15 +74,29 @@ void Plotter::plot(plot_data data,
     }
 }
 
-void Plotter::hist(plot_data data) {
+void Plotter::hist(plot_data data,
+                   float runtime,
+                   std::string title,
+                   std::string xlabel,
+                   std::string ylabel) {
     Gnuplot gp;
     
-    //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+    std::string range = "set xrange [0:" + std::to_string(runtime) + "]\n";
+    
+    std::string t = "set title '" + title + "'\n";
+    std::string x = "set xlabel '" + xlabel + "'\n";
+    std::string y = "set ylabel '" + ylabel + "'\n";
+    
+    gp << range;
+    
+    gp << t;
+    gp << x;
+    gp << y;
     
     std::string cmd = "plot ";
     
     for (auto& it : data) {
-        cmd +=  "'-' using (0.0):(0.5) smooth freq with points title '" + it.first + "', ";
+        cmd +=  "'-' using (0.0):(0.1) smooth freq with points title '" + it.first + "', ";
     }
     
     // pop off last two character (i.e. ', ') or doesn't seem to work
@@ -95,7 +114,7 @@ void Plotter::hist(plot_data data) {
 
 
 void Plotter::plotLinkRate(float runtime) {
-    Plotter::plot(link_rate,
+    Plotter::plot(linkRate,
                   runtime,
                   "Link Rate", "Time (s)", "Link Rate (bps)");
 }
@@ -116,4 +135,10 @@ void Plotter::plotFlowWindowSize(float runtime) {
     Plotter::plot(flowWindowSize,
                   runtime,
                   "Window Size", "Time (s)", "Window Size (pkts)");
+}
+
+void Plotter::plotPacketLoss(float runtime) {
+    Plotter::hist(packetLoss,
+                  runtime,
+                  "Packet Loss", "Time (s)", "Number of Packets");
 }

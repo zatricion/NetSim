@@ -26,8 +26,10 @@ public:
    
 
     void logFlowWindowSize(std::string name,
-                     std::tuple<float, float> rate_data);
-
+                           std::tuple<float, float> rate_data);
+    
+    void logPacketLoss(std::string name,
+                                std::tuple<float, float> rate_data);
  
     void plot(plot_data data,
               float runtime,
@@ -35,19 +37,24 @@ public:
               std::string xlabel,
               std::string ylabel);
     
-    void hist(plot_data data);
+    void hist(plot_data data,
+              float runtime,
+              std::string title,
+              std::string xlabel,
+              std::string ylabel);
     
     void plotLinkRate(float);
     void plotBufferOccupancy(float);
     void plotFlowRTT(float);
     void plotFlowWindowSize(float);
+    void plotPacketLoss(float);
     
 private:
-    plot_data link_rate;
+    plot_data linkRate;
     plot_data BufferOccupancy;
     plot_data flowRTT;
     plot_data flowWindowSize;
-    
+    plot_data packetLoss;
 };
 
 extern Plotter sim_plotter;
