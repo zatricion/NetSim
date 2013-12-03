@@ -97,13 +97,13 @@ void Plotter::plotBufferOccupancy(float runtime) {
 void Plotter::plotFlowRTT(float runtime) {
     Plotter::plot(flowRTT,
                   runtime,
-                  "Flow RTT", "Time (s)", "RTT (s)");
+                  "Flow RTT", "Time (s)", "RTT (s)", "lines");
 }
 
 void Plotter::plotFlowWindowSize(float runtime) {
     Plotter::plot(flowWindowSize,
                   runtime,
-                  "Window Size", "Time (s)", "Window Size (pkts)");
+                  "Window Size", "Time (s)", "Window Size (pkts)", "lines");
 }
 
 void Plotter::plotPacketLoss(float runtime) {

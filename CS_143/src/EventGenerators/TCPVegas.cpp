@@ -62,23 +62,25 @@ void TCPVegas::handleVegasUpdate(Flow *flow, float time) {
     if (flow->phase == DONE || flow->phase == FIN) {
         return;
     }
+    /*
     std::cout << "WindowStart= " << flow->windowStart << std::endl;
     std::cout << "WindowEnd= " << flow->windowEnd << std::endl;
     std::cout << "minRTT= " << flow->minRTT << std::endl;
     std::cout << "A= " << flow->A << std::endl;
     std::cout << "Alpha= " << flow->vegasConstAlpha << std::endl;
     std::cout << "Beta= " << flow->vegasConstBeta << std::endl;
+    */
    
 
     
 
     int windowSize = flow->windowEnd - flow->windowStart + 1;
     FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
-    std::cout << "BEFORE: windowSize=" << windowSize << std::endl;
+    //std::cout << "BEFORE: windowSize=" << windowSize << std::endl;
 
     
     float testValue = (windowSize / flow->minRTT) - (windowSize / flow->A);
-    std::cout << "TEST= " << testValue << std::endl;
+    //std::cout << "TEST= " << testValue << std::endl;
     // apply Vegas update
     if (testValue < (flow->vegasConstAlpha / flow->minRTT)) {
         windowSize += 1;
@@ -91,10 +93,10 @@ void TCPVegas::handleVegasUpdate(Flow *flow, float time) {
     windowSize = std::max(1, windowSize);
     
     flow->windowEnd = windowSize + flow->windowStart - 1;
-    std::cout << "New Window End= " << flow->windowEnd << std::endl;
-    std::cout << "AFTER: windowSize=" << windowSize << std::endl;
+    //std::cout << "New Window End= " << flow->windowEnd << std::endl;
+    //std::cout << "AFTER: windowSize=" << windowSize << std::endl;
 
-    std::cout << "------------" << std::endl;
+    //std::cout << "------------" << std::endl;
 
 
     sendManyPackets(flow, time);
