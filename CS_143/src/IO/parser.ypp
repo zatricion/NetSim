@@ -34,7 +34,7 @@ int yyerror(const char *s);
 int yylex();
 
 // debug
-bool debug = true;
+bool debug = false;
 // map for link lookups
 std::map<std::string, std::shared_ptr<Link> > link_map;
 // map for host lookups
