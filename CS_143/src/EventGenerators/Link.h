@@ -30,6 +30,8 @@ public:
     void logBufferOccupancy(float, float);
     
     void packetLoss(float);
+    float updateTime;
+    float tempLR;
     
 private:
     // Maximum queue_size in bits

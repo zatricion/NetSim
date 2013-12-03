@@ -16,6 +16,8 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
     queue_delay = 0;
     queue_size = 0;
     buffer_occupancy = 0;
+    updateTime = 0.0;
+    tempLR = -1.0;
 }
 
 
@@ -59,8 +61,15 @@ void Link::logLinkRate(float time) {
     float link_rate = (total_bits / (time - link_time)); // / pow(10, 6);
     
     // add the link rate to the plotter
-    sim_plotter.logLinkRate(this->getID(),
+    if (time - updateTime < .1) {
+        tempLR = std::max(tempLR, link_rate);
+    }
+    else {
+        updateTime = time;
+        tempLR = -1.0;
+        sim_plotter.logLinkRate(this->getID(),
                             std::make_tuple(time, link_rate));
+    }
 }
 
 // Log queue size

@@ -19,6 +19,7 @@ Host::Host(std::shared_ptr<Link> host_link, std::string host_id) :
     std::unordered_map<std::string, Flow > flows;
     std::unordered_map<std::string, float> host_update_time;
     std::unordered_map<std::string, std::pair<std::set<int>, Phase>> recvd;
+    avgFlowRate = -1;
 }
 
 
@@ -349,12 +350,20 @@ void Host::respondTo(PacketEvent new_event) {
             logPacketDelay(time, pktDelay, pkt->flowID);
             
             // Log flow rate in between time we last got flow data to now
+
             auto got = host_update_time.find(pkt->flowID);
             if (got == host_update_time.end()) {
                 host_update_time[pkt->flowID] = pkt->timestamp;
             }
             float timePassed = time - host_update_time[pkt->flowID];
             float rate = pkt->size / timePassed;
+
+            if (avgFlowRate == -1) { avgFlowRate = rate; }
+            else {
+                avgFlowRate = std::max(avgFlowRate, rate);
+            }
+
+            if (timePassed < .2) { return; }
             logFlowRate(time + (timePassed / 2), rate, pkt->flowID);
             host_update_time[pkt->flowID] = time;
         }

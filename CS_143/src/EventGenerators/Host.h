@@ -50,6 +50,7 @@ public:
     void respondToFinUnackEvent(UnackEvent unack_event);
     void respondToSynPacketEvent(PacketEvent new_event);
     void respondToFinPacketEvent(PacketEvent new_event);
+    float avgFlowRate;
     
     std::string toString();
     

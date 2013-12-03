@@ -85,7 +85,7 @@ void Plotter::plot(plot_data data,
 void Plotter::plotLinkRate(float runtime) {
     Plotter::plot(linkRate,
                   runtime,
-                  "Link Rate", "Time (s)", "Link Rate (bps)");
+                  "Link Rate", "Time (s)", "Link Rate (bps)", "lines");
 }
 
 void Plotter::plotBufferOccupancy(float runtime) {
