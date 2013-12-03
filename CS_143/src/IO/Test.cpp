@@ -187,7 +187,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    while(handler.getMinTime() < 10.0)     {
+    while(handler.getMinTime() < 20.0)     {
         handler.step();
     }
     

@@ -9,6 +9,7 @@
 #include <limits>
 #include "../EventHandling/Packet.h"
 #include "../EventHandling/PacketEvent.h"
+#include "../EventHandling/BFResendEvent.h"
 #include <sstream>
 #include "Host.h"
 #include "Path.h"
@@ -56,10 +57,10 @@ private:
     std::vector<std::shared_ptr<Link> > debug_links;
     
     // Time last bf_table sent from this router
-    float router_time;
+    float router_time = 0.0;
     
     // Time to wait between bf packet broadcasts
-    float wait_time = 0.1;
+    float wait_time = 0.0;
 };
 
 

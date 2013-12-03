@@ -26,10 +26,6 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
     }
     // add bf packetEvents to eventHeap
     broadcastTable(0.0);
-
-    auto b = std::make_shared<BFResendEvent>(uuid, uuid, wait_time);
-    wait_time = std::min(5.0, wait_time + 0.1); // TODO 5.0 magic #
-    addEventToLocalQueue(b);
 }
 
 // broadcast BF table to all connected routers
@@ -132,7 +128,6 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
 }
 
 // Deal with PacketEvents
-// jjjjjj
 void Router::giveEvent(std::shared_ptr<Event> e) {
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
@@ -142,28 +137,18 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     
     float now = packet_event.eventTime();
     if (pkt->bf_tbl_bit) {
-        // Need to update routing.
         updateRouting(pkt->bf_table, packet_event.source, pkt->source);
-        //broadcastTable(packet_event.eventTime() + 5);
-
-        /*
+<<<<<<< HEAD
+        broadcastTable(packet_event.eventTime() + 5);
+=======
         if (now - router_time > wait_time) {
-            FILE_LOG(logDEBUG) << "REBROADCASTING";
+            broadcastTable(now);
             router_time = now;
             wait_time = std::min(5.0, wait_time + 0.1);
-            broadcastTable(now);
         }
-        */
-    }
-    else if (e->getType() == "BF_RESEND_EVENT") {
-       FILE_LOG(logDEBUG) << "Scheduling BF Resend";
-       broadcastTable(now);
-       auto b = std::make_shared<BFResendEvent>(uuid, uuid, now + wait_time);
-       wait_time = std::min(5.0, wait_time + 0.1);
-       addEventToLocalQueue(b);
+>>>>>>> 8d9d976025d4491f3a1bd130e5415915faf9ba2f
     }
     else {
-        // Routing actual data
         std::string dest = getRouting(pkt->final_dest);
         
         if (dest != "NONE") {
