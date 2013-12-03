@@ -15,23 +15,32 @@ public:
     void logLinkRate(std::string name,
                      std::tuple<float, float> rate_data);
     
-    void plotLinkRate();
     
     void logBufferOccupancy(std::string link_name,
                      std::tuple<float, float> buffer_data);
     
-    void plotBufferOccupancy();
+    
 
     void logFlowRTT(std::string name,
                      std::tuple<float, float> rate_data);
-    void plotFlowRTT();
+   
 
     void logFlowWindowSize(std::string name,
                      std::tuple<float, float> rate_data);
-    void plotFlowWindowSize();
+
  
-    void plot(plot_data data, std::string title, std::string xlabel, std::string ylabel);
+    void plot(plot_data data,
+              float runtime,
+              std::string title,
+              std::string xlabel,
+              std::string ylabel);
+    
     void hist(plot_data data);
+    
+    void plotLinkRate(float);
+    void plotBufferOccupancy(float);
+    void plotFlowRTT(float);
+    void plotFlowWindowSize(float);
     
 private:
     plot_data link_rate;

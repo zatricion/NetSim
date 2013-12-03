@@ -187,15 +187,16 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    while(handler.getMinTime() < 10.0)     {
+    float runtime = 10.0;
+    while(handler.getMinTime() < runtime)     {
         handler.step();
     }
     
     // output link rate plot
-    sim_plotter.plotLinkRate();
-    sim_plotter.plotBufferOccupancy();
-    sim_plotter.plotFlowRTT();
-    sim_plotter.plotFlowWindowSize();
+    sim_plotter.plotLinkRate(runtime);
+    sim_plotter.plotBufferOccupancy(runtime);
+    sim_plotter.plotFlowRTT(runtime);
+    sim_plotter.plotFlowWindowSize(runtime);
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

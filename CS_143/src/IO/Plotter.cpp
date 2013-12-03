@@ -31,14 +31,20 @@ void Plotter::logFlowWindowSize(std::string name,
     flowWindowSize[name].push_back(rate_data);
 }
 
-void Plotter::plot(plot_data data, std::string title, std::string xlabel, std::string ylabel) {
+void Plotter::plot(plot_data data,
+                   float runtime,
+                   std::string title,
+                   std::string xlabel,
+                   std::string ylabel) {
     Gnuplot gp;
     
-//    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+    std::string range = "set xrange [0:" + std::to_string(runtime) + "]\n";
     
     std::string t = "set title '" + title + "'\n";
     std::string x = "set xlabel '" + xlabel + "'\n";
     std::string y = "set ylabel '" + ylabel + "'\n";
+    
+    gp << range;
     
     gp << t;
     gp << x;
@@ -88,18 +94,26 @@ void Plotter::hist(plot_data data) {
 }
 
 
-void Plotter::plotLinkRate() {
-    Plotter::plot(link_rate, "Link Rate", "Time (s)", "Link Rate (bps)");
+void Plotter::plotLinkRate(float runtime) {
+    Plotter::plot(link_rate,
+                  runtime,
+                  "Link Rate", "Time (s)", "Link Rate (bps)");
 }
 
-void Plotter::plotBufferOccupancy() {
-    Plotter::plot(BufferOccupancy, "Buffer Occupancy", "Time (s)", "Queue Size (bits)");
+void Plotter::plotBufferOccupancy(float runtime) {
+    Plotter::plot(BufferOccupancy,
+                  runtime,
+                  "Buffer Occupancy", "Time (s)", "Queue Size (bits)");
 }
 
-void Plotter::plotFlowRTT() {
-    Plotter::plot(flowRTT, "Flow RTT", "Time (s)", "RTT (s)");
+void Plotter::plotFlowRTT(float runtime) {
+    Plotter::plot(flowRTT,
+                  runtime,
+                  "Flow RTT", "Time (s)", "RTT (s)");
 }
 
-void Plotter::plotFlowWindowSize() {
-    Plotter::plot(flowWindowSize, "Window Size", "Time (s)", "Window Size (pkts)");
+void Plotter::plotFlowWindowSize(float runtime) {
+    Plotter::plot(flowWindowSize,
+                  runtime,
+                  "Window Size", "Time (s)", "Window Size (pkts)");
 }
