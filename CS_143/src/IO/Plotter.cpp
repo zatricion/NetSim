@@ -1,5 +1,5 @@
 #include "Plotter.h"
-#include "gnuplot-iostream.h"
+//#include "gnuplot-iostream.h"
 
 
 // For get calls
