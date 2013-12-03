@@ -315,6 +315,7 @@ void Host::respondTo(PacketEvent new_event) {
             // Note that if the host is the receiving end, do nothing.
             // This is because when we receive the ACK from the SYNACK,
             // we do nothing.
+            
         }
         if (!pkt->ack) {
             // We received a packet.  Send an acknowledgment.
