@@ -128,6 +128,8 @@ void simTest2()
 {
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
     Handler handler = Handler();
+
+    read_input(handler);
     
     // add links
     auto link0 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),

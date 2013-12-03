@@ -22,6 +22,7 @@
 #include <cmath>
 #include "../Tools/Log.h"
 #include "../IO/Plotter.h"
+#include "../IO/NetInput.h"
 
 int main();
 void packetTest();

@@ -2,9 +2,11 @@
 #include "NetInput.h"
 
 //int main(int argc, char *argv[]) {
-void read_input() {
+Handler& read_input(Handler &h) {
   //std::cout << "Running test\n";
 
-  parse(std::cin);
+  parse(std::cin, h);
+
+  return h;
 }
 

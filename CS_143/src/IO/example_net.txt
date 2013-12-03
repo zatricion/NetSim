@@ -36,4 +36,5 @@ router [host1 host2] [link3 link4 link5] router4
 #      float timestamp)
 # How to have congestion algorithm?
 # Could have a token...ehh.
-flow flow1 host2 TCP_VEGAS 20 host1 5 0.5
+# don't use underscores!
+flow flow1 host2 VEGAS 20. host1 5. 0.5

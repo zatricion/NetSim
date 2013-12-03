@@ -5,16 +5,39 @@
 #include <string>
 #include <vector>
 #include <string>
-//#include <iostream>
+#include <memory>
+#include <map>
+#include <iostream>
+//#include "../EventHandling/Packet.h"
+//#include "../EventHandling/Event.h"
+//#include "../EventHandling/UnackEvent.h"
+//#include "../EventHandling/FlowEvent.h"
+#include "../EventGenerators/Flow.h"
+//#include "../EventHandling/PacketEvent.h"
+#include "../EventGenerators/EventGenerator.h"
+#include "../EventGenerators/FlowGenerator.h"
+#include "../EventGenerators/Router.h"
+#include "../EventGenerators/Host.h"
+#include "../EventGenerators/Link.h"
+#include "../EventHandling/Handler.h"
+//#include "../EventGenerators/CongestionAlg.h"
+#include "../EventGenerators/TCPReno.h"
+#include "../EventGenerators/TCPVegas.h"
 #include "NetInput.h"
+
 
 int yyerror(const char *s);
 int yylex();
 
-//static Canvas c; 
+// map for link lookups
+std::map<std::string, std::shared_ptr<Link> > link_map;
+// map for host lookups
+std::map<std::string, std::shared_ptr<Host> > host_map;
+// lists for accumulating strings
 static std::vector<std::string> str_list; 
-// previous point
-//float px,py;
+static std::vector<std::string> old_str_list; 
+// handler
+static Handler h;
 %}
 
 %union {
@@ -40,11 +63,13 @@ command:  host | router | link | flow;
 close: RBRACK
 open:  LBRACK {
   //std::cout << "Opening a list" << std::endl;
+  old_str_list = str_list;
   str_list.clear();
 };
 
 strings: string | string strings;
 string: STR {
+  //std::cout << $1 << std::endl;
   str_list.push_back($1);
 };
 
@@ -57,15 +82,32 @@ list: open strings close {
 
 // Host(shared_ptr<Link> host_link, 
 //      string host_id)
-host: HOSTTOK list STR {
-  std::cout << "HOST: " << $3 << std::endl;	
+host: HOSTTOK STR STR {
+  //std::cout << "HOST: " << $2 << ' ' << $3 << std::endl;
+  // create host
+  auto host = std::make_shared<Host>(link_map[$2], $3);
+  // add host to local map
+  host_map[$3] = host;
+  // add link to handler
+  h.addGenerator(host);	
 };
 
 // Router(vector<string> host_list, 
 //        vector<shared_ptr<Link> > neighboring_links, 
 //        string router_id)
-router: ROUTERTOK list STR {
-  std::cout << "ROUTER: " << $3 << std::endl;
+router: ROUTERTOK list list STR {
+  //std::cout << "ROUTER: " << $4 << std::endl;
+  // construct string vector from host_list
+  std::vector<std::string> host_list = old_str_list; // copied???
+  // construct shared_ptr<Link> vector from neighboring_links
+  std::vector<std::shared_ptr<Link> > neighboring_links;
+  for (auto &it : str_list) {
+    neighboring_links.push_back(link_map[it]);
+  }
+  // make router
+  auto router = std::make_shared<Router>(host_list, neighboring_links, $4);
+  // give to handler
+  h.addGenerator(router);
 };
 
 // Link(float buffer_size, 
@@ -75,10 +117,14 @@ router: ROUTERTOK list STR {
 //      string n2, 
 //      string link_id)
 link: LINKTOK FLOAT FLOAT FLOAT STR STR STR {
-  std::cout << "LINK: " << $2 << ' ' << $3 << ' ' << $4 << std::endl;	
+  //std::cout << "LINK: " << $2 << ' ' << $3 << ' ' << $4 << "..." << std::endl;
+  // create link
+  auto link = std::make_shared<Link>($2, $3, $4, $5, $6, $7);
+  // add link to local map
+  link_map[$7] = link;
+  // add link to handler
+  h.addGenerator(link);
 };
-
-// host [test1 test2 test3 test4] meow
 
 // Flow(string ID, 
 //      string dest, 
@@ -88,7 +134,28 @@ link: LINKTOK FLOAT FLOAT FLOAT STR STR STR {
 //      int windowSize, 
 //      float timestamp)
 flow: FLOWTOK STR STR STR FLOAT STR FLOAT FLOAT {
-  std::cout << "FLOW: " << $2 << $3 << std::endl;	
+  //std::cout << "FLOW: " << $5 << ' ' << $7 << ' ' << $8 << std::endl;	
+  std::string ID = $2;
+  std::string dest = $3;
+  //std::shared_ptr<CongestionAlg> alg;
+  std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
+  //if ($4 == "VEGAS") {
+  //  alg = std::make_shared<TCPVegas>();
+  //} else {
+  //  alg = std::make_shared<TCPReno>();
+  //}
+  int data_size = (int) $5;
+  std::shared_ptr<Host> host = host_map[$6];
+  int windowSize = (int) $7;
+  int timestamp = $8;
+  auto flow = std::make_shared<Flow>(ID, dest, alg, data_size, host, 
+                                     windowSize, timestamp);
+  std::vector<std::shared_ptr<Flow> > flow_list;
+  flow_list.push_back(flow);  
+  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
+
+  // give to handler
+  h.addGenerator(flow_g);
 };
 
 %%
@@ -105,7 +172,8 @@ int yylex() {
 }
 
 
-void parse(std::istream &datafile) {
+//void parse(std::istream &datafile) {
+Handler& parse(std::istream &datafile, Handler &h) {
    // Construct the lexer.
    lexer = new yyFlexLexer(&datafile);
    // Run the parser.
@@ -115,4 +183,6 @@ void parse(std::istream &datafile) {
    }
 
    delete lexer;
+   // return handler
+   return h;
 }
