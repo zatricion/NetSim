@@ -66,11 +66,6 @@ void Host::respondTo(FlowEvent flow_event) {
     flows[flow_event.floww->id] = flow_event.floww;
 
     // Here, we want to start the SYN handshake.
-<<<<<<< .merge_file_jfaIQs
-    auto syn = std::make_shared<Packet>("SYN", flow_event.floww->destination,
-        flow_event.floww->source, SYN_SIZE, false, -1, 
-        flow_event.floww->id, true, false, flow_event.eventTime());
-=======
     auto syn = std::make_shared<Packet>("SYN",
                                         flow_event.floww->destination,
                                         flow_event.floww->source,
@@ -82,7 +77,6 @@ void Host::respondTo(FlowEvent flow_event) {
                                         false, // bf packet?
                                         flow_event.eventTime());
     
->>>>>>> .merge_file_JF7jbt
     float waitTime = flow_event.floww->waitTime;
     sendAndQueueResend(syn, flow_event.eventTime(), waitTime);
 }
@@ -298,117 +292,6 @@ void Host::respondTo(PacketEvent new_event) {
     // make sure this is where the packet should have ended up
     assert(pkt->final_dest == uuid);
 
-<<<<<<< .merge_file_jfaIQs
-    if (pkt->syn) {
-        if (pkt->ack) {
-            // received syn.ack.  First, we send an ack.  Then, we start
-            // sending data, and set the mode of the flow to DATA.
-            if (flows[pkt->flowID]->phase != DATA) {
-                FILE_LOG(logDEBUG1) << "Received a first SYNACK.  On host:" 
-                    << toString();
-                // This is the first SYN.ACK received.
-                flows[pkt->flowID]->phase = DATA;
-
-                float RTT = new_event.eventTime() - pkt->timestamp;
-                flows[pkt->flowID]->A = RTT;
-                flows[pkt->flowID]->D = RTT;
-                flows[pkt->flowID]->waitTime = flows[pkt->flowID]->A + 4 * flows[pkt->flowID]->D;
-
-                FILE_LOG(logDEBUG) << "WAITTIME=" << flows[pkt->flowID]->waitTime;
-                auto ack = std::make_shared<Packet>("ACK", pkt->source, uuid,
-                    ACK_SIZE, true, -1, pkt->flowID, false, false,
-                    pkt->timestamp);
-                auto pEV = std::make_shared<PacketEvent>(my_link->getID(), 
-                    uuid, time, ack);
-                addEventToLocalQueue(pEV);
-
-                // Initialize the data flow.
-                flows[pkt->flowID]->initialize(new_event.eventTime());
-            }
-        }
-        else {
-            // received a syn, non-ack.
-            // Send a syn.ack.  Then, create an entry in recvd.  Do these things
-            // only if we don't already have an entry in recvd (i.e. only if we
-            // have never gotten a non-ack syn before.
-            if (recvd.count(pkt->flowID) == 0) {
-                recvd[pkt->flowID] = 
-                    std::pair<std::set<int>, Phase>(std::set<int>(), DATA);
-                auto synack = std::make_shared<Packet>("SYNACK", pkt->source,
-                    uuid, SYN_SIZE, true, -1, pkt->flowID, true, false,
-                    pkt->timestamp);
-                auto pEV = std::make_shared<PacketEvent>(my_link->getID(), 
-                    uuid, time, synack);
-                addEventToLocalQueue(pEV);
-            }
-        }
-    }
-
-    else if (pkt->fin) {
-        if (pkt->ack) {
-            // Received a FIN.ACK.  Set the connection to DONE.
-            if (flows.count(pkt->flowID)) {
-                // This host is the sending end of the flow.
-                flows[pkt->flowID]->phase = DONE;
-            }
-            else {
-                assert(recvd.count(pkt->flowID));
-                recvd[pkt->flowID].second = DONE;
-            }
-        }
-        else {
-            // Received a FIN, non-ack.
-
-            if (flows.count(pkt->flowID)) {
-                // This host is the sending end of the flow.
-                // We received a FIN from the receiving end.
-                // The sending end should already be in the FIN or
-                // the DONE state.  Then, we simply send a FINACK.  Don't
-                // schedule a resend.
-                assert(flows[pkt->flowID]->phase == FIN ||
-                       flows[pkt->flowID]->phase == DONE);
-                auto finack = std::make_shared<Packet>("FINACK", pkt->source,
-                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true,
-                    pkt->timestamp);
-                auto finAckEvent = std::make_shared<PacketEvent>(my_link->getID(),
-                    uuid, new_event.eventTime(), finack);
-                addEventToLocalQueue(finAckEvent);
-            }
-            else {
-                assert(recvd.count(pkt->flowID));
-                // This host is the receiving end of the flow.
-                // We received a FIN from the sending end.  This is how
-                // the receiving end knows that the flow is over.
-                
-                if (recvd[pkt->flowID].second == DATA) {
-                    // TODO set phase to FIN, and send our first FIN, and
-                    // reschedule an unackEvent for the FIN.
-                    recvd[pkt->flowID].second = FIN;
-                    auto fin = std::make_shared<Packet>("FIN", pkt->source,
-                        uuid, FIN_SIZE, false, -1, pkt->flowID, false, true,
-                        new_event.eventTime());
-                    // TODO we need to store wait times for each recvd object
-                    // in addition to the other stuff we already have.
-                    sendAndQueueResend(fin, new_event.eventTime(), 500);
-                }
-
-                // Regardless of whether we were already in the FIN state or
-                // not, we want to resend a FINACK.
-
-
-                // We should not be in DATA phase, and we sure shouldn't
-                // be in the SYN phase.
-                assert(recvd[pkt->flowID].second == FIN ||
-                       recvd[pkt->flowID].second == DONE);
-                auto finack = std::make_shared<Packet>("FINACK", pkt->source,
-                    uuid, FIN_SIZE, true, -1, pkt->flowID, false, true,
-                    pkt->timestamp);
-                auto finAckEvent = std::make_shared<PacketEvent>(my_link->getID(),
-                    uuid, new_event.eventTime(), finack);
-                addEventToLocalQueue(finAckEvent);
-            }
-        }
-=======
     float time = new_event.eventTime();
     
     if (pkt->bf_tbl_bit) {
@@ -421,7 +304,6 @@ void Host::respondTo(PacketEvent new_event) {
 
     else if (pkt->fin) {
         respondToFinPacketEvent(new_event);
->>>>>>> .merge_file_JF7jbt
     }
 
     else {
@@ -443,18 +325,6 @@ void Host::respondTo(PacketEvent new_event) {
                 if (*it > ackNum) { break; }
                 ackNum += 1;
             }
-<<<<<<< .merge_file_jfaIQs
-    	    auto ret = std::make_shared<Packet>(pkt->uuid, pkt->source, 
-                pkt->final_dest, ACK_SIZE, true, ackNum, 
-                pkt->flowID, false, false, pkt->timestamp);
-            ret->ackSet = recvd[pkt->flowID].first;
-    	    float ts = new_event.eventTime();
-    	    auto pEv = std::make_shared<PacketEvent>(my_link->getID(), getID(),
-                ts, ret);
-            addEventToLocalQueue(pEv);
-            FILE_LOG(logDEBUG1) << "Host with id=" << uuid << " sent an ack: "
-                << ret->toString() << "at time=" << new_event.eventTime();
-=======
 
     	    auto ret = std::make_shared<Packet>(pkt->uuid,
                                                 pkt->source, // final destination
@@ -468,7 +338,6 @@ void Host::respondTo(PacketEvent new_event) {
                                                 pkt->timestamp);
             
             send(ret, time);
->>>>>>> .merge_file_JF7jbt
         }
     }
 }
