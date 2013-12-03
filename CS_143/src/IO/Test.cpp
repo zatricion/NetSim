@@ -194,7 +194,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 20.0;
+    float runtime = 10.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }
@@ -205,6 +205,7 @@ void simTest2()
     sim_plotter.plotFlowRTT(runtime);
     sim_plotter.plotFlowWindowSize(runtime);
     sim_plotter.plotPacketLoss(runtime);
+    sim_plotter.plotPacketDelay(runtime);
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

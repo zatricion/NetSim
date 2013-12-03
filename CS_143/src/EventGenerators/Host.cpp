@@ -314,6 +314,7 @@ void Host::respondTo(PacketEvent new_event) {
             // Note that if the host is the receiving end, do nothing.
             // This is because when we receive the ACK from the SYNACK,
             // we do nothing.
+            
         }
         if (!pkt->ack) {
             // We received a packet.  Send an acknowledgment.
@@ -338,6 +339,9 @@ void Host::respondTo(PacketEvent new_event) {
                                                 pkt->timestamp);
             
             send(ret, time);
+            
+            float pktDelay = time - pkt->timestamp;
+            logPacketDelay(time, pktDelay, pkt->flowID);
         }
     }
 }
@@ -379,4 +383,10 @@ void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float del
 
     auto uEV = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
     addEventToLocalQueue(uEV);
+}
+
+void Host::logPacketDelay(float time, float PacketDelay, std::string flowID) {
+    FILE_LOG(logDEBUG) << "logPacketDely: " << time << ", " << (float) PacketDelay;
+    sim_plotter.logPacketDelay(flowID,
+                              std::make_tuple(time, (float) PacketDelay));
 }

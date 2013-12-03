@@ -68,9 +68,9 @@ void Link::logBufferOccupancy(float time, float queue_size) {
     //if (this->getID() == "link1") {
         //std::cout << "buffer_size: " << queueKbps << std::endl;
     //}
-
+    
     sim_plotter.logBufferOccupancy(this->getID(),
-                            std::make_tuple(time, queue_size));
+                                   std::make_tuple(time, queue_size));
 }
 
 void Link::giveEvent(std::shared_ptr<Event> e)

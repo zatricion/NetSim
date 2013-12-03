@@ -52,6 +52,8 @@ public:
     void respondToFinPacketEvent(PacketEvent new_event);
     
     std::string toString();
+    
+    void logPacketDelay(float time, float PacketDelay, std::string FlowID);
 };
 
 #endif /* defined(__CS_143__Host__) */
