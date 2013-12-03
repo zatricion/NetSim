@@ -1,0 +1,39 @@
+# Network spec for test case 1
+
+# Link(float buffer_size, 
+#      float prop_delay, 
+#      float capacity, 
+#      string n1, 
+#      string n2, 
+#      string link_id)
+link 64 10 12.5 host1   router1 link0
+link 64 10 10.0 router1 router2 link1
+link 64 10 10.0 router1 router3 link2
+link 64 10 10.0 router2 router4 link3
+link 64 10 10.0 router3 router4 link4
+link 64 10 12.5 router4 host2   link5
+
+# Host(shared_ptr<Link> host_link, 
+#      string host_id)
+host link0 host1
+host link5 host2
+
+# Router(vector<string> host_list, 
+#        vector<shared_ptr<Link> > neighboring_links, 
+#        string router_id)
+# NOTE THAT HOST LIST IS A LIST OF STRINGS
+router [host1 host2] [link0 link1 link2] router1
+router [host1 host2] [link1 link3]       router2
+router [host1 host2] [link2 link3]       router3
+router [host1 host2] [link3 link4 link5] router4
+
+# Flow(string ID, 
+#      string dest, 
+#      shared_ptr<CongestionAlg> alg, 
+#      int data_size, 
+#      shared_ptr<Host> host, 
+#      int windowSize, 
+#      float timestamp)
+# How to have congestion algorithm?
+# Could have a token...ehh.
+flow flow1 host2 TCP_VEGAS 20 host1 5 0.5

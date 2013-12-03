@@ -1,8 +1,8 @@
 CC=g++
-CFLAGS=-std=c++0x  -g -Wall
+CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o build/parser.tab.o build/lexer.yy.o build/NetInput.o
 SOURCE = src/IO/Test.cpp
 
 all: simulator 
@@ -80,6 +80,22 @@ build/TCPVegasUpdateEvent.o: src/EventHandling/TCPVegasUpdateEvent.cpp src/Event
 build/BFResendEvent.o: src/EventHandling/BFResendEvent.cpp src/EventHandling/BFResendEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/BFResendEvent.o
 
+build/parser.tab.cpp build/parser.tab.hpp: src/IO/parser.ypp
+	bison -d src/IO/parser.ypp
+        # lolwat
+	mv parser.tab.cpp build/parser.tab.cpp
+	mv parser.tab.hpp build/parser.tab.hpp
+
+build/parser.tab.o: build/parser.tab.cpp build/parser.tab.hpp
+        # omg
+	cp src/IO/NetInput.h build/NetInput.h
+	$(CC) $(CFLAGS) -c $< -o build/parser.tab.o
+
+build/lexer.yy.cpp: src/IO/lexer.lex
+	flex -+ -o build/lexer.yy.cpp src/IO/lexer.lex
+
+build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
+	$(CC) $(CFLAGS) -c $< -o build/NetInput.o
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)
@@ -90,4 +106,4 @@ test: clean runtest
 	./runtest
 
 clean:
-	rm build/*.o
+	rm build/*.o build/lexer.yy.cpp build/parser.tab.cpp build/parser.tab.hpp build/NetInput.h

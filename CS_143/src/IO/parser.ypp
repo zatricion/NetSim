@@ -1,0 +1,118 @@
+/* Parses records containing a number and zero or more subrecords */
+%{
+#include <stdint.h>
+#include <FlexLexer.h>
+#include <string>
+#include <vector>
+#include <string>
+//#include <iostream>
+#include "NetInput.h"
+
+int yyerror(const char *s);
+int yylex();
+
+//static Canvas c; 
+static std::vector<std::string> str_list; 
+// previous point
+//float px,py;
+%}
+
+%union {
+    char* strval;
+    float fval;
+}
+
+%defines
+%token <fval> FLOAT
+%token <strval> STR
+%token HOSTTOK
+%token ROUTERTOK
+%token LINKTOK
+%token FLOWTOK
+%token LBRACK
+%token RBRACK
+
+%%
+
+commands: command | command commands; //| commands command;
+command:  host | router | link | flow;
+
+close: RBRACK
+open:  LBRACK {
+  //std::cout << "Opening a list" << std::endl;
+  str_list.clear();
+};
+
+strings: string | string strings;
+string: STR {
+  str_list.push_back($1);
+};
+
+list: open strings close {
+  std::cout << "LIST: ";
+  for (auto &it : str_list)
+    std::cout << it << ", ";
+  std::cout << std::endl;
+};
+
+// Host(shared_ptr<Link> host_link, 
+//      string host_id)
+host: HOSTTOK list STR {
+  std::cout << "HOST: " << $3 << std::endl;	
+};
+
+// Router(vector<string> host_list, 
+//        vector<shared_ptr<Link> > neighboring_links, 
+//        string router_id)
+router: ROUTERTOK list STR {
+  std::cout << "ROUTER: " << $3 << std::endl;
+};
+
+// Link(float buffer_size, 
+//      float prop_delay, 
+//      float capacity, 
+//      string n1, 
+//      string n2, 
+//      string link_id)
+link: LINKTOK FLOAT FLOAT FLOAT STR STR STR {
+  std::cout << "LINK: " << $2 << ' ' << $3 << ' ' << $4 << std::endl;	
+};
+
+// host [test1 test2 test3 test4] meow
+
+// Flow(string ID, 
+//      string dest, 
+//      shared_ptr<CongestionAlg> alg, 
+//      int data_size, 
+//      shared_ptr<Host> host, 
+//      int windowSize, 
+//      float timestamp)
+flow: FLOWTOK STR STR STR FLOAT STR FLOAT FLOAT {
+  std::cout << "FLOW: " << $2 << $3 << std::endl;	
+};
+
+%%
+
+static FlexLexer *lexer;
+
+int yyerror(const char * s) {
+   std::cerr << "Parse error: " << s << std::endl;
+   return 0;
+}
+
+int yylex() {
+   return lexer->yylex();
+}
+
+
+void parse(std::istream &datafile) {
+   // Construct the lexer.
+   lexer = new yyFlexLexer(&datafile);
+   // Run the parser.
+   if(yyparse()) {
+       std::cerr << "Parse failed!" << std::endl;
+       exit(1);
+   }
+
+   delete lexer;
+}
