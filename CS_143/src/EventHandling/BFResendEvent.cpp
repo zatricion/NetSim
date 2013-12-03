@@ -10,7 +10,7 @@ BFResendEvent::BFResendEvent(std::string dest, std::string src,
 std::string BFResendEvent::toString() {
     std::stringstream fmt;
     fmt << "{BFResendEVENT: source=" << source << ", destination=" <<
-        destination << ", timestamp=" << "}.";
+        destination << ", timestamp=" << timestamp << "}.";
     return fmt.str();
 }
 
