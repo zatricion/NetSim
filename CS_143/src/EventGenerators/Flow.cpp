@@ -12,7 +12,8 @@
  * do.
  */
 void Flow::initialize(float time) {
-    FILE_LOG(logDEBUG1) << "Initializing data stream from flow with id=" << id;
+    FILE_LOG(logDEBUG) << "Initializing data stream from flow with id=" << id;
+    FILE_LOG(logDEBUG) << a->toString();
     if (a->toString() == "TCPVegas") {
         auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, source, waitTime + time, id);
         host->addEventToLocalQueue(vUpdate);

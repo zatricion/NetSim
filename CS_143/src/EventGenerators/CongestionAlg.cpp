@@ -30,7 +30,3 @@ void CongestionAlg::sendManyPackets(Flow* flow, float time) {
         }
     }
 }
-
-std::string CongestionAlg::toString() {
-    return "CongestionAlg";
-}

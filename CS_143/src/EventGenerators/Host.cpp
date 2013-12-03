@@ -191,7 +191,7 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
         flows[pkt->flowID]->minRTT = RTT;
         
         // Initialize the data flow.
-        flows[pkt->flowID]->initialize(new_event.eventTime());
+        //flows[pkt->flowID]->initialize(new_event.eventTime());
 
         // Initialize the data flow, now that the variables are set.
         flows[pkt->flowID]->initialize(new_event.eventTime());
