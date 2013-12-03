@@ -62,7 +62,7 @@ void Link::logLinkRate(float time) {
     
     // add the link rate to the plotter
 
-    if (time - updateTime < .005) {
+    if (time - updateTime < .01) {
         tempLR = std::max(tempLR, link_rate);
     }
     else {
