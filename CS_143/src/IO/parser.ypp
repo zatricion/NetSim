@@ -1,0 +1,213 @@
+/* Parses records containing a number and zero or more subrecords */
+%{
+//#ifndef __NETINPUT_H_GUARD__
+//#define __NETINPUT_H_GUARD__
+
+#include <stdint.h>
+#include <FlexLexer.h>
+#include <string>
+#include <vector>
+#include <string>
+#include <memory>
+#include <map>
+#include <iostream>
+#include "../EventHandling/Packet.h"
+#include "../EventHandling/Event.h"
+#include "../EventHandling/UnackEvent.h"
+#include "../EventHandling/FlowEvent.h"
+#include "../EventGenerators/Flow.h"
+#include "../EventHandling/PacketEvent.h"
+#include "../EventGenerators/EventGenerator.h"
+#include "../EventGenerators/FlowGenerator.h"
+#include "../EventGenerators/Router.h"
+#include "../EventGenerators/Host.h"
+#include "../EventGenerators/Link.h"
+#include "../EventHandling/Handler.h"
+#include "../EventGenerators/CongestionAlg.h"
+#include "../EventGenerators/TCPReno.h"
+#include "../EventGenerators/TCPVegas.h"
+#include "NetInput.h"
+
+//#endif
+
+int yyerror(const char *s);
+int yylex();
+
+// debug
+bool debug = false;
+// map for link lookups
+std::map<std::string, std::shared_ptr<Link> > link_map;
+// map for host lookups
+std::map<std::string, std::shared_ptr<Host> > host_map;
+// lists for accumulating strings
+static std::vector<std::string> str_list; 
+static std::vector<std::string> old_str_list; 
+// handler
+static Handler h;
+%}
+
+%union {
+    char* strval;
+    float fval;
+}
+
+%defines
+%token <fval> FLOAT
+%token <strval> STR
+%token HOSTTOK
+%token ROUTERTOK
+%token LINKTOK
+%token FLOWTOK
+%token LBRACK
+%token RBRACK
+
+%%
+
+commands: command | command commands; //| commands command;
+command:  host | router | link | flow;
+
+close: RBRACK
+open:  LBRACK {
+  //std::cout << "Opening a list" << std::endl;
+  old_str_list = str_list;
+  str_list.clear();
+};
+
+strings: string | string strings;
+string: STR {
+  //std::cout << $1 << std::endl;
+  str_list.push_back($1);
+};
+
+list: open strings close {
+  std::string out = "";
+  out += "LIST: ";
+  for (auto &it : str_list)
+    out += it + ", ";
+  if(debug) std::cout << out << std::endl;
+};
+
+// Host(shared_ptr<Link> host_link, 
+//      string host_id)
+host: HOSTTOK string string {
+  std::string s2 = str_list[str_list.size()-1];
+  std::string s1 = str_list[str_list.size()-2];
+  if(debug) std::cout << "HOST: " << s1 << ' ' << s2 << std::endl;
+  // create host
+  auto host = std::make_shared<Host>(link_map[s1], s2);
+  // add host to local map
+  host_map[s2] = host;
+  // add link to handler
+  h.addGenerator(host);	
+};
+
+// Router(vector<string> host_list, 
+//        vector<shared_ptr<Link> > neighboring_links, 
+//        string router_id)
+//        ALSO REMEMBER d_links
+router: ROUTERTOK list list STR {
+  if(debug) std::cout << "ROUTER: " << $4 << std::endl;
+  // construct string vector from host_list
+  std::vector<std::string> host_list = old_str_list; // copied???
+  // construct shared_ptr<Link> vector from neighboring_links
+  std::vector<std::shared_ptr<Link> > neighboring_links;
+  std::vector<std::shared_ptr<Link> > d_links;
+  for (auto &it : str_list) {
+    neighboring_links.push_back(link_map[it]);
+  }
+
+  // make router
+  auto router = std::make_shared<Router>(host_list, neighboring_links, 
+                                         $4, d_links);
+  // give to handler
+  h.addGenerator(router);
+};
+
+// Link(float buffer_size, 
+//      float prop_delay, 
+//      float capacity, 
+//      string n1, 
+//      string n2, 
+//      string link_id)
+link: LINKTOK FLOAT FLOAT FLOAT string string string { 
+  std::string s3 = str_list[str_list.size()-1];
+  std::string s2 = str_list[str_list.size()-2];
+  std::string s1 = str_list[str_list.size()-3];
+  if(debug) std::cout << "LINK: " << $2 << ' ' << $3 << ' ' << $4 << ' ' << s1 << ' ' << s2 << ' ' << s3 << std::endl;
+  // create link
+  auto link = std::make_shared<Link>($2, $3, $4, s1, s2, s3);
+  // add link to local map
+  link_map[s3] = link;
+  // add link to handler
+  h.addGenerator(link);
+};
+
+// Flow(string ID, 
+//      string dest, 
+//      shared_ptr<CongestionAlg> alg, 
+//      int data_size, 
+//      shared_ptr<Host> host, 
+//      int windowSize, 
+//      float timestamp)
+flow: FLOWTOK string string string FLOAT string FLOAT FLOAT {
+  // PROBABLY SOMETHING WRONG WITH STRING REFERENCES
+  // THIS SEEMS TO BE A PROBLEM FOR ALL THINGS THAT AREN'T USING LISTS :O
+  std::string s4 = str_list[str_list.size()-1];
+  std::string s3 = str_list[str_list.size()-2];
+  std::string s2 = str_list[str_list.size()-3];
+  std::string s1 = str_list[str_list.size()-4];
+  if(debug) std::cout << "FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
+  std::string ID = s1;
+  std::string dest = s2;
+  //std::shared_ptr<CongestionAlg> alg;
+  std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
+  //if ($4 == "VEGAS") {
+  //  alg = std::make_shared<TCPVegas>();
+  //} else {
+  //  alg = std::make_shared<TCPReno>();
+  //}
+  int data_size = (int) $5;
+  std::shared_ptr<Host> host = host_map[s4];
+  int windowSize = (int) $7;
+  float timestamp = $8;
+  auto flow = std::make_shared<Flow>(ID, dest, alg, data_size, host, 
+                                     windowSize, timestamp);
+  std::vector<std::shared_ptr<Flow> > flow_list;
+  flow_list.push_back(flow);  
+  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
+  // give to handler
+  h.addGenerator(flow_g);
+};
+
+%%
+
+static FlexLexer *lexer;
+
+int yyerror(const char * s) {
+   std::cerr << "Parse error: " << s << std::endl;
+   return 0;
+}
+
+int yylex() {
+   return lexer->yylex();
+}
+
+
+//void parse(std::istream &datafile) {
+//void parse(std::istream &datafile, Handler &handler) {
+Handler& parse(std::istream &datafile) {
+   // set own handler
+   //std::cout << 
+   //h = handler;
+   h = Handler();
+   // Construct the lexer.
+   lexer = new yyFlexLexer(&datafile);
+   // Run the parser.
+   if(yyparse()) {
+       std::cerr << "Parse failed!" << std::endl;
+       exit(1);
+   }
+
+   delete lexer;
+   return h;
+}

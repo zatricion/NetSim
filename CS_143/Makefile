@@ -1,8 +1,9 @@
 CC=g++
-CFLAGS=-std=c++0x  -g -Wall
+CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o
+#build/parser.tab.o build/lexer.yy.o build/NetInput.o
 SOURCE = src/IO/Test.cpp
 
 all: simulator 
@@ -16,22 +17,22 @@ build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/Event
 
 build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h  
 	$(CC) $(CFLAGS) -c $< -o build/Path.o 
-    
+
 build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Packet.o
-    
+
 build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/CongestionAlg.h src/EventGenerators/Host.h
 	$(CC) $(CFLAGS) -c $< -o build/Flow.o
 
 build/Event.o: src/EventHandling/Event.cpp src/EventHandling/Event.h
 	$(CC) $(CFLAGS) -c $< -o build/Event.o
-    
+
 build/UnackEvent.o: src/EventHandling/UnackEvent.cpp src/EventHandling/UnackEvent.h src/EventHandling/Packet.h src/EventHandling/Event.h
 	$(CC) $(CFLAGS) -c $< -o build/UnackEvent.o
 
 build/FlowEvent.o: src/EventHandling/FlowEvent.cpp src/EventHandling/FlowEvent.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventGenerators/Flow.h
 	$(CC) $(CFLAGS) -c $< -o build/FlowEvent.o
-    
+
 build/PacketEvent.o: src/EventHandling/PacketEvent.cpp src/EventHandling/PacketEvent.h src/EventHandling/Packet.h src/EventGenerators/EventGenerator.h
 	$(CC) $(CFLAGS) -c $< -o build/PacketEvent.o
 
@@ -46,7 +47,7 @@ build/Router.o: src/EventGenerators/Router.cpp src/EventGenerators/Router.h src/
 
 build/Host.o: src/EventGenerators/Host.cpp src/EventGenerators/Host.h src/EventGenerators/Link.h src/EventHandling/Packet.h src/EventHandling/FlowEvent.h src/EventGenerators/Flow.h src/EventHandling/UnackEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/Host.o
-    
+
 build/Link.o: src/EventGenerators/Link.cpp src/EventGenerators/Link.h src/EventGenerators/EventGenerator.h src/EventHandling/PacketEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/Link.o
 
@@ -55,7 +56,7 @@ build/Handler.o: src/EventHandling/Handler.cpp src/EventHandling/Handler.h src/E
 
 build/CongestionAlg.o: src/EventGenerators/CongestionAlg.cpp src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
 	$(CC) $(CFLAGS) -c $< -o build/CongestionAlg.o
-    
+
 build/deref_comp.o: src/Tools/deref_comp.cpp src/Tools/deref_comp.h src/EventHandling/Event.h
 	$(CC) $(CFLAGS) -c $< -o build/deref_comp.o
 
@@ -80,6 +81,34 @@ build/TCPVegasUpdateEvent.o: src/EventHandling/TCPVegasUpdateEvent.cpp src/Event
 build/BFResendEvent.o: src/EventHandling/BFResendEvent.cpp src/EventHandling/BFResendEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/BFResendEvent.o
 
+# put everything in src/IO at first, then move .o's to build
+
+#src/IO/parser.tab.cpp src/IO/parser.tab.hpp: src/IO/parser.ypp
+src/IO/parser.tab.cpp src/IO/parser.tab.hpp: src/IO/parser.ypp
+	bison -d src/IO/parser.ypp
+        # lolwat
+	mv parser.tab.cpp src/IO/parser.tab.cpp
+	mv parser.tab.hpp src/IO/parser.tab.hpp	
+
+#build/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
+src/IO/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
+	#$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
+	$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
+	#mv parser.tab.o build/parser.tab.o
+
+src/IO/lexer.yy.cpp: src/IO/lexer.lex
+	flex -+ -o src/IO/lexer.yy.cpp src/IO/lexer.lex
+
+#build/lexer.yy.o: src/IO/lexer.yy.cpp
+src/IO/lexer.yy.o: src/IO/lexer.yy.cpp
+	#$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
+	$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
+	# ew
+	#mv src/IO/lexer.yy.o build/lexer.yy.o
+
+#build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
+src/IO/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
+	$(CC) $(CFLAGS) -c $< -o src/IO/NetInput.o
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)
@@ -90,4 +119,4 @@ test: clean runtest
 	./runtest
 
 clean:
-	rm build/*.o
+	rm build/*.o src/IO/*.o src/IO/lexer.yy.cpp src/IO/parser.tab.cpp src/IO/parser.tab.hpp
