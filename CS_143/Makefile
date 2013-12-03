@@ -88,6 +88,7 @@ src/IO/parser.tab.cpp src/IO/parser.tab.hpp: src/IO/parser.ypp
 
 build/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
 	$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
+	mv src/IO/parser.tab.o build/parser.tab.o
 
 src/IO/lexer.yy.cpp: src/IO/lexer.lex
 	flex -+ -o src/IO/lexer.yy.cpp src/IO/lexer.lex
