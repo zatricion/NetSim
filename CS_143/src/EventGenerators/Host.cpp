@@ -161,7 +161,7 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
     float time = new_event.eventTime();
 
     if (pkt->ack && flows[pkt->flowID]->phase != DATA) {
-        // This is the first SYN.ACK received.
+        // This is the first SYNACK received.
         flows[pkt->flowID]->phase = DATA;
         auto ack = std::make_shared<Packet>("ACK",
                                             pkt->source, // final destination
@@ -178,6 +178,19 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
 
         // Initialize the data flow.
         flows[pkt->flowID]->initialize(new_event.eventTime());
+
+        // If we're using Vegas, we want to set the constants alpha and
+        // beta.  Set all constants.
+        float RTT = time - pkt->timestamp;
+        flows[pkt->flowID]->A = RTT;
+        flows[pkt->flowID]->D = RTT;
+        flows[pkt->flowID]->waitTime = 4 * RTT + RTT;
+        flows[pkt->flowID]->vegasConstAlpha = 1.0 / RTT;
+        flows[pkt->flowID]->vegasConstBeta = 3.0 / RTT;
+        flows[pkt->flowID]->minRTT = RTT;
+
+        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(uuid, uuid, flows[pkt->flowID]->waitTime + time, pkt->flowID);
+        addEventToLocalQueue(vUpdate);
     }
 
     if (!pkt->ack && recvd.count(pkt->flowID) == 0) {

@@ -46,7 +46,7 @@ void simTest0()
     // add link1
     auto link1 = std::make_shared<Link>((64 * 64 * 64 * 8 * 1000.0), 0.001, pow(10, 7),
                                         "host1", "host2", "link1");
-    auto ccAlg = std::make_shared<TCPReno>();
+    auto ccAlg = std::make_shared<TCPVegas>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
@@ -72,6 +72,7 @@ void simTest0()
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }
 
+/*
 void simTest1()
 {
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
@@ -121,6 +122,7 @@ void simTest1()
 
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }
+*/
 
 void simTest2()
 {

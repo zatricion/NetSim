@@ -11,14 +11,11 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPVegas::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
-    FILE_LOG(logDEBUG1) << "Handling UnackEvent for packet " << 
-        unacked->toString() << ".  Flow:" << flow->toString();
+
     auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
         flow->source, time, unacked);
     
-    // TODO this is the correct behavior, right?
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
-    FILE_LOG(logDEBUG1) << "Handled UnackEvent.  Flow " << flow->toString();
 }
 
 
@@ -30,10 +27,6 @@ void TCPVegas::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, flo
  * @param time the time at which the event was received
  */
 void TCPVegas::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
-
-
-
-    FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
     int seqNum = pkt->sequence_num;
 
     if (seqNum == flow->numPackets) {
@@ -46,16 +39,14 @@ void TCPVegas::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         flow->windowStart = seqNum;
         flow->windowEnd = seqNum;
 
-        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW."; // We might not actually be done.
-        // We appear to still be getting more events after this.  TODO
+        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
+
         flow->phase = FIN;
         // We need to send a FIN to the other host.
         auto fin = std::make_shared<Packet>("FIN", flow->destination,
             flow->source, FIN_SIZE, false, -1, flow->id, false, true, time);
-        auto finEvent = std::make_shared<PacketEvent>(
-            flow->host->my_link->getID(), flow->host->getID(), time, fin);
-        flow->host->addEventToLocalQueue(finEvent);
-            
+
+        flow->host->send(fin, time);
         return;
     }
 
@@ -70,21 +61,26 @@ void TCPVegas::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
 
 
 void TCPVegas::handleVegasUpdate(Flow *flow, float time) {
-    FILE_LOG(logDEBUG1) << "handling VegasUpdate.";
-
+    FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT";
     if (flow->phase == DONE || flow->phase == FIN) {
         return;
     }
 
     int windowSize = flow->windowStart - flow->windowEnd + 1;
+    FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
     float testValue = (windowSize / flow->minRTT) - (windowSize / flow->A);
-    // TODO typically, vegasConst is 1 / ds
-    // other one is 3 / ds
     if (testValue < flow->vegasConstAlpha) { windowSize += 1; }
     else if (testValue > flow->vegasConstBeta) { windowSize -= 1; }
     flow->windowEnd = windowSize + flow->windowStart - 1;
+    windowSize = flow->windowStart - flow->windowEnd + 1;
+
+    sendManyPackets(flow, time);
 
     // schedule another update
     auto update = std::make_shared<TCPVegasUpdateEvent>(flow->source, flow->source,
-        time + flow->A, flow->id);
+        time + flow->waitTime, flow->id);
+    flow->host->addEventToLocalQueue(update);
+
+    FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;
+    flow->logFlowWindowSize(time, windowSize);
 }

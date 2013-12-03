@@ -10,9 +10,9 @@ TCPVegasUpdateEvent::TCPVegasUpdateEvent(std::string dest, std::string src,
 
 std::string TCPVegasUpdateEvent::toString() {
     std::stringstream fmt;
-    fmt << "{TCPVegasUpdateEVENT: source=";// << source << ", destination=" <<
-        //destination << ", start=" << congAvCount << ", timestamp=" << timestamp
-        //<< "}.";
+    fmt << "{TCPVegasUpdateEVENT: source=" << source << ", destination=" <<
+        destination << ", flowID=" << flowID << ", timestamp=" << timestamp
+        << "}.";
     return fmt.str();
 }
 

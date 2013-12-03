@@ -11,12 +11,25 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
-    FILE_LOG(logDEBUG1) << "Handling UnackEvent for packet " << 
-        unacked->toString() << ".  Flow:" << flow->toString();
+    // If in slowstart or cong av, go to slow start windowsize->1
+    // change ssthresh to half previous win size.
+    // 
+    if (flow->renoPhase == FASTRECOVERY) {
+        return;
+    }
+    FILE_LOG(logDEBUG) << "TIMEOUT";
+    flow->renoPhase = SLOWSTART;
+    flow->ssthresh = (flow->windowEnd - flow->windowStart + 1) / 2;
+    // Set the window size to 1.
+    int oldWindowEnd = flow->windowEnd;
+    flow->windowEnd = flow->windowStart;
+    for (int i = flow->windowEnd + 1; i <= oldWindowEnd; i++) {
+        flow->unSentPackets.insert(i);
+    }
+
     auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
         flow->source, time, unacked);
     
-    // TODO this is the correct behavior, right?
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
     FILE_LOG(logDEBUG1) << "Handled UnackEvent.  Flow " << flow->toString();
 }
@@ -73,6 +86,9 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
                 flow->source, time + flow->waitTime, flow->cavCount, flow->id);
             flow->host->addEventToLocalQueue(up);
+            // TODO instead you can do + 1 / windowSize.
+            // To reconcile rounding: keep floating point, use integer.
+            // can also have window size in bytes; division would work.
         }
     }
 
@@ -81,7 +97,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             flow->multiplicity += 1;
         }
 
-        if (flow->multiplicity >= 3) {
+        if (flow->multiplicity > 3) {
             // We have received triple acks.  Move into fast recovery, do a
             // fast resend.  If we don't receive an ack, we will go back to
             // slow start.
@@ -96,6 +112,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             int windowSize = flow->windowEnd - flow->windowStart + 1;
             windowSize /= 2;
             flow->windowEnd = flow->windowStart + windowSize - 1;
+            flow->ssthresh = windowSize;
 
             // All the packets that were just cut out of the transmission
             // window need to be added to the list of unsent packets, so they
@@ -107,17 +124,15 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             // Now, we want to do a fast retransmit.  Not clear to me if we
             // resend all packets, or just the first.  It might just be first.
             // Hence, the funny "loop"
-            //for (int i = flow->windowStart; i <= flow->windowEnd; i++) {
-            for (int i = flow->windowStart; i == flow->windowStart; i++) {
-                // TODO not 0.
+            //for (int i = flow->windowStart; i == flow->windowStart; i++) {
+                int i = flow->windowStart;
                 auto p = std::make_shared<Packet>("FRETRANS", flow->destination,
                     flow->source, DATA_PKT_SIZE, false, i, flow->id, false, false, time);
                 auto pEV = std::make_shared<PacketEvent>(
                     flow->host->my_link->getID(), flow->host->getID(), time, p);
                 flow->host->addEventToLocalQueue(pEV);
-            }
+            //}
 
-            // TODO increase windowsize by 1 every rtt.
 
             // Now, we add a timeout event.  If we don't get any acks from our
             // fast retransmit, the timeout event will fire and we go back to
@@ -141,7 +156,8 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
 
     else if (flow->renoPhase == FASTRECOVERY) {
         //if (seqNum <= flow->windowEnd && seqNum > flow->windowStart) {
-        if (seqNum > flow->fastWindowEnd) {
+        //if (seqNum > flow->fastWindowEnd) {
+        if (seqNum > flow->windowStart) {
             // We have received acks for everything in the window.  Recovery
             // was successful.
             flow->renoPhase = CONGESTIONAVOIDANCE;
@@ -186,10 +202,12 @@ void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
     FILE_LOG(logDEBUG1) << "handling TimeoutEvent.";
     if (frCount == flow->frCount &&
         flow->renoPhase == FASTRECOVERY) {
+
         // Reduce window size to 1
         int oldWindowEnd = flow->windowEnd;
         int windowSize = 1;
         flow->windowEnd = flow->windowStart + windowSize - 1;
+        flow->ssthresh = (flow->windowEnd - flow->windowStart + 1) / 2;
         // All the packets that were just cut out of the transmission
         // window need to be added to the list of unsent packets, so they
         // aren't forgotten.

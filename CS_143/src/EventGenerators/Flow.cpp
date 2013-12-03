@@ -30,7 +30,7 @@ Flow::Flow(std::string idval, std::string dest,
     destination = dest;
     a = alg;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    ssthresh = 9999999;
+    ssthresh = 70;
     multiplicity = 0;
     waitTime = .5;
     phase = SYN;
@@ -45,7 +45,7 @@ Flow::Flow(std::string idval, std::string dest,
     fastWindowEnd = -1;
     A = waitTime;
     D = waitTime;
-    b = .5;
+    b = .1;
 }
 
 
@@ -86,7 +86,6 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param time the time at which the ack is received
  */
 void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
-    FILE_LOG(logDEBUG1) << "Ack received by flow with id=" << id;
     assert(p->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
@@ -97,19 +96,11 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
 
-        vegasConstAlpha = 1.0 / RTT;
-        vegasConstBeta = 3.0 / RTT;
-        minRTT = RTT;
+        minRTT = std::min(minRTT, RTT);
         
         a->handleAck(this, p, time);
     }
-    else if (phase == FIN || phase == DONE) {
-            FILE_LOG(logDEBUG1) << "Received a non-fin ack when in the FIN" <<
-                " or DONE phase.  Do nothing.";
-    }
-    else {
-        assert(false); // SYNACKs should not call this function.
-    }
+    // Otherwise, do nothing.
 }
 
 
