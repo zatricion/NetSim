@@ -3,6 +3,7 @@
 .DS_Store
 runtest
 test.log
+routing_table_test.txt
 NetSim.xcodeproj/*
 
 

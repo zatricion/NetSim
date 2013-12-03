@@ -3,42 +3,36 @@
 #include <string>
 #include <sstream>
 
-// Default constructor.
-Packet::Packet()
-{
-    uuid = "none";
-    final_dest = "none";
-    source = "none";
-    size = 0;
-    ack  = 0;
-    sequence_num = -1;
-    flowID = "NONE";
-    syn = 0;
-    fin = 0;
-    std::set<int> ackSet;
-}
-
-// Constructor for most cases.
+// Constructor for when a packet is generated from a host.  We need the flowID
+// of the flow from which the packet was derived.
 Packet::Packet(std::string id,
                std::string fd,
                std::string src,
                int s,
                bool a,
-               int seq) {
+               int seq,
+               std::string flow_id,
+               bool sync,
+               bool finish,
+               bool bf,
+               bf_type bf_t,
+               float ts)
+{
     uuid = id;
     final_dest = fd;
-    source = src;    
+    source = src;
     size = s;
     ack = a;
     sequence_num = seq;
-    flowID = "NONE";
-    syn = 0;
-    fin = 0;
+    flowID = flow_id;
+    syn = sync;
+    fin = finish;
     std::set<int> ackSet;
+    bf_tbl_bit = bf;
+    bf_table = bf_t;
+    timestamp = ts;
 }
 
-// Constructor for when a packet is generated from a host.  We need the flowID
-// of the flow from which the packet was derived.
 Packet::Packet(std::string id,
                std::string fd,
                std::string src,
@@ -73,6 +67,8 @@ Packet::Packet(const Packet& other) {
     syn = other.syn;
     fin = other.fin;
     ackSet = other.ackSet;
+    bf_tbl_bit = other.bf_tbl_bit;
+    bf_table = other.bf_table;
 }
 
 std::string Packet::toString() {

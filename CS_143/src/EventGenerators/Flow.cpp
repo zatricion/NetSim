@@ -2,6 +2,7 @@
 #include "Host.h"
 #include "CongestionAlg.h"
 #include "TCPReno.h"
+#include "TCPVegas.h"
 #include <cassert>
 #include <math.h>
 #include "../Tools/Log.h"
@@ -29,9 +30,9 @@ Flow::Flow(std::string idval, std::string dest,
     destination = dest;
     a = alg;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    ssthresh = 20;
+    ssthresh = 70;
     multiplicity = 0;
-    waitTime = 500.0;
+    waitTime = .5;
     phase = SYN;
     unSentPackets = std::set<int>();
     for (int i = 0; i < numPackets; i++) {
@@ -44,7 +45,7 @@ Flow::Flow(std::string idval, std::string dest,
     fastWindowEnd = -1;
     A = waitTime;
     D = waitTime;
-    b = .5;
+    b = .1;
 }
 
 
@@ -85,8 +86,6 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param time the time at which the ack is received
  */
 void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
-    FILE_LOG(logDEBUG1) << "Ack received by flow with id=" << id;
-
     assert(p->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
@@ -95,16 +94,13 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D;
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
+        logFlowRTT(time, RTT);
+
+        minRTT = std::min(minRTT, RTT);
         
         a->handleAck(this, p, time);
     }
-    else if (phase == FIN || phase == DONE) {
-            FILE_LOG(logDEBUG1) << "Received a non-fin ack when in the FIN" <<
-                " or DONE phase.  Do nothing.";
-    }
-    else {
-        assert(false); // SYNACKs should not call this function.
-    }
+    // Otherwise, do nothing.
 }
 
 
@@ -133,6 +129,22 @@ void Flow::handleRenoUpdate(int cavCount, float time) {
     (std::static_pointer_cast<TCPReno>(a))->handleRenoUpdate(this, cavCount, time);
 }
 
+void Flow::handleVegasUpdate(float time) {
+    (std::static_pointer_cast<TCPVegas>(a))->handleVegasUpdate(this, time);
+}
+
 void Flow::handleTimeout(int frCount, float time) {
     (std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
+}
+
+void Flow::logFlowRTT(float time, float RTT) {
+    FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
+    sim_plotter.logFlowRTT(id,
+        std::make_tuple(time, RTT));
+}
+
+void Flow::logFlowWindowSize(float time, int windowSize) {
+    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (float) windowSize;
+    sim_plotter.logFlowWindowSize(id,
+        std::make_tuple(time, (float) windowSize));
 }

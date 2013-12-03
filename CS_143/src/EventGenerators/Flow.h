@@ -14,10 +14,13 @@ class Host;
 
 enum Phase {SYN, DATA, FIN, DONE};
 enum RenoPhase {SLOWSTART, CONGESTIONAVOIDANCE, FASTRECOVERY};
-static const int DATA_PKT_SIZE = 1024;
-static const int ACK_SIZE = 64;
-static const int SYN_SIZE = 64;
-static const int FIN_SIZE = 64;
+// data packet size is 1KB
+static const int DATA_PKT_SIZE = 1024 * 8;
+
+// other packets are 64B
+static const int ACK_SIZE = 64 * 8;
+static const int SYN_SIZE = 64 * 8;
+static const int FIN_SIZE = 64 * 8;
 
 class Flow
 {
@@ -77,6 +80,13 @@ public:
 
     // Counter for TCPReno.
     int fastWindowEnd;
+    float A;
+    float D;
+    float b;
+
+    float vegasConstAlpha;
+    float vegasConstBeta;
+    float minRTT;
 
     float A;
     float D;
@@ -93,6 +103,7 @@ public:
     // If so, we have a no-op.  If not, resend.
     void handleUnackEvent(std::shared_ptr<Packet> unacked, float time);
     void handleRenoUpdate(int cavCount, float time);
+    void handleVegasUpdate(float time);
     void handleTimeout(int frCount, float time);
     
     // Called when an ack is received.
@@ -101,6 +112,9 @@ public:
     std::string toString();
         
     void initialize(float time);
+
+    void logFlowRTT(float time, float RTT);
+    void logFlowWindowSize(float time, int windowSize);
 };
 
 #endif /* defined(__CS_143_Flow__) */

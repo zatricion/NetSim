@@ -17,12 +17,16 @@
 #include "../EventHandling/Handler.h"
 #include "../EventGenerators/CongestionAlg.h"
 #include "../EventGenerators/TCPReno.h"
+#include "../EventGenerators/TCPVegas.h"
 #include <cassert>
 #include <cmath>
 #include "../Tools/Log.h"
+#include "../IO/Plotter.h"
 
 int main();
 void packetTest();
 void simTest0();
+void simTest1();
+void simTest2();
 
 #endif

@@ -6,7 +6,7 @@
  * @param flow the pointer to the flow that called the CongestionAlgorithm.
  */
 void CongestionAlg::initialize(Flow* flow, float time) {
-    FILE_LOG(logDEBUG) << "Initializing flow:" << flow->toString();
+    //FILE_LOG(logDEBUG) << "Initializing flow:" << flow->toString();
     sendManyPackets(flow, time);
 }
 

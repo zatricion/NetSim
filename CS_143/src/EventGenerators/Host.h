@@ -12,11 +12,14 @@ class Flow;
 #include "Flow.h"
 #include "../EventHandling/UnackEvent.h"
 #include "../EventHandling/TCPRenoUpdateEvent.h"
+#include "../EventHandling/TCPVegasUpdateEvent.h"
 #include "../EventHandling/TimeoutEvent.h"
 #include <unordered_set>
 #include <unordered_map>
 #include <string>
 #include "../Tools/Log.h"
+
+static const int ACK_PKT_SIZE = 64 * 8;
 
 class Host : public EventGenerator
 {
@@ -37,10 +40,16 @@ public:
     virtual void giveEvent(std::shared_ptr<Event>) override;
     
     // giveEvent helper functions
-    void respondTo(PacketEvent);
-    void respondTo(FlowEvent);
-    void respondTo(UnackEvent);
+    void respondTo(PacketEvent new_event);
+    void respondTo(FlowEvent flow_event);
+    void respondTo(UnackEvent unack_event);
     void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
+    void send(std::shared_ptr<Packet> pkt, float time);
+
+    void respondToSynUnackEvent(UnackEvent unack_event);
+    void respondToFinUnackEvent(UnackEvent unack_event);
+    void respondToSynPacketEvent(PacketEvent new_event);
+    void respondToFinPacketEvent(PacketEvent new_event);
     
     std::string toString();
 };

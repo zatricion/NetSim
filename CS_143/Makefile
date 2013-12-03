@@ -1,20 +1,23 @@
 CC=g++
-CFLAGS=-std=c++0x -g -Wall
-LDFLAGS=-lm
-
-OBJECTS = build/Test.o build/Packet.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o
+CFLAGS=-std=c++0x  -g -Wall
+LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
+ 
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o
 SOURCE = src/IO/Test.cpp
 
-all: simulator
+all: simulator 
 
 simulator: runtest # TODO this will compile and create the actual program.
                    # For now, we will just generate the test file.
 
 # Individual Object dependencies
-build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h
+build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Test.o 
+
+build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h  
+	$(CC) $(CFLAGS) -c $< -o build/Path.o 
     
-build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h
+build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Packet.o
     
 build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/CongestionAlg.h src/EventGenerators/Host.h
@@ -59,11 +62,24 @@ build/deref_comp.o: src/Tools/deref_comp.cpp src/Tools/deref_comp.h src/EventHan
 build/TCPReno.o: src/EventGenerators/TCPReno.cpp src/EventGenerators/TCPReno.h src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
 	$(CC) $(CFLAGS) -c $< -o build/TCPReno.o
 
+build/TCPVegas.o: src/EventGenerators/TCPVegas.cpp src/EventGenerators/TCPVegas.h src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
+	$(CC) $(CFLAGS) -c $< -o build/TCPVegas.o
+
 build/TCPRenoUpdateEvent.o: src/EventHandling/TCPRenoUpdateEvent.cpp src/EventHandling/TCPRenoUpdateEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/TCPRenoUpdateEvent.o
 
 build/TimeoutEvent.o: src/EventHandling/TimeoutEvent.cpp src/EventHandling/TimeoutEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/TimeoutEvent.o
+
+build/Plotter.o: src/IO/Plotter.cpp src/IO/Plotter.h src/IO/gnuplot-iostream.h
+	$(CC) $(CFLAGS) -c $< -o build/Plotter.o
+
+build/TCPVegasUpdateEvent.o: src/EventHandling/TCPVegasUpdateEvent.cpp src/EventHandling/TCPVegasUpdateEvent.h
+	$(CC) $(CFLAGS) -c $< -o build/TCPVegasUpdateEvent.o
+
+build/BFResendEvent.o: src/EventHandling/BFResendEvent.cpp src/EventHandling/BFResendEvent.h
+	$(CC) $(CFLAGS) -c $< -o build/BFResendEvent.o
+
 
 # An executable, prepared to test the objects.
 runtest: $(OBJECTS)

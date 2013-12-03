@@ -5,10 +5,15 @@
 #include <map>
 #include <vector>
 #include <set>
+#include <memory>
+#include <unordered_map>
+#include "../EventGenerators/Path.h"
 
 class Packet
 {
 public:
+    typedef std::unordered_map<std::string, std::shared_ptr<Path> >  bf_type;
+    
     std::string uuid;
     std::string final_dest;
     std::string source;
@@ -19,9 +24,10 @@ public:
     bool fin;
     
     bool bf_tbl_bit;
+    
     // this is a mapping from host_id to path to that host 
     // (which is vector of node ids)
-//    std::map<std::string, std::vector<std::string> > bf_table;
+    bf_type bf_table;
     
     int sequence_num;
     // If the packet was generated from a Flow in a host, this is the ID of
@@ -30,18 +36,20 @@ public:
     std::set<int> ackSet;
     float timestamp;
 
-    // Default Constructor
-    Packet();
-    
-    // Constructor
+    // Another constructor.
     Packet(std::string id,
                    std::string fd,
                    std::string src,
                    int s,
                    bool a,
-                   int seq);
+                   int seq,
+                   std::string flow_id,
+                   bool sync,
+                   bool finish,
+                   bool bf = false,
+                   bf_type bf_table = bf_type(),
+                   float ts = -1.0);
 
-    // Another constructor.
     Packet(std::string id,
                    std::string fd,
                    std::string src,

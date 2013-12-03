@@ -12,11 +12,8 @@ public:
     int congAvCount;
     std::string flowID;
     
-    virtual std::string toString();
-    virtual std::string getType();
-    
-protected:
-    float timestamp;
+    virtual std::string toString() override;
+    virtual std::string getType() override;
 };
 
 #endif /* defined(__CS_143__TCPRenoUpdateEvent__) */
