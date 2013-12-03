@@ -14,9 +14,6 @@ public:
     
     virtual std::string toString() override;
     virtual std::string getType() override;
-    
-protected:
-    float timestamp;
 };
 
 #endif /* defined(__CS_143__TimeoutEvent__) */

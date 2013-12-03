@@ -40,10 +40,16 @@ public:
     virtual void giveEvent(std::shared_ptr<Event>) override;
     
     // giveEvent helper functions
-    void respondTo(PacketEvent);
-    void respondTo(FlowEvent);
-    void respondTo(UnackEvent);
+    void respondTo(PacketEvent new_event);
+    void respondTo(FlowEvent flow_event);
+    void respondTo(UnackEvent unack_event);
     void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
+    void send(std::shared_ptr<Packet> pkt, float time, float delay);
+
+    void respondToSynUnackEvent(UnackEvent unack_event);
+    void respondToFinUnackEvent(UnackEvent unack_event);
+    void respondToSynPacketEvent(PacketEvent new_event);
+    void respondToFinPacketEvent(PacketEvent new_event);
     
     std::string toString();
 };
