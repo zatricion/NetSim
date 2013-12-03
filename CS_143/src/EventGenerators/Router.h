@@ -56,9 +56,6 @@ private:
     
     std::vector<std::shared_ptr<Link> > debug_links;
     
-    // Time last bf_table sent from this router
-    float router_time = 0.0;
-    
     // Time to wait between bf packet broadcasts
     float wait_time = 0.0;
 };
