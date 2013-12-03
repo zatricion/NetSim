@@ -1,5 +1,5 @@
 #include "Plotter.h"
-#include "gnuplot-iostream.h"
+//#include "gnuplot-iostream.h"
 
 
 // For get calls
@@ -11,8 +11,12 @@ Plotter sim_plotter = Plotter();
 
 void Plotter::logLinkRate(std::string name,
                           std::tuple<float, float> rate_data) {
+<<<<<<< HEAD
     linkRate[name].push_back(rate_data);
     
+=======
+    link_rate[name].push_back(rate_data);
+>>>>>>> 0292b17f96c94757f810a0958e4ad15396e3caf3
 }
 
 void Plotter::logBufferOccupancy(std::string name,

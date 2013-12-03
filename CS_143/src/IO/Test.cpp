@@ -192,11 +192,12 @@ void simTest2()
         handler.step();
     }
     
-    // output link rate plot
+    // output plots
     sim_plotter.plotLinkRate(runtime);
     sim_plotter.plotBufferOccupancy(runtime);
     sim_plotter.plotFlowRTT(runtime);
     sim_plotter.plotFlowWindowSize(runtime);
+    sim_plotter.plotPacketLoss(runtime);
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }
