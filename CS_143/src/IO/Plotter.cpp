@@ -31,13 +31,19 @@ void Plotter::logFlowWindowSize(std::string name,
     flowWindowSize[name].push_back(rate_data);
 }
 
-void Plotter::plot(plot_data data) {
+void Plotter::plot(plot_data data, std::string title, std::string xlabel, std::string ylabel) {
     Gnuplot gp;
     
 //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
-
-    gp << "set xrange [5:10]\nset yrange [0:1000000]\n";
-
+    
+    std::string t = "set title '" + title + "'\n";
+    std::string x = "set xlabel '" + xlabel + "'\n";
+    std::string y = "set ylabel '" + ylabel + "'\n";
+    
+    gp << t;
+    gp << x;
+    gp << y;
+    
     std::string cmd = "plot ";
 
     for (auto& it : data) {
@@ -57,72 +63,43 @@ void Plotter::plot(plot_data data) {
     }
 }
 
-void Plotter::plot2(plot_data data) {
+void Plotter::hist(plot_data data) {
     Gnuplot gp;
     
-//    gp << "set xrange [0:5]\nset yrange [0:10]\n";
-
-    gp << "set xrange [5:10]\nset yrange [0:1]\n";
-
+    //    gp << "set xrange [0:5]\nset yrange [0:10]\n";
+    
     std::string cmd = "plot ";
-
+    
     for (auto& it : data) {
-        cmd +=  "'-' with points title '" + it.first + "', ";
+        cmd +=  "'-' using (0.0):(0.5) smooth freq with points title '" + it.first + "', ";
     }
     
     // pop off last two character (i.e. ', ') or doesn't seem to work
     cmd.erase(cmd.begin() + cmd.size() - 2);
     cmd += "\n";
     gp << cmd;
-
+    
     for (auto& it : data) {
         
         //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
-       
-        gp.send1d(it.second);
-    }
-}
-
-
-void Plotter::plot3(plot_data data) {
-    Gnuplot gp;
-    
-//    gp << "set xrange [0:5]\nset yrange [0:10]\n";
-
-    gp << "set xrange [5:10]\nset yrange [0:20]\n";
-
-    std::string cmd = "plot ";
-
-    for (auto& it : data) {
-        cmd +=  "'-' with points title '" + it.first + "', ";
-    }
-    
-    // pop off last two character (i.e. ', ') or doesn't seem to work
-    cmd.erase(cmd.begin() + cmd.size() - 2);
-    cmd += "\n";
-    gp << cmd;
-
-    for (auto& it : data) {
         
-        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
-       
         gp.send1d(it.second);
     }
 }
 
 
 void Plotter::plotLinkRate() {
-    Plotter::plot(link_rate);
+    Plotter::plot(link_rate, "Link Rate", "Time (s)", "Link Rate (bps)");
 }
 
 void Plotter::plotBufferOccupancy() {
-    Plotter::plot(BufferOccupancy);
+    Plotter::plot(BufferOccupancy, "Buffer Occupancy", "Time (s)", "Queue Size (bits)");
 }
 
 void Plotter::plotFlowRTT() {
-    Plotter::plot2(flowRTT);
+    Plotter::plot(flowRTT, "Flow RTT", "Time (s)", "RTT (s)");
 }
 
 void Plotter::plotFlowWindowSize() {
-    Plotter::plot3(flowWindowSize);
+    Plotter::plot(flowWindowSize, "Window Size", "Time (s)", "Window Size (pkts)");
 }

@@ -30,9 +30,8 @@ public:
                      std::tuple<float, float> rate_data);
     void plotFlowWindowSize();
  
-    void plot(plot_data data);
-    void plot2(plot_data data);
-    void plot3(plot_data data);
+    void plot(plot_data data, std::string title, std::string xlabel, std::string ylabel);
+    void hist(plot_data data);
     
 private:
     plot_data link_rate;
