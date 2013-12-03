@@ -46,11 +46,11 @@ void simTest0()
     // add link1
     auto link1 = std::make_shared<Link>((64 * 64 * 64 * 8 * 1000.0), 0.001, pow(10, 7),
                                         "host1", "host2", "link1");
-    auto ccAlg = std::make_shared<TCPVegas>();
+    auto ccAlg = std::make_shared<TCPReno>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                      (8 * pow(10, 4)), host1, 10, 1.0);
+                      (8 * pow(10, 6)), host1, 10, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -64,12 +64,20 @@ void simTest0()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
+    float runtime = 5.0;
     while(handler.running())
     {
         handler.step();
     }
 
     FILE_LOG(logINFO) << "Simulator passed tests!";
+
+    sim_plotter.plotLinkRate(runtime);
+    sim_plotter.plotBufferOccupancy(runtime);
+    sim_plotter.plotFlowRTT(runtime);
+    sim_plotter.plotFlowWindowSize(runtime);
+    sim_plotter.plotPacketLoss(runtime);
+ 
 }
 
 /*
@@ -130,17 +138,22 @@ void simTest2()
     Handler handler = Handler();
     
     // add links
-    auto link0 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
+    float buf_size = 64 * 8 * 1024; // in bits per second
+    float p_delay = .01; // in seconds
+    float cap05 = 1.25 * pow(10, 7); // in Mbps
+    float caprest = pow(10, 7); // in Mbps
+    
+    auto link0 = std::make_shared<Link>(buf_size, p_delay, cap05,
                                         "host1", "router1", "link0");
-    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link1 = std::make_shared<Link>(buf_size, p_delay, pow(10, 7),
                                         "router1", "router2", "link1");
-    auto link2 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link2 = std::make_shared<Link>(buf_size, p_delay, caprest,
                                         "router1", "router3", "link2");
-    auto link3 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link3 = std::make_shared<Link>(buf_size, p_delay, caprest,
                                         "router2", "router4", "link3");
-    auto link4 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link4 = std::make_shared<Link>(buf_size, p_delay, caprest,
                                         "router3", "router4", "link4");
-    auto link5 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
+    auto link5 = std::make_shared<Link>(buf_size, p_delay, cap05,
                                         "router4", "host2", "link5");
     
     // add congestion control algorithm
@@ -163,7 +176,7 @@ void simTest2()
     
     // add flow
     auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                                        (20 * 8 * pow(10, 6)), host1, 1, 0.5);
+                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -189,7 +202,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 5.0;
+    float runtime = 30.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }

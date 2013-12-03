@@ -84,3 +84,7 @@ void TCPVegas::handleVegasUpdate(Flow *flow, float time) {
     FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;
     flow->logFlowWindowSize(time, windowSize);
 }
+
+std::string TCPVegas::toString() {
+    return "TCPVegas";
+}

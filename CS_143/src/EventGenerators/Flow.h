@@ -87,6 +87,8 @@ public:
     float vegasConstAlpha;
     float vegasConstBeta;
     float minRTT;
+    float winOverFlow;
+    float ignoreTime;
 
     // Constructors
     Flow(std::string idval, std::string dest,

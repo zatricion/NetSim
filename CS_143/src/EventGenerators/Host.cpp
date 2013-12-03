@@ -28,6 +28,7 @@ Host::Host(std::shared_ptr<Link> host_link, std::string host_id) :
  */
 void Host::giveEvent(std::shared_ptr<Event> e) {
     std::string type = e->getType();
+        FILE_LOG(logDEBUG) << type;
     if (type == "PACKET_EVENT") {
         respondTo(*(std::static_pointer_cast<PacketEvent>(e)));
     }
@@ -83,6 +84,7 @@ void Host::respondTo(FlowEvent flow_event) {
 
 
 void Host::respondToSynUnackEvent(UnackEvent unack_event) {
+    // TODO the times need to be changed.
     auto p = unack_event.packet;
     float time = unack_event.eventTime();
     std::string flowString = p->flowID;
@@ -107,6 +109,7 @@ void Host::respondToSynUnackEvent(UnackEvent unack_event) {
 
 
 void Host::respondToFinUnackEvent(UnackEvent unack_event) {
+    // TODO times need to be changed.
     auto p = unack_event.packet;
     float time = unack_event.eventTime();
     std::string flowString = p->flowID;
@@ -176,9 +179,6 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
 
         send(ack, time);
 
-        // Initialize the data flow.
-        flows[pkt->flowID]->initialize(new_event.eventTime());
-
         // If we're using Vegas, we want to set the constants alpha and
         // beta.  Set all constants.
         float RTT = time - pkt->timestamp;
@@ -189,8 +189,8 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
         flows[pkt->flowID]->vegasConstBeta = 3.0 / RTT;
         flows[pkt->flowID]->minRTT = RTT;
 
-        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(uuid, uuid, flows[pkt->flowID]->waitTime + time, pkt->flowID);
-        addEventToLocalQueue(vUpdate);
+        // Initialize the data flow, now that the variables are set.
+        flows[pkt->flowID]->initialize(new_event.eventTime());
     }
 
     if (!pkt->ack && recvd.count(pkt->flowID) == 0) {
@@ -288,7 +288,8 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
  */
 void Host::respondTo(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
-    
+
+    FILE_LOG(logDEBUG) << "Host received packet:" << pkt->toString();
     // make sure this is where the packet should have ended up
     assert(pkt->final_dest == uuid);
 

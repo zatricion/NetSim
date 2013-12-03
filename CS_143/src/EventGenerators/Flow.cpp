@@ -13,6 +13,11 @@
  */
 void Flow::initialize(float time) {
     FILE_LOG(logDEBUG1) << "Initializing data stream from flow with id=" << id;
+    if (a->toString() == "TCPVegas") {
+        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, source, waitTime + time, id);
+        host->addEventToLocalQueue(vUpdate);
+    }
+    
     a->initialize(this, time);
 }
 
@@ -30,7 +35,7 @@ Flow::Flow(std::string idval, std::string dest,
     destination = dest;
     a = alg;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    ssthresh = 70;
+    ssthresh = 700;
     multiplicity = 0;
     waitTime = .5;
     phase = SYN;
@@ -46,6 +51,8 @@ Flow::Flow(std::string idval, std::string dest,
     A = waitTime;
     D = waitTime;
     b = .1;
+    winOverFlow = 0;
+    ignoreTime = 0;
 }
 
 
@@ -64,14 +71,14 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
     // Note that it is in fact possible to receive a legitimate unackEvent where
     // the seqNum is > the windowEnd, if we shrink the window size.  So, we must
     // check the upper bound and lower bound.
-    if (seqNum >= windowStart && seqNum <= windowEnd) {
+    if (seqNum >= windowStart && seqNum <= windowEnd) { // TODO what do we do if it's greatre than windowEnd?
         // For go back N, just retransmit, as long as the packet is within
         // the window.
         FILE_LOG(logDEBUG1) << "Packet unacknowledged.  Better resend.";
         FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
             ", time=" << time;
         a->handleUnackEvent(this, unacked, time);
-    }
+    } 
     else {
         FILE_LOG(logDEBUG1) << "No action on UnackEvent.";
     }
@@ -89,6 +96,7 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
     assert(p->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
+        FILE_LOG(logDEBUG) << "time=" << time << ", p->timestamp=" << p->timestamp;
         float RTT = time - p->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
@@ -99,6 +107,7 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
         minRTT = std::min(minRTT, RTT);
         
         a->handleAck(this, p, time);
+        FILE_LOG(logDEBUG) << "UPDATED: " << toString();
     }
     // Otherwise, do nothing.
 }
@@ -119,9 +128,9 @@ std::string Flow::toString() {
         if (*it % 20 == 0) { setString << "\n"; }
     }
     setString << "}";
-    std::string setElems = setString.str();
+    std::string setElems =""; 
 
-    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << ", ssthresh=" << ssthresh << ", renoPhase=" << renoPhase << "}";
     return fmt.str();
 }
 

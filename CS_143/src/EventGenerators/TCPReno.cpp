@@ -11,27 +11,35 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
+
+    //if (unacked->sequence_num != flow->windowStart) { return; }
+    if (unacked->timestamp < flow->ignoreTime) { FILE_LOG(logDEBUG) << "UNACK Ignored."; return; }
+    flow->ignoreTime = time;
+
+    FILE_LOG(logDEBUG) << "HANDLINGUNACK: " << flow->toString();
+    FILE_LOG(logDEBUG) << "NUM=" << unacked->sequence_num;
+
+    unacked->timestamp = time;
     // If in slowstart or cong av, go to slow start windowsize->1
     // change ssthresh to half previous win size.
     // 
     if (flow->renoPhase == FASTRECOVERY) {
+        assert(false);
         return;
     }
     FILE_LOG(logDEBUG) << "TIMEOUT";
     flow->renoPhase = SLOWSTART;
     flow->ssthresh = (flow->windowEnd - flow->windowStart + 1) / 2;
     // Set the window size to 1.
-    int oldWindowEnd = flow->windowEnd;
+    //int oldWindowEnd = flow->windowEnd;
     flow->windowEnd = flow->windowStart;
-    for (int i = flow->windowEnd + 1; i <= oldWindowEnd; i++) {
-        flow->unSentPackets.insert(i);
-    }
+    // TODO
+    //for (int i = flow->windowEnd + 1; i <= oldWindowEnd; i++) {
+        //flow->unSentPackets.insert(i);
+    //}
 
-    auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
-        flow->source, time, unacked);
-    
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
-    FILE_LOG(logDEBUG1) << "Handled UnackEvent.  Flow " << flow->toString();
+    FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << flow->toString();
 }
 
 
@@ -45,6 +53,7 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
     int seqNum = pkt->sequence_num;
+    if (seqNum < flow->windowStart) { return; }
 
     if (seqNum == flow->numPackets) {
         // We received an ack that requests a nonexistent packet.  I.e. we sent
@@ -56,8 +65,7 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         flow->windowStart = seqNum;
         flow->windowEnd = seqNum;
 
-        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW."; // We might not actually be done.
-        // We appear to still be getting more events after this.  TODO
+        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
         flow->phase = FIN;
         // We need to send a FIN to the other host.
         auto fin = std::make_shared<Packet>("FIN", flow->destination,
@@ -66,12 +74,12 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
             flow->host->my_link->getID(), flow->host->getID(), time, fin);
         flow->host->addEventToLocalQueue(finEvent);
             
-        return;
     }
 
     // Handle each case separately, depending on which phase of Reno we're in.
 
     if (flow->renoPhase == SLOWSTART) {
+        FILE_LOG(logDEBUG) << "In SLOWSTART";
         int windowSize = flow->windowEnd - flow->windowStart + 1;
         // increase window size by 1, then readjust window and send packets.
         windowSize += 1;
@@ -79,13 +87,14 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
         sendManyPackets(flow, time);
         if (windowSize > flow->ssthresh) {
+            FILE_LOG(logDEBUG) << "Entering CONGESTIONAVOIDANCE";
             flow->renoPhase = CONGESTIONAVOIDANCE;
-            flow->cavCount += 1;
+            //flow->cavCount += 1;
             // Create an update event, in which the window size
             // increments once every RTT.
-            auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
-                flow->source, time + flow->waitTime, flow->cavCount, flow->id);
-            flow->host->addEventToLocalQueue(up);
+            //auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
+                //flow->source, time + flow->waitTime, flow->cavCount, flow->id);
+            //flow->host->addEventToLocalQueue(up);
             // TODO instead you can do + 1 / windowSize.
             // To reconcile rounding: keep floating point, use integer.
             // can also have window size in bytes; division would work.
@@ -96,91 +105,55 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
         if (seqNum == flow->windowStart) {
             flow->multiplicity += 1;
         }
+        else {
+            assert(seqNum > flow->windowStart);
+            flow->multiplicity = 0;
+        }
 
         if (flow->multiplicity > 3) {
-            // We have received triple acks.  Move into fast recovery, do a
-            // fast resend.  If we don't receive an ack, we will go back to
-            // slow start.
+            // We have received triple acks.  Do a fast resend, then timeout.
             flow->multiplicity = 0;
-            flow->renoPhase = FASTRECOVERY;
-            flow->fastWindowEnd = flow->windowEnd;
-            flow->frCount += 1;
 
-            int oldWindowEnd = flow->windowEnd;
-
-            // Halve the window size.
-            int windowSize = flow->windowEnd - flow->windowStart + 1;
-            windowSize /= 2;
-            flow->windowEnd = flow->windowStart + windowSize - 1;
-            flow->ssthresh = windowSize;
-
-            // All the packets that were just cut out of the transmission
-            // window need to be added to the list of unsent packets, so they
-            // aren't forgotten.
-            for (int i = flow->windowEnd + 1; i <= oldWindowEnd; i++) {
-                flow->unSentPackets.insert(i);
-            }
-
-            // Now, we want to do a fast retransmit.  Not clear to me if we
-            // resend all packets, or just the first.  It might just be first.
-            // Hence, the funny "loop"
-            //for (int i = flow->windowStart; i == flow->windowStart; i++) {
-                int i = flow->windowStart;
-                auto p = std::make_shared<Packet>("FRETRANS", flow->destination,
-                    flow->source, DATA_PKT_SIZE, false, i, flow->id, false, false, time);
-                auto pEV = std::make_shared<PacketEvent>(
-                    flow->host->my_link->getID(), flow->host->getID(), time, p);
-                flow->host->addEventToLocalQueue(pEV);
-            //}
-
-
-            // Now, we add a timeout event.  If we don't get any acks from our
-            // fast retransmit, the timeout event will fire and we go back to
-            // slow start.
-            auto timeout = std::make_shared<TimeoutEvent>(
-                flow->host->getID(), flow->host->getID(), time, 
-                flow->frCount, flow->id);
-            flow->host->addEventToLocalQueue(timeout);
+            FILE_LOG(logDEBUG) << "TRIPLICATE ACKS FOR " << pkt->toString();
+            auto retrans = std::make_shared<Packet>(
+                std::to_string(pkt->sequence_num),
+                pkt->source,
+                pkt->final_dest,
+                DATA_PKT_SIZE,
+                false,
+                pkt->sequence_num,
+                pkt->flowID,
+                false, false, time);
+            handleUnackEvent(flow, retrans, time);
         }
 
         else {
             // We have not received triple acks.  We will send more packets,
             // after adjusting the window bounds.
-        
             int windowSize = flow->windowEnd - flow->windowStart + 1;
+
+            float winOverFlow = flow->winOverFlow;
+
+            assert(flow->renoPhase == CONGESTIONAVOIDANCE);
+            FILE_LOG(logDEBUG) << "windowSize=" << windowSize;
+            winOverFlow += 1.0 / (windowSize);
+            windowSize += (int) winOverFlow;
+            winOverFlow -= (int) winOverFlow;
+            FILE_LOG(logDEBUG) << "windowSize=" << windowSize << ", winOverFlow=" << winOverFlow;
+
+            flow->winOverFlow = winOverFlow;
             flow->windowStart = seqNum;
             flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
             sendManyPackets(flow, time);
         }
     } // end CONGESTIONAVOIDANCE block;
 
-    else if (flow->renoPhase == FASTRECOVERY) {
-        //if (seqNum <= flow->windowEnd && seqNum > flow->windowStart) {
-        //if (seqNum > flow->fastWindowEnd) {
-        if (seqNum > flow->windowStart) {
-            // We have received acks for everything in the window.  Recovery
-            // was successful.
-            flow->renoPhase = CONGESTIONAVOIDANCE;
-            flow->cavCount += 1;
-
-            // Set up updates for every RTT
-            auto up = std::make_shared<TCPRenoUpdateEvent>(flow->source, 
-                flow->source, time + flow->waitTime, flow->cavCount, flow->id);
-            flow->host->addEventToLocalQueue(up);
-
-            // Now, do what we normally would in the CONGESTIONAVOIDANCE phase.
-            handleAck(flow, pkt, time);
-        }
-        // Otherwise, we haven't received acks for everything in the window.
-        // continue to wait for more acks or the TimeoutEvent, whichever comes
-        // first.  (We don't want to congest the network by sending more packets
-        // at this time).  TODO are we supposed to send packets?  It's unclear.
-    }
     // log the window size.
     flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
 }
 
 void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
+    assert(false);
     FILE_LOG(logDEBUG1) << "handling RenoUpdate.";
     if (cavCount == flow->cavCount &&
         flow->renoPhase == CONGESTIONAVOIDANCE &&
@@ -199,6 +172,7 @@ void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
 }
 
 void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
+    assert(false);
     FILE_LOG(logDEBUG1) << "handling TimeoutEvent.";
     if (frCount == flow->frCount &&
         flow->renoPhase == FASTRECOVERY) {
@@ -218,4 +192,8 @@ void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
         flow->renoPhase = SLOWSTART;
     }
     flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
+}
+
+std::string TCPReno::toString() {
+    return "TCPReno";
 }
