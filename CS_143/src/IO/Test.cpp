@@ -11,7 +11,7 @@ int main()
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
     // TODO is it okay to change this later?  Preprocessor...
-    FILELog::ReportingLevel() = logDEBUG;
+    FILELog::ReportingLevel() = logINFO;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
@@ -156,7 +156,7 @@ void simTest2()
                                         "router4", "host2", "link5");
     
     // add congestion control algorithm
-    auto ccAlg = std::make_shared<TCPVegas>();
+    auto ccAlg = std::make_shared<TCPReno>();
     
     // add hosts
     auto host1 = std::make_shared<Host>(link0, "host1");
@@ -201,7 +201,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 40.0;
+    float runtime = 20.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }
