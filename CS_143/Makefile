@@ -87,12 +87,15 @@ src/IO/parser.tab.cpp src/IO/parser.tab.hpp: src/IO/parser.ypp
 	mv parser.tab.hpp src/IO/parser.tab.hpp	
 
 build/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
-        # omg
 	$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
-	mv src/IO/parser.tab.o build/parser.tab.o
 
-build/lexer.yy.cpp: src/IO/lexer.lex
-	flex -+ -o build/lexer.yy.cpp src/IO/lexer.lex
+src/IO/lexer.yy.cpp: src/IO/lexer.lex
+	flex -+ -o src/IO/lexer.yy.cpp src/IO/lexer.lex
+
+build/lexer.yy.o: src/IO/lexer.yy.cpp
+	$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
+	# ew
+	mv src/IO/lexer.yy.o build/lexer.yy.o
 
 build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o build/NetInput.o
