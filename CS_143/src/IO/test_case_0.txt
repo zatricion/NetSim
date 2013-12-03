@@ -1,0 +1,25 @@
+# Network spec for test case 1
+
+# Link(float buffer_size, 
+#      float prop_delay, 
+#      float capacity, 
+#      string n1, 
+#      string n2, 
+#      string link_id)
+link 524288 0.01 1000000 host1 host2 link1
+
+# Host(shared_ptr<Link> host_link, 
+#      string host_id)
+host link1 host1
+host link1 host2
+
+# Flow(string ID, 
+#      string dest, 
+#      shared_ptr<CongestionAlg> alg, 
+#      int data_size, 
+#      shared_ptr<Host> host, 
+#      int windowSize, 
+#      float timestamp)
+flow flow1 host2 VEGAS 160000000 host1 1 1
+
+
