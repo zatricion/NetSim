@@ -376,6 +376,7 @@ void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float del
     //auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
     //addEventToLocalQueue(pEV);
     send(pkt, time);
+
     auto uEV = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
     addEventToLocalQueue(uEV);
 }

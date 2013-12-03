@@ -24,7 +24,7 @@ float Handler::getMinTime() {
         if (!it.second->hasEvents()) { continue; }
         // update min if smaller
         float newTime = it.second->getNextTime();
-        if (newTime < minTime || minTime < 0.0) {// gross
+        if (newTime < minTime || minTime < 0.0) {
 	    minTime = newTime;
         }
     }

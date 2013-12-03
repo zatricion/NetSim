@@ -11,10 +11,7 @@
  * @param time the time at which the unackedEvent was thrown
  */
 void TCPVegas::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) {
-
-    auto e = std::make_shared<PacketEvent>(flow->host->my_link->getID(), 
-        flow->source, time, unacked);
-    
+    unacked->timestamp = time;
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
 }
 
@@ -51,7 +48,7 @@ void TCPVegas::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     }
 
     // Send packets.
-    int windowSize = flow->windowEnd - flow->windowStart;
+    int windowSize = flow->windowEnd - flow->windowStart + 1;
     flow->windowStart = seqNum;
     flow->windowEnd = std::min(seqNum + windowSize - 1, flow->numPackets - 1);
     sendManyPackets(flow, time);
@@ -65,20 +62,42 @@ void TCPVegas::handleVegasUpdate(Flow *flow, float time) {
     if (flow->phase == DONE || flow->phase == FIN) {
         return;
     }
+    std::cout << "WindowStart= " << flow->windowStart << std::endl;
+    std::cout << "WindowEnd= " << flow->windowEnd << std::endl;
+    std::cout << "minRTT= " << flow->minRTT << std::endl;
+    std::cout << "A= " << flow->A << std::endl;
+    std::cout << "Alpha= " << flow->vegasConstAlpha << std::endl;
+    std::cout << "Beta= " << flow->vegasConstBeta << std::endl;
+   
 
-    int windowSize = flow->windowStart - flow->windowEnd + 1;
+    
+
+    int windowSize = flow->windowEnd - flow->windowStart + 1;
     FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
+    
     float testValue = (windowSize / flow->minRTT) - (windowSize / flow->A);
-    if (testValue < flow->vegasConstAlpha) { windowSize += 1; }
-    else if (testValue > flow->vegasConstBeta) { windowSize -= 1; }
+    
+    // apply Vegas update
+    if (testValue < flow->vegasConstAlpha) {
+        windowSize += (1 / flow->A);
+    }
+    else if (testValue > flow->vegasConstBeta) {
+        windowSize -= (1 / flow->A);
+    }
+    // Otherwise leave window size alone
+    
     flow->windowEnd = windowSize + flow->windowStart - 1;
-    windowSize = flow->windowStart - flow->windowEnd + 1;
+    std::cout << "New Window End= " << flow->windowEnd << std::endl;
+    std::cout << "------------" << std::endl;
+
 
     sendManyPackets(flow, time);
 
     // schedule another update
-    auto update = std::make_shared<TCPVegasUpdateEvent>(flow->source, flow->source,
-        time + flow->waitTime, flow->id);
+    auto update = std::make_shared<TCPVegasUpdateEvent>(flow->source,
+                                                        flow->source,
+                                                        time + flow->waitTime,
+                                                        flow->id);
     flow->host->addEventToLocalQueue(update);
 
     FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;

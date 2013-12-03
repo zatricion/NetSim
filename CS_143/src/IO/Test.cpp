@@ -144,7 +144,7 @@ void simTest2()
                                         "router4", "host2", "link5");
     
     // add congestion control algorithm
-    auto ccAlg = std::make_shared<TCPReno>();
+    auto ccAlg = std::make_shared<TCPVegas>();
     
     // add hosts
     auto host1 = std::make_shared<Host>(link0, "host1");
@@ -189,7 +189,7 @@ void simTest2()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 5.0;
+    float runtime = 10.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }
