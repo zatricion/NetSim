@@ -127,10 +127,11 @@ void simTest1()
 void simTest2()
 {
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
-    Handler handler = Handler();
-
-    read_input(handler);
+    //Handler handler;// = Handler();
+    Handler& handler = read_input();
+    //handler = read_input();
     
+    /*
     // add links
     auto link0 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
                                         "host1", "router1", "link0");
@@ -189,6 +190,7 @@ void simTest2()
     handler.addGenerator(router4);
 
     handler.addGenerator(flow_g);
+    */
     
     FILE_LOG(logDEBUG) << "Running simulation.";
     float runtime = 10.0;

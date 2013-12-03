@@ -5,7 +5,9 @@
 
 
 // function headers
-void read_input(Handler &h);
-void parse(std::istream &datafile, Handler &h);
+//void read_input(Handler &h);
+Handler& read_input();
+//void parse(std::istream &datafile, Handler &handler);
+Handler& parse(std::istream &datafile);
 
 #endif // __NETINPUT_H_GUARD__

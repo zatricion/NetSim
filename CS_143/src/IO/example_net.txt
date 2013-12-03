@@ -6,12 +6,12 @@
 #      string n1, 
 #      string n2, 
 #      string link_id)
-link 64 10 12.5 host1   router1 link0
-link 64 10 10.0 router1 router2 link1
-link 64 10 10.0 router1 router3 link2
-link 64 10 10.0 router2 router4 link3
-link 64 10 10.0 router3 router4 link4
-link 64 10 12.5 router4 host2   link5
+link 524288 0.01 1250000 host1   router1 link0
+link 524288 0.01 1000000 router1 router2 link1
+link 524288 0.01 1000000 router1 router3 link2
+link 524288 0.01 1000000 router2 router4 link3
+link 524288 0.01 1000000 router3 router4 link4
+link 524288 0.01 1250000 router4 host2   link5
 
 # Host(shared_ptr<Link> host_link, 
 #      string host_id)
@@ -37,4 +37,6 @@ router [host1 host2] [link3 link4 link5] router4
 # How to have congestion algorithm?
 # Could have a token...ehh.
 # don't use underscores!
-flow flow1 host2 VEGAS 20. host1 5. 0.5
+flow flow1 host2 VEGAS 160000000 host1 1 0.5
+
+
