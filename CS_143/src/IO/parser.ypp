@@ -1,39 +1,27 @@
 /* Parses records containing a number and zero or more subrecords */
 %{
-//#ifndef __NETINPUT_H_GUARD__
-//#define __NETINPUT_H_GUARD__
 
 #include <stdint.h>
 #include <FlexLexer.h>
-#include <string>
 #include <vector>
 #include <string>
 #include <memory>
 #include <map>
 #include <iostream>
-#include "../EventHandling/Packet.h"
-#include "../EventHandling/Event.h"
-#include "../EventHandling/UnackEvent.h"
-#include "../EventHandling/FlowEvent.h"
 #include "../EventGenerators/Flow.h"
-#include "../EventHandling/PacketEvent.h"
-#include "../EventGenerators/EventGenerator.h"
 #include "../EventGenerators/FlowGenerator.h"
 #include "../EventGenerators/Router.h"
 #include "../EventGenerators/Host.h"
 #include "../EventGenerators/Link.h"
 #include "../EventHandling/Handler.h"
-#include "../EventGenerators/CongestionAlg.h"
 #include "../EventGenerators/TCPReno.h"
 #include "../EventGenerators/TCPVegas.h"
 #include "NetInput.h"
 
-//#endif
-
 int yyerror(const char *s);
 int yylex();
 
-// debug
+// debug statements
 bool debug = false;
 // map for link lookups
 std::map<std::string, std::shared_ptr<Link> > link_map;
@@ -90,6 +78,7 @@ list: open strings close {
 // Host(shared_ptr<Link> host_link, 
 //      string host_id)
 host: HOSTTOK string string {
+  // retrieve strings
   std::string s2 = str_list[str_list.size()-1];
   std::string s1 = str_list[str_list.size()-2];
   if(debug) std::cout << "HOST: " << s1 << ' ' << s2 << std::endl;
@@ -130,6 +119,7 @@ router: ROUTERTOK list list STR {
 //      string n2, 
 //      string link_id)
 link: LINKTOK FLOAT FLOAT FLOAT string string string { 
+  // retrieve strings
   std::string s3 = str_list[str_list.size()-1];
   std::string s2 = str_list[str_list.size()-2];
   std::string s1 = str_list[str_list.size()-3];
@@ -150,8 +140,7 @@ link: LINKTOK FLOAT FLOAT FLOAT string string string {
 //      int windowSize, 
 //      float timestamp)
 flow: FLOWTOK string string string FLOAT string FLOAT FLOAT {
-  // PROBABLY SOMETHING WRONG WITH STRING REFERENCES
-  // THIS SEEMS TO BE A PROBLEM FOR ALL THINGS THAT AREN'T USING LISTS :O
+  // retrieve strings
   std::string s4 = str_list[str_list.size()-1];
   std::string s3 = str_list[str_list.size()-2];
   std::string s2 = str_list[str_list.size()-3];
@@ -192,13 +181,8 @@ int yylex() {
    return lexer->yylex();
 }
 
-
-//void parse(std::istream &datafile) {
-//void parse(std::istream &datafile, Handler &handler) {
 Handler& parse(std::istream &datafile) {
-   // set own handler
-   //std::cout << 
-   //h = handler;
+   // init handler
    h = Handler();
    // Construct the lexer.
    lexer = new yyFlexLexer(&datafile);
