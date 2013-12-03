@@ -50,8 +50,17 @@ public:
     void respondToFinUnackEvent(UnackEvent unack_event);
     void respondToSynPacketEvent(PacketEvent new_event);
     void respondToFinPacketEvent(PacketEvent new_event);
+    float avgFlowRate;
     
     std::string toString();
+    
+    void logPacketDelay(float time, float packetDelay, std::string flowID);
+    
+    void logFlowRate (float time, float rate, std::string flowID);
+    
+private:
+    // Associates flow IDs with last time host got data from flow
+    std::unordered_map<std::string, float> host_update_time;
 };
 
 #endif /* defined(__CS_143__Host__) */
