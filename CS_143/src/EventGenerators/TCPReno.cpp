@@ -220,3 +220,7 @@ void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
     }
     flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
 }
+
+std::string TCPReno::toString() {
+    return "TCPReno";
+}

@@ -66,43 +66,14 @@ void Host::respondTo(FlowEvent flow_event) {
     flows[flow_event.floww->id] = flow_event.floww;
 
     // Here, we want to start the SYN handshake.
-    auto syn = std::make_shared<Packet>("SYN",
-                                        flow_event.floww->destination,
-                                        flow_event.floww->source,
-                                        SYN_SIZE,
-                                        false, // ack packet?
-                                        -1, // sequence number
-                                        flow_event.floww->id,
-                                        true, // syn packet?
-                                        false, // bf packet?
-                                        flow_event.eventTime());
-    
-    float waitTime = flow_event.floww->waitTime;
-    sendAndQueueResend(syn, flow_event.eventTime(), waitTime);
+    flows[flow_event.floww->id]->openConnection(flow_event.eventTime());
 }
 
 
 void Host::respondToSynUnackEvent(UnackEvent unack_event) {
-    auto p = unack_event.packet;
-    float time = unack_event.eventTime();
-    std::string flowString = p->flowID;
-    assert(p->syn);
-
-    if (p->ack) {
-        // This shouldn't happen.  The SYN.ACKs shouldn't throw
-        // UnackEvents.
-        assert(false);
-    }
-    else {
-        // We know the SYN doesn't need to be resent if we got a SYN.ACK,
-        // which occurs if our proper flow is no longer in "SYN" mode.
-        assert(flows.count(flowString) > 0);
-        if (flows[flowString]->phase == SYN) {
-            FILE_LOG(logDEBUG1) << "Resending SYN";
-            // We need to resend.
-            sendAndQueueResend(p, time, flows[flowString]->waitTime);
-        }
-    }
+    std::string flowString = unack_event.packet->flowID;
+    assert(flows.count(flowString) > 0);
+    flows[flowString]->respondToSynUnackEvent(unack_event.eventTime());
 }
 
 
@@ -153,44 +124,14 @@ void Host::respondTo(UnackEvent unack_event) {
 
 void Host::respondToSynPacketEvent(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
+    float time = new_event.eventTime();
     
     // make sure this is where the packet should have ended up
     assert(pkt->final_dest == uuid);
     assert(pkt->syn); 
 
-    float time = new_event.eventTime();
-
-    if (pkt->ack && flows[pkt->flowID]->phase != DATA) {
-        // This is the first SYNACK received.
-        flows[pkt->flowID]->phase = DATA;
-        auto ack = std::make_shared<Packet>("ACK",
-                                            pkt->source, // final destination
-                                            uuid, // source
-                                            ACK_SIZE,
-                                            true, // ack packet?
-                                            -1, // sequence number
-                                            pkt->flowID,
-                                            false, // syn packet?
-                                            false, // fin packet?
-                                            pkt->timestamp);
-
-        send(ack, time);
-
-        // Initialize the data flow.
-        flows[pkt->flowID]->initialize(new_event.eventTime());
-
-        // If we're using Vegas, we want to set the constants alpha and
-        // beta.  Set all constants.
-        float RTT = time - pkt->timestamp;
-        flows[pkt->flowID]->A = RTT;
-        flows[pkt->flowID]->D = RTT;
-        flows[pkt->flowID]->waitTime = 4 * RTT + RTT;
-        flows[pkt->flowID]->vegasConstAlpha = 1.0 / RTT;
-        flows[pkt->flowID]->vegasConstBeta = 3.0 / RTT;
-        flows[pkt->flowID]->minRTT = RTT;
-
-        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(uuid, uuid, flows[pkt->flowID]->waitTime + time, pkt->flowID);
-        addEventToLocalQueue(vUpdate);
+    if (pkt->ack) {
+        flows[pkt->flowID]->respondToSynPacketEvent(pkt, time);
     }
 
     if (!pkt->ack && recvd.count(pkt->flowID) == 0) {
@@ -288,12 +229,11 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
  */
 void Host::respondTo(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
+    float time = new_event.eventTime();
     
     // make sure this is where the packet should have ended up
     assert(pkt->final_dest == uuid);
 
-    float time = new_event.eventTime();
-    
     if (pkt->bf_tbl_bit) {
         // Do nothing
     }
@@ -307,7 +247,7 @@ void Host::respondTo(PacketEvent new_event) {
     }
 
     else {
-        // Not a syn or a fin.
+        // Not a syn or a fin or a bf packet.  It's a data packet.
         if (pkt->ack && flows.count(pkt->flowID)) {
             // The receiver of the ack is the sending end of the flow.
     	    flows[pkt->flowID]->handleAck(pkt, time);

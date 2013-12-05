@@ -111,6 +111,13 @@ public:
 
     void logFlowRTT(float time, float RTT);
     void logFlowWindowSize(float time, int windowSize);
+
+    void openConnection(float time);
+    void closeConnection(float time);
+    void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
+    void respondToSynUnackEvent(float time);
+    void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time);
+    void send(std::shared_ptr<Packet> pkt, float time);
 };
 
 #endif /* defined(__CS_143_Flow__) */

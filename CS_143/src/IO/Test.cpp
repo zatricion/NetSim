@@ -127,9 +127,7 @@ void simTest1()
 void simTest2()
 {
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
-    //Handler handler = Handler();
     Handler handler;
-    //Handler& handler = read_input();
     handler = read_input();
     
     /*

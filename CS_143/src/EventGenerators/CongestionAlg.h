@@ -15,6 +15,7 @@ public:
     void sendManyPackets(Flow* flow, float time);
     virtual void handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, float time) = 0;
     virtual void handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) = 0;
+    virtual std::string toString() = 0;
 };
 
 #endif /* defined(__CS_143__CongestAlg__) */

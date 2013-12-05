@@ -148,3 +148,81 @@ void Flow::logFlowWindowSize(float time, int windowSize) {
     sim_plotter.logFlowWindowSize(id,
         std::make_tuple(time, (float) windowSize));
 }
+
+void Flow::openConnection(float time) {
+    auto syn = std::make_shared<Packet>("SYN",
+                                        destination,
+                                        source,
+                                        SYN_SIZE,
+                                        false, // ack packet?
+                                        -1, // sequence number
+                                        id,
+                                        true, // syn packet?
+                                        false, // bf packet?
+                                        time);
+
+    sendAndQueueResend(syn, time, waitTime);
+}
+
+void Flow::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
+    host->sendAndQueueResend(pkt, time, delay);
+}
+
+void Flow::respondToSynUnackEvent(float time) {
+    // Check if synack has been received.
+    if (phase == SYN) {
+        FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
+        openConnection(time);
+    }
+}
+
+void Flow::closeConnection(float time) {
+    return;
+}
+
+void Flow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) {
+    // If we receive a SYN, it better be a SYNACK.  TODO rename to SynAckPacketEvent
+    assert(pkt->ack && pkt->syn);
+
+    if (phase == SYN) {
+        phase = DATA;
+
+        // Send an ack for the SYNACK.  Don't queue a resend (as per algorithm
+        // in book for connection establishment).
+        auto ack = std::make_shared<Packet>("ACK",
+                                            destination,
+                                            source,
+                                            ACK_SIZE,
+                                            true, // It's an ack packet.
+                                            -1, // Set seq_num to -1.
+                                            id, // Id of the flow
+                                            false, // Not a syn
+                                            false, // Not an ack
+                                            pkt->timestamp); // Timestamp here 
+                                                             //shouldn't matter.  TODO make sure.
+        send(ack, time);
+        
+        // Initialize the data flow.
+        initialize(time);
+
+        // TODO not all of these will be here, in the future.
+        float RTT = time - pkt->timestamp;
+        A = RTT;
+        D = RTT;
+        waitTime = 4 * RTT + RTT;
+        vegasConstAlpha = 1.0 / RTT;
+        vegasConstBeta = 3.0 / RTT;
+        minRTT = RTT;
+
+        if (a->toString() == "TCPVegas") {
+            auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 
+                source, time + waitTime, id);
+            host->addEventToLocalQueue(vUpdate);
+        }
+    }
+    // If we're not in the SYN phase, do nothing.
+}
+
+void Flow::send(std::shared_ptr<Packet> pkt, float time) {
+    host->send(pkt, time);
+}
