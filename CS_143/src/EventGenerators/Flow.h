@@ -103,7 +103,7 @@ public:
     void handleTimeout(int frCount, float time);
     
     // Called when an ack is received.
-    void handleAck(std::shared_ptr<Packet> p, float time);
+    void handleAck(std::shared_ptr<Packet> pkt, float time);
 
     std::string toString();
         

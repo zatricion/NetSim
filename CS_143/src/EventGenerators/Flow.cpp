@@ -12,7 +12,6 @@
  * do.
  */
 void Flow::initialize(float time) {
-    FILE_LOG(logDEBUG1) << "Initializing data stream from flow with id=" << id;
     a->initialize(this, time);
 }
 
@@ -70,7 +69,21 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
         FILE_LOG(logDEBUG1) << "Packet unacknowledged.  Better resend.";
         FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
             ", time=" << time;
-        a->handleUnackEvent(this, unacked, time);
+
+        //a->handleUnackEvent(this, unacked, time);
+        /** TODO VEGAS ONLY **/
+        // TODO this is very dangerous.  I would recommend making a new packet.
+        unacked->timestamp = time;
+        sendAndQueueResend(unacked, time, waitTime);
+        /** END TODO VEGAS ONLY **/
+
+
+
+
+
+
+
+
     }
     else {
         FILE_LOG(logDEBUG1) << "No action on UnackEvent.";
@@ -85,11 +98,11 @@ void Flow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param p the ack packet
  * @param time the time at which the ack is received
  */
-void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
-    assert(p->ack);
+void Flow::handleAck(std::shared_ptr<Packet> pkt, float time) {
+    assert(pkt->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
-        float RTT = time - p->timestamp;
+        float RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D;
@@ -98,7 +111,41 @@ void Flow::handleAck(std::shared_ptr<Packet> p, float time) {
 
         minRTT = std::min(minRTT, RTT);
         
-        a->handleAck(this, p, time);
+
+        //a->handleAck(this, p, time);
+        /*** TODO VEGAS ONLY. ***/
+    int seqNum = pkt->sequence_num;
+
+    if (seqNum == numPackets) {
+        // We received an ack that requests a nonexistent packet.  I.e. we sent
+        // the 100th packet (with seqNum 99), and this ack says "100", but there
+        // is no 100th packet to send.  So we're done.
+
+        // We're done sending packets.  Move the window outside of the bounds
+        // of the packets.
+        windowStart = seqNum;
+        windowEnd = seqNum;
+
+        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
+
+        phase = FIN;
+        // We need to send a FIN to the other host.
+        auto fin = std::make_shared<Packet>("FIN", destination,
+            source, FIN_SIZE, false, -1, id, false, true, time);
+
+        host->send(fin, time);
+        return;
+    }
+
+    // Send packets.
+    int windowSize = windowEnd - windowStart + 1;
+    windowStart = seqNum;
+    windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
+    a->sendManyPackets(this, time);
+
+    logFlowWindowSize(time, windowEnd - windowStart + 1);
+
+    /*** END TODO VEGAS ONLY. ***/
     }
     // Otherwise, do nothing.
 }
@@ -130,7 +177,38 @@ void Flow::handleRenoUpdate(int cavCount, float time) {
 }
 
 void Flow::handleVegasUpdate(float time) {
-    (std::static_pointer_cast<TCPVegas>(a))->handleVegasUpdate(this, time);
+    FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT";
+    if (phase == DONE || phase == FIN) {
+        return;
+    }
+
+    int windowSize = windowEnd - windowStart + 1;
+    FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
+
+    float testValue = (windowSize / minRTT) - (windowSize / A);
+
+    // apply Vegas update
+    if (testValue < vegasConstAlpha) {
+        windowSize += (1 / A);
+    }
+    else if (testValue > vegasConstBeta) {
+        windowSize -= (1 / A);
+    }
+    // Otherwise leave window size alone
+
+    windowEnd = windowSize + windowStart - 1;
+
+    a->sendManyPackets(this, time);
+
+    // schedule another update
+    auto update = std::make_shared<TCPVegasUpdateEvent>(source,
+                                                        source,
+                                                        time + waitTime,
+                                                        id);
+    host->addEventToLocalQueue(update);
+
+    FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;
+    logFlowWindowSize(time, windowSize);
 }
 
 void Flow::handleTimeout(int frCount, float time) {

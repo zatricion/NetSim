@@ -192,7 +192,7 @@ void simTest2()
     */
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 70.0;
+    float runtime = 7.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }
