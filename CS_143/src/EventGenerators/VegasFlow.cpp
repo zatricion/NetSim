@@ -28,6 +28,9 @@ VegasFlow::VegasFlow(std::string idval, std::string dest,
  * waitTime after the initial packet was sent.
  */
 void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
+    int WS = windowEnd - windowStart + 1;
+    FILE_LOG(logDEBUG) << "BEFORE handleUnackEvent: time=" << time << ", WS=" << WS;
+    assert(time > 0);
     int seqNum = unacked->sequence_num;
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
@@ -40,13 +43,18 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
         FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
             ", time=" << time;
 
-        unacked->timestamp = time;
-        sendAndQueueResend(unacked, time, waitTime);
+        auto resend = std::make_shared<Packet>(*unacked);
+        resend->timestamp = time;
+        FILE_LOG(logDEBUG) << "Called from handleUnackEvent; waitTime=" << waitTime;
+        sendAndQueueResend(resend, time, waitTime);
 
     }
     else {
         FILE_LOG(logDEBUG1) << "No action on UnackEvent.";
     }
+
+    WS = windowEnd - windowStart + 1;
+    FILE_LOG(logDEBUG) << "AFTER handleUnackEvent: WS=" << WS;
 }
 
 
@@ -58,6 +66,8 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param time the time at which the ack is received
  */
 void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
+    int WS = windowEnd - windowStart + 1;
+    FILE_LOG(logDEBUG) << "BEFORE handleAck: WS=" << WS;
     FILE_LOG(logDEBUG) << "Flow is handleAck";
     assert(pkt->ack);
     if (phase == DATA) {
@@ -72,8 +82,6 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
         minRTT = std::min(minRTT, RTT);
         
 
-        //a->handleAck(this, p, time);
-        /*** TODO VEGAS ONLY. ***/
     int seqNum = pkt->sequence_num;
 
     if (seqNum == numPackets) {
@@ -99,15 +107,21 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
 
     // Send packets.
     int windowSize = windowEnd - windowStart + 1;
+    FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
     windowStart = seqNum;
+    FILE_LOG(logDEBUG) << "START=" << windowStart << ", windowSize=" << windowSize << ", numPackets=" << numPackets << ".";
     windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
     sendManyPackets(time);
 
-    logFlowWindowSize(time, windowEnd - windowStart + 1);
+    FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
+    FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
 
-    /*** END TODO VEGAS ONLY. ***/
     }
     // Otherwise, do nothing.
+
+    logFlowWindowSize(time, windowEnd - windowStart + 1);
+    WS = windowEnd - windowStart + 1;
+    FILE_LOG(logDEBUG) << "AFTER handleAck: WS=" << WS;
 }
 
 
@@ -137,7 +151,7 @@ std::string VegasFlow::toString() {
 //}
 
 void VegasFlow::handleVegasUpdate(float time) {
-    FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT";
+    FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT alpha=" << vegasConstAlpha << ", beta=" << vegasConstBeta;
     if (phase == DONE || phase == FIN) {
         return;
     }
@@ -147,16 +161,24 @@ void VegasFlow::handleVegasUpdate(float time) {
 
     float testValue = (windowSize / minRTT) - (windowSize / A);
 
+    FILE_LOG(logDEBUG) << "1:START=" << windowStart << ", END=" << windowEnd;
     // apply Vegas update
     if (testValue < vegasConstAlpha) {
+        FILE_LOG(logDEBUG) << "INC";
         windowSize += (1 / A);
     }
     else if (testValue > vegasConstBeta) {
+        FILE_LOG(logDEBUG) << "DEC";
         windowSize -= (1 / A);
     }
+    FILE_LOG(logDEBUG) << "2:START=" << windowStart << ", END=" << windowEnd;
     // Otherwise leave window size alone
+    // Set the cap:
 
     windowEnd = windowSize + windowStart - 1;
+    windowEnd = std::min(windowEnd, numPackets - 1); // Make sure it's before the end.
+    windowEnd = std::max(windowEnd, windowStart); // Make sure it's after or at windowStart
+    FILE_LOG(logDEBUG) << "3:START=" << windowStart << ", END=" << windowEnd;
 
     sendManyPackets(time);
 
@@ -167,6 +189,7 @@ void VegasFlow::handleVegasUpdate(float time) {
                                                         id);
     host->addEventToLocalQueue(update);
 
+    windowSize = windowEnd - windowStart + 1;
     FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;
     logFlowWindowSize(time, windowSize);
 }
@@ -199,6 +222,7 @@ void VegasFlow::openConnection(float time) {
                                         false, // bf packet?
                                         time);
 
+        FILE_LOG(logDEBUG) << "Called from openConn; waitTime=" << waitTime;
     sendAndQueueResend(syn, time, waitTime);
 }
 

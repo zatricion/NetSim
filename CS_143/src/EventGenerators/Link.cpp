@@ -102,7 +102,6 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         FILE_LOG(logDEBUG) << "node1=" << node1;
         assert (source == node2);
         queue2_size = std::max<float>(0, queue2_size - (now - link2_time) * capacity);
-
     }
 
 
@@ -110,8 +109,9 @@ void Link::giveEvent(std::shared_ptr<Event> e)
 
 if (source == node1) {    
     // Read: if the new packet will fit in the buffer...
-    if (queue1_size + packet_event.packet->size < buffer1_size)
+    if (queue1_size + packet_event.packet->size <= buffer1_size)
     {
+        FILE_LOG(logDEBUG) << "PACKET NOT DROPPED.  Journeying towards " << node2;
         // Find the appropriate queue_delay.  TODO why is this a stored var?
         // I think that is kind of dangerous.
         queue1_delay = (queue1_size + packet_event.packet->size) / capacity;
@@ -145,9 +145,10 @@ if (source == node1) {
     }
     
     else {
+        FILE_LOG(logDEBUG) << "Packet dropped.";
+        FILE_LOG(logDEBUG) << "queue1_size=" << queue1_size << ", packet_event.packet->size =" << packet_event.packet->size << ", buffer1_size=" << buffer1_size;
         if (this->getID() == "link1" || this->getID() == "link2"){
             // Packet has been dropped
-            FILE_LOG(logDEBUG) << "Packet dropped.";
             num_dropped1++;
             if (now - dropped_time1 > 0.1) {
                 sim_plotter.logPacketLoss(this->getID(), std::make_tuple(now, num_dropped1));
@@ -163,8 +164,10 @@ if (source == node1) {
 else {
     assert(source == node2);
      // Read: if the new packet will fit in the buffer...
-    if (queue2_size + packet_event.packet->size < buffer2_size)
+    if (queue2_size + packet_event.packet->size <= buffer2_size)
     {
+        // TODO of course the logs aren't correct.  You're still logging the same place."
+        FILE_LOG(logDEBUG) << "PACKET NOT DROPPED.  Journeying towards " << node1;
         // Find the appropriate queue_delay.  TODO why is this a stored var?
         // I think that is kind of dangerous.
         queue2_delay = (queue2_size + packet_event.packet->size) / capacity;
@@ -198,6 +201,8 @@ else {
     }
     
     else {
+        FILE_LOG(logDEBUG) << "PACKET DROPPED.";
+        FILE_LOG(logDEBUG) << "queue2_size=" << queue2_size << ", packet_event.packet->size =" << packet_event.packet->size << ", buffer2_size=" << buffer2_size;
         if (this->getID() == "link1" || this->getID() == "link2"){
             // Packet has been dropped
             FILE_LOG(logDEBUG) << "Packet dropped.";

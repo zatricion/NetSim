@@ -206,6 +206,7 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
             // TODO we need to store wait times for each recvd object
             // in addition to the other stuff we already have.
             // or we can just do this lolz
+            //LOG_FILE(logDEBUG) << "Called from r2fin, waitTime=" << waitTime;
             sendAndQueueResend(fin, time, 2);
         }
 
@@ -312,6 +313,7 @@ std::string Host::toString() {
 }
 
 void Host::send(std::shared_ptr<Packet> pkt, float time) {
+    assert(time > 0);
     FILE_LOG(logDEBUG) << "send from uuid=" << uuid;
     auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
     addEventToLocalQueue(pEV);
@@ -326,6 +328,9 @@ void Host::send(std::shared_ptr<Packet> pkt, float time) {
  * @param delay the packet will be sent at time + delay
  */
 void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
+    assert(pkt->timestamp <= time);
+    assert(time > 0); 
+    assert(delay > 0);
     FILE_LOG(logDEBUG) << "sendAndQueueResend";
     //auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
     //addEventToLocalQueue(pEV);

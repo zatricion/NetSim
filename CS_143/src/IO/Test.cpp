@@ -16,7 +16,7 @@ int main()
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest2();
+    simTest0();
     //simTest1();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
@@ -44,13 +44,15 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    auto link1 = std::make_shared<Link>(20 * 8 * 1024.0, 0.1, pow(10, 7),
+    // Test: Can only hold 1 packet on link buffer.
+    auto link1 = std::make_shared<Link>(300 * 8 * 1024.0, 0.1, pow(10, 7),
                                         "host1", "host2", "link1");
     auto ccAlg = std::make_shared<TCPVegas>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
-    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                      (80 * pow(10, 4)), host1, 10, 1.0);
+    auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
+                      (3000 * 8 * 1024), host1, 1, 1.0);
+    // (Send 20 1kb packets along link, with 1kb buffer)
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -71,7 +73,7 @@ void simTest0()
         handler.step();
     }
 
-    float runtime = 3.0;
+    float runtime = 40.0;
     FILE_LOG(logINFO) << "Simulator passed tests!";
     sim_plotter.plotLinkRate(runtime);
     sim_plotter.plotBufferOccupancy(runtime);
@@ -173,7 +175,7 @@ void simTest2()
     auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
     
     // add flow
-    auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
+    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
                                         (20 * 8 * pow(10, 6)), host1, 1, 5.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
@@ -213,6 +215,6 @@ void simTest2()
     sim_plotter.plotFlowRTT(runtime);
     sim_plotter.plotFlowWindowSize(runtime);
     sim_plotter.plotPacketLoss(runtime);
-    
+
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }

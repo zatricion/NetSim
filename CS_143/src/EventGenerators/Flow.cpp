@@ -46,8 +46,10 @@ void Flow::sendManyPackets(float time) {
             unSentPackets.erase(i);
             auto pkt = std::make_shared<Packet>(std::to_string(i),
                 destination, source, DATA_PKT_SIZE,
-                false, i, id, false, false, time);
-        host->sendAndQueueResend(pkt, time, waitTime);
+                false, i, id, false, false, time + 1.00f * i / 1000); // TODO make things asyncrhonous
+        FILE_LOG(logDEBUG) << "Called from sendManyPackets";
+        FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
+        host->sendAndQueueResend(pkt, time + 1.00f * i / 1000, waitTime);
         }
     }
 }
