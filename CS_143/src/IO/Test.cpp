@@ -64,12 +64,14 @@ void simTest0()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 20.0;
-    while(handler.getMinTime() < runtime)
+    //float runtime = 6.0;
+    //while(handler.getMinTime() < runtime)
+    while(handler.running())
     {
         handler.step();
     }
 
+    float runtime = 3.0;
     FILE_LOG(logINFO) << "Simulator passed tests!";
     sim_plotter.plotLinkRate(runtime);
     sim_plotter.plotBufferOccupancy(runtime);
