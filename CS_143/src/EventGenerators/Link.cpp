@@ -75,6 +75,7 @@ void Link::logBufferOccupancy(float time, float queue_size) {
 
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
+    FILE_LOG(logDEBUG) << "Link got a packet event.";
     // Get PacketEvent
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
 
@@ -97,6 +98,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         std::string destination = (source == node1) ? node2 : node1;
         
         // Add an event to the Link priority queue
+        FILE_LOG(logDEBUG) << "Pushing to queue at time=" << timestamp;
         auto packetEvent = std::make_shared<PacketEvent>(destination, uuid, timestamp, packet_event.packet);
         eventHeap.push(packetEvent);
         
@@ -120,6 +122,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     else {
         if (this->getID() == "link1" || this->getID() == "link2"){
             // Packet has been dropped
+            FILE_LOG(logDEBUG) << "Packet dropped.";
             num_dropped++;
             if (now - dropped_time > 0.1) {
                 sim_plotter.logPacketLoss(this->getID(), std::make_tuple(now, num_dropped));

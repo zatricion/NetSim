@@ -10,6 +10,7 @@ class Flow;
 #include "../EventHandling/Packet.h"
 #include "../EventHandling/FlowEvent.h"
 #include "Flow.h"
+#include "VegasFlow.h"
 #include "../EventHandling/UnackEvent.h"
 #include "../EventHandling/TCPRenoUpdateEvent.h"
 #include "../EventHandling/TCPVegasUpdateEvent.h"

@@ -9,6 +9,7 @@
 #include <cassert>
 #include <algorithm> // std::max
 #include <sstream>
+#include "../Tools/Log.h"
 
 class Link : public EventGenerator
 {

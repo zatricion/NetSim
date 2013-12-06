@@ -4,10 +4,8 @@
 #include <set>
 #include <memory>
 #include <queue>
-#include <memory>
 #include "../EventHandling/Packet.h"
 #include "../Tools/Log.h"
-
 
 class CongestionAlg;
 class Host;
@@ -22,24 +20,13 @@ static const int ACK_SIZE = 64 * 8;
 static const int SYN_SIZE = 64 * 8;
 static const int FIN_SIZE = 64 * 8;
 
-class Flow
-{
+class Flow {
 public:
-    // Using go back N, this is the start of the window (inclusive).
     int windowStart;
-
-    // Using go back N, this is the end of the window (inclusive).
     int windowEnd;
-    // Host that owns the flow
     std::shared_ptr<Host> host;
-
-    // ID of the flow
     std::string id;
-
-    // source of the flow.  Should equal host->uuid
     std::string source;
-
-    // Destination of the flow
     std::string destination;
 
     // Congestion algorithm associated with the flow.
@@ -60,64 +47,40 @@ public:
     // The current phase we are in.
     Phase phase;
 
-    // The phase that the TCP Reno alg. is in.
-    RenoPhase renoPhase;
-
-    // The unsent packets.
     std::set<int> unSentPackets;
 
-    // Counter for TCPReno.
-    int ssthresh;
-
-    // Counter for TCPReno.
-    int multiplicity;
-
-    // Counter for TCPReno.
-    int frCount;
-
-    // Counter for TCPReno.
-    int cavCount;
-
-    // Counter for TCPReno.
-    int fastWindowEnd;
     float A;
     float D;
     float b;
 
-    float vegasConstAlpha;
-    float vegasConstBeta;
-    float minRTT;
-
-    // Constructors
+    // No constructors.
     Flow(std::string idval, std::string dest,
-             std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
-             int winSize, float ts);
-    
+         std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
+         int winSize, float ts);
+
+
+    //
     // Called when there is a potentially unacknowledged event.
     // When we send a packet, we add an UnackEvent to the event heap.  Then,
     // when the event is handled, we check to see if it has been acknowledged.
     // If so, we have a no-op.  If not, resend.
-    void handleUnackEvent(std::shared_ptr<Packet> unacked, float time);
-    void handleRenoUpdate(int cavCount, float time);
-    void handleVegasUpdate(float time);
-    void handleTimeout(int frCount, float time);
-    
+    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, float time) = 0;
+
     // Called when an ack is received.
-    void handleAck(std::shared_ptr<Packet> pkt, float time);
+    virtual void handleAck(std::shared_ptr<Packet> pkt, float time) = 0;
 
-    std::string toString();
-        
-    void initialize(float time);
+    virtual std::string toString() = 0;
 
-    void logFlowRTT(float time, float RTT);
-    void logFlowWindowSize(float time, int windowSize);
+    virtual void initialize(float time) = 0;
 
-    void openConnection(float time);
-    void closeConnection(float time);
-    void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
-    void respondToSynUnackEvent(float time);
-    void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time);
-    void send(std::shared_ptr<Packet> pkt, float time);
+    virtual void logFlowRTT(float time, float RTT) = 0;
+    virtual void logFlowWindowSize(float time, int windowSize) = 0;
+
+    virtual void openConnection(float time) = 0;
+    virtual void closeConnection(float time) = 0;
+    virtual void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) = 0;
+    virtual void respondToSynUnackEvent(float time) = 0;
+    virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) = 0;
+    virtual void send(std::shared_ptr<Packet> pkt, float time) = 0;
 };
-
-#endif /* defined(__CS_143_Flow__) */
+#endif

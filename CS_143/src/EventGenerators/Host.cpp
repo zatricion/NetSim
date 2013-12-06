@@ -16,7 +16,8 @@ Host::Host(std::shared_ptr<Link> host_link, std::string host_id) :
 
     my_link = host_link;
     uuid = host_id;
-    std::unordered_map<std::string, Flow > flows;
+    // TODO this change may have made a huge difference.
+    std::unordered_map<std::string, std::shared_ptr<Flow> > flows;
     std::unordered_map<std::string, std::pair<std::set<int>, Phase>> recvd;
 }
 
@@ -29,6 +30,7 @@ Host::Host(std::shared_ptr<Link> host_link, std::string host_id) :
 void Host::giveEvent(std::shared_ptr<Event> e) {
     std::string type = e->getType();
     if (type == "PACKET_EVENT") {
+        FILE_LOG(logDEBUG) << "Got a packet event.";
         respondTo(*(std::static_pointer_cast<PacketEvent>(e)));
     }
     else if (type == "FLOW_EVENT") {
@@ -38,16 +40,19 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
         respondTo(*(std::static_pointer_cast<UnackEvent>(e)));
     }
     else if (type == "TCP_RENO_UPDATE_EVENT") {
-        TCPRenoUpdateEvent t = *(std::static_pointer_cast<TCPRenoUpdateEvent>(e));
-        flows[t.flowID]->handleRenoUpdate(t.congAvCount, t.eventTime());
+        assert(false);
+        //TCPRenoUpdateEvent t = *(std::static_pointer_cast<TCPRenoUpdateEvent>(e));
+        //flows[t.flowID]->handleRenoUpdate(t.congAvCount, t.eventTime());
     }
     else if (type == "TCP_VEGAS_UPDATE_EVENT") {
         TCPVegasUpdateEvent t = *(std::static_pointer_cast<TCPVegasUpdateEvent>(e));
-        flows[t.flowID]->handleVegasUpdate(t.eventTime());
+        auto v = std::static_pointer_cast<VegasFlow>(flows[t.flowID]);
+        v->handleVegasUpdate(t.eventTime());
     }
     else if (type == "TIMEOUT_EVENT") {
-        TimeoutEvent t = *(std::static_pointer_cast<TimeoutEvent>(e));
-        flows[t.flowID]->handleTimeout(t.fastRecoveryCount, t.eventTime());
+        assert(false);
+        //TimeoutEvent t = *(std::static_pointer_cast<TimeoutEvent>(e));
+        //flows[t.flowID]->handleTimeout(t.fastRecoveryCount, t.eventTime());
     }
     else {
         assert (false);
@@ -228,6 +233,7 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
  * @param new_event the packet event received.
  */
 void Host::respondTo(PacketEvent new_event) {
+    FILE_LOG(logDEBUG) << "Packet event received on host=" << uuid;
     std::shared_ptr<Packet> pkt = new_event.packet;
     float time = new_event.eventTime();
     
@@ -239,16 +245,21 @@ void Host::respondTo(PacketEvent new_event) {
     }
     
     else if (pkt->syn) {
+        FILE_LOG(logDEBUG) << "It was a syn";
         respondToSynPacketEvent(new_event);
     }
 
     else if (pkt->fin) {
         respondToFinPacketEvent(new_event);
+        FILE_LOG(logDEBUG) << "It was a fin";
     }
 
     else {
+        FILE_LOG(logDEBUG) << "It was a data packet.";
+        FILE_LOG(logDEBUG) << pkt->toString() << ", gotten on host" << uuid;
         // Not a syn or a fin or a bf packet.  It's a data packet.
         if (pkt->ack && flows.count(pkt->flowID)) {
+            FILE_LOG(logDEBUG) << "Flow is handling hack.";
             // The receiver of the ack is the sending end of the flow.
     	    flows[pkt->flowID]->handleAck(pkt, time);
             // Note that if the host is the receiving end, do nothing.
@@ -256,6 +267,7 @@ void Host::respondTo(PacketEvent new_event) {
             // we do nothing.
         }
         if (!pkt->ack) {
+            FILE_LOG(logDEBUG) << "Receiver (host) is handling hack.";
             // We received a packet.  Send an acknowledgment.
             recvd[pkt->flowID].first.insert(pkt->sequence_num);
             
@@ -300,6 +312,7 @@ std::string Host::toString() {
 }
 
 void Host::send(std::shared_ptr<Packet> pkt, float time) {
+    FILE_LOG(logDEBUG) << "send from uuid=" << uuid;
     auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
     addEventToLocalQueue(pEV);
 }
@@ -313,6 +326,7 @@ void Host::send(std::shared_ptr<Packet> pkt, float time) {
  * @param delay the packet will be sent at time + delay
  */
 void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
+    FILE_LOG(logDEBUG) << "sendAndQueueResend";
     //auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
     //addEventToLocalQueue(pEV);
     send(pkt, time);

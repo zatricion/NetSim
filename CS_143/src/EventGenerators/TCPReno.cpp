@@ -14,6 +14,7 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
     // If in slowstart or cong av, go to slow start windowsize->1
     // change ssthresh to half previous win size.
     // 
+    /*
     if (flow->renoPhase == FASTRECOVERY) {
         return;
     }
@@ -32,6 +33,8 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
     
     flow->host->sendAndQueueResend(unacked, time, flow->waitTime);
     FILE_LOG(logDEBUG1) << "Handled UnackEvent.  Flow " << flow->toString();
+    */
+    return;
 }
 
 
@@ -43,6 +46,8 @@ void TCPReno::handleUnackEvent(Flow* flow, std::shared_ptr<Packet> unacked, floa
  * @param time the time at which the event was received
  */
 void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
+    return;
+    /*
     FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
     int seqNum = pkt->sequence_num;
 
@@ -179,9 +184,12 @@ void TCPReno::handleAck(Flow* flow, std::shared_ptr<Packet> pkt, float time) {
     }
     // log the window size.
     flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
+    */
 }
 
 void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
+    return;
+    /*
     FILE_LOG(logDEBUG1) << "handling RenoUpdate.";
     if (cavCount == flow->cavCount &&
         flow->renoPhase == CONGESTIONAVOIDANCE &&
@@ -197,9 +205,12 @@ void TCPReno::handleRenoUpdate(Flow *flow, int cavCount, float time) {
         flow->host->addEventToLocalQueue(up);
     }
     flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
+    */
 }
 
 void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
+    return;
+    /*
     FILE_LOG(logDEBUG1) << "handling TimeoutEvent.";
     if (frCount == flow->frCount &&
         flow->renoPhase == FASTRECOVERY) {
@@ -219,6 +230,7 @@ void TCPReno::handleTimeout(Flow *flow, int frCount, float time) {
         flow->renoPhase = SLOWSTART;
     }
     flow->logFlowWindowSize(time, flow->windowEnd - flow->windowStart + 1);
+    */
 }
 
 std::string TCPReno::toString() {
