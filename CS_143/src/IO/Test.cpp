@@ -49,7 +49,7 @@ void simTest0()
     auto ccAlg = std::make_shared<TCPVegas>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
-    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2", ccAlg,
+    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
                       (80 * pow(10, 4)), host1, 10, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
@@ -173,8 +173,8 @@ void simTest2()
     auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
     
     // add flow
-    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2", ccAlg,
-                                        (20 * 8 * pow(10, 6)), host1, 1, 0.5);
+    auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
+                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -202,7 +202,7 @@ void simTest2()
     
 
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 20.0;
+    float runtime = 25.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }

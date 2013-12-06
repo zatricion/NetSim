@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o build/VegasFlow.o #src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o 
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o #src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o 
 #build/parser.tab.o build/lexer.yy.o build/NetInput.o
 SOURCE = src/IO/Test.cpp
 
@@ -84,6 +84,8 @@ build/BFResendEvent.o: src/EventHandling/BFResendEvent.cpp src/EventHandling/BFR
 build/VegasFlow.o: src/EventGenerators/VegasFlow.cpp src/EventGenerators/VegasFlow.h
 	$(CC) $(CFLAGS) -c $< -o build/VegasFlow.o
 
+build/TahoeFlow.o: src/EventGenerators/TahoeFlow.cpp src/EventGenerators/TahoeFlow.h
+	$(CC) $(CFLAGS) -c $< -o build/TahoeFlow.o
 
 # put everything in src/IO at first, then move .o's to build
 

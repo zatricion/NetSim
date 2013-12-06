@@ -11,7 +11,7 @@ class CongestionAlg;
 class Host;
 
 enum Phase {SYN, DATA, FIN, DONE};
-enum RenoPhase {SLOWSTART, CONGESTIONAVOIDANCE, FASTRECOVERY};
+enum TahoePhase {SLOWSTART, CONGESTIONAVOIDANCE};
 // data packet size is 1KB
 static const int DATA_PKT_SIZE = 1024 * 8;
 
@@ -28,9 +28,6 @@ public:
     std::string id;
     std::string source;
     std::string destination;
-
-    // Congestion algorithm associated with the flow.
-    std::shared_ptr<CongestionAlg> a;
 
     // Total number of packets in the flow.
     int numPackets;
@@ -55,7 +52,7 @@ public:
 
     // No constructors.
     Flow(std::string idval, std::string dest,
-         std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
+         int data_size, std::shared_ptr<Host> h,
          int winSize, float ts);
 
 
@@ -71,7 +68,7 @@ public:
 
     virtual std::string toString() = 0;
 
-    virtual void initialize(float time) = 0;
+    void initialize(float time);
 
     virtual void logFlowRTT(float time, float RTT) = 0;
     virtual void logFlowWindowSize(float time, int windowSize) = 0;
@@ -82,5 +79,6 @@ public:
     virtual void respondToSynUnackEvent(float time) = 0;
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) = 0;
     virtual void send(std::shared_ptr<Packet> pkt, float time) = 0;
+    void sendManyPackets(float time);
 };
 #endif

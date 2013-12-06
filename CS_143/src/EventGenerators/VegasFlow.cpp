@@ -9,45 +9,12 @@
 #include "../Tools/Log.h"
 
 /**
- * Initializes the data flow.  Calls the congestion algorithm to see what to
- * do.
- */
-void VegasFlow::initialize(float time) {
-    a->initialize(this, time);
-}
-
-
-/**
  * Constructor
  */
 VegasFlow::VegasFlow(std::string idval, std::string dest, 
-           std::shared_ptr<CongestionAlg> alg, int data_size, 
-           std::shared_ptr<Host> h, int winSize, float ts) : Flow(idval, dest, alg, data_size, h, winSize, ts) {
-    /*
-    timestamp = ts;
-    host = h;
-    id = idval;
-    source = h->getID();
-    destination = dest;
-    a = alg;
-    numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
-    waitTime = .5;
-    phase = SYN;
-    unSentPackets = std::set<int>();
-    for (int i = 0; i < numPackets; i++) {
-        unSentPackets.insert(i);
-    }
-    windowStart = 0;
-    windowEnd = winSize - 1;
-    //cavCount = 0;
-    //ssthresh
-    //multiplicity
-    //frCount = 0;
-    //fastWindowEnd = -1;
-    A = waitTime;
-    D = waitTime;
-    b = .1;
-    */
+           int data_size, 
+           std::shared_ptr<Host> h, int winSize, float ts) : Flow(idval, dest, data_size, h, winSize, ts) {
+
 }
 
 
@@ -73,19 +40,8 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
         FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
             ", time=" << time;
 
-        //a->handleUnackEvent(this, unacked, time);
-        /** TODO VEGAS ONLY **/
-        // TODO this is very dangerous.  I would recommend making a new packet.
         unacked->timestamp = time;
         sendAndQueueResend(unacked, time, waitTime);
-        /** END TODO VEGAS ONLY **/
-
-
-
-
-
-
-
 
     }
     else {
@@ -145,7 +101,7 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
     int windowSize = windowEnd - windowStart + 1;
     windowStart = seqNum;
     windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
-    a->sendManyPackets(this, time);
+    sendManyPackets(time);
 
     logFlowWindowSize(time, windowEnd - windowStart + 1);
 
@@ -202,7 +158,7 @@ void VegasFlow::handleVegasUpdate(float time) {
 
     windowEnd = windowSize + windowStart - 1;
 
-    a->sendManyPackets(this, time);
+    sendManyPackets(time);
 
     // schedule another update
     auto update = std::make_shared<TCPVegasUpdateEvent>(source,
@@ -296,11 +252,9 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time)
         vegasConstBeta = 3.0 / RTT;
         minRTT = RTT;
 
-        if (a->toString() == "TCPVegas") {
-            auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 
-                source, time + waitTime, id);
-            host->addEventToLocalQueue(vUpdate);
-        }
+        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 
+            source, time + waitTime, id);
+        host->addEventToLocalQueue(vUpdate);
     }
     // If we're not in the SYN phase, do nothing.
 }

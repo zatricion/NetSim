@@ -37,7 +37,7 @@ public:
 
     // Constructors
     VegasFlow(std::string idval, std::string dest,
-             std::shared_ptr<CongestionAlg> alg, int data_size, std::shared_ptr<Host> h,
+             int data_size, std::shared_ptr<Host> h,
              int winSize, float ts);
 
     
@@ -53,8 +53,6 @@ public:
     virtual void handleAck(std::shared_ptr<Packet> pkt, float time) override;
 
     virtual std::string toString() override;
-
-    virtual void initialize(float time) override;
 
     virtual void logFlowRTT(float time, float RTT) override;
     virtual void logFlowWindowSize(float time, int windowSize) override;

@@ -6,6 +6,7 @@
 #include "../EventHandling/Packet.h"
 #include "../EventGenerators/Flow.h"
 #include "../EventGenerators/VegasFlow.h"
+#include "../EventGenerators/TahoeFlow.h"
 #include "../EventHandling/Event.h"
 #include "../EventHandling/UnackEvent.h"
 #include "../EventHandling/FlowEvent.h"
