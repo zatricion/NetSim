@@ -75,10 +75,10 @@ public:
 
     virtual void openConnection(float time) = 0;
     virtual void closeConnection(float time) = 0;
-    virtual void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) = 0;
+    void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
     virtual void respondToSynUnackEvent(float time) = 0;
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) = 0;
-    virtual void send(std::shared_ptr<Packet> pkt, float time) = 0;
+    void send(std::shared_ptr<Packet> pkt, float time);
     void sendManyPackets(float time);
 };
 #endif

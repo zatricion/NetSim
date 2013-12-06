@@ -1,9 +1,6 @@
 #include "Flow.h"
 #include "VegasFlow.h"
 #include "Host.h"
-#include "CongestionAlg.h"
-#include "TCPReno.h"
-#include "TCPVegas.h"
 #include <cassert>
 #include <math.h>
 #include "../Tools/Log.h"
@@ -146,9 +143,6 @@ std::string VegasFlow::toString() {
     return fmt.str();
 }
 
-//void Flow::handleRenoUpdate(int cavCount, float time) {
-    //(std::static_pointer_cast<TCPReno>(a))->handleRenoUpdate(this, cavCount, time);
-//}
 
 void VegasFlow::handleVegasUpdate(float time) {
     FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT alpha=" << vegasConstAlpha << ", beta=" << vegasConstBeta;
@@ -226,10 +220,6 @@ void VegasFlow::openConnection(float time) {
     sendAndQueueResend(syn, time, waitTime);
 }
 
-void VegasFlow::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
-    host->sendAndQueueResend(pkt, time, delay);
-}
-
 void VegasFlow::respondToSynUnackEvent(float time) {
     // Check if synack has been received.
     if (phase == SYN) {
@@ -281,8 +271,4 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time)
         host->addEventToLocalQueue(vUpdate);
     }
     // If we're not in the SYN phase, do nothing.
-}
-
-void VegasFlow::send(std::shared_ptr<Packet> pkt, float time) {
-    host->send(pkt, time);
 }

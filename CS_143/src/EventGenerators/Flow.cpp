@@ -1,13 +1,19 @@
 #include "Flow.h"
 #include "Host.h"
-//#include "CongestionAlg.h"
-#include "TCPReno.h"
-#include "TCPVegas.h"
 #include <cassert>
 #include <math.h>
 #include "../Tools/Log.h"
 
-// Constructor.
+/**
+ * Constructor for the flow.
+ *
+ * @param idval the id of the flow.  IDs must be unique
+ * @param dest the destination of the data flow
+ * @param data_size the size of the flow's data packets
+ * @param h the host that is the flow's source
+ * @param winSize the initial size of the flow's window (usually 1)
+ * @param ts the timestamp at which the flow begins
+ */
 Flow::Flow(std::string idval, std::string dest,
            int data_size,
            std::shared_ptr<Host> h, int winSize, float ts) {
@@ -25,20 +31,31 @@ Flow::Flow(std::string idval, std::string dest,
     }
     windowStart = 0;
     windowEnd = winSize - 1;
-    //cavCount = 0;
-    //ssthresh
-    //multiplicity
-    //frCount = 0;
-    //fastWindowEnd = -1;
     A = waitTime;
     D = waitTime;
     b = .1;
 }
 
+
+/**
+ * Start the data flow.
+ *
+ * @param time the time at which the data flow starts.
+ */
 void Flow::initialize(float time) {
     sendManyPackets(time);
 }
 
+
+/**
+ * Send as many packets as possible.  Every packet that has never been marked
+ * as being sent (i.e. every packet that is in unsentPackets) that also
+ * satisfies windowStart <= sequence_num <= windowEnd will be sent.  The ones
+ * that have already been sent (the ones not in unsentPackets) will not be
+ * resent.
+ *
+ * @param time the time at which the packets are sent.
+ */
 void Flow::sendManyPackets(float time) {
     for (int i = windowStart; i <= windowEnd; i++) {
         if (unSentPackets.count(i) == 1) {
@@ -46,10 +63,39 @@ void Flow::sendManyPackets(float time) {
             unSentPackets.erase(i);
             auto pkt = std::make_shared<Packet>(std::to_string(i),
                 destination, source, DATA_PKT_SIZE,
-                false, i, id, false, false, time + 1.00f * i / 1000); // TODO make things asyncrhonous
+                false, i, id, false, false, time + 1.00f * i / 1000);
+                // TODO the above looks kind of ghetto, but it's important to
+                // offset the packets a bit, to keep them from reshuffling in
+                // the buffers.
         FILE_LOG(logDEBUG) << "Called from sendManyPackets";
         FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
         host->sendAndQueueResend(pkt, time + 1.00f * i / 1000, waitTime);
         }
     }
+}
+
+
+/**
+ * Helper function for sending a packet from the flow's source to its
+ * destination.
+ *
+ * @param pkt the packet to be sent
+ * @param time the time at which it is sent
+ */
+void Flow::send(std::shared_ptr<Packet> pkt, float time) {
+    host->send(pkt, time);
+}
+
+
+/**
+ * Sends a packet from the flow's source to its destination.  Also queues
+ * an UnackEvent in case an ack isn't received.
+ *
+ * @param pkt the packet to be sent
+ * @param time the time at which the packet it sent
+ * @param delay the delay after 'time' at which we consider the packet to have
+ * timed out
+ */
+void Flow::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
+    host->sendAndQueueResend(pkt, time, delay);
 }

@@ -47,7 +47,6 @@ void simTest0()
     // Test: Can only hold 1 packet on link buffer.
     auto link1 = std::make_shared<Link>(300 * 8 * 1024.0, 0.1, pow(10, 7),
                                         "host1", "host2", "link1");
-    auto ccAlg = std::make_shared<TCPVegas>();
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
@@ -155,9 +154,6 @@ void simTest2()
                                         "router3", "router4", "link4");
     auto link5 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
                                         "router4", "host2", "link5");
-    
-    // add congestion control algorithm
-    auto ccAlg = std::make_shared<TCPVegas>();
     
     // add hosts
     auto host1 = std::make_shared<Host>(link0, "host1");

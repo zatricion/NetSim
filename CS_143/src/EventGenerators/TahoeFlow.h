@@ -53,10 +53,8 @@ public:
 
     virtual void openConnection(float time) override;
     virtual void closeConnection(float time) override;
-    virtual void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) override;
     virtual void respondToSynUnackEvent(float time) override;
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) override;
-    virtual void send(std::shared_ptr<Packet> pkt, float time) override;
 
 
 

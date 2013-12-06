@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/CongestionAlg.o build/deref_comp.o build/TCPReno.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/TCPVegas.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o #src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o 
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o #src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o 
 #build/parser.tab.o build/lexer.yy.o build/NetInput.o
 SOURCE = src/IO/Test.cpp
 
@@ -21,7 +21,7 @@ build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h
 build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Packet.o
 
-build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/CongestionAlg.h src/EventGenerators/Host.h
+build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/Host.h
 	$(CC) $(CFLAGS) -c $< -o build/Flow.o
 
 build/Event.o: src/EventHandling/Event.cpp src/EventHandling/Event.h
@@ -54,17 +54,8 @@ build/Link.o: src/EventGenerators/Link.cpp src/EventGenerators/Link.h src/EventG
 build/Handler.o: src/EventHandling/Handler.cpp src/EventHandling/Handler.h src/EventGenerators/EventGenerator.h src/EventHandling/Event.h
 	$(CC) $(CFLAGS) -c $< -o build/Handler.o
 
-build/CongestionAlg.o: src/EventGenerators/CongestionAlg.cpp src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
-	$(CC) $(CFLAGS) -c $< -o build/CongestionAlg.o
-
 build/deref_comp.o: src/Tools/deref_comp.cpp src/Tools/deref_comp.h src/EventHandling/Event.h
 	$(CC) $(CFLAGS) -c $< -o build/deref_comp.o
-
-build/TCPReno.o: src/EventGenerators/TCPReno.cpp src/EventGenerators/TCPReno.h src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
-	$(CC) $(CFLAGS) -c $< -o build/TCPReno.o
-
-build/TCPVegas.o: src/EventGenerators/TCPVegas.cpp src/EventGenerators/TCPVegas.h src/EventGenerators/CongestionAlg.h src/EventHandling/UnackEvent.h src/EventHandling/PacketEvent.h src/EventGenerators/Flow.h
-	$(CC) $(CFLAGS) -c $< -o build/TCPVegas.o
 
 build/TCPRenoUpdateEvent.o: src/EventHandling/TCPRenoUpdateEvent.cpp src/EventHandling/TCPRenoUpdateEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/TCPRenoUpdateEvent.o
