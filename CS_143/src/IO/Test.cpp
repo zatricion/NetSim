@@ -16,7 +16,7 @@ int main()
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest0();
+    simTest2();
     //simTest1();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
@@ -135,8 +135,6 @@ void simTest1()
 
 void simTest2()
 {
-    return;
-    /*
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
     Handler handler;
     //handler = read_input();
@@ -175,7 +173,7 @@ void simTest2()
     auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
     
     // add flow
-    auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
+    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2", ccAlg,
                                         (20 * 8 * pow(10, 6)), host1, 1, 0.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
@@ -204,7 +202,7 @@ void simTest2()
     
 
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 7.0;
+    float runtime = 20.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }
@@ -217,5 +215,4 @@ void simTest2()
     sim_plotter.plotPacketLoss(runtime);
     
     FILE_LOG(logINFO) << "Simulator passed tests!";
-    */
 }
