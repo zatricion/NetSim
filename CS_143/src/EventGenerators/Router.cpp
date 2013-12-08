@@ -53,11 +53,12 @@ void Router::broadcastTable(float timestamp) {
         auto pkt = std::make_shared<Packet>("bf_pkt_" + this->getID(),
                                             other_node, this->getID(),
                                             BF_PKT_SIZE,
-                                            false,
-                                            0,
-                                            "NONE",
-                                            false,
-                                            false,
+                                            false, // ack
+                                            0, // seq num
+                                            "NONE", // flowID
+                                            false, // sync
+                                            false, // finish
+                                            timestamp,
                                             true,
                                             routing_table);
         auto bf_event = std::make_shared<PacketEvent>(it.first, this->getID(), timestamp, pkt);

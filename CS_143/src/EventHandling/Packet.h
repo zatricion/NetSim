@@ -36,7 +36,7 @@ public:
     std::set<int> ackSet;
     float timestamp;
 
-    // Another constructor.
+    // Constructor.
     Packet(std::string id,
                    std::string fd,
                    std::string src,
@@ -46,20 +46,9 @@ public:
                    std::string flow_id,
                    bool sync,
                    bool finish,
+                   float ts = -1.0,
                    bool bf = false,
-                   bf_type bf_table = bf_type(),
-                   float ts = -1.0);
-
-    Packet(std::string id,
-                   std::string fd,
-                   std::string src,
-                   int s,
-                   bool a,
-                   int seq,
-                   std::string flow_id,
-                   bool sync,
-                   bool finish,
-                   float ts);
+                   bf_type bf_table = bf_type());
     
     // Copy Constructor
     Packet(const Packet& other);
