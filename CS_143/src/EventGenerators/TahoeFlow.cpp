@@ -193,7 +193,7 @@ std::string TahoeFlow::toString() {
         if (*it % 20 == 0) { setString << "\n"; }
     }
     setString << "}";
-    std::string setElems = setString.str();
+    std::string setElems = "";// setString.str();
 
     fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << 
         destination << ", numPackets=" << numPackets << ", waitTime=" << 
