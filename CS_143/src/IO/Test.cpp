@@ -44,7 +44,7 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), // buffer size
+    auto link1 = std::make_shared<Link>((300 * 8 * 1024.0), // buffer size
                                         0.1, // propagation delay
                                         pow(10, 7), // capacity
                                         "host1", "host2", "link1");
@@ -52,7 +52,7 @@ void simTest0()
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
-                      (20 * 8 * pow(10, 6)), host1, 1, 1.0);
+                      (3000 * 8 * 1024), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -69,8 +69,8 @@ void simTest0()
     //float runtime = 6.0;
     float runtime = 40.0;
 
-    while(handler.getMinTime() < runtime)
-//    while(handler.running())
+    //while(handler.getMinTime() < runtime)
+    while(handler.running())
     {
         handler.step();
     }

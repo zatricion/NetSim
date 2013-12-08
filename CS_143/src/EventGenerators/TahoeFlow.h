@@ -17,6 +17,7 @@ public:
     int ssthresh;
     int multiplicity;
     float winOverFlow;
+    float validUnackTime;
 
     // Counter for TCPReno.
     //int multiplicity;

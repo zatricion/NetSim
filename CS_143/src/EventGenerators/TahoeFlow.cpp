@@ -15,6 +15,7 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest,
     ssthresh = 999999;
     multiplicity = 0;
     winOverFlow = 0.0;
+    validUnackTime = 0.0;
 }
 
 
@@ -34,7 +35,14 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
     // Note that it is in fact possible to receive a legitimate unackEvent where
     // the seqNum is > the windowEnd, if we shrink the window size.  So, we must
     // check the upper bound and lower bound.
+    if (unacked->timestamp < validUnackTime) {
+        // His time stamp is too low.  The unackEvent was generated before the
+        // most recent timeout.
+        FILE_LOG(logDEBUG) << "UNFAIR UNACK";
+        return;
+    }
     if (seqNum >= windowStart && seqNum <= windowEnd) {
+        validUnackTime = time;
         // For go back N, just retransmit, as long as the packet is within
         // the window.
         FILE_LOG(logDEBUG1) << "Packet unacknowledged.  Better resend.";
