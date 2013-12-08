@@ -54,6 +54,7 @@ Packet::Packet(std::string id,
     fin = finish;
     std::set<int> ackSet;
     timestamp = ts;
+    bf_tbl_bit = 0;
 }
 
 Packet::Packet(const Packet& other) {
