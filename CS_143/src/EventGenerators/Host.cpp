@@ -84,7 +84,7 @@ void Host::respondToSynUnackEvent(UnackEvent unack_event) {
 
 void Host::respondToFinUnackEvent(UnackEvent unack_event) {
     auto p = unack_event.packet;
-    float time = unack_event.eventTime();
+    double time = unack_event.eventTime();
     std::string flowString = p->flowID;
     assert(p->fin);
     assert(!p->ack); //  We don't reschedule the sending of an ack.
@@ -111,7 +111,7 @@ void Host::respondToFinUnackEvent(UnackEvent unack_event) {
  */
 void Host::respondTo(UnackEvent unack_event) {
     auto p = unack_event.packet;
-    float time = unack_event.eventTime();
+    double time = unack_event.eventTime();
     std::string flowString = p->flowID;
 
     if (p->syn) {
@@ -129,7 +129,7 @@ void Host::respondTo(UnackEvent unack_event) {
 
 void Host::respondToSynPacketEvent(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
-    float time = new_event.eventTime();
+    double time = new_event.eventTime();
     
     // make sure this is where the packet should have ended up
     assert(pkt->final_dest == uuid);
@@ -169,7 +169,7 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
     assert(pkt->final_dest == uuid);
     assert(pkt->fin);
 
-    float time = new_event.eventTime();
+    double time = new_event.eventTime();
 
     if (pkt->ack) {
         // Received a FIN.ACK.  Set the connection to DONE.
@@ -236,7 +236,7 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
 void Host::respondTo(PacketEvent new_event) {
     FILE_LOG(logDEBUG) << "Packet event received on host=" << uuid;
     std::shared_ptr<Packet> pkt = new_event.packet;
-    float time = new_event.eventTime();
+    double time = new_event.eventTime();
     
     // make sure this is where the packet should have ended up
     assert(pkt->final_dest == uuid);
@@ -313,7 +313,7 @@ std::string Host::toString() {
     return ret;
 }
 
-void Host::send(std::shared_ptr<Packet> pkt, float time) {
+void Host::send(std::shared_ptr<Packet> pkt, double time) {
     assert(time > 0);
     FILE_LOG(logDEBUG) << "send from uuid=" << uuid;
     auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
@@ -328,7 +328,7 @@ void Host::send(std::shared_ptr<Packet> pkt, float time) {
  * @param time the time at which event is to be sent.
  * @param delay the packet will be sent at time + delay
  */
-void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
+void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay) {
     assert(pkt->timestamp <= time);
     assert(time > 0); 
     assert(delay > 0);

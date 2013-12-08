@@ -4,7 +4,7 @@
 // Link Methods
 
 // Constructor
-Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string n2, std::string link_id)
+Link::Link(double buf_size, float p_delay, float cap, std::string n1, std::string n2, std::string link_id)
 {
     prop_delay = p_delay;
     capacity = cap;
@@ -17,7 +17,7 @@ Link::Link(float buf_size, float p_delay, float cap, std::string n1, std::string
 }
 
 
-float Link::getTotalDelay(std::string node) {
+double Link::getTotalDelay(std::string node) {
     return prop_delay + queue_delay[node];
 }
 
@@ -26,9 +26,9 @@ std::string Link::getOtherNode(std::string my_node) {
     return (my_node == node1) ? node2 : node1;
 }
 
-void Link::logLinkRate(float time, std::string node) {
-    float total_bits = 0.0;
-    float prev_time = link_time[node];
+void Link::logLinkRate(double time, std::string node) {
+    double total_bits = 0.0;
+    double prev_time = link_time[node];
     auto packets_on_this_link = packets_on_link[node];
     
     if (packets_on_this_link.empty()) {
@@ -37,8 +37,8 @@ void Link::logLinkRate(float time, std::string node) {
     auto it = packets_on_this_link.begin();
     for( ; it != packets_on_this_link.end(); ++it) {
         int packet_size = std::get<0>(*it);
-        float on_link_time = std::get<1>(*it);
-        float off_link_time = std::get<2>(*it);
+        double on_link_time = std::get<1>(*it);
+        double off_link_time = std::get<2>(*it);
         
         // If the previous time we logged this is greater than the off_link time,
         // just remove this
@@ -47,10 +47,10 @@ void Link::logLinkRate(float time, std::string node) {
         }
         // Otherwise we add the number of bits sent between now and link_time to our counter
         else if (on_link_time <= time) {
-            float start = std::max(prev_time, on_link_time);
-            float end = std::min(time, off_link_time);
+            double start = std::max(prev_time, on_link_time);
+            double end = std::min(time, off_link_time);
             
-            float bits_sent = packet_size * ((end - start) / (off_link_time - on_link_time));
+            double bits_sent = packet_size * ((end - start) / (off_link_time - on_link_time));
             
             // add to total_bits sent in this period of time
             total_bits += bits_sent;
@@ -58,7 +58,7 @@ void Link::logLinkRate(float time, std::string node) {
     }
     
     // calculate link rate
-    float link_rate = (total_bits / (time - prev_time)); // / pow(10, 6);
+    double link_rate = (total_bits / (time - prev_time)); // / pow(10, 6);
     
     // add the link rate to the plotter
     sim_plotter.logLinkRate(this->getID(),
@@ -67,7 +67,7 @@ void Link::logLinkRate(float time, std::string node) {
 }
 
 // Log queue size
-void Link::logBufferOccupancy(float time, std::string node) {
+void Link::logBufferOccupancy(double time, std::string node) {
     sim_plotter.logBufferOccupancy(this->getID(),
                             std::make_tuple(time, queue_size[node]));
 }
@@ -80,16 +80,18 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     PacketEvent packet_event = *(std::static_pointer_cast<PacketEvent>(e));
 
     std::string source = packet_event.source;
-    float now = packet_event.eventTime();
+    double now = packet_event.eventTime();
     
     FILE_LOG(logDEBUG) << "source=" << source;
     FILE_LOG(logDEBUG) << "node2=" << node2;
     FILE_LOG(logDEBUG) << "node1=" << node1;
     
     // Queue size in bits
-    queue_size[source] = std::max<float>(0, queue_size[source] - (now - link_time[source]) * capacity);
+    queue_size[source] = std::max<double>(0.0, queue_size[source] - (now - link_time[source]) * capacity);
+    
+    // std::cout << queue_size[source] << std::endl;
 
-    float this_queue_size = queue_size[source];
+    double this_queue_size = queue_size[source];
     std::string other_node = getOtherNode(source);
 
     // Read: if the new packet will fit in the buffer...
@@ -99,7 +101,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         // Update the appropriate queue_delay.
         queue_delay[source] = (this_queue_size + packet_event.packet->size) / capacity;
 
-        float timestamp = now + prop_delay + queue_delay[source];
+        double timestamp = now + prop_delay + queue_delay[source];
         
         // Add an event to the Link priority queue
         FILE_LOG(logDEBUG) << "Pushing to queue at time=" << timestamp;
@@ -111,19 +113,6 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         
         // Update queue size
         queue_size[source] += packet_event.packet->size;
-        
-        if ((this->getID() == "link1") || (this->getID() == "link2")) {
-            // Log only data packets so that we see only one direction (assumes all flows go right)
-            if ((packet_event.packet->bf_tbl_bit == false)
-                && (packet_event.packet->ack == false)) {
-                
-                // Log the link rate
-                logLinkRate(now, source);
-                
-                // Log queue size
-                logBufferOccupancy(now, source);
-            }
-        }
     }
     
     else {
@@ -142,11 +131,26 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         }
     }
     
+    
+    if ((this->getID() == "link1") || (this->getID() == "link2")) {
+        // Log only data packets so that we see only one direction (assumes all flows go right)
+        if ((packet_event.packet->bf_tbl_bit == false)
+            && (packet_event.packet->ack == false)) {
+            
+            // Log the link rate
+            logLinkRate(now, source);
+            
+            // Log queue size
+            logBufferOccupancy(now, source);
+        }
+    }
+
+    
     // Update link_time
     link_time[source] = now;
 }
 
-float Link::getPropDelay() {
+double Link::getPropDelay() {
     return prop_delay;
 }
 

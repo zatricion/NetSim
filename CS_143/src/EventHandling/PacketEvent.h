@@ -9,7 +9,7 @@ class PacketEvent : public Event
 {
 public:
 	std::shared_ptr<Packet> packet;
-    PacketEvent(std::string dest, std::string src, float ts, std::shared_ptr<Packet> pkt);
+    PacketEvent(std::string dest, std::string src, double ts, std::shared_ptr<Packet> pkt);
     
     virtual std::string toString() override;
     virtual std::string getType() override;

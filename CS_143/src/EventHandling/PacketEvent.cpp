@@ -3,7 +3,7 @@
 
 // Constructor
 
-PacketEvent::PacketEvent(std::string dest, std::string src, float ts, std::shared_ptr<Packet> pkt) : Event(dest, src, ts) {
+PacketEvent::PacketEvent(std::string dest, std::string src, double ts, std::shared_ptr<Packet> pkt) : Event(dest, src, ts) {
     packet = pkt;
 }
 

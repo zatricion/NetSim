@@ -4,7 +4,7 @@
 // Constructor
 
 BFResendEvent::BFResendEvent(std::string dest, std::string src,
-    float ts) : Event(dest, src, ts) {
+    double ts) : Event(dest, src, ts) {
 }
 
 std::string BFResendEvent::toString() {

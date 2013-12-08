@@ -11,7 +11,7 @@ class UnackEvent : public Event {
 public:
     UnackEvent(std::shared_ptr<Packet> pkt,
 	       std::string dest, std::string src,
-	       float ts);
+	       double ts);
 
     std::shared_ptr<Packet> packet;
     

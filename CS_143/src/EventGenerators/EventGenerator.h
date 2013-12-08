@@ -29,7 +29,7 @@ public:
     std::shared_ptr<Event> getEvent();
     
     // Call this to get the timestamp of the next event
-    float getNextTime();
+    double getNextTime();
 
     bool hasEvents();
     

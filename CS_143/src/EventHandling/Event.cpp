@@ -5,13 +5,13 @@
 
 Event::Event(std::string dest,
              std::string src,
-             float ts) {
+             double ts) {
     destination = std::move(dest);
     source = std::move(src);
     timestamp = ts;
 }
 
-float Event::eventTime() const {
+double Event::eventTime() const {
     return timestamp;
 }
 

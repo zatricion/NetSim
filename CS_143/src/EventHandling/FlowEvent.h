@@ -15,7 +15,7 @@ public:
     FlowEvent(std::shared_ptr<Flow> flowobj,
               std::string dest,
               std::string src,
-              float ts);
+              double ts);
 
     int data_size;
     std::shared_ptr<Flow> floww;

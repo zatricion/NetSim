@@ -7,8 +7,8 @@
 class TimeoutEvent: public Event
 {
 public:
-    TimeoutEvent(std::string dest, std::string src, float ts, int start, std::string);
-//    Event(std::string dest, std::string src, float ts);
+    TimeoutEvent(std::string dest, std::string src, double ts, int start, std::string);
+//    Event(std::string dest, std::string src, double ts);
     int fastRecoveryCount;
     std::string flowID;
     

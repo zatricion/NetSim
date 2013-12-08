@@ -7,8 +7,8 @@
 class TCPRenoUpdateEvent : public Event
 {
 public:
-    TCPRenoUpdateEvent(std::string dest, std::string src, float ts, int cavCount, std::string id);
-//    Event(std::string dest, std::string src, float ts);
+    TCPRenoUpdateEvent(std::string dest, std::string src, double ts, int cavCount, std::string id);
+//    Event(std::string dest, std::string src, double ts);
     int congAvCount;
     std::string flowID;
     

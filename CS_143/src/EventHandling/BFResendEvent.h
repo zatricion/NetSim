@@ -7,8 +7,8 @@
 class BFResendEvent : public Event
 {
 public:
-    BFResendEvent(std::string dest, std::string src, float ts);
-//    Event(std::string dest, std::string src, float ts);
+    BFResendEvent(std::string dest, std::string src, double ts);
+//    Event(std::string dest, std::string src, double ts);
     
     virtual std::string toString() override;
     virtual std::string getType() override;

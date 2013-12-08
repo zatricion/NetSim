@@ -25,10 +25,10 @@ public:
     Handler() {};
 
     // iterate over generators and find the "most immediate" time
-    float getMinTime();
+    double getMinTime();
     
     // iterate over generators, populate currEvents with imm. events
-    void populateCurrentEvents(float time);
+    void populateCurrentEvents(double time);
 
     // hand off all events in currEvents to wherever they should go
     void processCurrentEvents();

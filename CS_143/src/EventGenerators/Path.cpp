@@ -2,7 +2,7 @@
 
 // Constructor
 Path::Path(std::string link) {
-    link_vec.push_back(std::tuple<std::string, float>(link, std::numeric_limits<float>::max()));
+    link_vec.push_back(std::tuple<std::string, double>(link, std::numeric_limits<float>::max()));
 };
 
 Path::Path(const Path& other) {
@@ -12,18 +12,18 @@ Path::Path(const Path& other) {
     }
 };
 
-void Path::addLink(std::string link, float delay) {
-    link_vec.push_back(std::tuple<std::string, float>(link, delay));
+void Path::addLink(std::string link, double delay) {
+    link_vec.push_back(std::tuple<std::string, double>(link, delay));
 };
 
-float Path::getTotalDelay() const {
-    float total_delay = 0;
+double Path::getTotalDelay() const {
+    double total_delay = 0;
     for (auto &it : link_vec)
         total_delay += std::get<1>(it);
     return total_delay;
 };
 
-void Path::updateLinkWeight(std::string link, float delay) {
+void Path::updateLinkWeight(std::string link, double delay) {
     for (auto &it : link_vec) {
         if (std::get<0>(it) == link) {
             std::get<1>(it) = delay;

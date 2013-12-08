@@ -6,9 +6,9 @@
 class Event
 {
 public:
-    Event(std::string dest, std::string src, float ts);
+    Event(std::string dest, std::string src, double ts);
     
-    float eventTime() const;
+    double eventTime() const;
         
     std::string destination;
     std::string source;
@@ -17,7 +17,7 @@ public:
     virtual std::string getType();
     
 protected:
-    float timestamp;
+    double timestamp;
 };
 
 #endif /* defined(__CS_143__Event__) */

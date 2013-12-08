@@ -11,11 +11,11 @@ void Handler::addGenerator(std::shared_ptr<EventGenerator> gen) {
 }
 
 
-float Handler::getMinTime() {
+double Handler::getMinTime() {
     assert(genMap.size() > 0);
 
 
-    float minTime = -1.0;
+    double minTime = -1.0;
     // iterate over EventGenerators
     //for (auto it = genMap.begin(); it != genMap.end(); it++) {
     for (auto& it : genMap) {
@@ -23,7 +23,7 @@ float Handler::getMinTime() {
         // Make sure it has events.  Otherwise move on.
         if (!it.second->hasEvents()) { continue; }
         // update min if smaller
-        float newTime = it.second->getNextTime();
+        double newTime = it.second->getNextTime();
         if (newTime < minTime || minTime < 0.0) {
 	    minTime = newTime;
         }
@@ -33,7 +33,7 @@ float Handler::getMinTime() {
 
 
 // iterate over generators, populate currEvents with imm. events
-void Handler::populateCurrentEvents(float minTime) {
+void Handler::populateCurrentEvents(double minTime) {
     // WARNING: will clear out currEvents...is that desired behavior?
     currEvents.clear();
     for (const auto& it : genMap) {

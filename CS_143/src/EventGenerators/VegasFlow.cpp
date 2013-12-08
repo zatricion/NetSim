@@ -10,7 +10,7 @@
  */
 VegasFlow::VegasFlow(std::string idval, std::string dest, 
            int data_size, 
-           std::shared_ptr<Host> h, int winSize, float ts) : Flow(idval, dest, data_size, h, winSize, ts) {
+           std::shared_ptr<Host> h, int winSize, double ts) : Flow(idval, dest, data_size, h, winSize, ts) {
 
 }
 
@@ -24,7 +24,7 @@ VegasFlow::VegasFlow(std::string idval, std::string dest,
  * @param time the time at which the event is thrown.  This should be roughly
  * waitTime after the initial packet was sent.
  */
-void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
+void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int WS = windowEnd - windowStart + 1;
     FILE_LOG(logDEBUG) << "BEFORE handleUnackEvent: time=" << time << ", WS=" << WS;
     assert(time > 0);
@@ -62,14 +62,14 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param p the ack packet
  * @param time the time at which the ack is received
  */
-void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
+void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
     int WS = windowEnd - windowStart + 1;
     FILE_LOG(logDEBUG) << "BEFORE handleAck: WS=" << WS;
     FILE_LOG(logDEBUG) << "Flow is handleAck";
     assert(pkt->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
-        float RTT = time - pkt->timestamp;
+        double RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D;
@@ -145,7 +145,7 @@ std::string VegasFlow::toString() {
 }
 
 
-void VegasFlow::handleVegasUpdate(float time) {
+void VegasFlow::handleVegasUpdate(double time) {
     FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT alpha=" << vegasConstAlpha << ", beta=" << vegasConstBeta;
     if (phase == DONE || phase == FIN) {
         return;
@@ -154,7 +154,7 @@ void VegasFlow::handleVegasUpdate(float time) {
     int windowSize = windowEnd - windowStart + 1;
     FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
 
-    float testValue = (windowSize / minRTT) - (windowSize / A);
+    double testValue = (windowSize / minRTT) - (windowSize / A);
 
     FILE_LOG(logDEBUG) << "1:START=" << windowStart << ", END=" << windowEnd;
     // apply Vegas update
@@ -189,23 +189,23 @@ void VegasFlow::handleVegasUpdate(float time) {
     logFlowWindowSize(time, windowSize);
 }
 
-//void Flow::handleTimeout(int frCount, float time) {
+//void Flow::handleTimeout(int frCount, double time) {
     //(std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
 //}
 
-void VegasFlow::logFlowRTT(float time, float RTT) {
+void VegasFlow::logFlowRTT(double time, float RTT) {
     FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
     sim_plotter.logFlowRTT(id,
         std::make_tuple(time, RTT));
 }
 
-void VegasFlow::logFlowWindowSize(float time, int windowSize) {
-    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (float) windowSize;
+void VegasFlow::logFlowWindowSize(double time, int windowSize) {
+    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (double) windowSize;
     sim_plotter.logFlowWindowSize(id,
-        std::make_tuple(time, (float) windowSize));
+        std::make_tuple(time, (double) windowSize));
 }
 
-void VegasFlow::openConnection(float time) {
+void VegasFlow::openConnection(double time) {
     auto syn = std::make_shared<Packet>("SYN",
                                         destination,
                                         source,
@@ -221,7 +221,7 @@ void VegasFlow::openConnection(float time) {
     sendAndQueueResend(syn, time, waitTime);
 }
 
-void VegasFlow::respondToSynUnackEvent(float time) {
+void VegasFlow::respondToSynUnackEvent(double time) {
     // Check if synack has been received.
     if (phase == SYN) {
         FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
@@ -229,11 +229,11 @@ void VegasFlow::respondToSynUnackEvent(float time) {
     }
 }
 
-void VegasFlow::closeConnection(float time) {
+void VegasFlow::closeConnection(double time) {
     return;
 }
 
-void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) {
+void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) {
     // If we receive a SYN, it better be a SYNACK.  TODO rename to SynAckPacketEvent
     assert(pkt->ack && pkt->syn);
 
@@ -250,7 +250,7 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time)
                                             -1, // Set seq_num to -1.
                                             id, // Id of the flow
                                             false, // Not a syn
-                                            false, // Not an ack
+                                            false, // Not a fin
                                             pkt->timestamp); // Timestamp here 
                                                              //shouldn't matter.  TODO make sure.
         send(ack, time);
@@ -259,7 +259,7 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time)
         initialize(time);
 
         // TODO not all of these will be here, in the future.
-        float RTT = time - pkt->timestamp;
+        double RTT = time - pkt->timestamp;
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;

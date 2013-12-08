@@ -3,7 +3,7 @@
 
 // Constructor
 
-FlowEvent::FlowEvent(std::shared_ptr<Flow> flowobj, std::string dest, std::string src, float ts) : Event(src, src, ts)
+FlowEvent::FlowEvent(std::shared_ptr<Flow> flowobj, std::string dest, std::string src, double ts) : Event(src, src, ts)
 {
     floww = std::move(flowobj);
 }

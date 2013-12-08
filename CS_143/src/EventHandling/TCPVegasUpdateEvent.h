@@ -7,8 +7,8 @@
 class TCPVegasUpdateEvent : public Event
 {
 public:
-    TCPVegasUpdateEvent(std::string dest, std::string src, float ts, std::string id);
-//    Event(std::string dest, std::string src, float ts);
+    TCPVegasUpdateEvent(std::string dest, std::string src, double ts, std::string id);
+//    Event(std::string dest, std::string src, double ts);
     std::string flowID;
     
     virtual std::string toString() override;

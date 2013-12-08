@@ -3,7 +3,7 @@
 
 // Constructor
 
-TimeoutEvent::TimeoutEvent(std::string dest, std::string src, float ts, int frCount, std::string id) : Event(dest, src, ts) {
+TimeoutEvent::TimeoutEvent(std::string dest, std::string src, double ts, int frCount, std::string id) : Event(dest, src, ts) {
     fastRecoveryCount = frCount;
     flowID = id;
 }

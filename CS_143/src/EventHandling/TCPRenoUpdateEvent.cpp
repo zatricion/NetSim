@@ -4,7 +4,7 @@
 // Constructor
 
 TCPRenoUpdateEvent::TCPRenoUpdateEvent(std::string dest, std::string src,
-    float ts, int cavCount, std::string id) : Event(dest, src, ts) {
+    double ts, int cavCount, std::string id) : Event(dest, src, ts) {
 
     congAvCount = cavCount;
     flowID = id;

@@ -10,7 +10,7 @@
  */
 TahoeFlow::TahoeFlow(std::string idval, std::string dest, 
            int data_size, 
-           std::shared_ptr<Host> h, int winSize, float ts) : Flow(idval, dest, data_size, h, winSize, ts) {
+           std::shared_ptr<Host> h, int winSize, double ts) : Flow(idval, dest, data_size, h, winSize, ts) {
     tahoePhase = SLOWSTART;
     ssthresh = 999999;
     multiplicity = 0;
@@ -28,7 +28,7 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest,
  * @param time the time at which the event is thrown.  This should be roughly
  * waitTime after the initial packet was sent.
  */
-void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
+void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
 
     // If the packet has not been acknowledged...
@@ -80,12 +80,12 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, float time) {
  * @param p the ack packet
  * @param time the time at which the ack is received
  */
-void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
+void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
     FILE_LOG(logDEBUG) << "Flow is handleAck";
     assert(pkt->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
-        float RTT = time - pkt->timestamp;
+        double RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D;
@@ -165,7 +165,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, float time) {
                 // after adjusting the window bounds.
                 int windowSize = windowEnd - windowStart + 1;
 
-                float wOverFlow = winOverFlow;
+                double wOverFlow = winOverFlow;
 
                 assert(tahoePhase == CONGESTIONAVOIDANCE);
                 FILE_LOG(logDEBUG) << "windowSize=" << windowSize;
@@ -211,19 +211,19 @@ std::string TahoeFlow::toString() {
 }
 
 
-void TahoeFlow::logFlowRTT(float time, float RTT) {
+void TahoeFlow::logFlowRTT(double time, float RTT) {
     sim_plotter.logFlowRTT(id, std::make_tuple(time, RTT));
 }
 
 
-void TahoeFlow::logFlowWindowSize(float time, int windowSize) {
-    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (float) windowSize;
+void TahoeFlow::logFlowWindowSize(double time, int windowSize) {
+    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (double) windowSize;
     sim_plotter.logFlowWindowSize(id,
-        std::make_tuple(time, (float) windowSize));
+        std::make_tuple(time, (double) windowSize));
 }
 
 
-void TahoeFlow::openConnection(float time) {
+void TahoeFlow::openConnection(double time) {
     auto syn = std::make_shared<Packet>("SYN",
                                         destination,
                                         source,
@@ -239,7 +239,7 @@ void TahoeFlow::openConnection(float time) {
 }
 
 
-void TahoeFlow::respondToSynUnackEvent(float time) {
+void TahoeFlow::respondToSynUnackEvent(double time) {
     // Check if synack has been received.
     if (phase == SYN) {
         FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
@@ -248,12 +248,12 @@ void TahoeFlow::respondToSynUnackEvent(float time) {
 }
 
 
-void TahoeFlow::closeConnection(float time) {
+void TahoeFlow::closeConnection(double time) {
     return;
 }
 
 
-void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) {
+void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) {
     // If we receive a SYN, it better be a SYNACK.
     assert(pkt->ack && pkt->syn);
 
@@ -277,7 +277,7 @@ void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time)
         // Initialize the data flow.
         initialize(time);
 
-        float RTT = time - pkt->timestamp;
+        double RTT = time - pkt->timestamp;
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;

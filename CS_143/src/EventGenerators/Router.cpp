@@ -35,10 +35,10 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
 }
 
 // broadcast BF table to all connected routers
-void Router::broadcastTable(float timestamp) {
+void Router::broadcastTable(double timestamp) {
     // update BF table
     for (const auto& it : links) {
-        float delay = it.second->getTotalDelay(this->getID());
+        double delay = it.second->getTotalDelay(this->getID());
         for (auto& bf : routing_table) {
             bf.second->updateLinkWeight(it.first, delay);
         }
@@ -89,14 +89,14 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
     
     // update neighboring links
     for (const auto& li : links) {
-        float delay = li.second->getTotalDelay(this->getID());
+        double delay = li.second->getTotalDelay(this->getID());
         for (auto& bf : routing_table) {
             bf.second->updateLinkWeight(li.first, delay);
         }
     }
     
     // Delay of link to other router
-    float link_delay = links[link_id]->getTotalDelay(this->getID());
+    double link_delay = links[link_id]->getTotalDelay(this->getID());
     
     for (const auto& it : bf_table) {
         std::string host_id = it.first;
@@ -104,10 +104,10 @@ void Router::updateRouting(Packet::bf_type bf_table, std::string link_id, std::s
         Path other_path = *it.second;
         
         // Delay along the other path
-        float other_delay = other_path.getTotalDelay();
+        double other_delay = other_path.getTotalDelay();
         
         // Delay along the current path
-        float curr_delay = routing_table[host_id]->getTotalDelay();
+        double curr_delay = routing_table[host_id]->getTotalDelay();
         
         if (link_delay + other_delay < curr_delay) {
             // check to see if current router is already in other router path
@@ -133,7 +133,7 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     FILE_LOG(logDEBUG) << "TYPE OF E:" << e->getType();
     // Get PacketEvent
     if (e->getType() == "BF_RESEND_EVENT") {
-        float now = e->eventTime();
+        double now = e->eventTime();
         FILE_LOG(logDEBUG) << "Scheduling BF Resend";
         broadcastTable(now);
         auto b = std::make_shared<BFResendEvent>(uuid, uuid, now + wait_time);
@@ -184,7 +184,7 @@ void Router::printRouting(Packet::bf_type r_table, std::string router) {
     for (const auto& it : r_table) {
         std::string host_id = it.first;
         Path other_path = *it.second;
-        float curr_delay = other_path.getTotalDelay();
+        double curr_delay = other_path.getTotalDelay();
         std::string link_id = other_path.getNextLink();
         std::string path_str = other_path.to_string();
         
@@ -208,7 +208,7 @@ std::string Router::toString() {
     for (const auto& it : routing_table) {
         std::string host_id = it.first;
         Path other_path = *it.second;
-        float curr_delay = other_path.getTotalDelay();
+        double curr_delay = other_path.getTotalDelay();
         std::string link_id = other_path.getNextLink();
         std::string path_str = other_path.to_string();
         

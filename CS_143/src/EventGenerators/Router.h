@@ -26,7 +26,7 @@ public:
     void updateRouting(Packet::bf_type, std::string, std::string);
     
     // Broadcast routing table
-    void broadcastTable(float timestamp);
+    void broadcastTable(double timestamp);
     
     // add route to routing table
     void addRouting(std::string targ_host, std::shared_ptr<Path> path);
@@ -57,7 +57,7 @@ private:
     std::vector<std::shared_ptr<Link> > debug_links;
     
     // Time to wait between bf packet broadcasts
-    float wait_time = 0.0;
+    double wait_time = 0.0;
 };
 
 

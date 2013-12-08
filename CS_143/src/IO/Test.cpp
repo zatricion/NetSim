@@ -45,14 +45,14 @@ void simTest0()
     
     // add link1
     auto link1 = std::make_shared<Link>((300 * 8 * 1024.0), // buffer size
-                                        0.1, // propagation delay
+                                        0.01, // propagation delay
                                         pow(10, 7), // capacity
                                         "host1", "host2", "link1");
     
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
-    auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
-                      (3000 * 8 * 1024), host1, 1, 1.0);
+    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
+                      (10000 * 8 * 1024), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -66,8 +66,8 @@ void simTest0()
     handler.addGenerator(flow_g);
     
     FILE_LOG(logDEBUG) << "Running simulation.";
-    //float runtime = 6.0;
-    float runtime = 40.0;
+    //double runtime = 6.0;
+    double runtime = 25.0;
 
     //while(handler.getMinTime() < runtime)
     while(handler.running())
@@ -174,7 +174,7 @@ void simTest2()
     
     // add flow
     auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
+                                        (20 * 8 * pow(10, 6)), host1, 1, 0.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -202,7 +202,7 @@ void simTest2()
     
 
     FILE_LOG(logDEBUG) << "Running simulation.";
-    float runtime = 25.0;
+    double runtime = 25.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }

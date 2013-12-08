@@ -4,7 +4,7 @@
 // Constructor
 
 TCPVegasUpdateEvent::TCPVegasUpdateEvent(std::string dest, std::string src,
-    float ts, std::string id) : Event(dest, src, ts) {
+    double ts, std::string id) : Event(dest, src, ts) {
     flowID = id;
 }
 

@@ -24,9 +24,9 @@ std::string EventGenerator::getID() const {
 /**
  * Get the lowest time in the Event Generator's priority queue.
  *
- * @return the min time as a float
+ * @return the min time as a double
  */
-float EventGenerator::getNextTime() {
+double EventGenerator::getNextTime() {
     assert(hasEvents());
     return eventHeap.top()->eventTime();
 }

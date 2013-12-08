@@ -16,48 +16,48 @@ class Link : public EventGenerator
 {
 
 public:
-    Link(float, float, float, std::string, std::string, std::string);
+    Link(double, float, float, std::string, std::string, std::string);
     
     virtual void giveEvent(std::shared_ptr<Event>) override;
     
-    float getTotalDelay(std::string node);
+    double getTotalDelay(std::string node);
     
     std::string getOtherNode(std::string node);
     
-    void logLinkRate(float time, std::string node);
+    void logLinkRate(double time, std::string node);
     
-    void logBufferOccupancy(float time, std::string node);
+    void logBufferOccupancy(double time, std::string node);
     
-    void packetLoss(float);
+    void packetLoss(double);
     
-    float getPropDelay();
+    double getPropDelay();
     
     std::string toString();
     
 private:
     // Maximum queue_size in bits
-    float buffer_size;
+    double buffer_size;
 
     // Delay seen by an incoming packet due to link length
-    float prop_delay;
+    double prop_delay;
     
     // Queue size in bits at queue_time for each queue
-    std::unordered_map<std::string, float> queue_size;
+    std::unordered_map<std::string, double> queue_size;
     
     // Delay seen by an incoming packet due to the queue for each queue
-    std::unordered_map<std::string, float> queue_delay;
+    std::unordered_map<std::string, double> queue_delay;
     
     // Number of bits sent per time-step
-    float capacity;
+    double capacity;
     
     std::string node1;
     std::string node2;
     
     // Last update time for each queue
-    std::unordered_map<std::string, float> link_time;
+    std::unordered_map<std::string, double> link_time;
     
     // Tuples (pkt_size, on_link_time, off_link_time) for each queue
-    std::unordered_map<std::string, std::list<std::tuple<int, float, float> > >packets_on_link;
+    std::unordered_map<std::string, std::list<std::tuple<int, double, float> > >packets_on_link;
     
     // Number of packets on queue for each queue
     std::unordered_map<std::string, int> buffer_occupancy;
@@ -66,7 +66,7 @@ private:
     std::unordered_map<std::string, int> num_dropped;
     
     // Last time dropped packets were logged for each queue
-    std::unordered_map<std::string, float> dropped_time;
+    std::unordered_map<std::string, double> dropped_time;
 };
 
 #endif /* defined(__CS_143__Link__) */

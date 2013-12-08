@@ -16,8 +16,8 @@ public:
     // Counter for TCPReno.
     int ssthresh;
     int multiplicity;
-    float winOverFlow;
-    float validUnackTime;
+    double winOverFlow;
+    double validUnackTime;
 
     // Counter for TCPReno.
     //int multiplicity;
@@ -32,30 +32,30 @@ public:
     //int fastWindowEnd;
 
     // Vegas only.
-    //float vegasConstAlpha;
-    //float vegasConstBeta;
-    //float minRTT;
+    //double vegasConstAlpha;
+    //double vegasConstBeta;
+    //double minRTT;
 
     // Constructors
     TahoeFlow(std::string idval, std::string dest,
              int data_size, std::shared_ptr<Host> h,
-             int winSize, float ts);
+             int winSize, double ts);
 
     // Overrides
-    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, float time) override;
+    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, double time) override;
 
     // Called when an ack is received.
-    virtual void handleAck(std::shared_ptr<Packet> pkt, float time) override;
+    virtual void handleAck(std::shared_ptr<Packet> pkt, double time) override;
 
     virtual std::string toString() override;
 
-    virtual void logFlowRTT(float time, float RTT) override;
-    virtual void logFlowWindowSize(float time, int windowSize) override;
+    virtual void logFlowRTT(double time, float RTT) override;
+    virtual void logFlowWindowSize(double time, int windowSize) override;
 
-    virtual void openConnection(float time) override;
-    virtual void closeConnection(float time) override;
-    virtual void respondToSynUnackEvent(float time) override;
-    virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) override;
+    virtual void openConnection(double time) override;
+    virtual void closeConnection(double time) override;
+    virtual void respondToSynUnackEvent(double time) override;
+    virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) override;
 
 
 

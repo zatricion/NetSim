@@ -10,34 +10,34 @@
 Plotter sim_plotter = Plotter();
 
 void Plotter::logLinkRate(std::string name,
-                          std::tuple<float, float> rate_data) {
+                          std::tuple<double, float> rate_data) {
     linkRate[name].push_back(rate_data);
     
 }
 
 void Plotter::logBufferOccupancy(std::string name,
-                          std::tuple<float, float> rate_data) {
+                          std::tuple<double, float> rate_data) {
     BufferOccupancy[name].push_back(rate_data);
     
 }
 
 void Plotter::logFlowRTT(std::string name,
-                         std::tuple<float, float> rate_data) {
+                         std::tuple<double, float> rate_data) {
     flowRTT[name].push_back(rate_data);
 }
 
 void Plotter::logFlowWindowSize(std::string name,
-                         std::tuple<float, float> rate_data) {
+                         std::tuple<double, float> rate_data) {
     flowWindowSize[name].push_back(rate_data);
 }
 
 void Plotter::logPacketLoss(std::string name,
-                             std::tuple<float, float> rate_data) {
+                             std::tuple<double, float> rate_data) {
     packetLoss[name].push_back(rate_data);
 }
 
 void Plotter::plot(plot_data data,
-                   float runtime,
+                   double runtime,
                    std::string title,
                    std::string xlabel,
                    std::string ylabel,
@@ -75,31 +75,31 @@ void Plotter::plot(plot_data data,
     }
 }
 
-void Plotter::plotLinkRate(float runtime) {
+void Plotter::plotLinkRate(double runtime) {
     Plotter::plot(linkRate,
                   runtime,
                   "Link Rate", "Time (s)", "Link Rate (bps)");
 }
 
-void Plotter::plotBufferOccupancy(float runtime) {
+void Plotter::plotBufferOccupancy(double runtime) {
     Plotter::plot(BufferOccupancy,
                   runtime,
                   "Buffer Occupancy", "Time (s)", "Queue Size (bits)", "lines");
 }
 
-void Plotter::plotFlowRTT(float runtime) {
+void Plotter::plotFlowRTT(double runtime) {
     Plotter::plot(flowRTT,
                   runtime,
                   "Flow RTT", "Time (s)", "RTT (s)");
 }
 
-void Plotter::plotFlowWindowSize(float runtime) {
+void Plotter::plotFlowWindowSize(double runtime) {
     Plotter::plot(flowWindowSize,
                   runtime,
                   "Window Size", "Time (s)", "Window Size (pkts)");
 }
 
-void Plotter::plotPacketLoss(float runtime) {
+void Plotter::plotPacketLoss(double runtime) {
     Plotter::plot(packetLoss,
                   runtime,
                   "Packet Loss", "Time (s)", "Number of Packets", "lines");

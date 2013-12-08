@@ -33,27 +33,27 @@ public:
     int numPackets;
 
     // How long the flow will wait before sending another packet.
-    float waitTime;
+    double waitTime;
 
     // packet size
     int packetSize;
 
     // Time when the flow is generated.
-    float timestamp;
+    double timestamp;
 
     // The current phase we are in.
     Phase phase;
 
     std::set<int> unSentPackets;
 
-    float A;
-    float D;
-    float b;
+    double A;
+    double D;
+    double b;
 
     // No constructors.
     Flow(std::string idval, std::string dest,
          int data_size, std::shared_ptr<Host> h,
-         int winSize, float ts);
+         int winSize, double ts);
 
 
     //
@@ -61,24 +61,24 @@ public:
     // When we send a packet, we add an UnackEvent to the event heap.  Then,
     // when the event is handled, we check to see if it has been acknowledged.
     // If so, we have a no-op.  If not, resend.
-    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, float time) = 0;
+    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, double time) = 0;
 
     // Called when an ack is received.
-    virtual void handleAck(std::shared_ptr<Packet> pkt, float time) = 0;
+    virtual void handleAck(std::shared_ptr<Packet> pkt, double time) = 0;
 
     virtual std::string toString() = 0;
 
-    void initialize(float time);
+    void initialize(double time);
 
-    virtual void logFlowRTT(float time, float RTT) = 0;
-    virtual void logFlowWindowSize(float time, int windowSize) = 0;
+    virtual void logFlowRTT(double time, float RTT) = 0;
+    virtual void logFlowWindowSize(double time, int windowSize) = 0;
 
-    virtual void openConnection(float time) = 0;
-    virtual void closeConnection(float time) = 0;
-    void sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay);
-    virtual void respondToSynUnackEvent(float time) = 0;
-    virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, float time) = 0;
-    void send(std::shared_ptr<Packet> pkt, float time);
-    void sendManyPackets(float time);
+    virtual void openConnection(double time) = 0;
+    virtual void closeConnection(double time) = 0;
+    void sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay);
+    virtual void respondToSynUnackEvent(double time) = 0;
+    virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) = 0;
+    void send(std::shared_ptr<Packet> pkt, double time);
+    void sendManyPackets(double time);
 };
 #endif

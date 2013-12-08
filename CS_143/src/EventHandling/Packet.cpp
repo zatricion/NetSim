@@ -14,7 +14,7 @@ Packet::Packet(std::string id,
                std::string flow_id,
                bool sync,
                bool finish,
-               float ts,
+               double ts,
                bool bf,
                bf_type bf_t)
 {

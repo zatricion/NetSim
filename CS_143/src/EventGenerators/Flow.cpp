@@ -16,7 +16,7 @@
  */
 Flow::Flow(std::string idval, std::string dest,
            int data_size,
-           std::shared_ptr<Host> h, int winSize, float ts) {
+           std::shared_ptr<Host> h, int winSize, double ts) {
     timestamp = ts;
     host = h;
     id = idval;
@@ -42,7 +42,7 @@ Flow::Flow(std::string idval, std::string dest,
  *
  * @param time the time at which the data flow starts.
  */
-void Flow::initialize(float time) {
+void Flow::initialize(double time) {
     sendManyPackets(time);
 }
 
@@ -56,20 +56,20 @@ void Flow::initialize(float time) {
  *
  * @param time the time at which the packets are sent.
  */
-void Flow::sendManyPackets(float time) {
+void Flow::sendManyPackets(double time) {
     for (int i = windowStart; i <= windowEnd; i++) {
         if (unSentPackets.count(i) == 1) {
             // He has not been sent before.  Let's send him, and queue a resend.
             unSentPackets.erase(i);
             auto pkt = std::make_shared<Packet>(std::to_string(i),
                 destination, source, DATA_PKT_SIZE,
-                false, i, id, false, false, time + 1.00f * i / 1000);
+                false, i, id, false, false, time + 1.00 * i / 1000000.0);
                 // TODO the above looks kind of ghetto, but it's important to
                 // offset the packets a bit, to keep them from reshuffling in
                 // the buffers.
         FILE_LOG(logDEBUG) << "Called from sendManyPackets";
         FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
-        host->sendAndQueueResend(pkt, time + 1.00f * i / 1000, waitTime);
+        host->sendAndQueueResend(pkt, time + 1.00 * i / 1000000.0, waitTime);
         }
     }
 }
@@ -82,7 +82,7 @@ void Flow::sendManyPackets(float time) {
  * @param pkt the packet to be sent
  * @param time the time at which it is sent
  */
-void Flow::send(std::shared_ptr<Packet> pkt, float time) {
+void Flow::send(std::shared_ptr<Packet> pkt, double time) {
     host->send(pkt, time);
 }
 
@@ -96,6 +96,6 @@ void Flow::send(std::shared_ptr<Packet> pkt, float time) {
  * @param delay the delay after 'time' at which we consider the packet to have
  * timed out
  */
-void Flow::sendAndQueueResend(std::shared_ptr<Packet> pkt, float time, float delay) {
+void Flow::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay) {
     host->sendAndQueueResend(pkt, time, delay);
 }
