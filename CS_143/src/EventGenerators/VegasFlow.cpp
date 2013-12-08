@@ -79,39 +79,39 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         minRTT = std::min(minRTT, RTT);
         
 
-    int seqNum = pkt->sequence_num;
+        int seqNum = pkt->sequence_num;
 
-    if (seqNum == numPackets) {
-        // We received an ack that requests a nonexistent packet.  I.e. we sent
-        // the 100th packet (with seqNum 99), and this ack says "100", but there
-        // is no 100th packet to send.  So we're done.
+        if (seqNum == numPackets) {
+            // We received an ack that requests a nonexistent packet.  I.e. we sent
+            // the 100th packet (with seqNum 99), and this ack says "100", but there
+            // is no 100th packet to send.  So we're done.
 
-        // We're done sending packets.  Move the window outside of the bounds
-        // of the packets.
+            // We're done sending packets.  Move the window outside of the bounds
+            // of the packets.
+            windowStart = seqNum;
+            windowEnd = seqNum;
+
+            FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
+
+            phase = FIN;
+            // We need to send a FIN to the other host.
+            auto fin = std::make_shared<Packet>("FIN", destination,
+                source, FIN_SIZE, false, -1, id, false, true, time);
+
+            host->send(fin, time);
+            return;
+        }
+
+        // Send packets.
+        int windowSize = windowEnd - windowStart + 1;
+        FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
         windowStart = seqNum;
-        windowEnd = seqNum;
+        FILE_LOG(logDEBUG) << "START=" << windowStart << ", windowSize=" << windowSize << ", numPackets=" << numPackets << ".";
+        windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
+        sendManyPackets(time);
 
-        FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
-
-        phase = FIN;
-        // We need to send a FIN to the other host.
-        auto fin = std::make_shared<Packet>("FIN", destination,
-            source, FIN_SIZE, false, -1, id, false, true, time);
-
-        host->send(fin, time);
-        return;
-    }
-
-    // Send packets.
-    int windowSize = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
-    windowStart = seqNum;
-    FILE_LOG(logDEBUG) << "START=" << windowStart << ", windowSize=" << windowSize << ", numPackets=" << numPackets << ".";
-    windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
-    sendManyPackets(time);
-
-    FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
-    FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
+        FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
+        FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
 
     }
     // Otherwise, do nothing.
@@ -158,13 +158,13 @@ void VegasFlow::handleVegasUpdate(double time) {
 
     FILE_LOG(logDEBUG) << "1:START=" << windowStart << ", END=" << windowEnd;
     // apply Vegas update
-    if (testValue < vegasConstAlpha) {
+    if (testValue < (vegasConstAlpha / minRTT)) {
         FILE_LOG(logDEBUG) << "INC";
-        windowSize += (1 / A);
+        windowSize++;
     }
-    else if (testValue > vegasConstBeta) {
+    else if (testValue > (vegasConstBeta / minRTT)) {
         FILE_LOG(logDEBUG) << "DEC";
-        windowSize -= (1 / A);
+        windowSize--;
     }
     FILE_LOG(logDEBUG) << "2:START=" << windowStart << ", END=" << windowEnd;
     // Otherwise leave window size alone
@@ -196,7 +196,7 @@ void VegasFlow::handleVegasUpdate(double time) {
 void VegasFlow::logFlowRTT(double time, float RTT) {
     FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
     sim_plotter.logFlowRTT(id,
-        std::make_tuple(time, RTT));
+        std::make_tuple(time, A));
 }
 
 void VegasFlow::logFlowWindowSize(double time, int windowSize) {

@@ -33,7 +33,7 @@ Flow::Flow(std::string idval, std::string dest,
     windowEnd = winSize - 1;
     A = waitTime;
     D = waitTime;
-    b = .1;
+    b = .01;
 }
 
 

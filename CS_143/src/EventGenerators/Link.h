@@ -56,6 +56,9 @@ private:
     // Last update time for each queue
     std::unordered_map<std::string, double> link_time;
     
+    // Last time link rate was logged for each queue
+    std::unordered_map<std::string, double> link_rate_time;
+    
     // Tuples (pkt_size, on_link_time, off_link_time) for each queue
     std::unordered_map<std::string, std::list<std::tuple<int, double, float> > >packets_on_link;
     

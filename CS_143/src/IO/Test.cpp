@@ -11,12 +11,12 @@ int main()
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
     // TODO is it okay to change this later?  Preprocessor...
-    FILELog::ReportingLevel() = logDEBUG;
+    FILELog::ReportingLevel() = logINFO; //logDEBUG;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest0();
+    simTest2();
     //simTest1();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
@@ -52,7 +52,7 @@ void simTest0()
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                      (10000 * 8 * 1024), host1, 1, 1.0);
+                      (30000 * 8 * 1024), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -67,7 +67,7 @@ void simTest0()
     
     FILE_LOG(logDEBUG) << "Running simulation.";
     //double runtime = 6.0;
-    double runtime = 25.0;
+    double runtime = 40.0;
 
     //while(handler.getMinTime() < runtime)
     while(handler.running())
@@ -202,7 +202,7 @@ void simTest2()
     
 
     FILE_LOG(logDEBUG) << "Running simulation.";
-    double runtime = 25.0;
+    double runtime = 50.0;
     while(handler.getMinTime() < runtime)     {
         handler.step();
     }

@@ -28,7 +28,7 @@ std::string Link::getOtherNode(std::string my_node) {
 
 void Link::logLinkRate(double time, std::string node) {
     double total_bits = 0.0;
-    double prev_time = link_time[node];
+    double prev_time = link_rate_time[node];
     auto packets_on_this_link = packets_on_link[node];
     
     if (packets_on_this_link.empty()) {
@@ -135,10 +135,13 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     if ((this->getID() == "link1") || (this->getID() == "link2")) {
         // Log only data packets so that we see only one direction (assumes all flows go right)
         if ((packet_event.packet->bf_tbl_bit == false)
-            && (packet_event.packet->ack == false)) {
+            && (packet_event.packet->ack == false)
+            && ((now - link_rate_time[source]) > 0.1)) {
             
             // Log the link rate
             logLinkRate(now, source);
+            
+            link_rate_time[source] = now;
             
             // Log queue size
             logBufferOccupancy(now, source);
