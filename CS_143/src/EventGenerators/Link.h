@@ -10,6 +10,7 @@
 #include <algorithm> // std::max
 #include <sstream>
 #include "../Tools/Log.h"
+#include <unordered_map>
 
 class Link : public EventGenerator
 {
@@ -18,37 +19,33 @@ public:
     Link(float, float, float, std::string, std::string, std::string);
     
     virtual void giveEvent(std::shared_ptr<Event>) override;
-
-    float getPropDelay();
-    std::string toString();
     
-    float getTotalDelay();
+    float getTotalDelay(std::string node);
     
-    std::string getOtherNode(std::string);
+    std::string getOtherNode(std::string node);
     
-    void logLinkRate(float);
+    void logLinkRate(float time, std::string node);
     
-    void logBufferOccupancy(float, float);
+    void logBufferOccupancy(float time, std::string node);
     
     void packetLoss(float);
     
+    float getPropDelay();
+    
+    std::string toString();
+    
 private:
     // Maximum queue_size in bits
-    float buffer1_size;
-    float buffer2_size;
-    
+    float buffer_size;
+
     // Delay seen by an incoming packet due to link length
-    float prop_delay1;
-    float prop_delay2;
-    // TODO psych don't need both of these.
+    float prop_delay;
     
-    // Queue size in bits at queue_time
-    float queue1_size;
-    float queue2_size;
+    // Queue size in bits at queue_time for each queue
+    std::unordered_map<std::string, float> queue_size;
     
-    // Delay seen by an incoming packet due to the queue
-    float queue1_delay;
-    float queue2_delay;
+    // Delay seen by an incoming packet due to the queue for each queue
+    std::unordered_map<std::string, float> queue_delay;
     
     // Number of bits sent per time-step
     float capacity;
@@ -56,25 +53,20 @@ private:
     std::string node1;
     std::string node2;
     
-    // Timestamp for which the queue is current
-    float link1_time = 0.0;
-    float link2_time = 0.0;
+    // Last update time for each queue
+    std::unordered_map<std::string, float> link_time;
     
-    // Tuples (pkt_size, on_link_time, off_link_time)
-    std::list<std::tuple<int, float, float> > packets_on_link1;
-    std::list<std::tuple<int, float, float> > packets_on_link2;
+    // Tuples (pkt_size, on_link_time, off_link_time) for each queue
+    std::unordered_map<std::string, std::list<std::tuple<int, float, float> > >packets_on_link;
     
-    // Number of packets on buffer
-    int buffer1_occupancy;
-    int buffer2_occupancy;
+    // Number of packets on queue for each queue
+    std::unordered_map<std::string, int> buffer_occupancy;
     
-    // Packets dropped in current bin of time
-    int num_dropped1 = 0;
-    int num_dropped2 = 0;
+    // Packets dropped in current bin of time for each queue
+    std::unordered_map<std::string, int> num_dropped;
     
-    // Last time dropped packets were logged
-    float dropped_time1 = 0.0;
-    float dropped_time2 = 0.0;
+    // Last time dropped packets were logged for each queue
+    std::unordered_map<std::string, float> dropped_time;
 };
 
 #endif /* defined(__CS_143__Link__) */

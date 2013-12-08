@@ -44,14 +44,15 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    // Test: Can only hold 1 packet on link buffer.
-    auto link1 = std::make_shared<Link>(300 * 8 * 1024.0, 0.1, pow(10, 7),
+    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), // buffer size
+                                        0.1, // propagation delay
+                                        pow(10, 7), // capacity
                                         "host1", "host2", "link1");
+    
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
-                      (3000 * 8 * 1024), host1, 1, 1.0);
-    // (Send 20 1kb packets along link, with 1kb buffer)
+                      (20 * 8 * pow(10, 6)), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -66,13 +67,14 @@ void simTest0()
     
     FILE_LOG(logDEBUG) << "Running simulation.";
     //float runtime = 6.0;
-    //while(handler.getMinTime() < runtime)
-    while(handler.running())
+    float runtime = 10.0;
+
+    while(handler.getMinTime() < runtime)
+//    while(handler.running())
     {
         handler.step();
     }
 
-    float runtime = 40.0;
     FILE_LOG(logINFO) << "Simulator passed tests!";
     sim_plotter.plotLinkRate(runtime);
     sim_plotter.plotBufferOccupancy(runtime);

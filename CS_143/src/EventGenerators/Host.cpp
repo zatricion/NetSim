@@ -243,6 +243,7 @@ void Host::respondTo(PacketEvent new_event) {
 
     if (pkt->bf_tbl_bit) {
         // Do nothing
+        FILE_LOG(logDEBUG) << "It was a BF packet, doing nothing.";
     }
     
     else if (pkt->syn) {
