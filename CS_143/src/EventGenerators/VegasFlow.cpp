@@ -137,7 +137,8 @@ std::string VegasFlow::toString() {
         if (*it % 20 == 0) { setString << "\n"; }
     }
     setString << "}";
-    std::string setElems = setString.str();
+    // std::string setElems = setString.str();
+    std::string setElems = "";
 
     fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
     return fmt.str();

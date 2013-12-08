@@ -112,7 +112,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         // Update queue size
         queue_size[source] += packet_event.packet->size;
         
-        if (this->getID() == "link1" || this->getID() == "link2"){
+        if ((this->getID() == "link1") || (this->getID() == "link2")) {
             // Log only data packets so that we see only one direction (assumes all flows go right)
             if ((packet_event.packet->bf_tbl_bit == false)
                 && (packet_event.packet->ack == false)) {
