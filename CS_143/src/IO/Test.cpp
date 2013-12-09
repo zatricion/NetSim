@@ -16,7 +16,7 @@ int main()
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest2();
+    simTest0();
     //simTest1();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
@@ -45,14 +45,14 @@ void simTest0()
     
     // add link1
     auto link1 = std::make_shared<Link>((300 * 8 * 1024.0), // buffer size
-                                        0.01, // propagation delay
+                                        0.00, // propagation delay
                                         pow(10, 7), // capacity
                                         "host1", "host2", "link1");
     
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                      (3000 * 8 * 1024), host1, 1, 1.0);
+                      (9000 * 8 * 1024), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -84,7 +84,7 @@ void simTest0()
  
 }
 
-void simTest2()
+void simTest1()
 {
     FILE_LOG(logDEBUG) << "Constructing Network Objects.";
     Handler handler;
@@ -92,17 +92,17 @@ void simTest2()
     
     ////////////
     // add links
-    auto link0 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
+    auto link0 = std::make_shared<Link>((64 * 8 * 1024.0), 0.00, 1.25 * pow(10, 7),
                                         "host1", "router1", "link0");
-    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link1 = std::make_shared<Link>((64 * 8 * 1024.0), 0.00, pow(10, 7),
                                         "router1", "router2", "link1");
-    auto link2 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link2 = std::make_shared<Link>((64 * 8 * 1024.0), 0.00, pow(10, 7),
                                         "router1", "router3", "link2");
-    auto link3 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link3 = std::make_shared<Link>((64 * 8 * 1024.0), 0.00, pow(10, 7),
                                         "router2", "router4", "link3");
-    auto link4 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, pow(10, 7),
+    auto link4 = std::make_shared<Link>((64 * 8 * 1024.0), 0.00, pow(10, 7),
                                         "router3", "router4", "link4");
-    auto link5 = std::make_shared<Link>((64 * 8 * 1024.0), 0.01, 1.25 * pow(10, 7),
+    auto link5 = std::make_shared<Link>((64 * 8 * 1024.0), 0.00, 1.25 * pow(10, 7),
                                         "router4", "host2", "link5");
     
     // add hosts

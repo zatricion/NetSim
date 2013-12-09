@@ -49,7 +49,7 @@ public:
 
     virtual std::string toString() override;
 
-    virtual void logFlowRTT(double time, float RTT) override;
+    virtual void logFlowRTT(double time, double RTT) override;
     virtual void logFlowWindowSize(double time, int windowSize) override;
 
     virtual void openConnection(double time) override;

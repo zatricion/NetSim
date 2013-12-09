@@ -72,9 +72,9 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
-        waitTime = A + 4 * D;
+        waitTime = A + 4 * D + 0.01;
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
-        logFlowRTT(time, RTT);
+        //logFlowRTT(time, RTT);
 
         minRTT = std::min(minRTT, RTT);
         
@@ -112,10 +112,6 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
 
         FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
         FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
-        
-        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source,
-                                                             source, time, id);
-        host->addEventToLocalQueue(vUpdate);
 
     }
     // Otherwise, do nothing.
@@ -159,6 +155,13 @@ void VegasFlow::handleVegasUpdate(double time) {
     FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
 
     double testValue = (windowSize / minRTT) - (windowSize / RTT);
+    logFlowRTT(time, testValue);
+    std::cout << (vegasConstAlpha / minRTT) << std::endl;
+    std::cout << (vegasConstBeta/ minRTT) << std::endl;
+    std::cout << "testValue " << (testValue) << std::endl;
+    std::cout << (minRTT) << std::endl;
+    std::cout << (RTT) << std::endl;
+    std::cout << std::endl;
 
     FILE_LOG(logDEBUG) << "1:START=" << windowStart << ", END=" << windowEnd;
     // apply Vegas update
@@ -181,12 +184,12 @@ void VegasFlow::handleVegasUpdate(double time) {
 
     sendManyPackets(time);
 
-//    // schedule another update
-//    auto update = std::make_shared<TCPVegasUpdateEvent>(source,
-//                                                        source,
-//                                                        time + waitTime,
-//                                                        id);
-//    host->addEventToLocalQueue(update);
+    // schedule another update
+    auto update = std::make_shared<TCPVegasUpdateEvent>(source,
+                                                        source,
+                                                        time + waitTime,
+                                                        id);
+    host->addEventToLocalQueue(update);
 
     windowSize = windowEnd - windowStart + 1;
     FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;
@@ -197,7 +200,7 @@ void VegasFlow::handleVegasUpdate(double time) {
     //(std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
 //}
 
-void VegasFlow::logFlowRTT(double time, float RTT) {
+void VegasFlow::logFlowRTT(double time, double RTT) {
     FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
     sim_plotter.logFlowRTT(id,
         std::make_tuple(time, RTT));
@@ -267,8 +270,8 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;
-        vegasConstAlpha = 1.0;
-        vegasConstBeta = 3.0;
+        vegasConstAlpha = 1.5;
+        vegasConstBeta = 2.5;
         minRTT = RTT;
 
         auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 

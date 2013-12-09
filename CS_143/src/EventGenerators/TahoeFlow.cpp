@@ -211,7 +211,7 @@ std::string TahoeFlow::toString() {
 }
 
 
-void TahoeFlow::logFlowRTT(double time, float RTT) {
+void TahoeFlow::logFlowRTT(double time, double RTT) {
     sim_plotter.logFlowRTT(id, std::make_tuple(time, RTT));
 }
 

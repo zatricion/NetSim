@@ -70,7 +70,7 @@ public:
 
     void initialize(double time);
 
-    virtual void logFlowRTT(double time, float RTT) = 0;
+    virtual void logFlowRTT(double time, double RTT) = 0;
     virtual void logFlowWindowSize(double time, int windowSize) = 0;
 
     virtual void openConnection(double time) = 0;
