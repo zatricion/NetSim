@@ -276,8 +276,8 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;
-        vegasConstAlpha = 1;
-        vegasConstBeta = 3;
+        vegasConstAlpha = 1.5;
+        vegasConstBeta = 2.5;
         minRTT = RTT;
 
         auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 
