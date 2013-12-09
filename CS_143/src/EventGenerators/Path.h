@@ -21,7 +21,7 @@ class Path {
 
     
 public:
-    std::vector<std::tuple<std::string, double> > link_vec;
+    std::vector<std::tuple<std::string, double, double> > link_vec;
     
     // Constructor
     Path(std::string link = "NONE");
@@ -31,11 +31,11 @@ public:
     
     //Path()~
     
-    void addLink(std::string link, double delay);
+    void addLink(std::string link, double delay, double ts);
     
     double getTotalDelay() const;
     
-    void updateLinkWeight(std::string link, double delay);
+    void updateLinkWeight(std::string link, double delay, double time);
     
     void updateAll(const Path& other);
     

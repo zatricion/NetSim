@@ -33,7 +33,7 @@ Flow::Flow(std::string idval, std::string dest,
     windowEnd = winSize - 1;
     A = waitTime;
     D = waitTime;
-    b = .01;
+    b = .1;
 }
 
 
@@ -63,13 +63,13 @@ void Flow::sendManyPackets(double time) {
             unSentPackets.erase(i);
             auto pkt = std::make_shared<Packet>(std::to_string(i),
                 destination, source, DATA_PKT_SIZE,
-                false, i, id, false, false, time + 1.00 * i / 1000000.0);
+                false, i, id, false, false, time + i / 1000000.0);
                 // TODO the above looks kind of ghetto, but it's important to
                 // offset the packets a bit, to keep them from reshuffling in
                 // the buffers.
         FILE_LOG(logDEBUG) << "Called from sendManyPackets";
         FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
-        host->sendAndQueueResend(pkt, time + 1.00 * i / 1000000.0, waitTime);
+        host->sendAndQueueResend(pkt, time + i / 1000000.0, waitTime);
         }
     }
 }

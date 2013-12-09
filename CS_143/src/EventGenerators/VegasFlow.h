@@ -34,6 +34,7 @@ public:
     double vegasConstAlpha;
     double vegasConstBeta;
     double minRTT;
+    double RTT;
 
     // Constructors
     VegasFlow(std::string idval, std::string dest,

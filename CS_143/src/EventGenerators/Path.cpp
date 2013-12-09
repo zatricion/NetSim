@@ -2,7 +2,7 @@
 
 // Constructor
 Path::Path(std::string link) {
-    link_vec.push_back(std::tuple<std::string, double>(link, std::numeric_limits<float>::max()));
+    link_vec.push_back(std::make_tuple(link, std::numeric_limits<float>::max(), 0.0));
 };
 
 Path::Path(const Path& other) {
@@ -12,8 +12,8 @@ Path::Path(const Path& other) {
     }
 };
 
-void Path::addLink(std::string link, double delay) {
-    link_vec.push_back(std::tuple<std::string, double>(link, delay));
+void Path::addLink(std::string link, double delay, double ts) {
+    link_vec.push_back(std::make_tuple(link, delay, ts));
 };
 
 double Path::getTotalDelay() const {
@@ -23,22 +23,20 @@ double Path::getTotalDelay() const {
     return total_delay;
 };
 
-void Path::updateLinkWeight(std::string link, double delay) {
+void Path::updateLinkWeight(std::string link, double delay, double time) {
     for (auto &it : link_vec) {
-        if (std::get<0>(it) == link) {
+        std::string this_link = std::get<0>(it);
+        if ((this_link == link) && (std::get<2>(it) < time)) {
             std::get<1>(it) = delay;
+            std::get<2>(it) = time;
             break;
         }
     }
 };
 
 void Path::updateAll(const Path& other) {
-    for (auto &it : link_vec) {
-        for (auto &ot : other.link_vec) {
-            if (std::get<0>(it) == std::get<0>(ot)) {
-                std::get<1>(it) = std::get<1>(ot);
-            }
-        }
+    for (auto &ot : other.link_vec) {
+        updateLinkWeight(std::get<0>(ot), std::get<1>(ot), std::get<2>(ot));
     }
 };
 
@@ -58,7 +56,7 @@ std::string Path::getNextLink() const {
 std::string Path::to_string() {
     std::string output = "";
     for (auto &it : link_vec) {
-        output += "(" + std::get<0>(it) + ", " + std::to_string(std::get<1>(it)) + ")  ";
+        output += "(" + std::to_string(std::get<2>(it)) + ", " + std::get<0>(it) + ", " + std::to_string(std::get<1>(it)) + ")  ";
     }
     return output;
 };

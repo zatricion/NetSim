@@ -23,7 +23,7 @@ public:
     Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id, std::vector<std::shared_ptr<Link> > debug_links);
     
     // Bellman-Ford
-    void updateRouting(Packet::bf_type, std::string, std::string);
+    void updateRouting(Packet::bf_type, std::string, std::string, double);
     
     // Broadcast routing table
     void broadcastTable(double timestamp);

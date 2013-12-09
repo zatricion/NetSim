@@ -52,7 +52,7 @@ void simTest0()
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
     auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                      (30000 * 8 * 1024), host1, 1, 1.0);
+                      (3000 * 8 * 1024), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -83,58 +83,6 @@ void simTest0()
     sim_plotter.plotPacketLoss(runtime);
  
 }
-
-/*
-void simTest1()
-{
-    FILE_LOG(logDEBUG) << "Constructing Network Objects.";
-    Handler handler = Handler();
-    
-    // add link1
-    auto link1 = std::make_shared<Link>((64 * 64 * 64 * 8 * 1000.0), 0.001, pow(10, 7),
-                                        "host1", "router", "link1");
-
-    auto link2 = std::make_shared<Link>((64 * 64 * 64 * 8 * 1000.0), 0.001, pow(10, 7),
-                                        "router", "host2", "link2");
-
-    auto ccAlg = std::make_shared<TCPReno>();
-
-    auto host1 = std::make_shared<Host>(link1, "host1");
-    auto host2 = std::make_shared<Host>(link2, "host2");
-
-    std::vector<std::string> host_list;
-    host_list.push_back(host1->getID());
-    host_list.push_back(host2->getID());
- 
-    auto router = std::make_shared<Router>(host_list, 
-       std::vector<std::shared_ptr<Link> > {link1, link2}, "router", 
-       std::vector<std::shared_ptr<Link> > {link1, link2});
-
-    auto flow1 = std::make_shared<Flow>("flow1", "host2", ccAlg,
-                      (8 * pow(10, 4)), host1, 10, 1.0);
-
-    std::vector<std::shared_ptr<Flow> > flow_list;
-    flow_list.push_back(flow1);
-
-    auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
-
-    FILE_LOG(logDEBUG) << "Adding Network Objects to handler.";
-    handler.addGenerator(link1);
-    handler.addGenerator(link2);
-    handler.addGenerator(host1);
-    handler.addGenerator(host2);
-    handler.addGenerator(router);
-    handler.addGenerator(flow_g);
-
-    FILE_LOG(logDEBUG) << "Running simulation.";
-    while(handler.running())
-    {
-        handler.step();
-    }
-
-    FILE_LOG(logINFO) << "Simulator passed tests!";
-}
-*/
 
 void simTest2()
 {
