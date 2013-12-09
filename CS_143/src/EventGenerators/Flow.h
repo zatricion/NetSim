@@ -17,7 +17,7 @@ static const int DATA_PKT_SIZE = 1024 * 8;
 
 // other packets are 64B
 static const int ACK_SIZE = 64 * 8;
-static const int SYN_SIZE = 64 * 8;
+static const int SYN_SIZE = 1024 * 8;
 static const int FIN_SIZE = 64 * 8;
 
 class Flow {

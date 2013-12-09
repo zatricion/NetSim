@@ -74,7 +74,7 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D + 0.01;
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
-        //logFlowRTT(time, RTT);
+        logFlowRTT(time, RTT);
 
         minRTT = std::min(minRTT, RTT);
         
@@ -104,10 +104,16 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
 
         // Send packets.
         int windowSize = windowEnd - windowStart + 1;
+        
         FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
+        
+        // Set windowStart to the current packet's sequence number
         windowStart = seqNum;
+       
         FILE_LOG(logDEBUG) << "START=" << windowStart << ", windowSize=" << windowSize << ", numPackets=" << numPackets << ".";
+        
         windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
+        
         sendManyPackets(time);
 
         FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
@@ -155,13 +161,13 @@ void VegasFlow::handleVegasUpdate(double time) {
     FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
 
     double testValue = (windowSize / minRTT) - (windowSize / RTT);
-    logFlowRTT(time, testValue);
-    std::cout << (vegasConstAlpha / minRTT) << std::endl;
-    std::cout << (vegasConstBeta/ minRTT) << std::endl;
-    std::cout << "testValue " << (testValue) << std::endl;
-    std::cout << (minRTT) << std::endl;
-    std::cout << (RTT) << std::endl;
-    std::cout << std::endl;
+    //logFlowRTT(time, testValue);
+//    std::cout << (vegasConstAlpha / minRTT) << std::endl;
+//    std::cout << (vegasConstBeta/ minRTT) << std::endl;
+//    std::cout << "testValue " << (testValue) << std::endl;
+//    std::cout << (minRTT) << std::endl;
+//    std::cout << (RTT) << std::endl;
+//    std::cout << std::endl;
 
     FILE_LOG(logDEBUG) << "1:START=" << windowStart << ", END=" << windowEnd;
     // apply Vegas update
@@ -178,8 +184,8 @@ void VegasFlow::handleVegasUpdate(double time) {
     // Set the cap:
 
     windowEnd = windowSize + windowStart - 1;
-    windowEnd = std::min(windowEnd, numPackets - 1); // Make sure it's before the end.
-    windowEnd = std::max(windowEnd, windowStart); // Make sure it's after or at windowStart
+//    assert(windowEnd <= numPackets - 1); // Make sure it's before the end.
+    assert(windowEnd >= windowStart); // Make sure it's after or at windowStart
     FILE_LOG(logDEBUG) << "3:START=" << windowStart << ", END=" << windowEnd;
 
     sendManyPackets(time);

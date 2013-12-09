@@ -45,7 +45,7 @@ void simTest0()
     
     // add link1
     auto link1 = std::make_shared<Link>((300 * 8 * 1024.0), // buffer size
-                                        0.00, // propagation delay
+                                        0.01, // propagation delay
                                         pow(10, 7), // capacity
                                         "host1", "host2", "link1");
     

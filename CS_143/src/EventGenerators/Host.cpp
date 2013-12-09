@@ -259,9 +259,9 @@ void Host::respondTo(PacketEvent new_event) {
     else {
         FILE_LOG(logDEBUG) << "It was a data packet.";
         FILE_LOG(logDEBUG) << pkt->toString() << ", gotten on host" << uuid;
-        // Not a syn or a fin or a bf packet.  It's a data packet.
+        // Not a syn or a fin or a bf packet.  It's an ack packet.
         if (pkt->ack && flows.count(pkt->flowID)) {
-            FILE_LOG(logDEBUG) << "Flow is handling hack.";
+            FILE_LOG(logDEBUG) << "Flow is handling ack.";
             // The receiver of the ack is the sending end of the flow.
     	    flows[pkt->flowID]->handleAck(pkt, time);
             // Note that if the host is the receiving end, do nothing.
