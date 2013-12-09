@@ -75,7 +75,7 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         waitTime = A + 4 * D + 0.01;
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
-
+        //std::cout << "now: " << time << " pkt_time: " << pkt->timestamp << " RTT: " << RTT << std::endl;
         minRTT = std::min(minRTT, RTT);
         
 
@@ -276,8 +276,8 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;
-        vegasConstAlpha = 1.5;
-        vegasConstBeta = 2.5;
+        vegasConstAlpha = 1;
+        vegasConstBeta = 3;
         minRTT = RTT;
 
         auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 

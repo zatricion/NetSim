@@ -57,21 +57,24 @@ void Flow::initialize(double time) {
  * @param time the time at which the packets are sent.
  */
 void Flow::sendManyPackets(double time) {
+//    std::cout << "windowStart: " << windowStart << " windowEnd: " << windowEnd << " diff: " << windowEnd - windowStart << " time: " << time << std::endl;
+    
     for (int i = windowStart; i <= windowEnd; i++) {
         if (unSentPackets.count(i) == 1) {
             // He has not been sent before.  Let's send him, and queue a resend.
             unSentPackets.erase(i);
             auto pkt = std::make_shared<Packet>(std::to_string(i),
                 destination, source, DATA_PKT_SIZE,
-                false, i, id, false, false, time + i / 1000000.0);
+                false, i, id, false, false, time + i / 10000000000.0);
                 // TODO the above looks kind of ghetto, but it's important to
                 // offset the packets a bit, to keep them from reshuffling in
                 // the buffers.
         FILE_LOG(logDEBUG) << "Called from sendManyPackets";
         FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
-        host->sendAndQueueResend(pkt, time + i / 1000000.0, waitTime);
+        host->sendAndQueueResend(pkt, time + i / 10000000000.0, waitTime);
         }
     }
+    
 }
 
 

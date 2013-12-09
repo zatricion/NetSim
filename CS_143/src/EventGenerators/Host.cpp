@@ -257,7 +257,7 @@ void Host::respondTo(PacketEvent new_event) {
     }
 
     else {
-        FILE_LOG(logDEBUG) << "It was a data packet.";
+        FILE_LOG(logDEBUG) << "Receiver (host) is handling ack.";
         FILE_LOG(logDEBUG) << pkt->toString() << ", gotten on host" << uuid;
         // Not a syn or a fin or a bf packet.  It's an ack packet.
         if (pkt->ack && flows.count(pkt->flowID)) {
@@ -269,7 +269,7 @@ void Host::respondTo(PacketEvent new_event) {
             // we do nothing.
         }
         if (!pkt->ack) {
-            FILE_LOG(logDEBUG) << "Receiver (host) is handling hack.";
+            FILE_LOG(logDEBUG) << "It was a data packet.";
             // We received a packet.  Send an acknowledgment.
             recvd[pkt->flowID].first.insert(pkt->sequence_num);
             
@@ -290,6 +290,12 @@ void Host::respondTo(PacketEvent new_event) {
                                                 false, // syn packet?
                                                 false, // fin packet?
                                                 pkt->timestamp);
+            
+            
+//            
+//            std::cout << "Time received" << std::endl;
+//            std::cout << time << std::endl;
+//            std::cout << std::endl;
             
             send(ret, time);
         }
