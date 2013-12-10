@@ -40,7 +40,11 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
     addEventToLocalQueue(b);
 }
 
-// broadcast BF table to all connected routers
+/**
+ * Broadcasts the routing table to all connected routers.
+ *
+ * @param timestamp the time at which the broadcast occurs.
+ */
 void Router::broadcastTable(double timestamp) {
     // update BF table
     for (const auto& it : links) {
@@ -69,12 +73,21 @@ void Router::broadcastTable(double timestamp) {
     }
 }
 
-// Add a link id to the router's link vector
+/**
+ * Adds a link to the router's link vector.
+ *
+ * @param link a pointer to the link to add.
+ */
 void Router::addLink(std::shared_ptr<Link> link) {
     links[link->getID()] = link;
 }
 
 // Add a host_id -> (next_link_id, dist, path) tuple indicating which link to route to given a host, along with bellman-ford info
+/**
+ * Adds a link to the router's link vector.
+ *
+ * @param link a pointer to the link to add.
+ */
 void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
     routing_table[host_id] = path;
 }
