@@ -1,3 +1,10 @@
+/**
+ * A generic object representing a data flow.  Contains methods for handling
+ * acks and sending packets that are sufficiently generic to use for both
+ * Tahoe and Vegas.  These algorithms use Go-Back-N style acks.
+ */
+
+
 #ifndef __CS_143_Flow__
 #define __CS_143_Flow__
 #include <string>
@@ -7,84 +14,161 @@
 #include "../EventHandling/Packet.h"
 #include "../Tools/Log.h"
 
-class CongestionAlg;
+// Needed because of circular dependency between Flow and Host.
 class Host;
 
 /**
- * The phase of the flow.
+ * The phase of the data flow.
  */
 enum Phase {SYN, DATA, FIN, DONE};
 
-/**
- * The 
- */
-// data packet size is 1KB
+/** Packet sizes, in bits. */
 static const int DATA_PKT_SIZE = 1024 * 8;
-
-// other packets are 64B
 static const int ACK_SIZE = 64 * 8;
 static const int SYN_SIZE = 1024 * 8;
 static const int FIN_SIZE = 64 * 8;
 
+
 class Flow {
+
 public:
+    // Fields
+    /** The start of the send window. */
     int windowStart;
+
+    /** The end of the send window. */
     int windowEnd;
+
+    /**
+     * A pointer to the host that represents the sending end of the data
+     * transfer.
+     */
     std::shared_ptr<Host> host;
+
+    /** The ID of the flow.  IDs must be globally unique. */
     std::string id;
+
+    /** The source of the flow.  Should be the id of the host. */
     std::string source;
+
+    /** The destination of the flow.  Should be the id of a host. */
     std::string destination;
 
-    // Total number of packets in the flow.
+    /** The total number of data packets in the flow. */
     int numPackets;
 
-    // How long the flow will wait before sending another packet.
+    /** The time a flow waits until a packet has timed out. */
     double waitTime;
 
-    // packet size
+    /** The size of packets in the flow. */
     int packetSize;
 
-    // Time when the flow is generated.
+    /** The time at which the flow begins. */
     double timestamp;
 
-    // The current phase we are in.
+    /**
+     * The current phase of the flow.  The flow begins in the SYN phase, then
+     * moves to the DATA phase (in which data transfer occurs), and closes in
+     * FIN phase.  The flow enters the DONE phase when a FINACK is received.
+     */
     Phase phase;
 
+    /**
+     * A list of packets that the flow hasn't sent yet.  Initially, this will
+     * be the set {0, 1, ..., numPackets - 1}.
+     */
     std::set<int> unSentPackets;
 
+    /** 
+      * The time-averaged RTT.  See page 92 of "Communication Networks: A 
+      * Concise Introduction" for an explanation of how this is updated.
+      */
     double A;
+
+    /** A measure of the variation of A. */
     double D;
+
+    /** A weighting factor used in calculations of A and D.  See page 92 of
+      * "Communication Networks: A Concise Introduction".
+      */
     double b;
 
-    // No constructors.
+    // Constructors
     Flow(std::string idval, std::string dest,
          int data_size, std::shared_ptr<Host> h,
          int winSize, double ts);
 
+    // Methods
+    /**
+     * Called when a packet may have timed out.  Some fields are checked to
+     * determine whether or not the packet has been acked.  An action is taken
+     * based on the result.
+     *
+     * @param unacked the packed that may or may not have been acknowledged.
+     * the packet represents the packet inside of an UnackEvent.
+     * @param time the time at which the UnackEvent is occurring.
+     */
+    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, 
+                                  double time) = 0;
 
-    //
-    // Called when there is a potentially unacknowledged event.
-    // When we send a packet, we add an UnackEvent to the event heap.  Then,
-    // when the event is handled, we check to see if it has been acknowledged.
-    // If so, we have a no-op.  If not, resend.
-    virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, double time) = 0;
-
-    // Called when an ack is received.
+    /**
+     * Called when an ack is received for a data packet that this flow sent out.
+     *
+     * @param pkt the ack received.
+     * @param time the time at which the ack is received.
+     */
     virtual void handleAck(std::shared_ptr<Packet> pkt, double time) = 0;
 
+    /**
+     * A string representing the Flow object.  Used mainly for debugging.
+     */
     virtual std::string toString() = 0;
 
-    void initialize(double time);
-
+    /**
+     * Log the RTT for a received packet.
+     *
+     * @param time the time at which the packet is received.
+     * @param RTT the round trip time to be logged.
+     */
     virtual void logFlowRTT(double time, double RTT) = 0;
+
+    /**
+     * Log the window size of the flow.
+     *
+     * @param time the time at which the packet is received.
+     * @param windowSize the window size to be logged.
+     */
     virtual void logFlowWindowSize(double time, int windowSize) = 0;
 
+    /**
+     * Begins the data transfer for the flow by sending a SYN.
+     *
+     * @param time the time at which the data transfer begins.
+     */
     virtual void openConnection(double time) = 0;
+
+    /**
+     * Ends the data transfer for the flow by sending a FIN.
+     *
+     * @param time the time at which the data transfer ends.
+     */
     virtual void closeConnection(double time) = 0;
-    void sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay);
+
+    /**
+     * TODO no longer virtual.
+     */
     virtual void respondToSynUnackEvent(double time) = 0;
+
+    /**
+     * TODO no longer virtual.
+     */
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) = 0;
+   
+    void initialize(double time);
+    void sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay);
     void send(std::shared_ptr<Packet> pkt, double time);
     void sendManyPackets(double time);
 };
+
+
 #endif
