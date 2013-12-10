@@ -51,8 +51,6 @@ public:
     void respondToFinUnackEvent(UnackEvent unack_event);
     void respondToSynPacketEvent(PacketEvent new_event);
     void respondToFinPacketEvent(PacketEvent new_event);
-    
-    std::string toString();
 };
 
 #endif /* defined(__CS_143__Host__) */

@@ -1,10 +1,11 @@
 #include "Host.h"
 #include "Flow.h"
-#include <math.h> // ceil
+#include <math.h>
 #include <string>
 #include <cassert>
 #include "../Tools/Log.h"
-  
+
+
 /**
  * Constructor.
  * 
@@ -13,24 +14,22 @@
  */
 Host::Host(std::shared_ptr<Link> host_link, std::string host_id) : 
     my_link(host_link) {
-
     my_link = host_link;
     uuid = host_id;
-    // TODO this change may have made a huge difference.
     std::unordered_map<std::string, std::shared_ptr<Flow> > flows;
     std::unordered_map<std::string, std::pair<std::set<int>, Phase>> recvd;
 }
 
 
 /**
- * Receives an event.  Determines its type, and passes to a helper function.
+ * Give an event to the Host.  This method determines the type of the event,
+ * then hands it to the appropriate helper function.
  *
  * @param e the event to be processed
  */
 void Host::giveEvent(std::shared_ptr<Event> e) {
     std::string type = e->getType();
     if (type == "PACKET_EVENT") {
-        FILE_LOG(logDEBUG) << "Got a packet event.";
         respondTo(*(std::static_pointer_cast<PacketEvent>(e)));
     }
     else if (type == "FLOW_EVENT") {
@@ -39,20 +38,10 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
     else if (type == "UNACK_EVENT") {
         respondTo(*(std::static_pointer_cast<UnackEvent>(e)));
     }
-    else if (type == "TCP_RENO_UPDATE_EVENT") {
-        assert(false);
-        //TCPRenoUpdateEvent t = *(std::static_pointer_cast<TCPRenoUpdateEvent>(e));
-        //flows[t.flowID]->handleRenoUpdate(t.congAvCount, t.eventTime());
-    }
     else if (type == "TCP_VEGAS_UPDATE_EVENT") {
         TCPVegasUpdateEvent t = *(std::static_pointer_cast<TCPVegasUpdateEvent>(e));
         auto v = std::static_pointer_cast<VegasFlow>(flows[t.flowID]);
         v->handleVegasUpdate(t.eventTime());
-    }
-    else if (type == "TIMEOUT_EVENT") {
-        assert(false);
-        //TimeoutEvent t = *(std::static_pointer_cast<TimeoutEvent>(e));
-        //flows[t.flowID]->handleTimeout(t.fastRecoveryCount, t.eventTime());
     }
     else {
         assert (false);
@@ -61,20 +50,24 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
 
 
 /**
- * Called when a flow_event is received.
+ * Called when a FlowEvent is received.
  *
- * @param flow_event the flow event received
+ * @param flow_event the FlowEvent received.
  */
 void Host::respondTo(FlowEvent flow_event) {
-    FILE_LOG(logDEBUG1) << "Host with id=" << uuid << " received a FlowEvent.";
-    // Get a flow object, and add it to the map of flows.
+    // Get the flow object, and add it to the map of flows.
     flows[flow_event.floww->id] = flow_event.floww;
 
-    // Here, we want to start the SYN handshake.
+    // Start the SYN handshake.
     flows[flow_event.floww->id]->openConnection(flow_event.eventTime());
 }
 
 
+/**
+ * Helper function called when an UnackEvent for a SYN is received.
+ *
+ * @param unack_event the UnackEvent.
+ */
 void Host::respondToSynUnackEvent(UnackEvent unack_event) {
     std::string flowString = unack_event.packet->flowID;
     assert(flows.count(flowString) > 0);
@@ -82,6 +75,11 @@ void Host::respondToSynUnackEvent(UnackEvent unack_event) {
 }
 
 
+/**
+ * Helper function called when an UnackEvent for a FIN is received.
+ *
+ * @param unack_event the UnackEvent.
+ */
 void Host::respondToFinUnackEvent(UnackEvent unack_event) {
     auto p = unack_event.packet;
     double time = unack_event.eventTime();
@@ -96,15 +94,17 @@ void Host::respondToFinUnackEvent(UnackEvent unack_event) {
         sendAndQueueResend(p, time, flows[p->flowID]->waitTime);
     }
     else if (recvd.count(p->flowID) && recvd[p->flowID].second != DONE) {
-        sendAndQueueResend(p, time, 2); // TODO there are no wait times
-                                        // associated with the receiving end.
-                                        // so I picked a number.
+        // There are no wait times associated with the receiving end of a flow.
+        // It isn't really worth storing any, since timeouts for a flow are
+        // only used when a FIN is sent.  So, we will just pick a reasonable 
+        // value.
+        sendAndQueueResend(p, time, .5);
     }
 }
 
 
 /**
- * Called when there is a potentially unacknowledged packet.
+ * Called when the host receives an UnackEvent.
  * 
  * @param unack_event the PacketEvent for the packet that might not have been
  * acknowledged
@@ -127,20 +127,28 @@ void Host::respondTo(UnackEvent unack_event) {
 }
 
 
+/**
+ * Helper function called when the host receives a PacketEvent corresponding to
+ * a SYN.
+ *
+ * @param new_event the PacketEvent.
+ */
 void Host::respondToSynPacketEvent(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
     double time = new_event.eventTime();
-    
-    // make sure this is where the packet should have ended up
+
+    // Make sure this is where the packet should have ended up.
     assert(pkt->final_dest == uuid);
     assert(pkt->syn); 
 
     if (pkt->ack) {
+        // This host is the sending end of the flow, and it received a SYNACK.
         flows[pkt->flowID]->respondToSynPacketEvent(pkt, time);
     }
 
     if (!pkt->ack && recvd.count(pkt->flowID) == 0) {
-        // received a syn, non-ack.
+        // This host is the sending end of the flow.
+
         // Send a syn.ack.  Then, create an entry in recvd.  Do these things
         // only if we don't already have an entry in recvd (i.e. only if we
         // have never gotten a non-ack syn before.
@@ -162,22 +170,28 @@ void Host::respondToSynPacketEvent(PacketEvent new_event) {
 }
 
 
+/**
+ * Helper function called when the host receives a PacketEvent corresponding to
+ * a FIN.
+ *
+ * @param new_event the PacketEvent.
+ */
 void Host::respondToFinPacketEvent(PacketEvent new_event) {
     std::shared_ptr<Packet> pkt = new_event.packet;
+    double time = new_event.eventTime();
     
-    // make sure this is where the packet should have ended up
+    // Make sure this is where the packet should have ended up.
     assert(pkt->final_dest == uuid);
     assert(pkt->fin);
 
-    double time = new_event.eventTime();
-
     if (pkt->ack) {
-        // Received a FIN.ACK.  Set the connection to DONE.
+        // Received a FINACK.  Set the connection to DONE.
         if (flows.count(pkt->flowID)) {
             // This host is the sending end of the flow.
             flows[pkt->flowID]->phase = DONE;
         }
         else {
+            // This host is the receiving end of the flow.
             assert(recvd.count(pkt->flowID));
             recvd[pkt->flowID].second = DONE;
         }
@@ -203,11 +217,13 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
                                                  true, // fin packet?
                                                  time);
                 
-            // TODO we need to store wait times for each recvd object
-            // in addition to the other stuff we already have.
-            // or we can just do this lolz
-            //LOG_FILE(logDEBUG) << "Called from r2fin, waitTime=" << waitTime;
-            sendAndQueueResend(fin, time, 2);
+            // There are no wait times associated with the receiving end of a 
+            // flow.
+
+            // It isn't really worth storing any, since timeouts for a flow are
+            // only used when a FIN is sent.  So, we will just pick a reasonable 
+            // value.
+            sendAndQueueResend(fin, time, .5);
         }
 
     }
@@ -234,7 +250,6 @@ void Host::respondToFinPacketEvent(PacketEvent new_event) {
  * @param new_event the packet event received.
  */
 void Host::respondTo(PacketEvent new_event) {
-    FILE_LOG(logDEBUG) << "Packet event received on host=" << uuid;
     std::shared_ptr<Packet> pkt = new_event.packet;
     double time = new_event.eventTime();
     
@@ -243,40 +258,38 @@ void Host::respondTo(PacketEvent new_event) {
 
     if (pkt->bf_tbl_bit) {
         // Do nothing
-        FILE_LOG(logDEBUG) << "It was a BF packet, doing nothing.";
+        return;
     }
     
     else if (pkt->syn) {
-        FILE_LOG(logDEBUG) << "It was a syn";
         respondToSynPacketEvent(new_event);
     }
 
     else if (pkt->fin) {
         respondToFinPacketEvent(new_event);
-        FILE_LOG(logDEBUG) << "It was a fin";
     }
 
     else {
-        FILE_LOG(logDEBUG) << "Receiver (host) is handling ack.";
-        FILE_LOG(logDEBUG) << pkt->toString() << ", gotten on host" << uuid;
-        // Not a syn or a fin or a bf packet.  It's an ack packet.
+        // Not a syn or a fin or a bf packet.  It's a data packet, or an ack.
         if (pkt->ack && flows.count(pkt->flowID)) {
-            FILE_LOG(logDEBUG) << "host " << uuid << " has an entry in 'flows' for flow with id=" << pkt->flowID;
-            FILE_LOG(logDEBUG) << "Flow is handling ack.";
-            // The receiver of the ack is the sending end of the flow.
+            // This host is the sending end of the flow.
     	    flows[pkt->flowID]->handleAck(pkt, time);
+
             // Note that if the host is the receiving end, do nothing.
             // This is because when we receive the ACK from the SYNACK,
             // we do nothing.
         }
         if (!pkt->ack) {
-            FILE_LOG(logDEBUG) << "It was a data packet.";
             // We received a packet.  Send an acknowledgment.
             recvd[pkt->flowID].first.insert(pkt->sequence_num);
             
             // Find out what our sequence number should be.
+
+            // It should be the first packet missing from our list of received
+            // packets.
             int ackNum = 0;
-            for (auto it = recvd[pkt->flowID].first.begin(); it != recvd[pkt->flowID].first.end(); it ++) {
+            for (auto it = recvd[pkt->flowID].first.begin(); 
+                 it != recvd[pkt->flowID].first.end(); it ++) {
                 if (*it > ackNum) { break; }
                 ackNum += 1;
             }
@@ -291,13 +304,7 @@ void Host::respondTo(PacketEvent new_event) {
                                                 false, // syn packet?
                                                 false, // fin packet?
                                                 pkt->timestamp);
-            
-            
-//            
-//            std::cout << "Time received" << std::endl;
-//            std::cout << time << std::endl;
-//            std::cout << std::endl;
-            
+
             send(ret, time);
         }
     }
@@ -305,45 +312,34 @@ void Host::respondTo(PacketEvent new_event) {
 
 
 /**
- * Get a string representing the host.
+ * Sends a packet by creating a PacketEvent for the packet and placing the
+ * PacketEvent on the eventHeap.
  *
- * @return the string representing the host
+ * @param pkt the Packet to be sent.
+ * @param time the time at which the Packet should be sent.
  */
-std::string Host::toString() {
-    // ID, all flows, all waiting outgoing messages, etc.
-    // TODO this implementation sucks
-    std::string ret(uuid);
-    // TODO wtf is this nonsense.
-    for (auto& flowStringPair : flows) {
-        ret += flowStringPair.second->toString() + "\n";
-    }
-    return ret;
-}
-
 void Host::send(std::shared_ptr<Packet> pkt, double time) {
     assert(time > 0);
-    FILE_LOG(logDEBUG) << "send from uuid=" << uuid;
     auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
     addEventToLocalQueue(pEV);
 }
 
 
 /**
- * Queues a packetEvent, and an unack event for the packetEvent.
+ * Queues a PacketEvent in the eventHeap, as well as an UnackEvent for the 
+ * PacketEvent.
  *
  * @param pkt the packet for the PacketEvent
  * @param time the time at which event is to be sent.
- * @param delay the packet will be sent at time + delay
+ * @param delay the UnackEvent will trigger at time + delay
  */
-void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay) {
+void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time,
+                              float delay) {
     assert(pkt->timestamp <= time);
     assert(time > 0); 
     assert(delay > 0);
-    FILE_LOG(logDEBUG) << "sendAndQueueResend";
-    //auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
-    //addEventToLocalQueue(pEV);
-    send(pkt, time);
 
+    send(pkt, time);
     auto uEV = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
     addEventToLocalQueue(uEV);
 }

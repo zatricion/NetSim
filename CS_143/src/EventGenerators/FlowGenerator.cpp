@@ -1,5 +1,5 @@
 #include "FlowGenerator.h"
-#include "../EventHandling/FlowEvent.h"
+
 
 /**
  * Creates a FlowGenerator object.  The constructor takes in a list of flows, 
@@ -11,10 +11,6 @@
  */
 FlowGenerator::FlowGenerator(std::vector<std::shared_ptr<Flow> > flows,
                              std::string flow_id) {
-    // Go through flows, create FlowEvents, push onto eventHeap
-    //for (std::vector<std::shared_ptr<Flow> >::iterator it = flows.begin();
-         //it != flows.end();
-         //it++)
     for (auto it : flows) {
         auto flow_event = std::make_shared<FlowEvent>(it, it->destination, 
             it->source, it->timestamp);
@@ -23,3 +19,13 @@ FlowGenerator::FlowGenerator(std::vector<std::shared_ptr<Flow> > flows,
     uuid = flow_id;
 }
 
+
+/**
+ * This method should never be called on the FlowGenerator, since it cannot
+ * receive events.
+ *
+ * @param e the event given to the FlowGenerator.
+ */
+void FlowGenerator::giveEvent(std::shared_ptr<Event> e) {
+    assert(false);
+}

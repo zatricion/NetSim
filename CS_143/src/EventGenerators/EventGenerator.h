@@ -38,8 +38,14 @@ public:
     std::string getID() const;
 
     // Methods:
+    /**
+     * Hands an Event to the EventGenerator for processing.
+     *
+     * @param e the Event to be processed.
+     */
+    virtual void giveEvent(std::shared_ptr<Event> e) = 0;
+
     bool hasEvents();
-    virtual void giveEvent(std::shared_ptr<Event>) = 0;
     std::shared_ptr<Event> getEvent();
     double getNextTime();
     void addEventToLocalQueue(std::shared_ptr<Event> e);
