@@ -32,6 +32,8 @@ static std::vector<std::string> str_list;
 static std::vector<std::string> old_str_list; 
 // handler
 static Handler h;
+// accumulate dem flows
+std::vector<std::shared_ptr<Flow> > flow_list;
 %}
 
 %union {
@@ -53,7 +55,7 @@ static Handler h;
 %%
 
 commands: command | command commands; //| commands command;
-command:  host | router | link | flow;
+command:  host | router | link | vegas_flow | tahoe_flow;
 
 close: RBRACK
 open:  LBRACK {
@@ -139,32 +141,21 @@ link: LINKTOK FLOAT FLOAT FLOAT string string string {
 //      shared_ptr<Host> host, 
 //      int windowSize, 
 //      float timestamp)
-flow: VEGASFLOWTOK string string FLOAT string FLOAT FLOAT {
+vegas_flow: VEGASFLOWTOK string string FLOAT string FLOAT FLOAT {
   // retrieve strings
   std::string s3 = str_list[str_list.size()-1]; // host
   std::string s2 = str_list[str_list.size()-2]; // dest
   std::string s1 = str_list[str_list.size()-3]; // ID
-  //if(debug) std::cout << "FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
+  //if(debug) std::cout << "VEGAS_FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
   std::string ID = s1;
   std::string dest = s2;
-  //std::shared_ptr<CongestionAlg> alg;
-  //std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
-  //if ($4 == "VEGAS") {
-  //  alg = std::make_shared<TCPVegas>();
-  //} else {
-  //  alg = std::make_shared<TCPReno>();
-  //}
   int data_size = (int) $4;
   std::shared_ptr<Host> host = host_map[s3];
   int windowSize = (int) $6;
   float timestamp = $7;
   auto flow = std::make_shared<VegasFlow>(ID, dest, data_size, host, 
-                                     windowSize, timestamp);
-  std::vector<std::shared_ptr<Flow> > flow_list;
+					  windowSize, timestamp);
   flow_list.push_back(flow);  
-  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g"); // TODO magic string
-  // give to handler
-  h.addGenerator(flow_g);
 };
 
 // TahoeFlow(string ID, 
@@ -173,32 +164,21 @@ flow: VEGASFLOWTOK string string FLOAT string FLOAT FLOAT {
 //      shared_ptr<Host> host, 
 //      int windowSize, 
 //      float timestamp)
-flow: TAHOEFLOWTOK string string FLOAT string FLOAT FLOAT {
+tahoe_flow: TAHOEFLOWTOK string string FLOAT string FLOAT FLOAT {
   // retrieve strings
   std::string s3 = str_list[str_list.size()-1]; // host
   std::string s2 = str_list[str_list.size()-2]; // dest
   std::string s1 = str_list[str_list.size()-3]; // ID
-  //if(debug) std::cout << "FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
+  //if(debug) std::cout << "TAHOE_FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
   std::string ID = s1;
   std::string dest = s2;
-  //std::shared_ptr<CongestionAlg> alg;
-  //std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
-  //if ($4 == "VEGAS") {
-  //  alg = std::make_shared<TCPVegas>();
-  //} else {
-  //  alg = std::make_shared<TCPReno>();
-  //}
   int data_size = (int) $4;
   std::shared_ptr<Host> host = host_map[s3];
   int windowSize = (int) $6;
   float timestamp = $7;
   auto flow = std::make_shared<TahoeFlow>(ID, dest, data_size, host, 
                                      windowSize, timestamp);
-  std::vector<std::shared_ptr<Flow> > flow_list;
   flow_list.push_back(flow);  
-  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g"); // TODO magic string
-  // give to handler
-  h.addGenerator(flow_g);
 };
 
 
@@ -226,6 +206,12 @@ Handler& parse(std::istream &datafile) {
        exit(1);
    }
 
+   // add flow generator from flow list
+   auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
+   // give to handler
+   h.addGenerator(flow_g);
+
+   // clean things up and return
    delete lexer;
    return h;
 }
