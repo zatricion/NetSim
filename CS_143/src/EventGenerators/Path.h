@@ -8,18 +8,8 @@
 #include <limits>
 #include <tuple>
 
-/*
-#include <unordered_map>
-#include <algorithm>
-#include "../EventHandling/Packet.h"
-#include "../EventHandling/PacketEvent.h"
-#include "Host.h"
-*/
-
-
 class Path {
 
-    
 public:
     std::vector<std::tuple<std::string, double, double> > link_vec;
     
@@ -28,9 +18,7 @@ public:
     
     // Copy Constructor
     Path(const Path& other);
-    
-    //Path()~
-    
+        
     void addLink(std::string link, double delay, double ts);
     
     double getTotalDelay() const;
@@ -43,7 +31,7 @@ public:
     
     std::string getNextLink() const;
     
-    std::string to_string();
+    std::string toString();
 };
 
 

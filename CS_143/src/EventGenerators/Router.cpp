@@ -96,9 +96,9 @@ void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
  * Returns the proper link to route to given a host
  *
  * @param targ_host the name of the host to which the router is routing packets.
+ * @return the name of the next link in the path.
  */
 std::string Router::getRouting(std::string targ_host) {
-    // should probably do some error checking
     return routing_table[targ_host]->getNextLink();
 }
 
@@ -216,7 +216,7 @@ std::string Router::toString() {
         Path other_path = *it.second;
         double curr_delay = other_path.getTotalDelay();
         std::string link_id = other_path.getNextLink();
-        std::string path_str = other_path.to_string();
+        std::string path_str = other_path.toString();
         
         std::string host_row_str =
             "Host: " + host_id + "\nLink_ID: " + link_id + "\nLink_delay: " + std::to_string(curr_delay) + "\nOther Path: " + path_str + "\n";
