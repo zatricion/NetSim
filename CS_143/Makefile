@@ -7,8 +7,7 @@ SOURCE = src/IO/Test.cpp
 
 all: simulator 
 
-simulator: runtest # TODO this will compile and create the actual program.
-                   # For now, we will just generate the test file.
+simulator: runtest
 
 # Individual Object dependencies
 build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
@@ -107,7 +106,7 @@ src/IO/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o src/IO/NetInput.o
 
 # An executable, prepared to test the objects.
-runtest: $(OBJECTS)
+simulator: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Tests the objects by running the runtest executable.

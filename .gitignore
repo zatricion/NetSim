@@ -1,7 +1,7 @@
 # OS-Generated files #
 ######################
 .DS_Store
-runtest
+simulator
 test.log
 routing_table_test.txt
 NetSim.xcodeproj/*
