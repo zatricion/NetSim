@@ -1,11 +1,16 @@
 #include "Router.h"
 #include <fstream>
 
-// Constructor
-Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id, std::vector<std::shared_ptr<Link> > d_links) {
+/**
+ * Constructor for instance of a Router.
+ *
+ * @param host_list a list of hosts the router connects to.
+ * @param neighboring_links a list of pointers to connected links.
+ * @param router_id the router name.
+ */
+Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id) {
     // set id
     uuid = router_id;
-    debug_links = d_links;
     
     // initialize table
     for (const auto& it : host_list) {
@@ -24,13 +29,14 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
         }
         addLink(it);
     }
-    // add bf packetEvents to eventHeap
+    
+    // broadcast the routing table to all neighboring devices
     broadcastTable(0.0);
 
     wait_time = 0.0;
     FILE_LOG(logDEBUG) << "waitTime=" << wait_time;
     auto b = std::make_shared<BFResendEvent>(uuid, uuid, wait_time);
-    wait_time = std::min(5.0, wait_time + 0.1); // TODO 5.0 magic #
+    wait_time = std::min(BF_WAIT, wait_time + 0.1);
     addEventToLocalQueue(b);
 }
 
@@ -81,7 +87,6 @@ std::string Router::getRouting(std::string targ_host) {
 
 void Router::updateRouting(Packet::bf_type bf_table,
                            std::string link_id,
-                           std::string router, // router is for debugging
                            double now) {
     // update the delays of the links in our path before updating paths
     updateTableWeights(bf_table);
@@ -93,10 +98,6 @@ void Router::updateRouting(Packet::bf_type bf_table,
             bf.second->updateLinkWeight(li.first, delay, now);
         }
     }
-    
-//    if (this->getID() == "router1") {
-//        printRouting(routing_table, this->getID() + "_before");
-//    }
     
     // Delay of link to other router
     double link_delay = links[link_id]->getTotalDelay(this->getID());
@@ -123,12 +124,6 @@ void Router::updateRouting(Packet::bf_type bf_table,
             }
         }
     }
-    
-    printRouting(routing_table, this->getID() + "_after");
-//    if (this->getID() == "router1") {
-//        printRouting(bf_table, router);
-//        printRouting(routing_table, this->getID() + "_after");
-//    }
 }
 
 // Deal with PacketEvents
@@ -152,7 +147,7 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     
     if (pkt->bf_tbl_bit) {
         // Need to update routing.
-        updateRouting(pkt->bf_table, packet_event.source, pkt->source, packet_event.eventTime());
+        updateRouting(pkt->bf_table, packet_event.source, packet_event.eventTime());
     }
     else {
         // Routing actual data
@@ -175,38 +170,10 @@ void Router::updateTableWeights(Packet::bf_type other_table) {
     }
 }
 
-void Router::printRouting(Packet::bf_type r_table, std::string router) {
-    std::ofstream myFile;
-    myFile.open("routing_table_test.txt", std::ios::out | std::ios::app);
-    std::string r_str = "\nRouter: " + router + "\n";
-    myFile << r_str;
-    myFile << "Size of table: " + std::to_string(r_table.size()) + "\n";
-    for (const auto& q : debug_links) {
-        myFile << q->getID().c_str() << " delay: " << std::to_string(q->getTotalDelay(uuid)) + "\n";
-    }
-    for (const auto& it : r_table) {
-        std::string host_id = it.first;
-        Path other_path = *it.second;
-        double curr_delay = other_path.getTotalDelay();
-        std::string link_id = other_path.getNextLink();
-        std::string path_str = other_path.to_string();
-        
-        std::string host_row_str =
-            "Host: " + host_id + "\nLink_ID: " + link_id + "\nLink_delay: " + std::to_string(curr_delay) + "\nOther Path: " + path_str + "\n";
-        
-        myFile << host_row_str + "\n";
-    }
-    myFile << "===============\n";
-    myFile.close();
-}
-
 std::string Router::toString() {
     std::stringstream str;
     str << "Router: " + this->getID() + "\n";
     str << "Size of table: " << std::to_string(routing_table.size()) + "\n";
-    for (const auto& q : debug_links) {
-        str << q->getID().c_str() << " delay: " << std::to_string(q->getTotalDelay(uuid)) + "\n";
-    }
     
     for (const auto& it : routing_table) {
         std::string host_id = it.first;

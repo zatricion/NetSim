@@ -96,21 +96,19 @@ host: HOSTTOK string string {
 // Router(vector<string> host_list, 
 //        vector<shared_ptr<Link> > neighboring_links, 
 //        string router_id)
-//        ALSO REMEMBER d_links
 router: ROUTERTOK list list STR {
   if(debug) std::cout << "ROUTER: " << $4 << std::endl;
   // construct string vector from host_list
   std::vector<std::string> host_list = old_str_list; // copied???
   // construct shared_ptr<Link> vector from neighboring_links
   std::vector<std::shared_ptr<Link> > neighboring_links;
-  std::vector<std::shared_ptr<Link> > d_links;
   for (auto &it : str_list) {
     neighboring_links.push_back(link_map[it]);
   }
 
   // make router
-  auto router = std::make_shared<Router>(host_list, neighboring_links, 
-                                         $4, d_links);
+  auto router = std::make_shared<Router>(host_list, neighboring_links, $4);
+  
   // give to handler
   h.addGenerator(router);
 };
