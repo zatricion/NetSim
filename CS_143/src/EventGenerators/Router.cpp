@@ -1,5 +1,6 @@
 #include "Router.h"
 
+
 /**
  * Constructor for instance of a Router.
  *
@@ -39,6 +40,7 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
     addEventToLocalQueue(b);
 }
 
+
 /**
  * Broadcasts the routing table to all connected routers.
  *
@@ -72,6 +74,7 @@ void Router::broadcastTable(double timestamp) {
     }
 }
 
+
 /**
  * Adds a link to the router's link vector.
  *
@@ -80,6 +83,7 @@ void Router::broadcastTable(double timestamp) {
 void Router::addLink(std::shared_ptr<Link> link) {
     links[link->getID()] = link;
 }
+
 
 /**
  * Adds a host_id -> (next_link_id, dist, path) tuple indicating which link to route to 
@@ -92,6 +96,7 @@ void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
     routing_table[host_id] = path;
 }
 
+
 /**
  * Returns the proper link to route to given a host
  *
@@ -101,6 +106,7 @@ void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
 std::string Router::getRouting(std::string targ_host) {
     return routing_table[targ_host]->getNextLink();
 }
+
 
 /**
  * Updates the routing table of a router when it receives a bf_packet.
@@ -150,6 +156,7 @@ void Router::updateRouting(Packet::bf_type bf_table,
     }
 }
 
+
 /**
  * Give an event to the router.  This method assumes it to be a packet event.
  *
@@ -175,7 +182,8 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     
     if (pkt->bf_tbl_bit) {
         // Need to update routing.
-        updateRouting(pkt->bf_table, packet_event.source, packet_event.eventTime());
+        updateRouting(pkt->bf_table, packet_event.source,
+                      packet_event.eventTime());
     }
     else {
         // Routing actual data
@@ -183,7 +191,8 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
         
         if (dest != "NONE") {
             // make new event
-            auto new_event = std::make_shared<PacketEvent>(dest, this->getID(), packet_event.eventTime(), pkt);
+            auto new_event = std::make_shared<PacketEvent>(dest, this->getID(),
+                packet_event.eventTime(), pkt);
             // put on event heap
             eventHeap.push(new_event);
         }
@@ -192,7 +201,7 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
 
 /**
  * Updates the link delays in a routing table given a new table.
- * The link delays only change if they see a more current delay in the new table.
+ * The link delays only change if they see a more current delay in the new table
  *
  * @param other_table the table with new information about link delays
  */
@@ -219,10 +228,10 @@ std::string Router::toString() {
         std::string path_str = other_path.toString();
         
         std::string host_row_str =
-            "Host: " + host_id + "\nLink_ID: " + link_id + "\nLink_delay: " + std::to_string(curr_delay) + "\nOther Path: " + path_str + "\n";
+            "Host: " + host_id + "\nLink_ID: " + link_id + "\nLink_delay: " + 
+            std::to_string(curr_delay) + "\nOther Path: " + path_str + "\n";
         
         str << host_row_str + "\n";
     }
     return str.str();
 }
- 
