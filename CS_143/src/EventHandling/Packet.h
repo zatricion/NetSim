@@ -1,5 +1,14 @@
+/**
+ * A class to represent Packets in the network.  Only one Packet type is
+ * present, but the Packet contains flags to identify whether it is a SYN,
+ * FIN, ACK, or Bellman-Ford packet.  These flags are used instead of different
+ * types.
+ */
+
+
 #ifndef __CS_143__Packet__
 #define __CS_143__Packet__
+
 
 #include <string>
 #include <map>
@@ -9,31 +18,58 @@
 #include <unordered_map>
 #include "../EventGenerators/Path.h"
 
-class Packet
-{
+
+class Packet {
+
 public:
+    // Used for Bellman-Ford packets.
     typedef std::unordered_map<std::string, std::shared_ptr<Path> >  bf_type;
     
+    // Fields
+    /** An id for the packet.  Not necessarily globally unique. */
     std::string uuid;
+
+    /** The destination. */
     std::string final_dest;
+
+    /** The source. */
     std::string source;
-    
+
+    /** Size of packet. */
     int size;
+
+    /** True if Packet is an ack. */
     bool ack;
+
+    /** True if Packet is a SYN. */
     bool syn;
+
+    /** True if Packet is a FIN. */
     bool fin;
-    
+
+    /** True if Packet is a Bellman-Ford Packet. */
     bool bf_tbl_bit;
-    
-    // this is a mapping from host_id to path to that host 
-    // (which is vector of node ids)
+
+    /** 
+     * A mapping from host_id to path to that host, which is vector of node
+     * ids. 
+     */
     bf_type bf_table;
     
+    /** Sequence number of the Packet.  Used for data packets. */
     int sequence_num;
-    // If the packet was generated from a Flow in a host, this is the ID of
-    // that flow.
+
+    /** 
+     * If the packet was generated from a Flow in a host, this is the ID of
+     * that flow.
+     */
     std::string flowID;
-    std::set<int> ackSet;
+
+    /**
+     * The timestamp of the Packet.  If this is a data Packet, it's the time
+     * at which the Packet was sent.  If it's an ack, it's the timestamp of the
+     * Packet that the ack is acking.
+     */
     double timestamp;
 
     // Constructor.
@@ -52,7 +88,10 @@ public:
     
     // Copy Constructor
     Packet(const Packet& other);
+
+    // Accessor
     std::string toString();
 };
+
 
 #endif /* defined(__CS_143__Packet__) */

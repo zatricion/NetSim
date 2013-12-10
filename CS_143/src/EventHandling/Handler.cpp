@@ -4,22 +4,26 @@
 #include <cassert>
 
 
-// Take ref to an instantiated network object to be added to the simulation
-// Handles getting that object's data
+/**
+ * Constructor for the event Handler.
+ *
+ * @param gen a map of all EventGenerators, with keys as strings
+ */
 void Handler::addGenerator(std::shared_ptr<EventGenerator> gen) {
     genMap[gen->getID()] = std::move(gen);
 }
 
 
+/**
+ * Get the lowest time from the distributed eventHeap.
+ *
+ * @return the minimum time.
+ */
 double Handler::getMinTime() {
     assert(genMap.size() > 0);
 
-
     double minTime = -1.0;
-    // iterate over EventGenerators
-    //for (auto it = genMap.begin(); it != genMap.end(); it++) {
     for (auto& it : genMap) {
-
         // Make sure it has events.  Otherwise move on.
         if (!it.second->hasEvents()) { continue; }
         // update min if smaller
@@ -32,9 +36,15 @@ double Handler::getMinTime() {
 }
 
 
-// iterate over generators, populate currEvents with imm. events
+/**
+ * Get a list of all events that should happen next.  This list will often
+ * contain only 1 event, since it is unlikely that multiple Events will have
+ * the exact same timestamp.
+ *
+ * @param minTime the minimum Event time out of all Events in all the
+ * EventGenerator eventHeaps
+ */
 void Handler::populateCurrentEvents(double minTime) {
-    // WARNING: will clear out currEvents...is that desired behavior?
     currEvents.clear();
     for (const auto& it : genMap) {
         // check to see if current EG has event at desired time, add if so
@@ -44,7 +54,10 @@ void Handler::populateCurrentEvents(double minTime) {
     }
 }
 
-// handle all events in current events queue
+
+/**
+ * Handle all events in currEvents.
+ */
 void Handler::processCurrentEvents() {
     not_done = false;
     for (auto& it : currEvents) {
@@ -53,18 +66,30 @@ void Handler::processCurrentEvents() {
     }
 }
 
-// handle passed event by sending to its destination
+
+/**
+ * Handle a single Event by passing it to its destination, and allowing the 
+ * destination object to do the rest of the work.
+ */
 void Handler::handleEvent(std::shared_ptr<Event> e) {
     genMap[e->destination]->giveEvent(e);
 }
 
+
+/**
+ * Go through a single step of the simulation.
+ */
 void Handler::step() {
     populateCurrentEvents(getMinTime());
     processCurrentEvents();
 }
 
 
-bool Handler::running()
-{
+/**
+ * Tells if the Handler is still running.
+ *
+ * @return true if it is still running
+ */
+bool Handler::running() {
     return not_done;
 }
