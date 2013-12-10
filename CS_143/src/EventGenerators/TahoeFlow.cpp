@@ -12,7 +12,7 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest,
            int data_size, 
            std::shared_ptr<Host> h, int winSize, double ts) : Flow(idval, dest, data_size, h, winSize, ts) {
     tahoePhase = SLOWSTART;
-    ssthresh = 999999;
+    ssthresh = 999999; // TODO make this max_int.
     multiplicity = 0;
     winOverFlow = 0.0;
     validUnackTime = 0.0;
@@ -226,7 +226,7 @@ std::string TahoeFlow::toString() {
         if (*it % 20 == 0) { setString << "\n"; }
     }
     setString << "}";
-    std::string setElems = "";// setString.str();
+    std::string setElems = setString.str();// setString.str();
 
     fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << 
         destination << ", numPackets=" << numPackets << ", waitTime=" << 
