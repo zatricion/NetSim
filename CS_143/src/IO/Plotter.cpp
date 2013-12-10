@@ -36,6 +36,16 @@ void Plotter::logPacketLoss(std::string name,
     packetLoss[name].push_back(rate_data);
 }
 
+void Plotter::logPacketDelay(std::string name,
+                            std::tuple<float, float> rate_data) {
+    packetDelay[name].push_back(rate_data);
+}
+
+void Plotter::logFlowRate(std::string name,
+                            std::tuple<float, float> rate_data) {
+    flowRate[name].push_back(rate_data);
+}
+
 void Plotter::plot(plot_data data,
                    float runtime,
                    std::string title,
@@ -59,7 +69,7 @@ void Plotter::plot(plot_data data,
     std::string cmd = "plot ";
 
     for (auto& it : data) {
-        cmd +=  "'-' with " + type + " title '" + it.first + "', ";
+        cmd +=  "'-' smooth bezier with " + type + " title '" + it.first + "', ";
     }
     
     // pop off last two character (i.e. ', ') or doesn't seem to work
@@ -68,9 +78,6 @@ void Plotter::plot(plot_data data,
     gp << cmd;
 
     for (auto& it : data) {
-        
-        //std::cout << std::get<0>(it.second.front()) << " " << std::get<1>(it.second.front()) << std::endl;
-       
         gp.send1d(it.second);
     }
 }
@@ -78,7 +85,7 @@ void Plotter::plot(plot_data data,
 void Plotter::plotLinkRate(float runtime) {
     Plotter::plot(linkRate,
                   runtime,
-                  "Link Rate", "Time (s)", "Link Rate (bps)");
+                  "Link Rate", "Time (s)", "Link Rate (bps)", "lines");
 }
 
 void Plotter::plotBufferOccupancy(float runtime) {
@@ -90,17 +97,28 @@ void Plotter::plotBufferOccupancy(float runtime) {
 void Plotter::plotFlowRTT(float runtime) {
     Plotter::plot(flowRTT,
                   runtime,
-                  "Flow RTT", "Time (s)", "RTT (s)");
+                  "Flow RTT", "Time (s)", "RTT (s)", "lines");
 }
 
 void Plotter::plotFlowWindowSize(float runtime) {
     Plotter::plot(flowWindowSize,
                   runtime,
-                  "Window Size", "Time (s)", "Window Size (pkts)");
+                  "Window Size", "Time (s)", "Window Size (pkts)", "lines");
 }
 
 void Plotter::plotPacketLoss(float runtime) {
     Plotter::plot(packetLoss,
                   runtime,
                   "Packet Loss", "Time (s)", "Number of Packets", "lines");
+}
+
+void Plotter::plotPacketDelay(float runtime) {
+    Plotter::plot(packetDelay,
+                  runtime,
+                  "Packet Delay", "Time (s)", "Packet Delay (s)", "lines");
+}
+void Plotter::plotFlowRate(float runtime) {
+    Plotter::plot(flowRate,
+                  runtime,
+                  "Flow Rate", "Time (s)", "Flow Rate (bps)", "lines");
 }
