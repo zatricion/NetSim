@@ -8,11 +8,4 @@
 
 bool operator>(const std::shared_ptr<Event> a, const std::shared_ptr<Event> b);
 
-//class DerefCompareEvent
-//{
-//public:
-//    bool operator() (const std::shared_ptr<Event> x, const std::shared_ptr<Event> y);
-//};
-
-
 #endif

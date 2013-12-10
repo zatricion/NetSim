@@ -1,9 +1,15 @@
 #include "Link.h"
 
-
-// Link Methods
-
-// Constructor
+/**
+ * Constructor for Link.
+ *
+ * @param buf_size the size of the link buffers.
+ * @param p_delay the propagation delay of the link.
+ * @param cap the link capacity.
+ * @param n1 a device connected to the link.
+ * @param n2 a device connected to the link.
+ * @param link_id the name of the link.
+ */
 Link::Link(double buf_size, float p_delay, float cap, std::string n1, std::string n2, std::string link_id)
 {
     prop_delay = p_delay;
@@ -16,16 +22,32 @@ Link::Link(double buf_size, float p_delay, float cap, std::string n1, std::strin
     FILE_LOG(logDEBUG) << "made, node1=" << node1 << ", node2=" << node2;
 }
 
-
+/**
+ * Gets the total delay of the link seen by a given sending node.
+ *
+ * @param node the node seeing the delay.
+ * @return total delay
+ */
 double Link::getTotalDelay(std::string node) {
     return prop_delay + queue_delay[node];
 }
 
+/**
+ * Gets the other node connected to a link.
+ *
+ * @param node the node we know about.
+ * @return the node on the opposite end.
+ */
 std::string Link::getOtherNode(std::string my_node) {
     assert((my_node == node1) || (my_node == node2));
     return (my_node == node1) ? node2 : node1;
 }
 
+/**
+ * Logs the link rate at a given time for a given sending node.
+ *
+ * @param node the node sending packets down the link.
+ */
 void Link::logLinkRate(double time, std::string node) {
     double total_bits = 0.0;
     double prev_time = link_rate_time[node];
@@ -63,15 +85,25 @@ void Link::logLinkRate(double time, std::string node) {
     // add the link rate to the plotter
     sim_plotter.logLinkRate(this->getID(),
                             std::make_tuple(time, link_rate));
-    return;
 }
 
-// Log queue size
+/**
+ * Logs the buffer occupancy at a given time for a given sending node.
+ *
+ * @param node the node sending packets down the link.
+ */
 void Link::logBufferOccupancy(double time, std::string node) {
     sim_plotter.logBufferOccupancy(this->getID(),
                             std::make_tuple(time, queue_size[node]));
 }
 
+/**
+ * Give the link an event. This method assumes that it is a packet event.
+ * The link responds by determining whether the packet is dropped or not.
+ * If the packet is not dropped, it is placed onto the queue for transmission.
+ *
+ * @param e the packet event given to the link.
+ */
 void Link::giveEvent(std::shared_ptr<Event> e)
 {
     FILE_LOG(logDEBUG) << "Link got a packet event.";
@@ -153,13 +185,22 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     link_time[source] = now;
 }
 
+/**
+ * Gets the propagation delay of a link.
+ *
+ * @return the propagation delay of the link.
+ */
 double Link::getPropDelay() {
     return prop_delay;
 }
 
+/**
+ * Represents the link as a string.
+ *
+ * @return the string representing the link.
+ */
 std::string Link::toString() {
-    //std::stringstream fmt;
-    //fmt << "{LINK: uuid=" << uuid << ", prop_delay=" << prop_delay << ", capacity=" << capacity << ", node1=" << node1 << ", node2=" << ", buffer_size=" << buffer_size << "}";
-    //return fmt.str();
-    return uuid;
+    std::stringstream fmt;
+    fmt << "{LINK: uuid=" << uuid << ", prop_delay=" << prop_delay << ", capacity=" << capacity << ", node1=" << node1 << ", node2=" << ", buffer_size=" << buffer_size << "}";
+    return fmt.str();
 }
