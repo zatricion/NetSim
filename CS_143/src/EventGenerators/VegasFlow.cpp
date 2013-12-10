@@ -5,29 +5,31 @@
 #include <math.h>
 #include "../Tools/Log.h"
 
-/**
- * Constructor
- */
-VegasFlow::VegasFlow(std::string idval, std::string dest, 
-           int data_size, 
-           std::shared_ptr<Host> h, int winSize, double ts) : Flow(idval, dest, data_size, h, winSize, ts) {
 
+/**
+ * Constructor for instance of Vegas algorithm.
+ *
+ * @param idval the unique id of the flow.
+ * @param dest the destination of the flow.
+ * @param data_size the size of the data transfer.
+ * @param h the host on which the flow is generated.
+ * @param winSize the initial window size (usually 1).
+ * @param ts the timestamp at which the flow is generated.
+ */
+VegasFlow::VegasFlow(std::string idval, std::string dest, int data_size,
+                     std::shared_ptr<Host> h, int winSize, double ts) :
+                     Flow(idval, dest, data_size, h, winSize, ts) {
 }
 
 
 /**
- * When a packet has not been acknowledged after waitTime, this method is
- * called, to determine what to do.  Another copy of the packet will be sent,
- * then the CongestionAlgorithm will update the fields.
+ * Handles on UnackEvent for this flow.
  * 
  * @param unacked the unacknowledged packet
  * @param time the time at which the event is thrown.  This should be roughly
  * waitTime after the initial packet was sent.
  */
 void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
-    int WS = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "BEFORE handleUnackEvent: time=" << time << ", WS=" << WS;
-    assert(time > 0);
     int seqNum = unacked->sequence_num;
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
@@ -36,36 +38,23 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     if (seqNum >= windowStart && seqNum <= windowEnd) {
         // For go back N, just retransmit, as long as the packet is within
         // the window.
-        FILE_LOG(logDEBUG1) << "Packet unacknowledged.  Better resend.";
-        FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
-            ", time=" << time;
-
         auto resend = std::make_shared<Packet>(*unacked);
         resend->timestamp = time;
-        FILE_LOG(logDEBUG) << "Called from handleUnackEvent; waitTime=" << waitTime;
         sendAndQueueResend(resend, time, waitTime);
-
     }
-    else {
-        FILE_LOG(logDEBUG1) << "No action on UnackEvent.";
-    }
-
-    WS = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "AFTER handleUnackEvent: WS=" << WS;
 }
 
 
 /**
  * When an ack is received from the flow's destination, this method is called,
- * to determine what to do.  The CongestionAlgorithm decides.
+ * to determine what to do.  Note that this algorithm doesn't update the window
+ * size.  Instead, our window size is updated by a recurring event called a
+ * VegasUpdateEvent.
  *
  * @param p the ack packet
  * @param time the time at which the ack is received
  */
 void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
-    int WS = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "BEFORE handleAck: WS=" << WS;
-    FILE_LOG(logDEBUG) << "Flow is handleAck";
     assert(pkt->ack);
     if (phase == DATA) {
         // Update the A, D, waitTime;
@@ -73,65 +62,46 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
         waitTime = A + 4 * D + 0.01;
-        FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
-        //std::cout << "now: " << time << " pkt_time: " << pkt->timestamp << " RTT: " << RTT << std::endl;
         minRTT = std::min(minRTT, RTT);
-        
 
         int seqNum = pkt->sequence_num;
 
         if (seqNum == numPackets) {
-            // We received an ack that requests a nonexistent packet.  I.e. we sent
-            // the 100th packet (with seqNum 99), and this ack says "100", but there
-            // is no 100th packet to send.  So we're done.
+            // We received an ack for a nonexistent packet.  I.e. we sent
+            // the 100th packet (with seqNum 99), and this ack says "100", but
+            // there is no 100th packet to send.  So we're done.
 
             // We're done sending packets.  Move the window outside of the bounds
             // of the packets.
             windowStart = seqNum;
             windowEnd = seqNum;
 
-            FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
-
             phase = FIN;
             // We need to send a FIN to the other host.
             auto fin = std::make_shared<Packet>("FIN", destination,
                 source, FIN_SIZE, false, -1, id, false, true, time);
 
-            host->send(fin, time);
+            send(fin, time);
             return;
         }
 
-        // Send packets.
+        // If we're not done, update window and send packets.
         int windowSize = windowEnd - windowStart + 1;
-        
-        FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
         
         // Set windowStart to the current packet's sequence number
         windowStart = seqNum;
-       
-        FILE_LOG(logDEBUG) << "START=" << windowStart << ", windowSize=" << windowSize << ", numPackets=" << numPackets << ".";
-        
         windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
-        
         sendManyPackets(time);
-
-        FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
-        FILE_LOG(logDEBUG) << "SIZE=" << windowSize << ", start=" << windowStart << ", end=" << windowEnd << ".";
-
-    }
-    // Otherwise, do nothing.
-
+    } // Otherwise, do nothing.
     logFlowWindowSize(time, windowEnd - windowStart + 1);
-    WS = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "AFTER handleAck: WS=" << WS;
 }
 
 
 /**
- * Represent the packet as a string.
+ * Represent the Flow as a string.
  *
- * @return a string representing the packet
+ * @return a string representing the Flow.
  */
 std::string VegasFlow::toString() {
 
@@ -151,42 +121,30 @@ std::string VegasFlow::toString() {
 }
 
 
+/**
+ * Updates the window size for the VegasFlow.  This is called in response to
+ * a VegasUpdateEvent being received by the Flow's Host.
+ *
+ * @param time the time at which the update happens.
+ */
 void VegasFlow::handleVegasUpdate(double time) {
-    FILE_LOG(logDEBUG) << "VEGAS UPDATE EVENT alpha=" << vegasConstAlpha << ", beta=" << vegasConstBeta;
     if (phase == DONE || phase == FIN) {
         return;
     }
 
     int windowSize = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "BEFORE: windowSize=" << windowSize;
 
     double testValue = (windowSize / minRTT) - (windowSize / RTT);
-    //logFlowRTT(time, testValue);
-//    std::cout << (vegasConstAlpha / minRTT) << std::endl;
-//    std::cout << (vegasConstBeta/ minRTT) << std::endl;
-//    std::cout << "testValue " << (testValue) << std::endl;
-//    std::cout << (minRTT) << std::endl;
-//    std::cout << (RTT) << std::endl;
-//    std::cout << std::endl;
 
-    FILE_LOG(logDEBUG) << "1:START=" << windowStart << ", END=" << windowEnd;
-    // apply Vegas update
     if (testValue < (vegasConstAlpha / minRTT)) {
-        FILE_LOG(logDEBUG) << "INC";
         windowSize++;
     }
     else if (testValue > (vegasConstBeta / minRTT)) {
-        FILE_LOG(logDEBUG) << "DEC";
         windowSize--;
     }
-    FILE_LOG(logDEBUG) << "2:START=" << windowStart << ", END=" << windowEnd;
-    // Otherwise leave window size alone
-    // Set the cap:
 
     windowEnd = windowSize + windowStart - 1;
-//    assert(windowEnd <= numPackets - 1); // Make sure it's before the end.
     assert(windowEnd >= windowStart); // Make sure it's after or at windowStart
-    FILE_LOG(logDEBUG) << "3:START=" << windowStart << ", END=" << windowEnd;
 
     sendManyPackets(time);
 
@@ -198,20 +156,17 @@ void VegasFlow::handleVegasUpdate(double time) {
     host->addEventToLocalQueue(update);
 
     windowSize = windowEnd - windowStart + 1;
-    FILE_LOG(logDEBUG) << "AFTER: windowSize=" << windowSize;
     logFlowWindowSize(time, windowSize);
 }
 
-//void Flow::handleTimeout(int frCount, double time) {
-    //(std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
-//}
 
-void VegasFlow::closeConnection(double time) {
-    return;
-}
-
+/**
+ * Called in response to a PacketEvent that is a SYN.  Starts data transfer.
+ *
+ * @param pkt the SYN packet.
+ * @param time the time at which data transfer begins.
+ */
 void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) {
-    // If we receive a SYN, it better be a SYNACK.  TODO rename to SynAckPacketEvent
     assert(pkt->ack && pkt->syn);
 
     if (phase == SYN) {

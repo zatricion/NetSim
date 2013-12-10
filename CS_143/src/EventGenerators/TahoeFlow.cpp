@@ -4,16 +4,24 @@
 #include <cassert>
 #include <math.h>
 #include "../Tools/Log.h"
+#include <climits>
 
 
 /**
- * Constructor
+ * Constructor for a TahoeFlow object.
+ *
+ * @param idval the id of the flow.  IDs must be globally unique.
+ * @param dest the destination of the flow.
+ * @param data_size the data size of the flow
+ * @param h a pointer to the sending end of the flow
+ * @param winSize the initial window size of the flow (usually 1)
+ * @param ts the time at which the flow begins
  */
-TahoeFlow::TahoeFlow(std::string idval, std::string dest, 
-           int data_size, 
-           std::shared_ptr<Host> h, int winSize, double ts) : Flow(idval, dest, data_size, h, winSize, ts) {
+TahoeFlow::TahoeFlow(std::string idval, std::string dest, int data_size,
+                     std::shared_ptr<Host> h, int winSize, double ts) :
+                     Flow(idval, dest, data_size, h, winSize, ts) {
     tahoePhase = SLOWSTART;
-    ssthresh = 999999; // TODO make this max_int.
+    ssthresh = INT_MAX;
     multiplicity = 0;
     winOverFlow = 0.0;
     validUnackTime = 0.0;
@@ -21,65 +29,58 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest,
 
 
 /**
- * When a packet has not been acknowledged after waitTime, this method is
- * called, to determine what to do.  Another copy of the packet will be sent,
- * then the CongestionAlgorithm will update the fields.
+ * This method is called when the TahoeFlow receives an UnackEvent.  First, the
+ * TahoeFlow determines if the Packet has been acknowledged or not.  Then,
+ * it times out if the Packet has not been acknowledged.
  * 
- * @param unacked the unacknowledged packet
+ * @param unacked the potentially unacknowledged packet
  * @param time the time at which the event is thrown.  This should be roughly
  * waitTime after the initial packet was sent.
  */
 void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
-    // TODO logFlowWindowSize
     
-    FILE_LOG(logDEBUG) << "Handling UnackEvent.  seqNum = " << seqNum << ", Flow " << toString();
+    // If we have a timeout, we want to effectively clear the Host's eventHeap
+    // of all UnackEvents for this Flow, because we don't want to repeat the
+    // timeout.  As a proxy for dequeueing these events, we keep a variable
+    // called validUnackTime.  The variable remembers when the last timeout
+    // occurred.  If the next UnackEvent was generated before validUnackTime,
+    // we ignore the next UnackEvent.
+    //
+    // We know that the timestamp of the Packet in the UnackEvent is the time
+    // at which the UnackEvent is created.  So this 'if' statement tests whether
+    // the UnackEvent was generated before the most recent timeout.
+    if (unacked->timestamp < validUnackTime) {
+        return;
+    }
 
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
     // the seqNum is > the windowEnd, if we shrink the window size.  So, we must
     // check the upper bound and lower bound.
-    if (unacked->timestamp < validUnackTime) {
-        // His time stamp is too low.  The unackEvent was generated before the
-        // most recent timeout.
-        FILE_LOG(logDEBUG) << "UNFAIR UNACK with seqNum=" << seqNum << ", unacked->timestamp=" << unacked->timestamp << ", validUnackTime=" << validUnackTime;
-        return;
-    }
     if (seqNum >= windowStart && seqNum <= windowEnd) {
+        // Update validUnackTime.
         validUnackTime = time;
-        // For go back N, just retransmit, as long as the packet is within
-        // the window.
+
+        // Since we are ignoring UnackEvents for Packets, we need to add those
+        // Packets to unSentPackets, so that they are later recent.  Otherwise,
+        // we may never actually send them again.
         for (int i = windowStart + 1; i <= windowEnd; i++) {
             unSentPackets.insert(i);
         }
 
-        //TODO isn't this kind of dangerous?
-        //unacked->timestamp = time;
+        // Create a new packet to send.  It is almost identical to unacked.
+        auto sendMe = std::make_shared<Packet>(*unacked);
+        sendMe->timestamp = time;
+        sendMe->sequence_num = windowStart;
 
-        // New way:
-        auto unAcked2 = std::make_shared<Packet>(*unacked);
-        unAcked2->timestamp = time;
-        unAcked2->sequence_num = windowStart;
-
-
-
-        // If in slowstart or cong av, go to slow start windowsize->1
-        // change ssthresh to half previous win size.
-        // 
-        FILE_LOG(logDEBUG) << "TIMEOUT at " << time;
         tahoePhase = SLOWSTART;
         ssthresh = (windowEnd - windowStart + 1) / 2;
 
         // Set the window size to 1.
         windowEnd = windowStart;
 
-        sendAndQueueResend(unAcked2, time, waitTime);
-        FILE_LOG(logDEBUG) << "RESEND OF " << unAcked2->sequence_num << "should occur attime + waitTime=" << time + waitTime;
-        //FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << toString();
-
-    }
-    else {
-        FILE_LOG(logDEBUG1) << "No action on UnackEvent.";
+        sendAndQueueResend(sendMe, time, waitTime);
     }
 }
 
@@ -92,39 +93,34 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
  * @param time the time at which the ack is received
  */
 void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
-    FILE_LOG(logDEBUG) << "Flow is handleAck";
     assert(pkt->ack);
+
+    // Only take an action is phase == DATA.  Otherwise, there's no point, since
+    // data flow is over.
     if (phase == DATA) {
         int seqNum = pkt->sequence_num;
 
+        // If the Packet's sequence number is below the windowStart, we don't
+        // need to do anything.
         if (seqNum < windowStart) {
-            // We need to make sure the ack number is in the acceptable range.  Or at least above 0.  But do we need to? // TODO
-            // This ack should probably just be ignored.
-            FILE_LOG(logDEBUG) << "I DONT BELONG HERE.";
-            //return;
             return;
         }
 
-        // For now, let's just ignore all acks that we receive that were made before the last timeout.
-        // eventually, we should consider them, but only change multiplicity if they came after the timeout.
-        // TODO
+        // We want to ignore acks that come before the validUnackTime.
+        // This is because they can affect the multiplicity unfairly and cause
+        // the flow to timeout unnecessarily.
         if (pkt->timestamp < validUnackTime) {
-            FILE_LOG(logDEBUG) << "IM AN UNFAIR mult changer, potentially.";
             return;
         }
 
-        // Update the A, D, waitTime;
+        // Update the A, D, waitTime, according to algorithm explained in Flow.
         double RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
-        waitTime = 1.5 * A + 4 * D + .01; // If you just use A, there are some packets that BARELY don't make it.
-        // Seems wrong to use just A.  //TODO better comments.
+        updateWaitTime();
 
-        FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
-
        
-        FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
         if (seqNum < windowStart) { return; }
 
         if (seqNum == numPackets) {
@@ -137,7 +133,6 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             windowStart = seqNum;
             windowEnd = seqNum;
 
-            FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
             phase = FIN;
             // We need to send a FIN to the other host.
             auto fin = std::make_shared<Packet>("FIN", destination,
@@ -147,8 +142,6 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             host->addEventToLocalQueue(finEvent);
             
         }
-
-    // Handle each case separately, depending on which phase of Reno we're in.
 
         if (tahoePhase == SLOWSTART) {
             FILE_LOG(logDEBUG) << "In SLOWSTART";
@@ -174,10 +167,9 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             }
 
             if (multiplicity > 3) {
-                // We have received triple acks.  Do a fast resend, then timeout.
+                // We have received triple duplicate acks.
                 multiplicity = 0;
 
-                FILE_LOG(logDEBUG) << "TRIPLICATE ACKS FOR " << pkt->toString();
                 auto retrans = std::make_shared<Packet>(
                     std::to_string(pkt->sequence_num),
                     pkt->source,
@@ -187,6 +179,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
                     pkt->sequence_num,
                     pkt->flowID,
                     false, false, time);
+                // To timeout, just call handleUnackEvent!
                 handleUnackEvent(retrans, time);
             }
 
@@ -195,32 +188,25 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
                 // after adjusting the window bounds.
                 int windowSize = windowEnd - windowStart + 1;
 
-                double wOverFlow = winOverFlow;
-
                 assert(tahoePhase == CONGESTIONAVOIDANCE);
-                FILE_LOG(logDEBUG) << "windowSize=" << windowSize;
-                wOverFlow += 1.0 / (windowSize);
-                windowSize += (int) wOverFlow;
-                wOverFlow -= (int) wOverFlow;
-                FILE_LOG(logDEBUG) << "windowSize=" << windowSize << ", winOverFlow=" << wOverFlow;
+                winOverFlow += 1.0 / (windowSize);
+                windowSize += (int) winOverFlow;
+                winOverFlow -= (int) winOverFlow;
 
-                winOverFlow = wOverFlow;
                 windowStart = seqNum;
                 windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
                 sendManyPackets(time);
             }
         } // end CONGESTIONAVOIDANCE block;
-
         logFlowWindowSize(time, windowEnd - windowStart + 1);
-    }
-    // Otherwise (if phase is not data), do nothing.
+    } // end phase == DATA block. If phase is not data, do nothing.
 }
 
 
 /**
- * Represent the packet as a string.
+ * Represent the Flow as a string.
  *
- * @return a string representing the packet
+ * @return a string representing the Flow.
  */
 std::string TahoeFlow::toString() {
     std::stringstream fmt;
@@ -241,11 +227,13 @@ std::string TahoeFlow::toString() {
 }
 
 
-void TahoeFlow::closeConnection(double time) {
-    return;
-}
-
-
+/**
+ * Called when a SYN PacketEvent for this flow reaches the host that the flow
+ * lives on.  It ends the SYN handshake and starts the data flow.
+ *
+ * @param pkt the Packet from the PacketEvent.
+ * @param time the time at which the PacketEvent arrives.
+ */
 void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) {
     // If we receive a SYN, it better be a SYNACK.
     assert(pkt->ack && pkt->syn);
@@ -273,7 +261,20 @@ void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         double RTT = time - pkt->timestamp;
         A = RTT;
         D = RTT;
-        waitTime = 4 * RTT + RTT;
+        updateWaitTime();
     }
     // If we're not in the SYN phase, do nothing.
+}
+
+
+/**
+ * Updates the wait time using a simple formula.
+ * Uses a slightly modified version of the formula A + 4 * D.
+ * Using A + 4 * D produces much more packet loss, because D becomes
+ * small very quickly in the simulation, making the waitTime variable
+ * very unforgiving.
+ */
+void TahoeFlow::updateWaitTime() {
+
+    waitTime = 1.5 * A + 4 * D + .01;
 }

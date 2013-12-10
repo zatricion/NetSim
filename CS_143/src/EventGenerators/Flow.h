@@ -124,14 +124,6 @@ public:
      */
     virtual std::string toString() = 0;
 
-
-    /**
-     * Ends the data transfer for the flow by sending a FIN.
-     *
-     * @param time the time at which the data transfer ends.
-     */
-    virtual void closeConnection(double time) = 0;
-
     /**
      * TODO no longer virtual.
      */

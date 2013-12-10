@@ -55,7 +55,6 @@ public:
 
     virtual std::string toString() override;
 
-    virtual void closeConnection(double time) override;
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) override;
 
 
