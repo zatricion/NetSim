@@ -1,19 +1,19 @@
-//
-//  CS 143
-//
-//  Event Generator
-//  * Link
-//  * Device
-//   - Host
-//   - Router
+/**
+ * Superclass for Links, Hosts, and Routers.  EventGenerators each have their
+ * own eventHeaps, which are ordered lists of events.  The EventHandler will
+ * determine the Event in the eventHeaps of the set of EventGenerators with
+ * the minimum time, and handle the Event.
+ */
+
 
 #include "EventGenerator.h"
 #include "../Tools/Log.h"
 #include <cassert>
 #include <iostream>
 
+
 /**
- * Get the ID of the Event Generator.
+ * Get the ID of the EventGenerator.
  *
  * @return the ID as a string
  */
@@ -21,8 +21,9 @@ std::string EventGenerator::getID() const {
     return uuid;
 }
 
+
 /**
- * Get the lowest time in the Event Generator's priority queue.
+ * Get the lowest time in the EventGenerator's priority queue.
  *
  * @return the min time as a double
  */
@@ -31,11 +32,12 @@ double EventGenerator::getNextTime() {
     return eventHeap.top()->eventTime();
 }
 
+
 /**
- * Remove and return the lowest time event from the Event Generator's priority
+ * Remove and return the lowest time event from the EventGenerator's priority
  * queue.
  *
- * @return a pointer to the Event.
+ * @return a pointer to the removed Event.
  */
 std::shared_ptr<Event> EventGenerator::getEvent() {
     std::shared_ptr<Event> nextEvent = std::move(eventHeap.top());
@@ -43,41 +45,22 @@ std::shared_ptr<Event> EventGenerator::getEvent() {
     return nextEvent;
 }
 
+
 /**
- * Tells whether the Event Generator's priority queue has any events.
+ * Tells whether the EventGenerator's priority queue has any events.
  *
  * @return bool is true if there are events
  */
 bool EventGenerator::hasEvents() {
-    return eventHeap.size() != 0;
+    return !eventHeap.empty();
 }
 
 
 /**
- * Add Event to local priority queue.
+ * Add Event to local eventHeap.
  *
- * @param E the Event to add.
+ * @param E the Event to add
  */
 void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e) {
     eventHeap.push(e);
-}
-
-
-/**
- * Get the size of the Event Generator's priority queue.
- *
- * @return a long representing the size
- */
-long EventGenerator::heapSize() {
-    return eventHeap.size();
-}
-
-
-/**
- * Returns a string representing the Event Generator.
- *
- * @return the string representing the Event Generator
- */
-std::string EventGenerator::toString() {
-    return "TODO";
 }

@@ -1,15 +1,24 @@
 CC=g++
+
+# Code requires C++11.
 CFLAGS=-std=c++0x -g -Wall
+
+# Boost library is used.
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o #build/parser.tab.o build/lexer.yy.o build/NetInput.o
+# List of objects to be built; stored in build/ directory.
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o
+
+# Source file
 SOURCE = src/IO/Test.cpp
 
 all: simulator 
 
-simulator: runtest
+# To build the simulator, build and link all objects.
+simulator: $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
-# Individual Object dependencies
+# Individual object dependencies
 build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Test.o 
 
@@ -105,9 +114,6 @@ build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 src/IO/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o src/IO/NetInput.o
 
-# An executable, prepared to test the objects.
-simulator: $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Tests the objects by running the runtest executable.
 test: clean runtest

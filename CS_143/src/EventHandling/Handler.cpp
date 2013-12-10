@@ -55,14 +55,6 @@ void Handler::processCurrentEvents() {
 
 // handle passed event by sending to its destination
 void Handler::handleEvent(std::shared_ptr<Event> e) {
-    // TODO remove
-    // verbosely print the routing tables.
-    for (const auto& it : genMap) {
-        if (it.second->getID() == "RTABLES") {
-            FILE_LOG(logDEBUG) << it.second->toString();
-        }
-    }
-    FILE_LOG(logDEBUG) << e->toString();
     genMap[e->destination]->giveEvent(e);
 }
 
