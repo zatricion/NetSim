@@ -92,7 +92,7 @@ void io() {
     handler = read_input();
  
     FILE_LOG(logDEBUG) << "Running simulation.";
-    double runtime = 10.0;
+    double runtime = 70.0;
     double currTime = handler.getMinTime();
     // set precision so won't flail around too much
     std::cout.precision(3);
@@ -254,11 +254,11 @@ void simTest2()
     
     // add flow
     auto flow1 = std::make_shared<VegasFlow>("flow1", "destination1",
-                                        (35 * 8 * pow(10, 6)), source1, 1, 0.5);
+                                        (35 * 8 * pow(10, 6)), source1, 1, 10.5);
     auto flow2 = std::make_shared<VegasFlow>("flow2", "destination2",
-                                        (15 * 8 * pow(10, 6)), source2, 1, 10.0);
+                                        (15 * 8 * pow(10, 6)), source2, 1, 20.0);
     auto flow3 = std::make_shared<VegasFlow>("flow3", "destination3",
-                                        (30 * 8 * pow(10, 6)), source3, 1, 20.0);
+                                        (30 * 8 * pow(10, 6)), source3, 1, 30.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);

@@ -78,7 +78,7 @@ void Plotter::plot(plot_data data,
 void Plotter::plotLinkRate(double runtime) {
     Plotter::plot(linkRate,
                   runtime,
-                  "Link Rate", "Time (s)", "Link Rate (bps)");
+                  "Link Rate", "Time (s)", "Link Rate (bps)", "lines");
 }
 
 void Plotter::plotBufferOccupancy(double runtime) {
@@ -90,13 +90,13 @@ void Plotter::plotBufferOccupancy(double runtime) {
 void Plotter::plotFlowRTT(double runtime) {
     Plotter::plot(flowRTT,
                   runtime,
-                  "Flow RTT", "Time (s)", "RTT (s)");
+                  "Flow RTT", "Time (s)", "RTT (s)", "lines");
 }
 
 void Plotter::plotFlowWindowSize(double runtime) {
     Plotter::plot(flowWindowSize,
                   runtime,
-                  "Window Size", "Time (s)", "Window Size (pkts)");
+                  "Window Size", "Time (s)", "Window Size (pkts)", "lines");
 }
 
 void Plotter::plotPacketLoss(double runtime) {

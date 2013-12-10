@@ -261,6 +261,7 @@ void Host::respondTo(PacketEvent new_event) {
         FILE_LOG(logDEBUG) << pkt->toString() << ", gotten on host" << uuid;
         // Not a syn or a fin or a bf packet.  It's an ack packet.
         if (pkt->ack && flows.count(pkt->flowID)) {
+            FILE_LOG(logDEBUG) << "host " << uuid << " has an entry in 'flows' for flow with id=" << pkt->flowID;
             FILE_LOG(logDEBUG) << "Flow is handling ack.";
             // The receiver of the ack is the sending end of the flow.
     	    flows[pkt->flowID]->handleAck(pkt, time);

@@ -31,6 +31,8 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest,
 void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
     // TODO logFlowWindowSize
+    
+    FILE_LOG(logDEBUG) << "Handling UnackEvent.  seqNum = " << seqNum << ", Flow " << toString();
 
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
@@ -39,7 +41,7 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     if (unacked->timestamp < validUnackTime) {
         // His time stamp is too low.  The unackEvent was generated before the
         // most recent timeout.
-        FILE_LOG(logDEBUG) << "UNFAIR UNACK";
+        FILE_LOG(logDEBUG) << "UNFAIR UNACK with seqNum=" << seqNum << ", unacked->timestamp=" << unacked->timestamp << ", validUnackTime=" << validUnackTime;
         return;
     }
     if (seqNum >= windowStart && seqNum <= windowEnd) {
@@ -56,6 +58,7 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
         // New way:
         auto unAcked2 = std::make_shared<Packet>(*unacked);
         unAcked2->timestamp = time;
+        unAcked2->sequence_num = windowStart;
 
 
 
@@ -70,7 +73,8 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
         windowEnd = windowStart;
 
         sendAndQueueResend(unAcked2, time, waitTime);
-        FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << toString();
+        FILE_LOG(logDEBUG) << "RESEND OF " << unAcked2->sequence_num << "should occur attime + waitTime=" << time + waitTime;
+        //FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << toString();
 
     }
     else {

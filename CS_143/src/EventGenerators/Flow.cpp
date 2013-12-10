@@ -73,6 +73,7 @@ void Flow::sendManyPackets(double time) {
         FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
         host->sendAndQueueResend(pkt, time + i / 10000000000.0, waitTime);
         }
+        else { assert(unSentPackets.count(i) == 0); }
     }
     
 }
