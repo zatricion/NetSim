@@ -13,9 +13,13 @@ class VegasFlow : public Flow {
 
 public:
     // Fields
+    /** The lower bound used in Vegas. */
     double vegasConstAlpha;
+    /** The upper bound used in Vegas. */
     double vegasConstBeta;
+    /** The minimumm RTT that has been encountered thus far. */
     double minRTT;
+    /** The most recent RTT. */
     double RTT;
 
     // Constructors

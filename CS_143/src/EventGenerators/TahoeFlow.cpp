@@ -89,7 +89,7 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
  * When an ack is received from the flow's destination, this method is called,
  * to determine what to do.  The CongestionAlgorithm decides.
  *
- * @param p the ack packet
+ * @param pkt the ack packet
  * @param time the time at which the ack is received
  */
 void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {

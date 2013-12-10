@@ -28,7 +28,6 @@ public:
 
     // Accessors
     double getTotalDelay(std::string node);
-    void packetLoss(double);
     double getPropDelay();
     std::string toString();
 

@@ -12,6 +12,9 @@
  * @param src the source of the Packet.
  * @param s the size of the Packet.
  * @param a true if the Packet is an ack.
+ * @param seq the sequence number of the Packet.  In the case of a data Packet,
+ * this will usually (but not always) be an int version of the id of the Packet.
+ * In the case of an ack, this will usually be the next Packet expected.
  * @param flow_id the id of the Flow from which the Packet was sent.
  * @param sync true if the Packet is a SYN
  * @param finish true if the Packet is a FIN
@@ -19,7 +22,7 @@
  * will be the time at which the Packet is sent, but for acks, this will be
  * the time at which the ack's data Packet was sent.
  * @param bf true if the Packet is a bellman ford packet (Router use only).
- * @param bf_type a representation of the routing table, if bf=true.
+ * @param bf_t a representation of the routing table, if bf=true.
  * Empty otherwise.
  */
 Packet::Packet(std::string id,

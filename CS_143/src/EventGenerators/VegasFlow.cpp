@@ -51,7 +51,7 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
  * size.  Instead, our window size is updated by a recurring event called a
  * VegasUpdateEvent.
  *
- * @param p the ack packet
+ * @param pkt the ack packet
  * @param time the time at which the ack is received
  */
 void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {

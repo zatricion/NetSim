@@ -24,8 +24,11 @@ enum Phase {SYN, DATA, FIN, DONE};
 
 /** Packet sizes, in bits. */
 static const int DATA_PKT_SIZE = 1024 * 8;
+/** Packet sizes, in bits. */
 static const int ACK_SIZE = 64 * 8;
+/** Packet sizes, in bits. */
 static const int SYN_SIZE = 1024 * 8;
+/** Packet sizes, in bits. */
 static const int FIN_SIZE = 64 * 8;
 
 

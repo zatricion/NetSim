@@ -36,7 +36,7 @@ double Link::getTotalDelay(std::string node) {
 /**
  * Gets the other node connected to a link.
  *
- * @param node the node we know about.
+ * @param my_node the node we know about.
  * @return the node on the opposite end.
  */
 std::string Link::getOtherNode(std::string my_node) {
@@ -48,6 +48,7 @@ std::string Link::getOtherNode(std::string my_node) {
 /**
  * Logs the link rate at a given time for a given sending node.
  *
+ * @param time the time at which rate is logged.
  * @param node the node sending packets down the link.
  */
 void Link::logLinkRate(double time, std::string node) {
@@ -95,6 +96,7 @@ void Link::logLinkRate(double time, std::string node) {
 /**
  * Logs the buffer occupancy at a given time for a given sending node.
  *
+ * @param time the time at which the buffer occupancy is logged.
  * @param node the node sending packets down the link.
  */
 void Link::logBufferOccupancy(double time, std::string node) {

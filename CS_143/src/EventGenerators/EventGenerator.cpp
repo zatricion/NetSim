@@ -51,7 +51,7 @@ bool EventGenerator::hasEvents() {
 /**
  * Add Event to local eventHeap.
  *
- * @param E the Event to add
+ * @param e the Event to add
  */
 void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e) {
     eventHeap.push(e);

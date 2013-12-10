@@ -29,6 +29,7 @@ public:
     
 protected:
     // Fields
+    /** The time at which the Event occurs. */
     double timestamp;
 };
 

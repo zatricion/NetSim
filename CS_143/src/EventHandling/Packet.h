@@ -22,10 +22,10 @@
 class Packet {
 
 public:
-    // Used for Bellman-Ford packets.
+    // Fields
+    /** Representation of routing table.  Used in Bellman-Ford. */
     typedef std::unordered_map<std::string, std::shared_ptr<Path> >  bf_type;
     
-    // Fields
     /** An id for the packet.  Not necessarily globally unique. */
     std::string uuid;
 
