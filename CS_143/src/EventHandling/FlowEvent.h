@@ -16,7 +16,6 @@ class Host;
 #include <sstream>
 #include "Event.h"
 #include "Packet.h"
-#include "../EventGenerators/EventGenerator.h"
 #include "../EventGenerators/Flow.h"
 
 

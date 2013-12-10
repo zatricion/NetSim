@@ -66,7 +66,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 268 of yacc.c  */
-#line 2 "src/IO/parser.ypp"
+#line 1 "src/IO/parser.ypp"
 
 
 #include <stdint.h>
@@ -100,7 +100,7 @@ static std::vector<std::string> str_list;
 static std::vector<std::string> old_str_list; 
 // handler
 static Handler h;
-// accumulate dem flows
+// accumulate flows
 std::vector<std::shared_ptr<Flow> > flow_list;
 
 
@@ -151,7 +151,7 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 39 "src/IO/parser.ypp"
+#line 38 "src/IO/parser.ypp"
 
     char* strval;
     float fval;
@@ -464,8 +464,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    57,    57,    57,    58,    58,    58,    58,    58,    60,
-      61,    67,    67,    68,    73,    83,    99,   122,   142,   165
+       0,    56,    56,    56,    57,    57,    57,    57,    57,    59,
+      60,    65,    65,    66,    70,    80,    96,   118,   139,   161
 };
 #endif
 
@@ -1414,9 +1414,8 @@ yyreduce:
         case 10:
 
 /* Line 1806 of yacc.c  */
-#line 61 "src/IO/parser.ypp"
+#line 60 "src/IO/parser.ypp"
     {
-  //std::cout << "Opening a list" << std::endl;
   old_str_list = str_list;
   str_list.clear();
 }
@@ -1425,9 +1424,8 @@ yyreduce:
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 68 "src/IO/parser.ypp"
+#line 66 "src/IO/parser.ypp"
     {
-  //std::cout << $1 << std::endl;
   str_list.push_back((yyvsp[(1) - (1)].strval));
 }
     break;
@@ -1435,7 +1433,7 @@ yyreduce:
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 73 "src/IO/parser.ypp"
+#line 70 "src/IO/parser.ypp"
     {
   std::string out = "";
   out += "LIST: ";
@@ -1448,7 +1446,7 @@ yyreduce:
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 83 "src/IO/parser.ypp"
+#line 80 "src/IO/parser.ypp"
     {
   // retrieve strings
   std::string s2 = str_list[str_list.size()-1];
@@ -1466,16 +1464,15 @@ yyreduce:
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 99 "src/IO/parser.ypp"
+#line 96 "src/IO/parser.ypp"
     {
   if(debug) std::cout << "ROUTER: " << (yyvsp[(4) - (4)].strval) << std::endl;
   // construct string vector from host_list
-  std::vector<std::string> host_list = old_str_list; // copied???
+  std::vector<std::string> host_list = old_str_list;
   // construct shared_ptr<Link> vector from neighboring_links
   std::vector<std::shared_ptr<Link> > neighboring_links;
-  for (auto &it : str_list) {
+  for (auto &it : str_list)
     neighboring_links.push_back(link_map[it]);
-  }
 
   // make router
   auto router = std::make_shared<Router>(host_list, neighboring_links, (yyvsp[(4) - (4)].strval));
@@ -1488,13 +1485,14 @@ yyreduce:
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 122 "src/IO/parser.ypp"
+#line 118 "src/IO/parser.ypp"
     { 
   // retrieve strings
   std::string s3 = str_list[str_list.size()-1];
   std::string s2 = str_list[str_list.size()-2];
   std::string s1 = str_list[str_list.size()-3];
-  if(debug) std::cout << "LINK: " << (yyvsp[(2) - (7)].fval) << ' ' << (yyvsp[(3) - (7)].fval) << ' ' << (yyvsp[(4) - (7)].fval) << ' ' << s1 << ' ' << s2 << ' ' << s3 << std::endl;
+  if(debug) std::cout << "LINK: " << (yyvsp[(2) - (7)].fval) << ' ' << (yyvsp[(3) - (7)].fval) << ' ' << (yyvsp[(4) - (7)].fval) << ' ' 
+		      << s1 << ' ' << s2 << ' ' << s3 << std::endl;
   // create link
   auto link = std::make_shared<Link>((yyvsp[(2) - (7)].fval), (yyvsp[(3) - (7)].fval), (yyvsp[(4) - (7)].fval), s1, s2, s3);
   // add link to local map
@@ -1507,13 +1505,12 @@ yyreduce:
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 142 "src/IO/parser.ypp"
+#line 139 "src/IO/parser.ypp"
     {
   // retrieve strings
   std::string s3 = str_list[str_list.size()-1]; // host
   std::string s2 = str_list[str_list.size()-2]; // dest
   std::string s1 = str_list[str_list.size()-3]; // ID
-  //if(debug) std::cout << "VEGAS_FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
   std::string ID = s1;
   std::string dest = s2;
   int data_size = (int) (yyvsp[(4) - (7)].fval);
@@ -1529,13 +1526,12 @@ yyreduce:
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 165 "src/IO/parser.ypp"
+#line 161 "src/IO/parser.ypp"
     {
   // retrieve strings
   std::string s3 = str_list[str_list.size()-1]; // host
   std::string s2 = str_list[str_list.size()-2]; // dest
   std::string s1 = str_list[str_list.size()-3]; // ID
-  //if(debug) std::cout << "TAHOE_FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
   std::string ID = s1;
   std::string dest = s2;
   int data_size = (int) (yyvsp[(4) - (7)].fval);
@@ -1551,7 +1547,7 @@ yyreduce:
 
 
 /* Line 1806 of yacc.c  */
-#line 1555 "parser.tab.cpp"
+#line 1551 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1782,11 +1778,15 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 183 "src/IO/parser.ypp"
+#line 178 "src/IO/parser.ypp"
 
 
 static FlexLexer *lexer;
 
+/**
+ * Handle parsing errors.
+ *
+ */
 int yyerror(const char * s) {
    std::cerr << "Parse error: " << s << std::endl;
    return 0;
@@ -1796,6 +1796,15 @@ int yylex() {
    return lexer->yylex();
 }
 
+
+/**
+ * Run the parser on a network description and return 
+ * a reference to the resulting handler.
+ *
+ * @param datafile a reference to an ifstream to read input from.
+ *
+ * @return reference to a handler containing the necessary network objects.
+ */
 Handler& parse(std::ifstream &datafile) {
    // init handler
    h = Handler();

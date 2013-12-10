@@ -19,16 +19,16 @@ simulator: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Individual object dependencies
-build/Simulator.o: src/IO/Simulator.cpp src/IO/Simulator.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
+build/Simulator.o: src/IO/Simulator.cpp src/IO/Simulator.h src/EventHandling/UnackEvent.h src/EventHandling/FlowEvent.h src/EventHandling/FlowEvent.h src/EventHandling/PacketEvent.h src/EventHandling/Handler.h src/EventGenerators/Flow.h src/EventGenerators/VegasFlow.h src/EventGenerators/TahoeFlow.h src/EventGenerators/EventGenerator.h src/EventGenerators/FlowGenerator.h src/EventGenerators/Router.h src/EventGenerators/Host.h src/EventGenerators/Link.h src/Tools/Log.h src/IO/Plotter.h src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o build/Simulator.o 
 
-build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h  
+build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Path.o 
 
 build/Packet.o: src/EventHandling/Packet.cpp src/EventHandling/Packet.h src/EventGenerators/Path.h
 	$(CC) $(CFLAGS) -c $< -o build/Packet.o
 
-build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/Host.h
+build/Flow.o: src/EventGenerators/Flow.cpp src/EventGenerators/Flow.h src/EventHandling/Packet.h src/EventGenerators/Host.h src/Tools/Log.h
 	$(CC) $(CFLAGS) -c $< -o build/Flow.o
 
 build/Event.o: src/EventHandling/Event.cpp src/EventHandling/Event.h

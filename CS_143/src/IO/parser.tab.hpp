@@ -56,7 +56,7 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 39 "src/IO/parser.ypp"
+#line 38 "src/IO/parser.ypp"
 
     char* strval;
     float fval;
