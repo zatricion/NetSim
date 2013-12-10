@@ -206,42 +206,6 @@ void VegasFlow::handleVegasUpdate(double time) {
     //(std::static_pointer_cast<TCPReno>(a))->handleTimeout(this, frCount, time);
 //}
 
-void VegasFlow::logFlowRTT(double time, double RTT) {
-    FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
-    sim_plotter.logFlowRTT(id,
-        std::make_tuple(time, RTT));
-}
-
-void VegasFlow::logFlowWindowSize(double time, int windowSize) {
-    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (double) windowSize;
-    sim_plotter.logFlowWindowSize(id,
-        std::make_tuple(time, (double) windowSize));
-}
-
-void VegasFlow::openConnection(double time) {
-    auto syn = std::make_shared<Packet>("SYN",
-                                        destination,
-                                        source,
-                                        SYN_SIZE,
-                                        false, // ack packet?
-                                        -1, // sequence number
-                                        id,
-                                        true, // syn packet?
-                                        false, // bf packet?
-                                        time);
-
-        FILE_LOG(logDEBUG) << "Called from openConn; waitTime=" << waitTime;
-    sendAndQueueResend(syn, time, waitTime);
-}
-
-void VegasFlow::respondToSynUnackEvent(double time) {
-    // Check if synack has been received.
-    if (phase == SYN) {
-        FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
-        openConnection(time);
-    }
-}
-
 void VegasFlow::closeConnection(double time) {
     return;
 }
@@ -276,11 +240,11 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;
-        vegasConstAlpha = 1.5;
+        vegasConstAlpha = 1.5; // TODO move these, make respondToSynPacketEvent in Flow.cpp
         vegasConstBeta = 2.5;
         minRTT = RTT;
 
-        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, 
+        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source,  // TODO this isn't used...?
             source, time + waitTime, id);
         host->addEventToLocalQueue(vUpdate);
     }

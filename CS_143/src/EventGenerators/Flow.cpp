@@ -108,3 +108,64 @@ void Flow::send(std::shared_ptr<Packet> pkt, double time) {
 void Flow::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay) {
     host->sendAndQueueResend(pkt, time, delay);
 }
+
+
+/**
+ * Log the RTT for a received packet.
+ *
+ * @param time the time at which the packet is received.
+ * @param RTT the round trip time to be logged.
+ */
+void Flow::logFlowRTT(double time, double RTT) {
+    FILE_LOG(logDEBUG) << "logFlowRTT: " << time << ", " << RTT;
+    sim_plotter.logFlowRTT(id,
+        std::make_tuple(time, RTT));
+}
+
+
+/**
+ * Log the window size of the flow.
+ *
+ * @param time the time at which the window size is logged
+ * @param windowSize the window size
+ */
+void Flow::logFlowWindowSize(double time, int windowSize) {
+    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (double) windowSize;
+    sim_plotter.logFlowWindowSize(id,
+        std::make_tuple(time, (double) windowSize));
+}
+
+
+/**
+ * Begins the data transfer for the flow by sending a SYN.
+ *
+ * @param time the time at which the data transfer begins.
+ */
+void Flow::openConnection(double time) {
+    auto syn = std::make_shared<Packet>("SYN",
+                                        destination,
+                                        source,
+                                        SYN_SIZE,
+                                        false, // ack packet?
+                                        -1, // sequence number
+                                        id,
+                                        true, // syn packet?
+                                        false, // bf packet?
+                                        time);
+
+    sendAndQueueResend(syn, time, waitTime);
+}
+
+
+/**
+ * Respond to an UnackEvent from a SYN packet.
+ *
+ * @param time the time at which the UnackEvent is received.
+ */
+void Flow::respondToSynUnackEvent(double time) {
+    // Check if synack has been received.
+    if (phase == SYN) {
+        FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
+        openConnection(time);
+    }
+}

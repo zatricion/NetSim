@@ -55,12 +55,7 @@ public:
 
     virtual std::string toString() override;
 
-    virtual void logFlowRTT(double time, double RTT) override;
-    virtual void logFlowWindowSize(double time, int windowSize) override;
-
-    virtual void openConnection(double time) override;
     virtual void closeConnection(double time) override;
-    virtual void respondToSynUnackEvent(double time) override;
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) override;
 
 

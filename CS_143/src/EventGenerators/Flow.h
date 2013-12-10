@@ -124,28 +124,6 @@ public:
      */
     virtual std::string toString() = 0;
 
-    /**
-     * Log the RTT for a received packet.
-     *
-     * @param time the time at which the packet is received.
-     * @param RTT the round trip time to be logged.
-     */
-    virtual void logFlowRTT(double time, double RTT) = 0;
-
-    /**
-     * Log the window size of the flow.
-     *
-     * @param time the time at which the packet is received.
-     * @param windowSize the window size to be logged.
-     */
-    virtual void logFlowWindowSize(double time, int windowSize) = 0;
-
-    /**
-     * Begins the data transfer for the flow by sending a SYN.
-     *
-     * @param time the time at which the data transfer begins.
-     */
-    virtual void openConnection(double time) = 0;
 
     /**
      * Ends the data transfer for the flow by sending a FIN.
@@ -157,17 +135,16 @@ public:
     /**
      * TODO no longer virtual.
      */
-    virtual void respondToSynUnackEvent(double time) = 0;
-
-    /**
-     * TODO no longer virtual.
-     */
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) = 0;
    
+    void logFlowWindowSize(double time, int windowSize);
+    void openConnection(double time);
     void initialize(double time);
     void sendAndQueueResend(std::shared_ptr<Packet> pkt, double time, float delay);
     void send(std::shared_ptr<Packet> pkt, double time);
     void sendManyPackets(double time);
+    void logFlowRTT(double time, double RTT);
+    void respondToSynUnackEvent(double time);
 };
 
 

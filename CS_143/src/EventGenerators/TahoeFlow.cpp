@@ -5,6 +5,7 @@
 #include <math.h>
 #include "../Tools/Log.h"
 
+
 /**
  * Constructor
  */
@@ -240,43 +241,6 @@ std::string TahoeFlow::toString() {
 }
 
 
-void TahoeFlow::logFlowRTT(double time, double RTT) {
-    sim_plotter.logFlowRTT(id, std::make_tuple(time, RTT));
-}
-
-
-void TahoeFlow::logFlowWindowSize(double time, int windowSize) {
-    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (double) windowSize;
-    sim_plotter.logFlowWindowSize(id,
-        std::make_tuple(time, (double) windowSize));
-}
-
-
-void TahoeFlow::openConnection(double time) {
-    auto syn = std::make_shared<Packet>("SYN",
-                                        destination,
-                                        source,
-                                        SYN_SIZE,
-                                        false, // ack packet?
-                                        -1, // sequence number
-                                        id,
-                                        true, // syn packet?
-                                        false, // bf packet?
-                                        time);
-
-    sendAndQueueResend(syn, time, waitTime);
-}
-
-
-void TahoeFlow::respondToSynUnackEvent(double time) {
-    // Check if synack has been received.
-    if (phase == SYN) {
-        FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
-        openConnection(time);
-    }
-}
-
-
 void TahoeFlow::closeConnection(double time) {
     return;
 }
@@ -310,7 +274,6 @@ void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         A = RTT;
         D = RTT;
         waitTime = 4 * RTT + RTT;
-
     }
     // If we're not in the SYN phase, do nothing.
 }
