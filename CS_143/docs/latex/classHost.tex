@@ -31,23 +31,22 @@ void \hyperlink{classHost_a9f76466a0f9e8362f70c7990eae22641}{respond\-To\-Fin\-U
 void \hyperlink{classHost_a55abc101a34bd2bc1aff724883a85ecc}{respond\-To\-Syn\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)
 \begin{DoxyCompactList}\small\item\em \-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-S\-Y\-N. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}{respond\-To\-Fin\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)
-\begin{DoxyCompactList}\small\item\em \-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-F\-I\-N. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-F\-I\-N. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_ad35c542cd4f9259b0f5329eb104b5334}{log\-Flow\-Rate} (double time, std\-::string flow\-I\-D)
+\begin{DoxyCompactList}\small\item\em \-Logs the flow rate by looking at the number of bits received for each flow in the time between logs for that flow. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classHost_a6b880d3ae2688e05f0617de4c247b84c}{std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ {\bfseries my\-\_\-link}}\label{classHost_a6b880d3ae2688e05f0617de4c247b84c}
-
-\item 
-\hypertarget{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}{std\-::unordered\-\_\-map\*
+std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ \hyperlink{classHost_a6b880d3ae2688e05f0617de4c247b84c}{my\-\_\-link}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classLink}{\-Link} this host connects to. \end{DoxyCompactList}\item 
+std\-::unordered\-\_\-map\*
 $<$ std\-::string, std\-::shared\-\_\-ptr\*
-$<$ \hyperlink{classFlow}{\-Flow} $>$ $>$ {\bfseries flows}}\label{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}
-
-\item 
-\hypertarget{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}{std\-::unordered\-\_\-map\*
+$<$ \hyperlink{classFlow}{\-Flow} $>$ $>$ \hyperlink{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}{flows}
+\begin{DoxyCompactList}\small\item\em \-Associates flow \-I\-Ds with \hyperlink{classFlow}{\-Flow} objects. \end{DoxyCompactList}\item 
+std\-::unordered\-\_\-map\*
 $<$ std\-::string, std\-::pair\*
-$<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}
-
-\end{DoxyCompactItemize}
+$<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ \hyperlink{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}{recvd}
+\begin{DoxyCompactList}\small\item\em \-Keeps track of what information has been received by which flows. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Constructor \& \-Destructor \-Documentation}
@@ -95,6 +94,25 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 
 \-Implements \hyperlink{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{\-Event\-Generator}.
 
+\hypertarget{classHost_ad35c542cd4f9259b0f5329eb104b5334}{\index{\-Host@{\-Host}!log\-Flow\-Rate@{log\-Flow\-Rate}}
+\index{log\-Flow\-Rate@{log\-Flow\-Rate}!Host@{\-Host}}
+\subsubsection[{log\-Flow\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::log\-Flow\-Rate} (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{std\-::string}]{flow\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{classHost_ad35c542cd4f9259b0f5329eb104b5334}
+
+
+\-Logs the flow rate by looking at the number of bits received for each flow in the time between logs for that flow. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em time} & the time at which the data is logged. \\
+\hline
+{\em flow\-I\-D} & the name of the flow \\
+\hline
+\end{DoxyParams}
 \hypertarget{classHost_a1386df4e48df0cf8e7252c55fa9e0f2b}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
 \index{respond\-To@{respond\-To}!Host@{\-Host}}
 \subsubsection[{respond\-To}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To} (
@@ -248,6 +266,30 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 {\em delay} & the \hyperlink{classUnackEvent}{\-Unack\-Event} will trigger at time + delay \\
 \hline
 \end{DoxyParams}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}{\index{\-Host@{\-Host}!flows@{flows}}
+\index{flows@{flows}!Host@{\-Host}}
+\subsubsection[{flows}]{\setlength{\rightskip}{0pt plus 5cm}std\-::unordered\-\_\-map$<$std\-::string, std\-::shared\-\_\-ptr$<${\bf \-Flow}$>$ $>$ {\bf \-Host\-::flows}}}\label{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}
+
+
+\-Associates flow \-I\-Ds with \hyperlink{classFlow}{\-Flow} objects. 
+
+\hypertarget{classHost_a6b880d3ae2688e05f0617de4c247b84c}{\index{\-Host@{\-Host}!my\-\_\-link@{my\-\_\-link}}
+\index{my\-\_\-link@{my\-\_\-link}!Host@{\-Host}}
+\subsubsection[{my\-\_\-link}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf \-Link}$>$ {\bf \-Host\-::my\-\_\-link}}}\label{classHost_a6b880d3ae2688e05f0617de4c247b84c}
+
+
+\hyperlink{classLink}{\-Link} this host connects to. 
+
+\hypertarget{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}{\index{\-Host@{\-Host}!recvd@{recvd}}
+\index{recvd@{recvd}!Host@{\-Host}}
+\subsubsection[{recvd}]{\setlength{\rightskip}{0pt plus 5cm}std\-::unordered\-\_\-map$<$std\-::string, std\-::pair$<$std\-::set$<$int$>$, \-Phase$>$ $>$ {\bf \-Host\-::recvd}}}\label{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}
+
+
+\-Keeps track of what information has been received by which flows. 
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

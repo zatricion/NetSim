@@ -106,8 +106,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classLink.html" title="Implementation of Network Links.">Link</a>.  <a href="#af0a6ae4d9767bacfb371f52a30441e64"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a19a132f87f8028ccd5af2503084aac64">getTotalDelay</a> (std::string node)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the total delay of the link seen by a given sending node.  <a href="#a19a132f87f8028ccd5af2503084aac64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94f034f0b3ebfbf4c08bcae80a5d9904"></a><!-- doxytag: member="Link::packetLoss" ref="a94f034f0b3ebfbf4c08bcae80a5d9904" args="(double)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (double)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a6349999e40910091ecea77e2a366aa46">getPropDelay</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the propagation delay of a link.  <a href="#a6349999e40910091ecea77e2a366aa46"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a8c768141c7ebf3b852bf978757f903be">toString</a> ()</td></tr>
@@ -208,7 +206,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (doubl
 <p>Gets the other node connected to a link. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">node</td><td>the node we know about. </td></tr>
+    <tr><td class="paramname">my_node</td><td>the node we know about. </td></tr>
   </table>
   </dd>
 </dl>
@@ -317,6 +315,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (doubl
 <p>Logs the buffer occupancy at a given time for a given sending node. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
+    <tr><td class="paramname">time</td><td>the time at which the buffer occupancy is logged. </td></tr>
     <tr><td class="paramname">node</td><td>the node sending packets down the link. </td></tr>
   </table>
   </dd>
@@ -352,6 +351,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (doubl
 <p>Logs the link rate at a given time for a given sending node. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
+    <tr><td class="paramname">time</td><td>the time at which rate is logged. </td></tr>
     <tr><td class="paramname">node</td><td>the node sending packets down the link. </td></tr>
   </table>
   </dd>
@@ -388,7 +388,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (doubl
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -400,7 +400,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (doubl
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 14:00:44 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 15:00:47 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -12,7 +12,7 @@
 \item 
 \hyperlink{classRouter_a161477ea1b51f59bcd03da20b5d25243}{\-Router} (std\-::vector$<$ std\-::string $>$ host\-\_\-list, std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ $>$ neighboring\-\_\-links, std\-::string router\-\_\-id)
 \begin{DoxyCompactList}\small\item\em \-Constructor for instance of a \hyperlink{classRouter}{\-Router}. \end{DoxyCompactList}\item 
-void \hyperlink{classRouter_a9517660547398a913aab151a3f058fbf}{update\-Routing} (\-Packet\-::bf\-\_\-type, std\-::string, double)
+void \hyperlink{classRouter_a9517660547398a913aab151a3f058fbf}{update\-Routing} (\hyperlink{classPacket_a4cae1612a245ea2eadde0066ecc4b990}{\-Packet\-::bf\-\_\-type}, std\-::string, double)
 \begin{DoxyCompactList}\small\item\em \-Updates the routing table of a router when it receives a bf\-\_\-packet. \end{DoxyCompactList}\item 
 void \hyperlink{classRouter_a0b106e96412284611079588b65721aa6}{broadcast\-Table} (double timestamp)
 \begin{DoxyCompactList}\small\item\em \-Broadcasts the routing table to all connected routers. \end{DoxyCompactList}\item 
@@ -22,7 +22,7 @@ void \hyperlink{classRouter_aa28dfae66a6e2587d3c39da83059a866}{add\-Link} (std\-
 \begin{DoxyCompactList}\small\item\em \-Adds a link to the router's link vector. \end{DoxyCompactList}\item 
 void \hyperlink{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)
 \begin{DoxyCompactList}\small\item\em \-Give an event to the router. \end{DoxyCompactList}\item 
-void \hyperlink{classRouter_a323a820ddc17ea36834cf3316510ec5c}{update\-Table\-Weights} (\-Packet\-::bf\-\_\-type)
+void \hyperlink{classRouter_a323a820ddc17ea36834cf3316510ec5c}{update\-Table\-Weights} (\hyperlink{classPacket_a4cae1612a245ea2eadde0066ecc4b990}{\-Packet\-::bf\-\_\-type})
 \begin{DoxyCompactList}\small\item\em \-Updates the link delays in a routing table given a new table. \end{DoxyCompactList}\item 
 std\-::string \hyperlink{classRouter_a2c333b431ae61349b91277cda82a3f5e}{get\-Routing} (std\-::string targ\-\_\-host)
 \begin{DoxyCompactList}\small\item\em \-Returns the proper link to route to given a host. \end{DoxyCompactList}\item 
@@ -153,7 +153,7 @@ the name of the next link in the path.
 \index{update\-Routing@{update\-Routing}!Router@{\-Router}}
 \subsubsection[{update\-Routing}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::update\-Routing} (
 \begin{DoxyParamCaption}
-\item[{\-Packet\-::bf\-\_\-type}]{bf\-\_\-table, }
+\item[{{\bf \-Packet\-::bf\-\_\-type}}]{bf\-\_\-table, }
 \item[{std\-::string}]{link\-\_\-id, }
 \item[{double}]{now}
 \end{DoxyParamCaption}
@@ -175,7 +175,7 @@ the name of the next link in the path.
 \index{update\-Table\-Weights@{update\-Table\-Weights}!Router@{\-Router}}
 \subsubsection[{update\-Table\-Weights}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::update\-Table\-Weights} (
 \begin{DoxyParamCaption}
-\item[{\-Packet\-::bf\-\_\-type}]{other\-\_\-table}
+\item[{{\bf \-Packet\-::bf\-\_\-type}}]{other\-\_\-table}
 \end{DoxyParamCaption}
 )}}\label{classRouter_a323a820ddc17ea36834cf3316510ec5c}
 

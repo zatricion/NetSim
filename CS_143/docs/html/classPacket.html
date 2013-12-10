@@ -95,13 +95,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cae1612a245ea2eadde0066ecc4b990"></a><!-- doxytag: member="Packet::bf_type" ref="a4cae1612a245ea2eadde0066ecc4b990" args="" -->
-typedef std::unordered_map<br class="typebreak"/>
+<tr><td class="memItemLeft" align="right" valign="top">typedef std::unordered_map<br class="typebreak"/>
 &lt; std::string, std::shared_ptr<br class="typebreak"/>
-&lt; <a class="el" href="classPath.html">Path</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bf_type</b></td></tr>
+&lt; <a class="el" href="classPath.html">Path</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">bf_type</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Representation of routing table.  <a href="#a4cae1612a245ea2eadde0066ecc4b990"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#a0467ca3fb88b9a8a6a41182aed61e5b3">Packet</a> (std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id, bool sync, bool finish, double ts=-1.0, bool bf=false, bf_type <a class="el" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e">bf_table</a>=bf_type())</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#a0467ca3fb88b9a8a6a41182aed61e5b3">Packet</a> (std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id, bool sync, bool finish, double ts=-1.0, bool bf=false, <a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">bf_type</a> <a class="el" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e">bf_table</a>=<a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">bf_type</a>())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> object.  <a href="#a0467ca3fb88b9a8a6a41182aed61e5b3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#ae8d5dfea51fa7fe55e4705b176f326ec">Packet</a> (const <a class="el" href="classPacket.html">Packet</a> &amp;other)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#ae8d5dfea51fa7fe55e4705b176f326ec"></a><br/></td></tr>
@@ -126,7 +126,7 @@ Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#ab3bb221061fb274a23f041e4b5e93ce7">bf_tbl_bit</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">True if <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is a Bellman-Ford <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>.  <a href="#ab3bb221061fb274a23f041e4b5e93ce7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad19b836a6a6deab55ec66cb333642a5e"></a><!-- doxytag: member="Packet::bf_table" ref="ad19b836a6a6deab55ec66cb333642a5e" args="" -->
-bf_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e">bf_table</a></td></tr>
+<a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">bf_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e">bf_table</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A mapping from host_id to path to that host, which is vector of node ids. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPacket.html#a1dcc152b6caa339c9d6f86c0fcde1c52">sequence_num</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence number of the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>.  <a href="#a1dcc152b6caa339c9d6f86c0fcde1c52"></a><br/></td></tr>
@@ -139,7 +139,24 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A class to represent Packets in the network. </p>
 <p>Only one <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> type is present, but the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> contains flags to identify whether it is a SYN, FIN, ACK, or Bellman-Ford packet. These flags are used instead of different types. </p>
-</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+</div><hr/><h2>Member Typedef Documentation</h2>
+<a class="anchor" id="a4cae1612a245ea2eadde0066ecc4b990"></a><!-- doxytag: member="Packet::bf_type" ref="a4cae1612a245ea2eadde0066ecc4b990" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::unordered_map&lt;std::string, std::shared_ptr&lt;<a class="el" href="classPath.html">Path</a>&gt; &gt; <a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">Packet::bf_type</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Representation of routing table. </p>
+<p>Used in Bellman-Ford. </p>
+
+</div>
+</div>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a0467ca3fb88b9a8a6a41182aed61e5b3"></a><!-- doxytag: member="Packet::Packet" ref="a0467ca3fb88b9a8a6a41182aed61e5b3" args="(std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id, bool sync, bool finish, double ts=&#45;1.0, bool bf=false, bf_type bf_table=bf_type())" -->
 <div class="memitem">
 <div class="memproto">
@@ -213,8 +230,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bf_type&#160;</td>
-          <td class="paramname"><em>bf_t</em> = <code>bf_type()</code>&#160;</td>
+          <td class="paramtype"><a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">bf_type</a>&#160;</td>
+          <td class="paramname"><em>bf_t</em> = <code><a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">bf_type</a>()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -233,12 +250,13 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
     <tr><td class="paramname">src</td><td>the source of the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. </td></tr>
     <tr><td class="paramname">s</td><td>the size of the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. </td></tr>
     <tr><td class="paramname">a</td><td>true if the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is an ack. </td></tr>
+    <tr><td class="paramname">seq</td><td>the sequence number of the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. In the case of a data <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>, this will usually (but not always) be an int version of the id of the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. In the case of an ack, this will usually be the next <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> expected. </td></tr>
     <tr><td class="paramname">flow_id</td><td>the id of the <a class="el" href="classFlow.html">Flow</a> from which the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> was sent. </td></tr>
     <tr><td class="paramname">sync</td><td>true if the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is a SYN </td></tr>
     <tr><td class="paramname">finish</td><td>true if the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is a FIN </td></tr>
     <tr><td class="paramname">ts</td><td>a timestamp associated with the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. For data packets, this will be the time at which the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is sent, but for acks, this will be the time at which the ack's data <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> was sent. </td></tr>
     <tr><td class="paramname">bf</td><td>true if the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is a bellman ford packet (<a class="el" href="classRouter.html">Router</a> use only). </td></tr>
-    <tr><td class="paramname">bf_type</td><td>a representation of the routing table, if bf=true. Empty otherwise. </td></tr>
+    <tr><td class="paramname">bf_t</td><td>a representation of the routing table, if bf=true. Empty otherwise. </td></tr>
   </table>
   </dd>
 </dl>
@@ -454,7 +472,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -466,7 +484,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 14:00:44 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 15:00:47 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

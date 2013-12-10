@@ -120,18 +120,20 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function called when the host receives a <a class="el" href="classPacketEvent.html" title="A wrapper for the Packet class.">PacketEvent</a> corresponding to a SYN.  <a href="#a55abc101a34bd2bc1aff724883a85ecc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a6f3523a2e00b6aae6f5e9fa14b0f0e0f">respondToFinPacketEvent</a> (<a class="el" href="classPacketEvent.html">PacketEvent</a> new_event)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function called when the host receives a <a class="el" href="classPacketEvent.html" title="A wrapper for the Packet class.">PacketEvent</a> corresponding to a FIN.  <a href="#a6f3523a2e00b6aae6f5e9fa14b0f0e0f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#ad35c542cd4f9259b0f5329eb104b5334">logFlowRate</a> (double time, std::string flowID)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the flow rate by looking at the number of bits received for each flow in the time between logs for that flow.  <a href="#ad35c542cd4f9259b0f5329eb104b5334"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b880d3ae2688e05f0617de4c247b84c"></a><!-- doxytag: member="Host::my_link" ref="a6b880d3ae2688e05f0617de4c247b84c" args="" -->
-std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>my_link</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27e0ce48916f5882e8916f96ec1a6b1f"></a><!-- doxytag: member="Host::flows" ref="a27e0ce48916f5882e8916f96ec1a6b1f" args="" -->
-std::unordered_map<br class="typebreak"/>
+<tr><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a6b880d3ae2688e05f0617de4c247b84c">my_link</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classLink.html" title="Implementation of Network Links.">Link</a> this host connects to.  <a href="#a6b880d3ae2688e05f0617de4c247b84c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::unordered_map<br class="typebreak"/>
 &lt; std::string, std::shared_ptr<br class="typebreak"/>
-&lt; <a class="el" href="classFlow.html">Flow</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>flows</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e5905756bdacfb89df56f6bcb29d7ff"></a><!-- doxytag: member="Host::recvd" ref="a8e5905756bdacfb89df56f6bcb29d7ff" args="" -->
-std::unordered_map<br class="typebreak"/>
+&lt; <a class="el" href="classFlow.html">Flow</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a27e0ce48916f5882e8916f96ec1a6b1f">flows</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates flow IDs with <a class="el" href="classFlow.html">Flow</a> objects.  <a href="#a27e0ce48916f5882e8916f96ec1a6b1f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::unordered_map<br class="typebreak"/>
 &lt; std::string, std::pair<br class="typebreak"/>
-&lt; std::set&lt; int &gt;, Phase &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>recvd</b></td></tr>
+&lt; std::set&lt; int &gt;, Phase &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a8e5905756bdacfb89df56f6bcb29d7ff">recvd</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Keeps track of what information has been received by which flows.  <a href="#a8e5905756bdacfb89df56f6bcb29d7ff"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="afde96dd6239594d91697006a850bea5b"></a><!-- doxytag: member="Host::Host" ref="afde96dd6239594d91697006a850bea5b" args="(std::shared_ptr&lt; Link &gt; host_link, std::string host_id)" -->
@@ -196,6 +198,42 @@ std::unordered_map<br class="typebreak"/>
 </dl>
 
 <p>Implements <a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">EventGenerator</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad35c542cd4f9259b0f5329eb104b5334"></a><!-- doxytag: member="Host::logFlowRate" ref="ad35c542cd4f9259b0f5329eb104b5334" args="(double time, std::string flowID)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHost.html#ad35c542cd4f9259b0f5329eb104b5334">Host::logFlowRate</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>flowID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Logs the flow rate by looking at the number of bits received for each flow in the time between logs for that flow. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>the time at which the data is logged. </td></tr>
+    <tr><td class="paramname">flowID</td><td>the name of the flow </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -453,6 +491,52 @@ std::unordered_map<br class="typebreak"/>
 
 </div>
 </div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a27e0ce48916f5882e8916f96ec1a6b1f"></a><!-- doxytag: member="Host::flows" ref="a27e0ce48916f5882e8916f96ec1a6b1f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, std::shared_ptr&lt;<a class="el" href="classFlow.html">Flow</a>&gt; &gt; <a class="el" href="classHost.html#a27e0ce48916f5882e8916f96ec1a6b1f">Host::flows</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Associates flow IDs with <a class="el" href="classFlow.html">Flow</a> objects. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6b880d3ae2688e05f0617de4c247b84c"></a><!-- doxytag: member="Host::my_link" ref="a6b880d3ae2688e05f0617de4c247b84c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classLink.html">Link</a>&gt; <a class="el" href="classHost.html#a6b880d3ae2688e05f0617de4c247b84c">Host::my_link</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><a class="el" href="classLink.html" title="Implementation of Network Links.">Link</a> this host connects to. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8e5905756bdacfb89df56f6bcb29d7ff"></a><!-- doxytag: member="Host::recvd" ref="a8e5905756bdacfb89df56f6bcb29d7ff" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, std::pair&lt;std::set&lt;int&gt;, Phase&gt; &gt; <a class="el" href="classHost.html#a8e5905756bdacfb89df56f6bcb29d7ff">Host::recvd</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Keeps track of what information has been received by which flows. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Host_8h_source.html">Host.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Host.cpp</li>
@@ -463,7 +547,7 @@ std::unordered_map<br class="typebreak"/>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -475,7 +559,7 @@ std::unordered_map<br class="typebreak"/>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 14:00:44 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 15:00:47 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

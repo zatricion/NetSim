@@ -95,11 +95,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a><a class="code" href="classPacket.html">00022</a> <span class="keyword">class </span><a class="code" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> {
 <a name="l00023"></a>00023 
 <a name="l00024"></a>00024 <span class="keyword">public</span>:
-<a name="l00025"></a>00025     <span class="comment">// Used for Bellman-Ford packets.</span>
-<a name="l00026"></a>00026     <span class="keyword">typedef</span> std::unordered_map&lt;std::string, std::shared_ptr&lt;Path&gt; &gt;  bf_type;
-<a name="l00027"></a>00027     
-<a name="l00028"></a>00028     <span class="comment">// Fields</span>
-<a name="l00030"></a><a class="code" href="classPacket.html#acaefdb9f910265a1ff97b522a780f088">00030</a> <span class="comment"></span>    std::string <a class="code" href="classPacket.html#acaefdb9f910265a1ff97b522a780f088" title="An id for the packet.">uuid</a>;
+<a name="l00025"></a>00025     <span class="comment">// Fields</span>
+<a name="l00027"></a><a class="code" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">00027</a> <span class="comment"></span>    <span class="keyword">typedef</span> std::unordered_map&lt;std::string, std::shared_ptr&lt;Path&gt; &gt;  <a class="code" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990" title="Representation of routing table.">bf_type</a>;
+<a name="l00028"></a>00028     
+<a name="l00030"></a><a class="code" href="classPacket.html#acaefdb9f910265a1ff97b522a780f088">00030</a>     std::string <a class="code" href="classPacket.html#acaefdb9f910265a1ff97b522a780f088" title="An id for the packet.">uuid</a>;
 <a name="l00031"></a>00031 
 <a name="l00033"></a><a class="code" href="classPacket.html#a14d18bd9829ec1951730bc8bbadb570d">00033</a>     std::string <a class="code" href="classPacket.html#a14d18bd9829ec1951730bc8bbadb570d" title="The destination.">final_dest</a>;
 <a name="l00034"></a>00034 
@@ -115,7 +114,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00049"></a>00049 
 <a name="l00051"></a><a class="code" href="classPacket.html#ab3bb221061fb274a23f041e4b5e93ce7">00051</a>     <span class="keywordtype">bool</span> <a class="code" href="classPacket.html#ab3bb221061fb274a23f041e4b5e93ce7" title="True if Packet is a Bellman-Ford Packet.">bf_tbl_bit</a>;
 <a name="l00052"></a>00052 
-<a name="l00057"></a><a class="code" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e">00057</a>     bf_type <a class="code" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e" title="A mapping from host_id to path to that host, which is vector of node ids.">bf_table</a>;
+<a name="l00057"></a><a class="code" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e">00057</a>     <a class="code" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990" title="Representation of routing table.">bf_type</a> <a class="code" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e" title="A mapping from host_id to path to that host, which is vector of node ids.">bf_table</a>;
 <a name="l00058"></a>00058     
 <a name="l00060"></a><a class="code" href="classPacket.html#a1dcc152b6caa339c9d6f86c0fcde1c52">00060</a>     <span class="keywordtype">int</span> <a class="code" href="classPacket.html#a1dcc152b6caa339c9d6f86c0fcde1c52" title="Sequence number of the Packet.">sequence_num</a>;
 <a name="l00061"></a>00061 
@@ -135,7 +134,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00084"></a>00084                    <span class="keywordtype">bool</span> finish,
 <a name="l00085"></a>00085                    <span class="keywordtype">double</span> ts = -1.0,
 <a name="l00086"></a>00086                    <span class="keywordtype">bool</span> bf = <span class="keyword">false</span>,
-<a name="l00087"></a>00087                    bf_type <a class="code" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e" title="A mapping from host_id to path to that host, which is vector of node ids.">bf_table</a> = bf_type());
+<a name="l00087"></a>00087                    <a class="code" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990" title="Representation of routing table.">bf_type</a> <a class="code" href="classPacket.html#ad19b836a6a6deab55ec66cb333642a5e" title="A mapping from host_id to path to that host, which is vector of node ids.">bf_table</a> = <a class="code" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990" title="Representation of routing table.">bf_type</a>());
 <a name="l00088"></a>00088     
 <a name="l00089"></a>00089     <span class="comment">// Copy Constructor</span>
 <a name="l00090"></a>00090     <a class="code" href="classPacket.html#a0467ca3fb88b9a8a6a41182aed61e5b3" title="Create a Packet object.">Packet</a>(<span class="keyword">const</span> <a class="code" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>&amp; other);
@@ -152,7 +151,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -164,7 +163,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 14:00:42 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 15:00:46 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

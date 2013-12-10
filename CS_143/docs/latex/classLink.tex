@@ -23,9 +23,6 @@
 \begin{DoxyCompactList}\small\item\em \-Constructor for \hyperlink{classLink}{\-Link}. \end{DoxyCompactList}\item 
 double \hyperlink{classLink_a19a132f87f8028ccd5af2503084aac64}{get\-Total\-Delay} (std\-::string node)
 \begin{DoxyCompactList}\small\item\em \-Gets the total delay of the link seen by a given sending node. \end{DoxyCompactList}\item 
-\hypertarget{classLink_a94f034f0b3ebfbf4c08bcae80a5d9904}{void {\bfseries packet\-Loss} (double)}\label{classLink_a94f034f0b3ebfbf4c08bcae80a5d9904}
-
-\item 
 double \hyperlink{classLink_a6349999e40910091ecea77e2a366aa46}{get\-Prop\-Delay} ()
 \begin{DoxyCompactList}\small\item\em \-Gets the propagation delay of a link. \end{DoxyCompactList}\item 
 std\-::string \hyperlink{classLink_a8c768141c7ebf3b852bf978757f903be}{to\-String} ()
@@ -93,7 +90,7 @@ void \hyperlink{classLink_af07994bcf90cd63abe9edab218a5d752}{log\-Buffer\-Occupa
 
 
 \begin{DoxyParams}{\-Parameters}
-{\em node} & the node we know about. \\
+{\em my\-\_\-node} & the node we know about. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
@@ -168,6 +165,8 @@ total delay
 
 
 \begin{DoxyParams}{\-Parameters}
+{\em time} & the time at which the buffer occupancy is logged. \\
+\hline
 {\em node} & the node sending packets down the link. \\
 \hline
 \end{DoxyParams}
@@ -185,6 +184,8 @@ total delay
 
 
 \begin{DoxyParams}{\-Parameters}
+{\em time} & the time at which rate is logged. \\
+\hline
 {\em node} & the node sending packets down the link. \\
 \hline
 \end{DoxyParams}

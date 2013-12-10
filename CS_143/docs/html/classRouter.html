@@ -99,7 +99,7 @@ Inheritance diagram for Router:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a161477ea1b51f59bcd03da20b5d25243">Router</a> (std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt; neighboring_links, std::string router_id)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for instance of a <a class="el" href="classRouter.html">Router</a>.  <a href="#a161477ea1b51f59bcd03da20b5d25243"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a9517660547398a913aab151a3f058fbf">updateRouting</a> (Packet::bf_type, std::string, double)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a9517660547398a913aab151a3f058fbf">updateRouting</a> (<a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">Packet::bf_type</a>, std::string, double)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the routing table of a router when it receives a bf_packet.  <a href="#a9517660547398a913aab151a3f058fbf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a0b106e96412284611079588b65721aa6">broadcastTable</a> (double timestamp)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts the routing table to all connected routers.  <a href="#a0b106e96412284611079588b65721aa6"></a><br/></td></tr>
@@ -109,7 +109,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a link to the router's link vector.  <a href="#aa28dfae66a6e2587d3c39da83059a866"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#aed4bdd88f4fa09cb784c5c329c935688">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Give an event to the router.  <a href="#aed4bdd88f4fa09cb784c5c329c935688"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a323a820ddc17ea36834cf3316510ec5c">updateTableWeights</a> (Packet::bf_type)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a323a820ddc17ea36834cf3316510ec5c">updateTableWeights</a> (<a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">Packet::bf_type</a>)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the link delays in a routing table given a new table.  <a href="#a323a820ddc17ea36834cf3316510ec5c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a2c333b431ae61349b91277cda82a3f5e">getRouting</a> (std::string targ_host)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the proper link to route to given a host.  <a href="#a2c333b431ae61349b91277cda82a3f5e"></a><br/></td></tr>
@@ -309,7 +309,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
         <tr>
           <td class="memname">void <a class="el" href="classRouter.html#a9517660547398a913aab151a3f058fbf">Router::updateRouting</a> </td>
           <td>(</td>
-          <td class="paramtype">Packet::bf_type&#160;</td>
+          <td class="paramtype"><a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">Packet::bf_type</a>&#160;</td>
           <td class="paramname"><em>bf_table</em>, </td>
         </tr>
         <tr>
@@ -352,7 +352,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
         <tr>
           <td class="memname">void <a class="el" href="classRouter.html#a323a820ddc17ea36834cf3316510ec5c">Router::updateTableWeights</a> </td>
           <td>(</td>
-          <td class="paramtype">Packet::bf_type&#160;</td>
+          <td class="paramtype"><a class="el" href="classPacket.html#a4cae1612a245ea2eadde0066ecc4b990">Packet::bf_type</a>&#160;</td>
           <td class="paramname"><em>other_table</em></td><td>)</td>
           <td></td>
         </tr>
@@ -381,7 +381,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -393,7 +393,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 14:00:44 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 15:00:48 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
