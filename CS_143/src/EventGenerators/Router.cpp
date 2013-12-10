@@ -96,9 +96,9 @@ void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
  * Returns the proper link to route to given a host
  *
  * @param targ_host the name of the host to which the router is routing packets.
+ * @return the name of the next link in the path.
  */
 std::string Router::getRouting(std::string targ_host) {
-    // should probably do some error checking
     return routing_table[targ_host]->getNextLink();
 }
 
