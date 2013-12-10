@@ -83,7 +83,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Link Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Link" --><!-- doxytag: inherits="EventGenerator" --><div class="dynheader">
+<!-- doxytag: class="Link" --><!-- doxytag: inherits="EventGenerator" -->
+<p>Implementation of Network Links.  
+ <a href="classLink.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Link_8h_source.html">Link.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for Link:</div>
 <div class="dyncontent">
  <div class="center">
@@ -97,26 +102,165 @@ Inheritance diagram for Link:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0a6ae4d9767bacfb371f52a30441e64"></a><!-- doxytag: member="Link::Link" ref="af0a6ae4d9767bacfb371f52a30441e64" args="(double, float, float, std::string, std::string, std::string)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Link</b> (double, float, float, std::string, std::string, std::string)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#abd9466c4c2097329f4affd9b2eafbd7a">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Hands an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> for processing.  <a href="#abd9466c4c2097329f4affd9b2eafbd7a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19a132f87f8028ccd5af2503084aac64"></a><!-- doxytag: member="Link::getTotalDelay" ref="a19a132f87f8028ccd5af2503084aac64" args="(std::string node)" -->
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getTotalDelay</b> (std::string node)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa4e4c72a6384f118846765c296e5634"></a><!-- doxytag: member="Link::getOtherNode" ref="aaa4e4c72a6384f118846765c296e5634" args="(std::string node)" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOtherNode</b> (std::string node)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e1ec62377102139e4acc14392e96c12"></a><!-- doxytag: member="Link::logLinkRate" ref="a0e1ec62377102139e4acc14392e96c12" args="(double time, std::string node)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>logLinkRate</b> (double time, std::string node)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af07994bcf90cd63abe9edab218a5d752"></a><!-- doxytag: member="Link::logBufferOccupancy" ref="af07994bcf90cd63abe9edab218a5d752" args="(double time, std::string node)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>logBufferOccupancy</b> (double time, std::string node)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#af0a6ae4d9767bacfb371f52a30441e64">Link</a> (double, float, float, std::string, std::string, std::string)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classLink.html" title="Implementation of Network Links.">Link</a>.  <a href="#af0a6ae4d9767bacfb371f52a30441e64"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a19a132f87f8028ccd5af2503084aac64">getTotalDelay</a> (std::string node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the total delay of the link seen by a given sending node.  <a href="#a19a132f87f8028ccd5af2503084aac64"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94f034f0b3ebfbf4c08bcae80a5d9904"></a><!-- doxytag: member="Link::packetLoss" ref="a94f034f0b3ebfbf4c08bcae80a5d9904" args="(double)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (double)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6349999e40910091ecea77e2a366aa46"></a><!-- doxytag: member="Link::getPropDelay" ref="a6349999e40910091ecea77e2a366aa46" args="()" -->
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getPropDelay</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c768141c7ebf3b852bf978757f903be"></a><!-- doxytag: member="Link::toString" ref="a8c768141c7ebf3b852bf978757f903be" args="()" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a6349999e40910091ecea77e2a366aa46">getPropDelay</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the propagation delay of a link.  <a href="#a6349999e40910091ecea77e2a366aa46"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a8c768141c7ebf3b852bf978757f903be">toString</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the link as a string.  <a href="#a8c768141c7ebf3b852bf978757f903be"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#abd9466c4c2097329f4affd9b2eafbd7a">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Give the link an event.  <a href="#abd9466c4c2097329f4affd9b2eafbd7a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#aaa4e4c72a6384f118846765c296e5634">getOtherNode</a> (std::string node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the other node connected to a link.  <a href="#aaa4e4c72a6384f118846765c296e5634"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#a0e1ec62377102139e4acc14392e96c12">logLinkRate</a> (double time, std::string node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the link rate at a given time for a given sending node.  <a href="#a0e1ec62377102139e4acc14392e96c12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#af07994bcf90cd63abe9edab218a5d752">logBufferOccupancy</a> (double time, std::string node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the buffer occupancy at a given time for a given sending node.  <a href="#af07994bcf90cd63abe9edab218a5d752"></a><br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>Implementation of Network Links. </p>
+<p>Links are bi-directional, and contain two send buffers. </p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="af0a6ae4d9767bacfb371f52a30441e64"></a><!-- doxytag: member="Link::Link" ref="af0a6ae4d9767bacfb371f52a30441e64" args="(double, float, float, std::string, std::string, std::string)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classLink.html#af0a6ae4d9767bacfb371f52a30441e64">Link::Link</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>buf_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>p_delay</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>cap</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>n1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>n2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>link_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor for <a class="el" href="classLink.html" title="Implementation of Network Links.">Link</a>. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buf_size</td><td>the size of the link buffers. </td></tr>
+    <tr><td class="paramname">p_delay</td><td>the propagation delay of the link. </td></tr>
+    <tr><td class="paramname">cap</td><td>the link capacity. </td></tr>
+    <tr><td class="paramname">n1</td><td>a device connected to the link. </td></tr>
+    <tr><td class="paramname">n2</td><td>a device connected to the link. </td></tr>
+    <tr><td class="paramname">link_id</td><td>the name of the link. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="aaa4e4c72a6384f118846765c296e5634"></a><!-- doxytag: member="Link::getOtherNode" ref="aaa4e4c72a6384f118846765c296e5634" args="(std::string node)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classLink.html#aaa4e4c72a6384f118846765c296e5634">Link::getOtherNode</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>my_node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the other node connected to a link. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>the node we know about. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the node on the opposite end. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6349999e40910091ecea77e2a366aa46"></a><!-- doxytag: member="Link::getPropDelay" ref="a6349999e40910091ecea77e2a366aa46" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classLink.html#a6349999e40910091ecea77e2a366aa46">Link::getPropDelay</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the propagation delay of a link. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the propagation delay of the link. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a19a132f87f8028ccd5af2503084aac64"></a><!-- doxytag: member="Link::getTotalDelay" ref="a19a132f87f8028ccd5af2503084aac64" args="(std::string node)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classLink.html#a19a132f87f8028ccd5af2503084aac64">Link::getTotalDelay</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Gets the total delay of the link seen by a given sending node. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>the node seeing the delay. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total delay </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="abd9466c4c2097329f4affd9b2eafbd7a"></a><!-- doxytag: member="Link::giveEvent" ref="abd9466c4c2097329f4affd9b2eafbd7a" args="(std::shared_ptr&lt; Event &gt;) override" -->
 <div class="memitem">
 <div class="memproto">
@@ -132,15 +276,105 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (
 </div>
 <div class="memdoc">
 
-<p>Hands an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> for processing. </p>
+<p>Give the link an event. </p>
+<p>This method assumes that it is a packet event. The link responds by determining whether the packet is dropped or not. If the packet is not dropped, it is placed onto the queue for transmission.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">e</td><td>the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to be processed. </td></tr>
+    <tr><td class="paramname">e</td><td>the packet event given to the link. </td></tr>
   </table>
   </dd>
 </dl>
 
 <p>Implements <a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">EventGenerator</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af07994bcf90cd63abe9edab218a5d752"></a><!-- doxytag: member="Link::logBufferOccupancy" ref="af07994bcf90cd63abe9edab218a5d752" args="(double time, std::string node)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classLink.html#af07994bcf90cd63abe9edab218a5d752">Link::logBufferOccupancy</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Logs the buffer occupancy at a given time for a given sending node. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>the node sending packets down the link. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0e1ec62377102139e4acc14392e96c12"></a><!-- doxytag: member="Link::logLinkRate" ref="a0e1ec62377102139e4acc14392e96c12" args="(double time, std::string node)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classLink.html#a0e1ec62377102139e4acc14392e96c12">Link::logLinkRate</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Logs the link rate at a given time for a given sending node. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>the node sending packets down the link. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8c768141c7ebf3b852bf978757f903be"></a><!-- doxytag: member="Link::toString" ref="a8c768141c7ebf3b852bf978757f903be" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classLink.html#a8c768141c7ebf3b852bf978757f903be">Link::toString</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Represents the link as a string. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the string representing the link. </dd></dl>
 
 </div>
 </div>
@@ -166,7 +400,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 13:23:46 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 14:00:44 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

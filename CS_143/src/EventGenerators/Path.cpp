@@ -1,5 +1,6 @@
 #include "Path.h"
 
+
 /**
  * Constructor for instance of a Path.
  *
@@ -8,6 +9,7 @@
 Path::Path(std::string link) {
     link_vec.push_back(std::make_tuple(link, std::numeric_limits<float>::max(), 0.0));
 };
+
 
 /**
  * Copy constructor for Path.
@@ -21,6 +23,7 @@ Path::Path(const Path& other) {
     }
 };
 
+
 /**
  * Adds a link to the path.
  *
@@ -31,6 +34,7 @@ Path::Path(const Path& other) {
 void Path::addLink(std::string link, double delay, double ts) {
     link_vec.push_back(std::make_tuple(link, delay, ts));
 };
+
 
 /**
  * Gets the total delay along a Path.
@@ -43,6 +47,7 @@ double Path::getTotalDelay() const {
         total_delay += std::get<1>(it);
     return total_delay;
 };
+
 
 /**
  * Updates a link weight in a Path. Only updates if the link delay is less current
@@ -63,6 +68,7 @@ void Path::updateLinkWeight(std::string link, double delay, double time) {
     }
 };
 
+
 /**
  * Updates all link weights in a Path.
  *
@@ -73,6 +79,7 @@ void Path::updateAll(const Path& other) {
         updateLinkWeight(std::get<0>(ot), std::get<1>(ot), std::get<2>(ot));
     }
 };
+
 
 /**
  * Determines whether a path includes a given link.
@@ -89,6 +96,7 @@ bool Path::hasCycle(std::string link) {
     return false;
 };
 
+
 /**
  * Gets the next link in a Path.
  *
@@ -97,6 +105,7 @@ bool Path::hasCycle(std::string link) {
 std::string Path::getNextLink() const {
     return std::get<0>(link_vec.back());
 }
+
 
 /**
  * Represents the Path as a string.
@@ -110,4 +119,3 @@ std::string Path::toString() {
     }
     return output;
 };
-    
