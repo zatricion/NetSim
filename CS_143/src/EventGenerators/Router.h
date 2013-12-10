@@ -11,6 +11,7 @@
 #include "../EventHandling/PacketEvent.h"
 #include "../EventHandling/BFResendEvent.h"
 #include <sstream>
+#include <fstream>
 #include "Host.h"
 #include "Path.h"
 

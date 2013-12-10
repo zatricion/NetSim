@@ -1,5 +1,4 @@
 #include "Router.h"
-#include <fstream>
 
 /**
  * Constructor for instance of a Router.
@@ -82,22 +81,34 @@ void Router::addLink(std::shared_ptr<Link> link) {
     links[link->getID()] = link;
 }
 
-// Add a host_id -> (next_link_id, dist, path) tuple indicating which link to route to given a host, along with bellman-ford info
 /**
- * Adds a link to the router's link vector.
+ * Adds a host_id -> (next_link_id, dist, path) tuple indicating which link to route to 
+ * given a host, along with bellman-ford info
  *
- * @param link a pointer to the link to add.
+ * @param host_id the name of the host to which the router is routing packets.
+ * @param path a pointer to the path it will use to route packets.
  */
 void Router::addRouting(std::string host_id, std::shared_ptr<Path> path) {
     routing_table[host_id] = path;
 }
 
-// Return the proper link to route to given a host
+/**
+ * Returns the proper link to route to given a host
+ *
+ * @param targ_host the name of the host to which the router is routing packets.
+ */
 std::string Router::getRouting(std::string targ_host) {
     // should probably do some error checking
     return routing_table[targ_host]->getNextLink();
 }
 
+/**
+ * Updates the routing table of a router when it receives a bf_packet.
+ *
+ * @param bf_table the routing table received.
+ * @param link_id the name of the link from which the packet was received.
+ * @param now the timestamp of the packet event.
+ */
 void Router::updateRouting(Packet::bf_type bf_table,
                            std::string link_id,
                            double now) {
@@ -139,7 +150,11 @@ void Router::updateRouting(Packet::bf_type bf_table,
     }
 }
 
-// Deal with PacketEvents
+/**
+ * Give an event to the router.  This method assumes it to be a packet event.
+ *
+ * @param e the event to be processed
+ */
 void Router::giveEvent(std::shared_ptr<Event> e) {
     FILE_LOG(logDEBUG) << "TYPE OF E:" << e->getType();
     // Get PacketEvent
@@ -175,7 +190,12 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
     }
 }
 
-// update the link weights in a routing table
+/**
+ * Updates the link delays in a routing table given a new table.
+ * The link delays only change if they see a more current delay in the new table.
+ *
+ * @param other_table the table with new information about link delays
+ */
 void Router::updateTableWeights(Packet::bf_type other_table) {
     for (const auto& it : other_table) {
         std::string host_id = it.first;
@@ -183,6 +203,9 @@ void Router::updateTableWeights(Packet::bf_type other_table) {
     }
 }
 
+/**
+ * Outputs a text representation of a router.
+ */
 std::string Router::toString() {
     std::stringstream str;
     str << "Router: " + this->getID() + "\n";
