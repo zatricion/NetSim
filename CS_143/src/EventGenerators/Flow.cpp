@@ -4,6 +4,7 @@
 #include <math.h>
 #include "../Tools/Log.h"
 
+
 /**
  * Constructor for the flow.
  *
@@ -14,23 +15,30 @@
  * @param winSize the initial size of the flow's window (usually 1)
  * @param ts the timestamp at which the flow begins
  */
-Flow::Flow(std::string idval, std::string dest,
-           int data_size,
+Flow::Flow(std::string idval, std::string dest, int data_size,
            std::shared_ptr<Host> h, int winSize, double ts) {
+    // Set fields.
     timestamp = ts;
     host = h;
     id = idval;
     source = h->getID();
     destination = dest;
     numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
+
+    // Default wait time is set to .5 seconds.  The waitTime will be updated
+    // upon reception of acks.
     waitTime = .5;
     phase = SYN;
     unSentPackets = std::set<int>();
+    
+    // Populate unSentPackets with every packet.
     for (int i = 0; i < numPackets; i++) {
         unSentPackets.insert(i);
     }
+
     windowStart = 0;
     windowEnd = winSize - 1;
+
     A = waitTime;
     D = waitTime;
     b = .1;
@@ -57,25 +65,22 @@ void Flow::initialize(double time) {
  * @param time the time at which the packets are sent.
  */
 void Flow::sendManyPackets(double time) {
-//    std::cout << "windowStart: " << windowStart << " windowEnd: " << windowEnd << " diff: " << windowEnd - windowStart << " time: " << time << std::endl;
-    
     for (int i = windowStart; i <= windowEnd; i++) {
         if (unSentPackets.count(i) == 1) {
-            // He has not been sent before.  Let's send him, and queue a resend.
+            // Packet i has not been sent before.  Send it, and queue a resend.
             unSentPackets.erase(i);
-            auto pkt = std::make_shared<Packet>(std::to_string(i),
-                destination, source, DATA_PKT_SIZE,
-                false, i, id, false, false, time + i / 10000000000.0);
-                // TODO the above looks kind of ghetto, but it's important to
-                // offset the packets a bit, to keep them from reshuffling in
-                // the buffers.
-        FILE_LOG(logDEBUG) << "Called from sendManyPackets";
-        FILE_LOG(logDEBUG) << "waitTime=" << waitTime;
-        host->sendAndQueueResend(pkt, time + i / 10000000000.0, waitTime);
+
+            // We want the packets to have slightly different timestamps, so
+            // that their order is retained.  So, we add a small number to each
+            // packet time.  This will be smaller than any realistic network
+            // delay.
+            double cpuTime = i / 10000000000.0;
+            auto pkt = std::make_shared<Packet>(std::to_string(i), destination,
+                source, DATA_PKT_SIZE, false, i, id, false, false,
+                time + cpuTime);
+            host->sendAndQueueResend(pkt, time + cpuTime, waitTime);
         }
-        else { assert(unSentPackets.count(i) == 0); }
     }
-    
 }
 
 

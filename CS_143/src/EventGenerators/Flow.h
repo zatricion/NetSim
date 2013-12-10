@@ -10,8 +10,14 @@
 class CongestionAlg;
 class Host;
 
+/**
+ * The phase of the flow.
+ */
 enum Phase {SYN, DATA, FIN, DONE};
-enum TahoePhase {SLOWSTART, CONGESTIONAVOIDANCE};
+
+/**
+ * The 
+ */
 // data packet size is 1KB
 static const int DATA_PKT_SIZE = 1024 * 8;
 

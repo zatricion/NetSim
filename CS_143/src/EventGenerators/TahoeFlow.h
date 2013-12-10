@@ -8,6 +8,7 @@
 #include "../Tools/Log.h"
 #include "Flow.h"
 
+enum TahoePhase {SLOWSTART, CONGESTIONAVOIDANCE};
 class TahoeFlow : public Flow {
 public:
     // The phase that the TCP Tahoe alg. is in.

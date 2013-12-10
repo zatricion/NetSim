@@ -5,6 +5,7 @@ simulator
 test.log
 routing_table_test.txt
 NetSim.xcodeproj/*
+CS_143/docs/*
 
 
 # Temp files #

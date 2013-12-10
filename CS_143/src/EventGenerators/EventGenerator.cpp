@@ -1,11 +1,3 @@
-/**
- * Superclass for Links, Hosts, and Routers.  EventGenerators each have their
- * own eventHeaps, which are ordered lists of events.  The EventHandler will
- * determine the Event in the eventHeaps of the set of EventGenerators with
- * the minimum time, and handle the Event.
- */
-
-
 #include "EventGenerator.h"
 #include "../Tools/Log.h"
 #include <cassert>
