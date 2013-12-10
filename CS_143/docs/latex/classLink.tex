@@ -1,6 +1,15 @@
 \hypertarget{classLink}{\section{\-Link \-Class \-Reference}
 \label{classLink}\index{\-Link@{\-Link}}
 }
+
+
+\-Implementation of \-Network \-Links.  
+
+
+
+
+{\ttfamily \#include $<$\-Link.\-h$>$}
+
 \-Inheritance diagram for \-Link\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,35 +19,119 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classLink_af0a6ae4d9767bacfb371f52a30441e64}{{\bfseries \-Link} (double, float, float, std\-::string, std\-::string, std\-::string)}\label{classLink_af0a6ae4d9767bacfb371f52a30441e64}
-
-\item 
-virtual void \hyperlink{classLink_abd9466c4c2097329f4affd9b2eafbd7a}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$) override
-\begin{DoxyCompactList}\small\item\em \-Hands an \hyperlink{classEvent}{\-Event} to the \hyperlink{classEventGenerator}{\-Event\-Generator} for processing. \end{DoxyCompactList}\item 
-\hypertarget{classLink_a19a132f87f8028ccd5af2503084aac64}{double {\bfseries get\-Total\-Delay} (std\-::string node)}\label{classLink_a19a132f87f8028ccd5af2503084aac64}
-
-\item 
-\hypertarget{classLink_aaa4e4c72a6384f118846765c296e5634}{std\-::string {\bfseries get\-Other\-Node} (std\-::string node)}\label{classLink_aaa4e4c72a6384f118846765c296e5634}
-
-\item 
-\hypertarget{classLink_a0e1ec62377102139e4acc14392e96c12}{void {\bfseries log\-Link\-Rate} (double time, std\-::string node)}\label{classLink_a0e1ec62377102139e4acc14392e96c12}
-
-\item 
-\hypertarget{classLink_af07994bcf90cd63abe9edab218a5d752}{void {\bfseries log\-Buffer\-Occupancy} (double time, std\-::string node)}\label{classLink_af07994bcf90cd63abe9edab218a5d752}
-
-\item 
+\hyperlink{classLink_af0a6ae4d9767bacfb371f52a30441e64}{\-Link} (double, float, float, std\-::string, std\-::string, std\-::string)
+\begin{DoxyCompactList}\small\item\em \-Constructor for \hyperlink{classLink}{\-Link}. \end{DoxyCompactList}\item 
+double \hyperlink{classLink_a19a132f87f8028ccd5af2503084aac64}{get\-Total\-Delay} (std\-::string node)
+\begin{DoxyCompactList}\small\item\em \-Gets the total delay of the link seen by a given sending node. \end{DoxyCompactList}\item 
 \hypertarget{classLink_a94f034f0b3ebfbf4c08bcae80a5d9904}{void {\bfseries packet\-Loss} (double)}\label{classLink_a94f034f0b3ebfbf4c08bcae80a5d9904}
 
 \item 
-\hypertarget{classLink_a6349999e40910091ecea77e2a366aa46}{double {\bfseries get\-Prop\-Delay} ()}\label{classLink_a6349999e40910091ecea77e2a366aa46}
+double \hyperlink{classLink_a6349999e40910091ecea77e2a366aa46}{get\-Prop\-Delay} ()
+\begin{DoxyCompactList}\small\item\em \-Gets the propagation delay of a link. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classLink_a8c768141c7ebf3b852bf978757f903be}{to\-String} ()
+\begin{DoxyCompactList}\small\item\em \-Represents the link as a string. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classLink_abd9466c4c2097329f4affd9b2eafbd7a}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$) override
+\begin{DoxyCompactList}\small\item\em \-Give the link an event. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classLink_aaa4e4c72a6384f118846765c296e5634}{get\-Other\-Node} (std\-::string node)
+\begin{DoxyCompactList}\small\item\em \-Gets the other node connected to a link. \end{DoxyCompactList}\item 
+void \hyperlink{classLink_a0e1ec62377102139e4acc14392e96c12}{log\-Link\-Rate} (double time, std\-::string node)
+\begin{DoxyCompactList}\small\item\em \-Logs the link rate at a given time for a given sending node. \end{DoxyCompactList}\item 
+void \hyperlink{classLink_af07994bcf90cd63abe9edab218a5d752}{log\-Buffer\-Occupancy} (double time, std\-::string node)
+\begin{DoxyCompactList}\small\item\em \-Logs the buffer occupancy at a given time for a given sending node. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classLink_a8c768141c7ebf3b852bf978757f903be}{std\-::string {\bfseries to\-String} ()}\label{classLink_a8c768141c7ebf3b852bf978757f903be}
 
-\end{DoxyCompactItemize}
+\subsection{\-Detailed \-Description}
+\-Implementation of \-Network \-Links. 
+
+\-Links are bi-\/directional, and contain two send buffers. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classLink_af0a6ae4d9767bacfb371f52a30441e64}{\index{\-Link@{\-Link}!\-Link@{\-Link}}
+\index{\-Link@{\-Link}!Link@{\-Link}}
+\subsubsection[{\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Link\-::\-Link} (
+\begin{DoxyParamCaption}
+\item[{double}]{buf\-\_\-size, }
+\item[{float}]{p\-\_\-delay, }
+\item[{float}]{cap, }
+\item[{std\-::string}]{n1, }
+\item[{std\-::string}]{n2, }
+\item[{std\-::string}]{link\-\_\-id}
+\end{DoxyParamCaption}
+)}}\label{classLink_af0a6ae4d9767bacfb371f52a30441e64}
+
+
+\-Constructor for \hyperlink{classLink}{\-Link}. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em buf\-\_\-size} & the size of the link buffers. \\
+\hline
+{\em p\-\_\-delay} & the propagation delay of the link. \\
+\hline
+{\em cap} & the link capacity. \\
+\hline
+{\em n1} & a device connected to the link. \\
+\hline
+{\em n2} & a device connected to the link. \\
+\hline
+{\em link\-\_\-id} & the name of the link. \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{\-Member \-Function \-Documentation}
+\hypertarget{classLink_aaa4e4c72a6384f118846765c296e5634}{\index{\-Link@{\-Link}!get\-Other\-Node@{get\-Other\-Node}}
+\index{get\-Other\-Node@{get\-Other\-Node}!Link@{\-Link}}
+\subsubsection[{get\-Other\-Node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Link\-::get\-Other\-Node} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{my\-\_\-node}
+\end{DoxyParamCaption}
+)}}\label{classLink_aaa4e4c72a6384f118846765c296e5634}
+
+
+\-Gets the other node connected to a link. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em node} & the node we know about. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the node on the opposite end. 
+\end{DoxyReturn}
+\hypertarget{classLink_a6349999e40910091ecea77e2a366aa46}{\index{\-Link@{\-Link}!get\-Prop\-Delay@{get\-Prop\-Delay}}
+\index{get\-Prop\-Delay@{get\-Prop\-Delay}!Link@{\-Link}}
+\subsubsection[{get\-Prop\-Delay}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Link\-::get\-Prop\-Delay} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classLink_a6349999e40910091ecea77e2a366aa46}
+
+
+\-Gets the propagation delay of a link. 
+
+\begin{DoxyReturn}{\-Returns}
+the propagation delay of the link. 
+\end{DoxyReturn}
+\hypertarget{classLink_a19a132f87f8028ccd5af2503084aac64}{\index{\-Link@{\-Link}!get\-Total\-Delay@{get\-Total\-Delay}}
+\index{get\-Total\-Delay@{get\-Total\-Delay}!Link@{\-Link}}
+\subsubsection[{get\-Total\-Delay}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Link\-::get\-Total\-Delay} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{node}
+\end{DoxyParamCaption}
+)}}\label{classLink_a19a132f87f8028ccd5af2503084aac64}
+
+
+\-Gets the total delay of the link seen by a given sending node. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em node} & the node seeing the delay. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+total delay 
+\end{DoxyReturn}
 \hypertarget{classLink_abd9466c4c2097329f4affd9b2eafbd7a}{\index{\-Link@{\-Link}!give\-Event@{give\-Event}}
 \index{give\-Event@{give\-Event}!Link@{\-Link}}
 \subsubsection[{give\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Link\-::give\-Event} (
@@ -48,17 +141,67 @@ virtual void \hyperlink{classLink_abd9466c4c2097329f4affd9b2eafbd7a}{give\-Event
 )\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classLink_abd9466c4c2097329f4affd9b2eafbd7a}
 
 
-\-Hands an \hyperlink{classEvent}{\-Event} to the \hyperlink{classEventGenerator}{\-Event\-Generator} for processing. 
+\-Give the link an event. 
+
+\-This method assumes that it is a packet event. \-The link responds by determining whether the packet is dropped or not. \-If the packet is not dropped, it is placed onto the queue for transmission.
 
 
 \begin{DoxyParams}{\-Parameters}
-{\em e} & the \hyperlink{classEvent}{\-Event} to be processed. \\
+{\em e} & the packet event given to the link. \\
 \hline
 \end{DoxyParams}
 
 
 \-Implements \hyperlink{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{\-Event\-Generator}.
 
+\hypertarget{classLink_af07994bcf90cd63abe9edab218a5d752}{\index{\-Link@{\-Link}!log\-Buffer\-Occupancy@{log\-Buffer\-Occupancy}}
+\index{log\-Buffer\-Occupancy@{log\-Buffer\-Occupancy}!Link@{\-Link}}
+\subsubsection[{log\-Buffer\-Occupancy}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Link\-::log\-Buffer\-Occupancy} (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{std\-::string}]{node}
+\end{DoxyParamCaption}
+)}}\label{classLink_af07994bcf90cd63abe9edab218a5d752}
+
+
+\-Logs the buffer occupancy at a given time for a given sending node. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em node} & the node sending packets down the link. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classLink_a0e1ec62377102139e4acc14392e96c12}{\index{\-Link@{\-Link}!log\-Link\-Rate@{log\-Link\-Rate}}
+\index{log\-Link\-Rate@{log\-Link\-Rate}!Link@{\-Link}}
+\subsubsection[{log\-Link\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Link\-::log\-Link\-Rate} (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{std\-::string}]{node}
+\end{DoxyParamCaption}
+)}}\label{classLink_a0e1ec62377102139e4acc14392e96c12}
+
+
+\-Logs the link rate at a given time for a given sending node. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em node} & the node sending packets down the link. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classLink_a8c768141c7ebf3b852bf978757f903be}{\index{\-Link@{\-Link}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!Link@{\-Link}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Link\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classLink_a8c768141c7ebf3b852bf978757f903be}
+
+
+\-Represents the link as a string. 
+
+\begin{DoxyReturn}{\-Returns}
+the string representing the link. 
+\end{DoxyReturn}
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

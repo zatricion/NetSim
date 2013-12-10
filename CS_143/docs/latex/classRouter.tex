@@ -20,15 +20,15 @@ void \hyperlink{classRouter_a923848a34881212d310a738032d31610}{add\-Routing} (st
 \begin{DoxyCompactList}\small\item\em \-Adds a host\-\_\-id -\/$>$ (next\-\_\-link\-\_\-id, dist, path) tuple indicating which link to route to given a host, along with bellman-\/ford info. \end{DoxyCompactList}\item 
 void \hyperlink{classRouter_aa28dfae66a6e2587d3c39da83059a866}{add\-Link} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ link)
 \begin{DoxyCompactList}\small\item\em \-Adds a link to the router's link vector. \end{DoxyCompactList}\item 
-std\-::string \hyperlink{classRouter_a2c333b431ae61349b91277cda82a3f5e}{get\-Routing} (std\-::string targ\-\_\-host)
-\begin{DoxyCompactList}\small\item\em \-Returns the proper link to route to given a host. \end{DoxyCompactList}\item 
 void \hyperlink{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)
 \begin{DoxyCompactList}\small\item\em \-Give an event to the router. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_a323a820ddc17ea36834cf3316510ec5c}{update\-Table\-Weights} (\-Packet\-::bf\-\_\-type)
+\begin{DoxyCompactList}\small\item\em \-Updates the link delays in a routing table given a new table. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classRouter_a2c333b431ae61349b91277cda82a3f5e}{get\-Routing} (std\-::string targ\-\_\-host)
+\begin{DoxyCompactList}\small\item\em \-Returns the proper link to route to given a host. \end{DoxyCompactList}\item 
 \hypertarget{classRouter_aa54f568dd950bcb0feae508e3c75889d}{std\-::string \hyperlink{classRouter_aa54f568dd950bcb0feae508e3c75889d}{to\-String} ()}\label{classRouter_aa54f568dd950bcb0feae508e3c75889d}
 
-\begin{DoxyCompactList}\small\item\em \-Outputs a text representation of a router. \end{DoxyCompactList}\item 
-void \hyperlink{classRouter_a323a820ddc17ea36834cf3316510ec5c}{update\-Table\-Weights} (\-Packet\-::bf\-\_\-type)
-\begin{DoxyCompactList}\small\item\em \-Updates the link delays in a routing table given a new table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Outputs a text representation of a router. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Constructor \& \-Destructor \-Documentation}
@@ -182,7 +182,7 @@ the name of the next link in the path.
 
 \-Updates the link delays in a routing table given a new table. 
 
-\-The link delays only change if they see a more current delay in the new table.
+\-The link delays only change if they see a more current delay in the new table
 
 
 \begin{DoxyParams}{\-Parameters}
