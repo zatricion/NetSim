@@ -3,8 +3,25 @@
 #include <string>
 #include <sstream>
 
-// Constructor for when a packet is generated from a host.  We need the flowID
-// of the flow from which the packet was derived.
+
+/**
+ * Create a Packet object.
+ * 
+ * @param id an ID representing the Packet.
+ * @param fd the destination of the Packet.
+ * @param src the source of the Packet.
+ * @param s the size of the Packet.
+ * @param a true if the Packet is an ack.
+ * @param flow_id the id of the Flow from which the Packet was sent.
+ * @param sync true if the Packet is a SYN
+ * @param finish true if the Packet is a FIN
+ * @param ts a timestamp associated with the Packet.  For data packets, this
+ * will be the time at which the Packet is sent, but for acks, this will be
+ * the time at which the ack's data Packet was sent.
+ * @param bf true if the Packet is a bellman ford packet (Router use only).
+ * @param bf_type a representation of the routing table, if bf=true.
+ * Empty otherwise.
+ */
 Packet::Packet(std::string id,
                std::string fd,
                std::string src,
@@ -16,8 +33,7 @@ Packet::Packet(std::string id,
                bool finish,
                double ts,
                bool bf,
-               bf_type bf_t)
-{
+               bf_type bf_t) {
     uuid = id;
     final_dest = fd;
     source = src;
@@ -27,12 +43,17 @@ Packet::Packet(std::string id,
     flowID = flow_id;
     syn = sync;
     fin = finish;
-    std::set<int> ackSet;
     bf_tbl_bit = bf;
     bf_table = bf_t;
     timestamp = ts;
 }
 
+
+/**
+ * Copy constructor.
+ *
+ * @param other Packet to copy.
+ */
 Packet::Packet(const Packet& other) {
     uuid = other.uuid;
     final_dest = other.final_dest;
@@ -43,11 +64,16 @@ Packet::Packet(const Packet& other) {
     flowID = other.flowID;
     syn = other.syn;
     fin = other.fin;
-    ackSet = other.ackSet;
     bf_tbl_bit = other.bf_tbl_bit;
     bf_table = other.bf_table;
 }
 
+
+/**
+ * String representation of the Packet.
+ *
+ * @return the Packet as a string.
+ */
 std::string Packet::toString() {
     std::stringstream fmt;
     fmt << "{PACKET: uuid=" << uuid << ", dest=" << final_dest <<
