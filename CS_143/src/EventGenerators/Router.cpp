@@ -1,7 +1,13 @@
 #include "Router.h"
 #include <fstream>
 
-// Constructor
+/**
+ * Constructor for instance of a Router.
+ *
+ * @param host_list a list of hosts the router connects to.
+ * @param neighboring_links a list of pointers to connected links.
+ * @param router_id the router name.
+ */
 Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<Link> > neighboring_links, std::string router_id) {
     // set id
     uuid = router_id;
@@ -23,13 +29,14 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
         }
         addLink(it);
     }
-    // add bf packetEvents to eventHeap
+    
+    // broadcast the routing table to all neighboring devices
     broadcastTable(0.0);
 
     wait_time = 0.0;
     FILE_LOG(logDEBUG) << "waitTime=" << wait_time;
     auto b = std::make_shared<BFResendEvent>(uuid, uuid, wait_time);
-    wait_time = std::min(5.0, wait_time + 0.1); // TODO 5.0 magic #
+    wait_time = std::min(BF_WAIT, wait_time + 0.1);
     addEventToLocalQueue(b);
 }
 

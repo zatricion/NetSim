@@ -15,6 +15,7 @@
 #include "Path.h"
 
 static const int BF_PKT_SIZE = 1024 * 8;
+static const double BF_WAIT = 5.0;
 
 class Router : public EventGenerator
 {
