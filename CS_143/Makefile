@@ -7,10 +7,10 @@ CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
 # List of objects to be built; stored in build/ directory.
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o
+OBJECTS = build/Simulator.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o
 
 # Source file
-SOURCE = src/IO/Test.cpp
+SOURCE = src/IO/Simulator.cpp
 
 all: simulator 
 
@@ -19,8 +19,8 @@ simulator: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Individual object dependencies
-build/Test.o: src/IO/Test.cpp src/IO/Test.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
-	$(CC) $(CFLAGS) -c $< -o build/Test.o 
+build/Simulator.o: src/IO/Simulator.cpp src/IO/Simulator.h src/EventHandling/Packet.h src/EventHandling/Event.h src/EventHandling/Handler.h src/EventGenerators/Path.h
+	$(CC) $(CFLAGS) -c $< -o build/Simulator.o 
 
 build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h  
 	$(CC) $(CFLAGS) -c $< -o build/Path.o 

@@ -1,10 +1,16 @@
-#include "Test.h"
+#include "Simulator.h"
 
+
+/**
+ * Runs the simulation.
+ *
+ * @return 0
+ */
 int main() {
     // Set most verbose logging.
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
-    FILELog::ReportingLevel() = logINFO; //logDEBUG;
+    FILELog::ReportingLevel() = logINFO;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
     
@@ -12,6 +18,11 @@ int main() {
     return 0;
 }
 
+
+/**
+ * Calls the I/O functionality for user input.  Then, parses the input and runs
+ * the simulation.
+ */
 void io() {
     Handler handler;
  
