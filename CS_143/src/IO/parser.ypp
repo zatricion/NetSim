@@ -195,7 +195,7 @@ int yylex() {
    return lexer->yylex();
 }
 
-Handler& parse(std::istream &datafile) {
+Handler& parse(std::ifstream &datafile) {
    // init handler
    h = Handler();
    // Construct the lexer.
