@@ -56,10 +56,10 @@ void Host::giveEvent(std::shared_ptr<Event> e) {
  */
 void Host::respondTo(FlowEvent flow_event) {
     // Get the flow object, and add it to the map of flows.
-    flows[flow_event.floww->id] = flow_event.floww;
+    flows[flow_event.flow->id] = flow_event.flow;
 
     // Start the SYN handshake.
-    flows[flow_event.floww->id]->openConnection(flow_event.eventTime());
+    flows[flow_event.flow->id]->openConnection(flow_event.eventTime());
 }
 
 

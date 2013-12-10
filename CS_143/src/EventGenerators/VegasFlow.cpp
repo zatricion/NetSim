@@ -61,7 +61,7 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
-        waitTime = A + 4 * D + 0.01;
+        updateWaitTime();
         logFlowRTT(time, RTT);
         minRTT = std::min(minRTT, RTT);
 
@@ -164,7 +164,7 @@ void VegasFlow::handleVegasUpdate(double time) {
  * Called in response to a PacketEvent that is a SYN.  Starts data transfer.
  *
  * @param pkt the SYN packet.
- * @param time the time at which data transfer begins.
+ * @param time the time at which SYN is received.
  */
 void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) {
     assert(pkt->ack && pkt->syn);
@@ -183,25 +183,34 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
                                             id, // Id of the flow
                                             false, // Not a syn
                                             false, // Not a fin
-                                            pkt->timestamp); // Timestamp here 
-                                                             //shouldn't matter.  TODO make sure.
+                                            pkt->timestamp);
+
         send(ack, time);
         
         // Initialize the data flow.
         initialize(time);
 
-        // TODO not all of these will be here, in the future.
         RTT = time - pkt->timestamp;
         A = RTT;
         D = RTT;
-        waitTime = 4 * RTT + RTT;
-        vegasConstAlpha = 1.5; // TODO move these, make respondToSynPacketEvent in Flow.cpp
+        updateWaitTime();
+        // Our choices of constants for Vegas.
+        vegasConstAlpha = 1.5;
         vegasConstBeta = 2.5;
         minRTT = RTT;
 
-        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source,  // TODO this isn't used...?
-            source, time + waitTime, id);
+        auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, source,
+                                                             time + waitTime,
+                                                             id);
         host->addEventToLocalQueue(vUpdate);
-    }
-    // If we're not in the SYN phase, do nothing.
+    } // If we're not in the SYN phase, do nothing.
+}
+
+
+/**
+ * Updates the waitTime for Vegas.  A slightly modified version of A + 4D is
+ * used, because D rapidly becomes very small.
+ */
+void VegasFlow::updateWaitTime() {
+    waitTime = A + 4 * D + .01;
 }
