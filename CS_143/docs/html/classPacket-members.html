@@ -83,17 +83,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 This is the complete list of members for <a class="el" href="classPacket.html">Packet</a>, including all inherited members.<table>
   <tr bgcolor="#f0f0f0"><td><b>ack</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>ackSet</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>bf_table</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>bf_tbl_bit</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>bf_type</b> typedef (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>fin</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>final_dest</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>flowID</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>Packet</b>() (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>Packet</b>(std::string id, std::string fd, std::string src, int s, bool a, int seq) (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>Packet</b>(std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id) (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>Packet</b>(std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id, bool sync, bool finish, double ts=-1.0, bool bf=false, bf_type bf_table=bf_type()) (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Packet</b>(const Packet &amp;other) (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>printPacket</b>() (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>sequence_num</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>size</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>source</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>syn</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>timestamp</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>toString</b>() (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>uuid</b> (defined in <a class="el" href="classPacket.html">Packet</a>)</td><td><a class="el" href="classPacket.html">Packet</a></td><td></td></tr>
 </table></div><!-- contents -->
 <!-- window showing the filter options -->
@@ -101,7 +105,7 @@ This is the complete list of members for <a class="el" href="classPacket.html">P
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -113,7 +117,7 @@ This is the complete list of members for <a class="el" href="classPacket.html">P
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:41 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

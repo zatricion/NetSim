@@ -90,7 +90,7 @@ Inheritance diagram for Host:</div>
  <div class="center">
   <img src="classHost.png" usemap="#Host_map" alt=""/>
   <map id="Host_map" name="Host_map">
-<area href="classEventGenerator.html" alt="EventGenerator" shape="rect" coords="0,0,101,24"/>
+<area href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators." alt="EventGenerator" shape="rect" coords="0,0,101,24"/>
 </map>
  </div></div>
 
@@ -98,16 +98,30 @@ Inheritance diagram for Host:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afde96dd6239594d91697006a850bea5b"></a><!-- doxytag: member="Host::Host" ref="afde96dd6239594d91697006a850bea5b" args="(std::shared_ptr&lt; Link &gt; host_link, std::string host_id)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Host</b> (std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; host_link, std::string host_id)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a658a8bee30dfb9e6ff7abc26620f88ff"></a><!-- doxytag: member="Host::giveEvent" ref="a658a8bee30dfb9e6ff7abc26620f88ff" args="(std::shared_ptr&lt; Event &gt;) override" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a28da4a1168cd8ce7c396f0ba5ced1c66">respondTo</a> (<a class="el" href="classPacketEvent.html">PacketEvent</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbd4abe19840d56b09499af1158d6081"></a><!-- doxytag: member="Host::respondTo" ref="adbd4abe19840d56b09499af1158d6081" args="(FlowEvent)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>respondTo</b> (<a class="el" href="classFlowEvent.html">FlowEvent</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a64221eb13d89a1bb84f1eb351bc45be4">respondTo</a> (<a class="el" href="classUnackEvent.html">UnackEvent</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa807c50f690bd2018265504483440c7d"></a><!-- doxytag: member="Host::toString" ref="aa807c50f690bd2018265504483440c7d" args="()" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#afde96dd6239594d91697006a850bea5b">Host</a> (std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; host_link, std::string host_id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#afde96dd6239594d91697006a850bea5b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a658a8bee30dfb9e6ff7abc26620f88ff">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives an event.  <a href="#a658a8bee30dfb9e6ff7abc26620f88ff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a1386df4e48df0cf8e7252c55fa9e0f2b">respondTo</a> (<a class="el" href="classPacketEvent.html">PacketEvent</a> new_event)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when host receives a packet.  <a href="#a1386df4e48df0cf8e7252c55fa9e0f2b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a15013b657e880635a087ce41d9bccaf8">respondTo</a> (<a class="el" href="classFlowEvent.html">FlowEvent</a> flow_event)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a flow_event is received.  <a href="#a15013b657e880635a087ce41d9bccaf8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#af19765406b0fc694ec4122ef57d3bbb3">respondTo</a> (<a class="el" href="classUnackEvent.html">UnackEvent</a> unack_event)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when there is a potentially unacknowledged packet.  <a href="#af19765406b0fc694ec4122ef57d3bbb3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a029c7f389a580fc7e53da38a698d0d9a">sendAndQueueResend</a> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time, float delay)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Queues a packetEvent, and an unack event for the packetEvent.  <a href="#a029c7f389a580fc7e53da38a698d0d9a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7aeac15cbcd5d64ff8c2af090d8db0c4"></a><!-- doxytag: member="Host::send" ref="a7aeac15cbcd5d64ff8c2af090d8db0c4" args="(std::shared_ptr&lt; Packet &gt; pkt, double time)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>send</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13a11214f204347c85388b28043459c2"></a><!-- doxytag: member="Host::respondToSynUnackEvent" ref="a13a11214f204347c85388b28043459c2" args="(UnackEvent unack_event)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>respondToSynUnackEvent</b> (<a class="el" href="classUnackEvent.html">UnackEvent</a> unack_event)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f76466a0f9e8362f70c7990eae22641"></a><!-- doxytag: member="Host::respondToFinUnackEvent" ref="a9f76466a0f9e8362f70c7990eae22641" args="(UnackEvent unack_event)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>respondToFinUnackEvent</b> (<a class="el" href="classUnackEvent.html">UnackEvent</a> unack_event)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55abc101a34bd2bc1aff724883a85ecc"></a><!-- doxytag: member="Host::respondToSynPacketEvent" ref="a55abc101a34bd2bc1aff724883a85ecc" args="(PacketEvent new_event)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>respondToSynPacketEvent</b> (<a class="el" href="classPacketEvent.html">PacketEvent</a> new_event)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f3523a2e00b6aae6f5e9fa14b0f0e0f"></a><!-- doxytag: member="Host::respondToFinPacketEvent" ref="a6f3523a2e00b6aae6f5e9fa14b0f0e0f" args="(PacketEvent new_event)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>respondToFinPacketEvent</b> (<a class="el" href="classPacketEvent.html">PacketEvent</a> new_event)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#aa807c50f690bd2018265504483440c7d">toString</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representing the host.  <a href="#aa807c50f690bd2018265504483440c7d"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b880d3ae2688e05f0617de4c247b84c"></a><!-- doxytag: member="Host::my_link" ref="a6b880d3ae2688e05f0617de4c247b84c" args="" -->
@@ -116,14 +130,83 @@ std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt;&#160;</td>
 std::unordered_map<br class="typebreak"/>
 &lt; std::string, std::shared_ptr<br class="typebreak"/>
 &lt; <a class="el" href="classFlow.html">Flow</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>flows</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e5905756bdacfb89df56f6bcb29d7ff"></a><!-- doxytag: member="Host::recvd" ref="a8e5905756bdacfb89df56f6bcb29d7ff" args="" -->
+std::unordered_map<br class="typebreak"/>
+&lt; std::string, std::pair<br class="typebreak"/>
+&lt; std::set&lt; int &gt;, Phase &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>recvd</b></td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a28da4a1168cd8ce7c396f0ba5ced1c66"></a><!-- doxytag: member="Host::respondTo" ref="a28da4a1168cd8ce7c396f0ba5ced1c66" args="(PacketEvent)" -->
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="afde96dd6239594d91697006a850bea5b"></a><!-- doxytag: member="Host::Host" ref="afde96dd6239594d91697006a850bea5b" args="(std::shared_ptr&lt; Link &gt; host_link, std::string host_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classHost.html#a28da4a1168cd8ce7c396f0ba5ced1c66">Host::respondTo</a> </td>
+          <td class="memname"><a class="el" href="classHost.html#afde96dd6239594d91697006a850bea5b">Host::Host</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt;&#160;</td>
+          <td class="paramname"><em>host_link</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>host_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host_link</td><td>the link connecting the host to a router </td></tr>
+    <tr><td class="paramname">host_id</td><td>the unique id of the host </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a658a8bee30dfb9e6ff7abc26620f88ff"></a><!-- doxytag: member="Host::giveEvent" ref="a658a8bee30dfb9e6ff7abc26620f88ff" args="(std::shared_ptr&lt; Event &gt;) override" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHost.html#a658a8bee30dfb9e6ff7abc26620f88ff">Host::giveEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td><code> [override, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Receives an event. </p>
+<p>Determines its type, and passes to a helper function.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>the event to be processed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classEventGenerator.html">EventGenerator</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1386df4e48df0cf8e7252c55fa9e0f2b"></a><!-- doxytag: member="Host::respondTo" ref="a1386df4e48df0cf8e7252c55fa9e0f2b" args="(PacketEvent new_event)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHost.html#a1386df4e48df0cf8e7252c55fa9e0f2b">Host::respondTo</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classPacketEvent.html">PacketEvent</a>&#160;</td>
           <td class="paramname"><em>new_event</em></td><td>)</td>
@@ -132,16 +215,48 @@ std::unordered_map<br class="typebreak"/>
       </table>
 </div>
 <div class="memdoc">
-<p>Called when host receives any packet. </p>
+
+<p>Called when host receives a packet. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_event</td><td>the packet event received. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="a64221eb13d89a1bb84f1eb351bc45be4"></a><!-- doxytag: member="Host::respondTo" ref="a64221eb13d89a1bb84f1eb351bc45be4" args="(UnackEvent)" -->
+<a class="anchor" id="a15013b657e880635a087ce41d9bccaf8"></a><!-- doxytag: member="Host::respondTo" ref="a15013b657e880635a087ce41d9bccaf8" args="(FlowEvent flow_event)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classHost.html#a28da4a1168cd8ce7c396f0ba5ced1c66">Host::respondTo</a> </td>
+          <td class="memname">void <a class="el" href="classHost.html#a1386df4e48df0cf8e7252c55fa9e0f2b">Host::respondTo</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFlowEvent.html">FlowEvent</a>&#160;</td>
+          <td class="paramname"><em>flow_event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Called when a flow_event is received. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flow_event</td><td>the flow event received </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af19765406b0fc694ec4122ef57d3bbb3"></a><!-- doxytag: member="Host::respondTo" ref="af19765406b0fc694ec4122ef57d3bbb3" args="(UnackEvent unack_event)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHost.html#a1386df4e48df0cf8e7252c55fa9e0f2b">Host::respondTo</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUnackEvent.html">UnackEvent</a>&#160;</td>
           <td class="paramname"><em>unack_event</em></td><td>)</td>
@@ -150,13 +265,82 @@ std::unordered_map<br class="typebreak"/>
       </table>
 </div>
 <div class="memdoc">
+
 <p>Called when there is a potentially unacknowledged packet. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">unack_event</td><td>the <a class="el" href="classPacketEvent.html">PacketEvent</a> for the packet that might not have been acknowledged </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a029c7f389a580fc7e53da38a698d0d9a"></a><!-- doxytag: member="Host::sendAndQueueResend" ref="a029c7f389a580fc7e53da38a698d0d9a" args="(std::shared_ptr&lt; Packet &gt; pkt, double time, float delay)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHost.html#a029c7f389a580fc7e53da38a698d0d9a">Host::sendAndQueueResend</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td>
+          <td class="paramname"><em>pkt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>delay</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Queues a packetEvent, and an unack event for the packetEvent. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pkt</td><td>the packet for the <a class="el" href="classPacketEvent.html">PacketEvent</a> </td></tr>
+    <tr><td class="paramname">time</td><td>the time at which event is to be sent. </td></tr>
+    <tr><td class="paramname">delay</td><td>the packet will be sent at time + delay </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa807c50f690bd2018265504483440c7d"></a><!-- doxytag: member="Host::toString" ref="aa807c50f690bd2018265504483440c7d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classHost.html#aa807c50f690bd2018265504483440c7d">Host::toString</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a string representing the host. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the string representing the host </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/<a class="el" href="Host_8h_source.html">Host.h</a></li>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/Host.cpp</li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Host_8h_source.html">Host.h</a></li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Host.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -164,7 +348,7 @@ std::unordered_map<br class="typebreak"/>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -176,7 +360,7 @@ std::unordered_map<br class="typebreak"/>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:41 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

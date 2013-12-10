@@ -91,9 +91,13 @@ Inheritance diagram for Event:</div>
  <div class="center">
   <img src="classEvent.png" usemap="#Event_map" alt=""/>
   <map id="Event_map" name="Event_map">
-<area href="classFlowEvent.html" alt="FlowEvent" shape="rect" coords="0,56,82,80"/>
-<area href="classPacketEvent.html" alt="PacketEvent" shape="rect" coords="92,56,174,80"/>
-<area href="classUnackEvent.html" alt="UnackEvent" shape="rect" coords="184,56,266,80"/>
+<area href="classBFResendEvent.html" alt="BFResendEvent" shape="rect" coords="0,56,143,80"/>
+<area href="classFlowEvent.html" alt="FlowEvent" shape="rect" coords="153,56,296,80"/>
+<area href="classPacketEvent.html" alt="PacketEvent" shape="rect" coords="306,56,449,80"/>
+<area href="classTCPRenoUpdateEvent.html" alt="TCPRenoUpdateEvent" shape="rect" coords="459,56,602,80"/>
+<area href="classTCPVegasUpdateEvent.html" alt="TCPVegasUpdateEvent" shape="rect" coords="612,56,755,80"/>
+<area href="classTimeoutEvent.html" alt="TimeoutEvent" shape="rect" coords="765,56,908,80"/>
+<area href="classUnackEvent.html" alt="UnackEvent" shape="rect" coords="918,56,1061,80"/>
 </map>
  </div></div>
 
@@ -101,12 +105,12 @@ Inheritance diagram for Event:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf52761e903e33d30275c4f0a7800316"></a><!-- doxytag: member="Event::Event" ref="acf52761e903e33d30275c4f0a7800316" args="(std::string dest, std::string src, float ts)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Event</b> (std::string dest, std::string src, float ts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeef24383baad6cba356ed7801d0e27ce"></a><!-- doxytag: member="Event::eventTime" ref="aeef24383baad6cba356ed7801d0e27ce" args="() const " -->
-float&#160;</td><td class="memItemRight" valign="bottom"><b>eventTime</b> () const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20da5a96724238c0afb4a9b27574400f"></a><!-- doxytag: member="Event::printEvent" ref="a20da5a96724238c0afb4a9b27574400f" args="()" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>printEvent</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ff6ddc14b006baade2b5ab2a622835d"></a><!-- doxytag: member="Event::Event" ref="a2ff6ddc14b006baade2b5ab2a622835d" args="(std::string dest, std::string src, double ts)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Event</b> (std::string dest, std::string src, double ts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79ba42604867e6f81ec29d9eaff0dc08"></a><!-- doxytag: member="Event::eventTime" ref="a79ba42604867e6f81ec29d9eaff0dc08" args="() const " -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>eventTime</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a924194a887aa70888e08a04b69389bd6"></a><!-- doxytag: member="Event::toString" ref="a924194a887aa70888e08a04b69389bd6" args="()" -->
+virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e3dfee48cea1b42321adae3c51f82e2"></a><!-- doxytag: member="Event::getType" ref="a3e3dfee48cea1b42321adae3c51f82e2" args="()" -->
 virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
@@ -117,12 +121,12 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>destination</b
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>source</b></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ceeca46ae28fce79241258b78c383de"></a><!-- doxytag: member="Event::timestamp" ref="a7ceeca46ae28fce79241258b78c383de" args="" -->
-float&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf947fd0c5db2bf468373ee94ec190b4"></a><!-- doxytag: member="Event::timestamp" ref="abf947fd0c5db2bf468373ee94ec190b4" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventHandling/<a class="el" href="Event_8h_source.html">Event.h</a></li>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventHandling/Event.cpp</li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventHandling/<a class="el" href="Event_8h_source.html">Event.h</a></li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventHandling/Event.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -130,7 +134,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -142,7 +146,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:24 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:39 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

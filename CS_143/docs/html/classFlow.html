@@ -84,23 +84,55 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Flow Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Flow" -->
+<!-- doxytag: class="Flow" --><div class="dynheader">
+Inheritance diagram for Flow:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classFlow.png" usemap="#Flow_map" alt=""/>
+  <map id="Flow_map" name="Flow_map">
+<area href="classTahoeFlow.html" alt="TahoeFlow" shape="rect" coords="0,56,75,80"/>
+<area href="classVegasFlow.html" alt="VegasFlow" shape="rect" coords="85,56,160,80"/>
+</map>
+ </div></div>
+
 <p><a href="classFlow-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb609967880d902a1f8ff8ad9db85862"></a><!-- doxytag: member="Flow::Flow" ref="aeb609967880d902a1f8ff8ad9db85862" args="(std::string idval, std::string src, std::string dest, std::shared_ptr&lt; CongestionAlg &gt; alg, int data_size, std::shared_ptr&lt; Host &gt; h, int winSize, float ts)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Flow</b> (std::string idval, std::string src, std::string dest, std::shared_ptr&lt; <a class="el" href="classCongestionAlg.html">CongestionAlg</a> &gt; alg, int data_size, std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt; h, int winSize, float ts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7f274b803ded1f3c5b1a4e24e477561"></a><!-- doxytag: member="Flow::handleUnackEvent" ref="ad7f274b803ded1f3c5b1a4e24e477561" args="(std::shared_ptr&lt; Packet &gt; unacked, float time)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUnackEvent</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; unacked, float time)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb3e75cba1b777a083cfa5bae24c7af0"></a><!-- doxytag: member="Flow::handleAck" ref="abb3e75cba1b777a083cfa5bae24c7af0" args="(std::shared_ptr&lt; Packet &gt; p, float time)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>handleAck</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; p, float time)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae330545a178e3800aadb7c3f856b7b94"></a><!-- doxytag: member="Flow::toString" ref="ae330545a178e3800aadb7c3f856b7b94" args="()" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fdad818f50e010c5db255abfc5138df"></a><!-- doxytag: member="Flow::initialize" ref="a2fdad818f50e010c5db255abfc5138df" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#ab7771ce5ed20e19fff6bf6ceb5d1adc4">Flow</a> (std::string idval, std::string dest, int data_size, std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt; h, int winSize, double ts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the flow.  <a href="#ab7771ce5ed20e19fff6bf6ceb5d1adc4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a45fd871502fad3fb23987ac773a0ab"></a><!-- doxytag: member="Flow::handleUnackEvent" ref="a8a45fd871502fad3fb23987ac773a0ab" args="(std::shared_ptr&lt; Packet &gt; unacked, double time)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUnackEvent</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; unacked, double time)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab75994d89f53573e60a1650dcaeddabb"></a><!-- doxytag: member="Flow::handleAck" ref="ab75994d89f53573e60a1650dcaeddabb" args="(std::shared_ptr&lt; Packet &gt; pkt, double time)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleAck</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa74099113ee1c2298874b85ade05be98"></a><!-- doxytag: member="Flow::toString" ref="aa74099113ee1c2298874b85ade05be98" args="()=0" -->
+virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966">initialize</a> (double time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the data flow.  <a href="#a1076308c9b3a11a1e0bdea4c7b4c2966"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e819e83edb2b9b90f647e6c43e28b8e"></a><!-- doxytag: member="Flow::logFlowRTT" ref="a4e819e83edb2b9b90f647e6c43e28b8e" args="(double time, double RTT)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>logFlowRTT</b> (double time, double RTT)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a777477d26afb220c96de8495e85e73ef"></a><!-- doxytag: member="Flow::logFlowWindowSize" ref="a777477d26afb220c96de8495e85e73ef" args="(double time, int windowSize)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>logFlowWindowSize</b> (double time, int windowSize)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedfba46ffa2ea5e12ed953174d29380f"></a><!-- doxytag: member="Flow::openConnection" ref="aedfba46ffa2ea5e12ed953174d29380f" args="(double time)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>openConnection</b> (double time)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ebd328c963fef5e538a3d6ea91ee317"></a><!-- doxytag: member="Flow::closeConnection" ref="a8ebd328c963fef5e538a3d6ea91ee317" args="(double time)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>closeConnection</b> (double time)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6">sendAndQueueResend</a> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time, float delay)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a packet from the flow's source to its destination.  <a href="#a2a9cb972dfe6f6f03543073b575d65c6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c3884b1b36915274c3c15934f7e6d2a"></a><!-- doxytag: member="Flow::respondToSynUnackEvent" ref="a3c3884b1b36915274c3c15934f7e6d2a" args="(double time)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>respondToSynUnackEvent</b> (double time)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b9f70de92594ba82c5a1b16298f3811"></a><!-- doxytag: member="Flow::respondToSynPacketEvent" ref="a1b9f70de92594ba82c5a1b16298f3811" args="(std::shared_ptr&lt; Packet &gt; pkt, double time)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>respondToSynPacketEvent</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a5a547ae4185337bf7790f9ace391ac48">send</a> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for sending a packet from the flow's source to its destination.  <a href="#a5a547ae4185337bf7790f9ace391ac48"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c">sendManyPackets</a> (double time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send as many packets as possible.  <a href="#a792deb9bffc1a4020e09275f037fcc4c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c04de60a81b02750673806906701a76"></a><!-- doxytag: member="Flow::windowStart" ref="a1c04de60a81b02750673806906701a76" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>windowStart</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ffd0d6dd0bf1c2c2b97ac164890715f"></a><!-- doxytag: member="Flow::windowEnd" ref="a8ffd0d6dd0bf1c2c2b97ac164890715f" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>windowEnd</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af45cdc7b3609577eb08cb072e9631809"></a><!-- doxytag: member="Flow::host" ref="af45cdc7b3609577eb08cb072e9631809" args="" -->
 std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>host</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8724a8f4ce94cf7bfb0db79e688ed179"></a><!-- doxytag: member="Flow::id" ref="a8724a8f4ce94cf7bfb0db79e688ed179" args="" -->
@@ -109,26 +141,225 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></t
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>source</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a536685c38def6cf8b61d0fb0d7e8372d"></a><!-- doxytag: member="Flow::destination" ref="a536685c38def6cf8b61d0fb0d7e8372d" args="" -->
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>destination</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaed7f19c7331e59bb123da68239807bc"></a><!-- doxytag: member="Flow::a" ref="aaed7f19c7331e59bb123da68239807bc" args="" -->
-std::shared_ptr&lt; <a class="el" href="classCongestionAlg.html">CongestionAlg</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>a</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78d725176506b21ce2355b3742ab8c17"></a><!-- doxytag: member="Flow::numPackets" ref="a78d725176506b21ce2355b3742ab8c17" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>numPackets</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c9d7d593004b45b1a1a88932598e9ec"></a><!-- doxytag: member="Flow::acknowledgedPackets" ref="a8c9d7d593004b45b1a1a88932598e9ec" args="" -->
-std::unordered_set&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>acknowledgedPackets</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae211f68d0d38e1625b06138aa71ff30c"></a><!-- doxytag: member="Flow::flow" ref="ae211f68d0d38e1625b06138aa71ff30c" args="" -->
-std::queue&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>flow</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b1bc90a9171baefb34683ce49ab4db6"></a><!-- doxytag: member="Flow::waitTime" ref="a6b1bc90a9171baefb34683ce49ab4db6" args="" -->
-float&#160;</td><td class="memItemRight" valign="bottom"><b>waitTime</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab567b4507276eeb779a109c459545988"></a><!-- doxytag: member="Flow::windowSize" ref="ab567b4507276eeb779a109c459545988" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>windowSize</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47968d3d4596ad50ce090a0c352a89f5"></a><!-- doxytag: member="Flow::waitTime" ref="a47968d3d4596ad50ce090a0c352a89f5" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>waitTime</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5af37a8637ec606977ebc1e33a0c59b"></a><!-- doxytag: member="Flow::packetSize" ref="ac5af37a8637ec606977ebc1e33a0c59b" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>packetSize</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac46a1249858fde4c562938948bfb13aa"></a><!-- doxytag: member="Flow::timestamp" ref="ac46a1249858fde4c562938948bfb13aa" args="" -->
-float&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a502b4455d485a1a0325d21d246183bb1"></a><!-- doxytag: member="Flow::timestamp" ref="a502b4455d485a1a0325d21d246183bb1" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56615b49301aaddf4cab4fa3f878c5a7"></a><!-- doxytag: member="Flow::phase" ref="a56615b49301aaddf4cab4fa3f878c5a7" args="" -->
+Phase&#160;</td><td class="memItemRight" valign="bottom"><b>phase</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef2aa1abe7872f9f75f24c482c5f20f9"></a><!-- doxytag: member="Flow::unSentPackets" ref="aef2aa1abe7872f9f75f24c482c5f20f9" args="" -->
+std::set&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>unSentPackets</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cb60750432baab4af8b8481fd97aa31"></a><!-- doxytag: member="Flow::A" ref="a9cb60750432baab4af8b8481fd97aa31" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ffa8765220cfbfcf8b358bcbfd8bc4d"></a><!-- doxytag: member="Flow::D" ref="a6ffa8765220cfbfcf8b358bcbfd8bc4d" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>D</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22a30218ebecf663beea5902199a5453"></a><!-- doxytag: member="Flow::b" ref="a22a30218ebecf663beea5902199a5453" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>b</b></td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ab7771ce5ed20e19fff6bf6ceb5d1adc4"></a><!-- doxytag: member="Flow::Flow" ref="ab7771ce5ed20e19fff6bf6ceb5d1adc4" args="(std::string idval, std::string dest, int data_size, std::shared_ptr&lt; Host &gt; h, int winSize, double ts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFlow.html#ab7771ce5ed20e19fff6bf6ceb5d1adc4">Flow::Flow</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>idval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>data_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>winSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor for the flow. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idval</td><td>the id of the flow. IDs must be unique </td></tr>
+    <tr><td class="paramname">dest</td><td>the destination of the data flow </td></tr>
+    <tr><td class="paramname">data_size</td><td>the size of the flow's data packets </td></tr>
+    <tr><td class="paramname">h</td><td>the host that is the flow's source </td></tr>
+    <tr><td class="paramname">winSize</td><td>the initial size of the flow's window (usually 1) </td></tr>
+    <tr><td class="paramname">ts</td><td>the timestamp at which the flow begins </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a1076308c9b3a11a1e0bdea4c7b4c2966"></a><!-- doxytag: member="Flow::initialize" ref="a1076308c9b3a11a1e0bdea4c7b4c2966" args="(double time)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966">Flow::initialize</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Start the data flow. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>the time at which the data flow starts. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5a547ae4185337bf7790f9ace391ac48"></a><!-- doxytag: member="Flow::send" ref="a5a547ae4185337bf7790f9ace391ac48" args="(std::shared_ptr&lt; Packet &gt; pkt, double time)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFlow.html#a5a547ae4185337bf7790f9ace391ac48">Flow::send</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td>
+          <td class="paramname"><em>pkt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper function for sending a packet from the flow's source to its destination. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pkt</td><td>the packet to be sent </td></tr>
+    <tr><td class="paramname">time</td><td>the time at which it is sent </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2a9cb972dfe6f6f03543073b575d65c6"></a><!-- doxytag: member="Flow::sendAndQueueResend" ref="a2a9cb972dfe6f6f03543073b575d65c6" args="(std::shared_ptr&lt; Packet &gt; pkt, double time, float delay)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6">Flow::sendAndQueueResend</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td>
+          <td class="paramname"><em>pkt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>delay</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sends a packet from the flow's source to its destination. </p>
+<p>Also queues an <a class="el" href="classUnackEvent.html">UnackEvent</a> in case an ack isn't received.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pkt</td><td>the packet to be sent </td></tr>
+    <tr><td class="paramname">time</td><td>the time at which the packet it sent </td></tr>
+    <tr><td class="paramname">delay</td><td>the delay after 'time' at which we consider the packet to have timed out </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a792deb9bffc1a4020e09275f037fcc4c"></a><!-- doxytag: member="Flow::sendManyPackets" ref="a792deb9bffc1a4020e09275f037fcc4c" args="(double time)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c">Flow::sendManyPackets</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Send as many packets as possible. </p>
+<p>Every packet that has never been marked as being sent (i.e. every packet that is in unsentPackets) that also satisfies windowStart &lt;= sequence_num &lt;= windowEnd will be sent. The ones that have already been sent (the ones not in unsentPackets) will not be resent.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>the time at which the packets are sent. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/<a class="el" href="Flow_8h_source.html">Flow.h</a></li>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/Flow.cpp</li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Flow_8h_source.html">Flow.h</a></li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Flow.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -136,7 +367,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -148,7 +379,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:40 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

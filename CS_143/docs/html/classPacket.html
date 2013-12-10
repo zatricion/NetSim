@@ -78,6 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a>  </div>
   <div class="headertitle">
@@ -87,16 +88,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- doxytag: class="Packet" -->
 <p><a href="classPacket-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cae1612a245ea2eadde0066ecc4b990"></a><!-- doxytag: member="Packet::bf_type" ref="a4cae1612a245ea2eadde0066ecc4b990" args="" -->
+typedef std::unordered_map<br class="typebreak"/>
+&lt; std::string, std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classPath.html">Path</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bf_type</b></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adad25df1f7cd92863fe024b611654ca0"></a><!-- doxytag: member="Packet::Packet" ref="adad25df1f7cd92863fe024b611654ca0" args="(std::string id, std::string fd, std::string src, int s, bool a, int seq)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (std::string id, std::string fd, std::string src, int s, bool a, int seq)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42b25c5d0ca62985777047ae06c0f299"></a><!-- doxytag: member="Packet::Packet" ref="a42b25c5d0ca62985777047ae06c0f299" args="(std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0467ca3fb88b9a8a6a41182aed61e5b3"></a><!-- doxytag: member="Packet::Packet" ref="a0467ca3fb88b9a8a6a41182aed61e5b3" args="(std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id, bool sync, bool finish, double ts=&#45;1.0, bool bf=false, bf_type bf_table=bf_type())" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (std::string id, std::string fd, std::string src, int s, bool a, int seq, std::string flow_id, bool sync, bool finish, double ts=-1.0, bool bf=false, bf_type bf_table=bf_type())</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8d5dfea51fa7fe55e4705b176f326ec"></a><!-- doxytag: member="Packet::Packet" ref="ae8d5dfea51fa7fe55e4705b176f326ec" args="(const Packet &amp;other)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const <a class="el" href="classPacket.html">Packet</a> &amp;other)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2fa4ac151c764a022093e7fa826a6c2"></a><!-- doxytag: member="Packet::printPacket" ref="af2fa4ac151c764a022093e7fa826a6c2" args="()" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>printPacket</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4f4ad4075cad5a29af1646c3e289399"></a><!-- doxytag: member="Packet::toString" ref="aa4f4ad4075cad5a29af1646c3e289399" args="()" -->
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acaefdb9f910265a1ff97b522a780f088"></a><!-- doxytag: member="Packet::uuid" ref="acaefdb9f910265a1ff97b522a780f088" args="" -->
@@ -109,16 +114,26 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>source</b></td
 int&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1824b08ed28de1f329146d082b6d0dee"></a><!-- doxytag: member="Packet::ack" ref="a1824b08ed28de1f329146d082b6d0dee" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>ack</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad27cb1ca949aa1dece5a14d0cc734a8e"></a><!-- doxytag: member="Packet::syn" ref="ad27cb1ca949aa1dece5a14d0cc734a8e" args="" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>syn</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2143fa46561ca6d5f5edd8678602ef6c"></a><!-- doxytag: member="Packet::fin" ref="a2143fa46561ca6d5f5edd8678602ef6c" args="" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>fin</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3bb221061fb274a23f041e4b5e93ce7"></a><!-- doxytag: member="Packet::bf_tbl_bit" ref="ab3bb221061fb274a23f041e4b5e93ce7" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>bf_tbl_bit</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad19b836a6a6deab55ec66cb333642a5e"></a><!-- doxytag: member="Packet::bf_table" ref="ad19b836a6a6deab55ec66cb333642a5e" args="" -->
+bf_type&#160;</td><td class="memItemRight" valign="bottom"><b>bf_table</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1dcc152b6caa339c9d6f86c0fcde1c52"></a><!-- doxytag: member="Packet::sequence_num" ref="a1dcc152b6caa339c9d6f86c0fcde1c52" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>sequence_num</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad841c025e14798586e5a01dfb17a8e56"></a><!-- doxytag: member="Packet::flowID" ref="ad841c025e14798586e5a01dfb17a8e56" args="" -->
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>flowID</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab196846302b6d54c4b3a417308f34819"></a><!-- doxytag: member="Packet::ackSet" ref="ab196846302b6d54c4b3a417308f34819" args="" -->
+std::set&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ackSet</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c6b8af8bd18da132511da84aaba3acb"></a><!-- doxytag: member="Packet::timestamp" ref="a3c6b8af8bd18da132511da84aaba3acb" args="" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventHandling/<a class="el" href="Packet_8h_source.html">Packet.h</a></li>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventHandling/Packet.cpp</li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventHandling/<a class="el" href="Packet_8h_source.html">Packet.h</a></li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventHandling/Packet.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -126,7 +141,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>flowID</b></td
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -138,7 +153,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>flowID</b></td
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:41 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

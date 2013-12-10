@@ -89,7 +89,7 @@ Inheritance diagram for Router:</div>
  <div class="center">
   <img src="classRouter.png" usemap="#Router_map" alt=""/>
   <map id="Router_map" name="Router_map">
-<area href="classEventGenerator.html" alt="EventGenerator" shape="rect" coords="0,0,101,24"/>
+<area href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators." alt="EventGenerator" shape="rect" coords="0,0,101,24"/>
 </map>
  </div></div>
 
@@ -97,18 +97,30 @@ Inheritance diagram for Router:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c8e76247f99d1ece5ab8368f30bcb9e"></a><!-- doxytag: member="Router::addRouting" ref="a0c8e76247f99d1ece5ab8368f30bcb9e" args="(std::string targ_host, std::string targ_link)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addRouting</b> (std::string targ_host, std::string targ_link)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07a2d8e8d3f8f2ce68178afa61bfe00c"></a><!-- doxytag: member="Router::addLink" ref="a07a2d8e8d3f8f2ce68178afa61bfe00c" args="(std::string link_id)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addLink</b> (std::string link_id)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a217136993163bb16e326d65443670197"></a><!-- doxytag: member="Router::Router" ref="a217136993163bb16e326d65443670197" args="(std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; Link &gt; &gt; neighboring_links, std::string router_id, std::vector&lt; std::shared_ptr&lt; Link &gt; &gt; debug_links)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Router</b> (std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt; neighboring_links, std::string router_id, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt; debug_links)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1435286d9572cbf0de11fa3c937ca9a"></a><!-- doxytag: member="Router::updateRouting" ref="ae1435286d9572cbf0de11fa3c937ca9a" args="(Packet::bf_type, std::string, std::string, double)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateRouting</b> (Packet::bf_type, std::string, std::string, double)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b106e96412284611079588b65721aa6"></a><!-- doxytag: member="Router::broadcastTable" ref="a0b106e96412284611079588b65721aa6" args="(double timestamp)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>broadcastTable</b> (double timestamp)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a923848a34881212d310a738032d31610"></a><!-- doxytag: member="Router::addRouting" ref="a923848a34881212d310a738032d31610" args="(std::string targ_host, std::shared_ptr&lt; Path &gt; path)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addRouting</b> (std::string targ_host, std::shared_ptr&lt; <a class="el" href="classPath.html">Path</a> &gt; path)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa28dfae66a6e2587d3c39da83059a866"></a><!-- doxytag: member="Router::addLink" ref="aa28dfae66a6e2587d3c39da83059a866" args="(std::shared_ptr&lt; Link &gt; link)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addLink</b> (std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; link)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c333b431ae61349b91277cda82a3f5e"></a><!-- doxytag: member="Router::getRouting" ref="a2c333b431ae61349b91277cda82a3f5e" args="(std::string targ_host)" -->
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getRouting</b> (std::string targ_host)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed4bdd88f4fa09cb784c5c329c935688"></a><!-- doxytag: member="Router::giveEvent" ref="aed4bdd88f4fa09cb784c5c329c935688" args="(std::shared_ptr&lt; Event &gt;)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa54f568dd950bcb0feae508e3c75889d"></a><!-- doxytag: member="Router::toString" ref="aa54f568dd950bcb0feae508e3c75889d" args="()" -->
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323a820ddc17ea36834cf3316510ec5c"></a><!-- doxytag: member="Router::updateTableWeights" ref="a323a820ddc17ea36834cf3316510ec5c" args="(Packet::bf_type)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateTableWeights</b> (Packet::bf_type)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81641d4aac06367d991e3218151de515"></a><!-- doxytag: member="Router::printRouting" ref="a81641d4aac06367d991e3218151de515" args="(Packet::bf_type, std::string)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>printRouting</b> (Packet::bf_type, std::string)</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/<a class="el" href="Router_8h_source.html">Router.h</a></li>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/Router.cpp</li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Router_8h_source.html">Router.h</a></li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Router.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -116,7 +128,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::s
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -128,7 +140,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::s
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:26 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:41 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

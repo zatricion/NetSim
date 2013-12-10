@@ -1,26 +1,60 @@
 \hypertarget{classFlow}{\section{\-Flow \-Class \-Reference}
 \label{classFlow}\index{\-Flow@{\-Flow}}
 }
+\-Inheritance diagram for \-Flow\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classFlow}
+\end{center}
+\end{figure}
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classFlow_aeb609967880d902a1f8ff8ad9db85862}{{\bfseries \-Flow} (std\-::string idval, std\-::string src, std\-::string dest, std\-::shared\-\_\-ptr$<$ \hyperlink{classCongestionAlg}{\-Congestion\-Alg} $>$ alg, int data\-\_\-size, std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ h, int win\-Size, float ts)}\label{classFlow_aeb609967880d902a1f8ff8ad9db85862}
+\hyperlink{classFlow_ab7771ce5ed20e19fff6bf6ceb5d1adc4}{\-Flow} (std\-::string idval, std\-::string dest, int data\-\_\-size, std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ h, int win\-Size, double ts)
+\begin{DoxyCompactList}\small\item\em \-Constructor for the flow. \end{DoxyCompactList}\item 
+\hypertarget{classFlow_a8a45fd871502fad3fb23987ac773a0ab}{virtual void {\bfseries handle\-Unack\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ unacked, double time)=0}\label{classFlow_a8a45fd871502fad3fb23987ac773a0ab}
 
 \item 
-\hypertarget{classFlow_ad7f274b803ded1f3c5b1a4e24e477561}{void {\bfseries handle\-Unack\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ unacked, float time)}\label{classFlow_ad7f274b803ded1f3c5b1a4e24e477561}
+\hypertarget{classFlow_ab75994d89f53573e60a1650dcaeddabb}{virtual void {\bfseries handle\-Ack} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)=0}\label{classFlow_ab75994d89f53573e60a1650dcaeddabb}
 
 \item 
-\hypertarget{classFlow_abb3e75cba1b777a083cfa5bae24c7af0}{void {\bfseries handle\-Ack} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ p, float time)}\label{classFlow_abb3e75cba1b777a083cfa5bae24c7af0}
+\hypertarget{classFlow_aa74099113ee1c2298874b85ade05be98}{virtual std\-::string {\bfseries to\-String} ()=0}\label{classFlow_aa74099113ee1c2298874b85ade05be98}
 
 \item 
-\hypertarget{classFlow_ae330545a178e3800aadb7c3f856b7b94}{std\-::string {\bfseries to\-String} ()}\label{classFlow_ae330545a178e3800aadb7c3f856b7b94}
+void \hyperlink{classFlow_a1076308c9b3a11a1e0bdea4c7b4c2966}{initialize} (double time)
+\begin{DoxyCompactList}\small\item\em \-Start the data flow. \end{DoxyCompactList}\item 
+\hypertarget{classFlow_a4e819e83edb2b9b90f647e6c43e28b8e}{virtual void {\bfseries log\-Flow\-R\-T\-T} (double time, double \-R\-T\-T)=0}\label{classFlow_a4e819e83edb2b9b90f647e6c43e28b8e}
 
 \item 
-\hypertarget{classFlow_a2fdad818f50e010c5db255abfc5138df}{void {\bfseries initialize} ()}\label{classFlow_a2fdad818f50e010c5db255abfc5138df}
+\hypertarget{classFlow_a777477d26afb220c96de8495e85e73ef}{virtual void {\bfseries log\-Flow\-Window\-Size} (double time, int window\-Size)=0}\label{classFlow_a777477d26afb220c96de8495e85e73ef}
 
-\end{DoxyCompactItemize}
+\item 
+\hypertarget{classFlow_aedfba46ffa2ea5e12ed953174d29380f}{virtual void {\bfseries open\-Connection} (double time)=0}\label{classFlow_aedfba46ffa2ea5e12ed953174d29380f}
+
+\item 
+\hypertarget{classFlow_a8ebd328c963fef5e538a3d6ea91ee317}{virtual void {\bfseries close\-Connection} (double time)=0}\label{classFlow_a8ebd328c963fef5e538a3d6ea91ee317}
+
+\item 
+void \hyperlink{classFlow_a2a9cb972dfe6f6f03543073b575d65c6}{send\-And\-Queue\-Resend} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time, float delay)
+\begin{DoxyCompactList}\small\item\em \-Sends a packet from the flow's source to its destination. \end{DoxyCompactList}\item 
+\hypertarget{classFlow_a3c3884b1b36915274c3c15934f7e6d2a}{virtual void {\bfseries respond\-To\-Syn\-Unack\-Event} (double time)=0}\label{classFlow_a3c3884b1b36915274c3c15934f7e6d2a}
+
+\item 
+\hypertarget{classFlow_a1b9f70de92594ba82c5a1b16298f3811}{virtual void {\bfseries respond\-To\-Syn\-Packet\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)=0}\label{classFlow_a1b9f70de92594ba82c5a1b16298f3811}
+
+\item 
+void \hyperlink{classFlow_a5a547ae4185337bf7790f9ace391ac48}{send} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)
+\begin{DoxyCompactList}\small\item\em \-Helper function for sending a packet from the flow's source to its destination. \end{DoxyCompactList}\item 
+void \hyperlink{classFlow_a792deb9bffc1a4020e09275f037fcc4c}{send\-Many\-Packets} (double time)
+\begin{DoxyCompactList}\small\item\em \-Send as many packets as possible. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFlow_a1c04de60a81b02750673806906701a76}{int {\bfseries window\-Start}}\label{classFlow_a1c04de60a81b02750673806906701a76}
+
+\item 
+\hypertarget{classFlow_a8ffd0d6dd0bf1c2c2b97ac164890715f}{int {\bfseries window\-End}}\label{classFlow_a8ffd0d6dd0bf1c2c2b97ac164890715f}
+
 \item 
 \hypertarget{classFlow_af45cdc7b3609577eb08cb072e9631809}{std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ {\bfseries host}}\label{classFlow_af45cdc7b3609577eb08cb072e9631809}
 
@@ -34,33 +68,150 @@
 \hypertarget{classFlow_a536685c38def6cf8b61d0fb0d7e8372d}{std\-::string {\bfseries destination}}\label{classFlow_a536685c38def6cf8b61d0fb0d7e8372d}
 
 \item 
-\hypertarget{classFlow_aaed7f19c7331e59bb123da68239807bc}{std\-::shared\-\_\-ptr$<$ \hyperlink{classCongestionAlg}{\-Congestion\-Alg} $>$ {\bfseries a}}\label{classFlow_aaed7f19c7331e59bb123da68239807bc}
-
-\item 
 \hypertarget{classFlow_a78d725176506b21ce2355b3742ab8c17}{int {\bfseries num\-Packets}}\label{classFlow_a78d725176506b21ce2355b3742ab8c17}
 
 \item 
-\hypertarget{classFlow_a8c9d7d593004b45b1a1a88932598e9ec}{std\-::unordered\-\_\-set$<$ int $>$ {\bfseries acknowledged\-Packets}}\label{classFlow_a8c9d7d593004b45b1a1a88932598e9ec}
-
-\item 
-\hypertarget{classFlow_ae211f68d0d38e1625b06138aa71ff30c}{std\-::queue$<$ \hyperlink{classPacket}{\-Packet} $>$ {\bfseries flow}}\label{classFlow_ae211f68d0d38e1625b06138aa71ff30c}
-
-\item 
-\hypertarget{classFlow_a6b1bc90a9171baefb34683ce49ab4db6}{float {\bfseries wait\-Time}}\label{classFlow_a6b1bc90a9171baefb34683ce49ab4db6}
-
-\item 
-\hypertarget{classFlow_ab567b4507276eeb779a109c459545988}{int {\bfseries window\-Size}}\label{classFlow_ab567b4507276eeb779a109c459545988}
+\hypertarget{classFlow_a47968d3d4596ad50ce090a0c352a89f5}{double {\bfseries wait\-Time}}\label{classFlow_a47968d3d4596ad50ce090a0c352a89f5}
 
 \item 
 \hypertarget{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}{int {\bfseries packet\-Size}}\label{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}
 
 \item 
-\hypertarget{classFlow_ac46a1249858fde4c562938948bfb13aa}{float {\bfseries timestamp}}\label{classFlow_ac46a1249858fde4c562938948bfb13aa}
+\hypertarget{classFlow_a502b4455d485a1a0325d21d246183bb1}{double {\bfseries timestamp}}\label{classFlow_a502b4455d485a1a0325d21d246183bb1}
+
+\item 
+\hypertarget{classFlow_a56615b49301aaddf4cab4fa3f878c5a7}{\-Phase {\bfseries phase}}\label{classFlow_a56615b49301aaddf4cab4fa3f878c5a7}
+
+\item 
+\hypertarget{classFlow_aef2aa1abe7872f9f75f24c482c5f20f9}{std\-::set$<$ int $>$ {\bfseries un\-Sent\-Packets}}\label{classFlow_aef2aa1abe7872f9f75f24c482c5f20f9}
+
+\item 
+\hypertarget{classFlow_a9cb60750432baab4af8b8481fd97aa31}{double {\bfseries \-A}}\label{classFlow_a9cb60750432baab4af8b8481fd97aa31}
+
+\item 
+\hypertarget{classFlow_a6ffa8765220cfbfcf8b358bcbfd8bc4d}{double {\bfseries \-D}}\label{classFlow_a6ffa8765220cfbfcf8b358bcbfd8bc4d}
+
+\item 
+\hypertarget{classFlow_a22a30218ebecf663beea5902199a5453}{double {\bfseries b}}\label{classFlow_a22a30218ebecf663beea5902199a5453}
 
 \end{DoxyCompactItemize}
 
 
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classFlow_ab7771ce5ed20e19fff6bf6ceb5d1adc4}{\index{\-Flow@{\-Flow}!\-Flow@{\-Flow}}
+\index{\-Flow@{\-Flow}!Flow@{\-Flow}}
+\subsubsection[{\-Flow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Flow\-::\-Flow} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{idval, }
+\item[{std\-::string}]{dest, }
+\item[{int}]{data\-\_\-size, }
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Host} $>$}]{h, }
+\item[{int}]{win\-Size, }
+\item[{double}]{ts}
+\end{DoxyParamCaption}
+)}}\label{classFlow_ab7771ce5ed20e19fff6bf6ceb5d1adc4}
+
+
+\-Constructor for the flow. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em idval} & the id of the flow. \-I\-Ds must be unique \\
+\hline
+{\em dest} & the destination of the data flow \\
+\hline
+{\em data\-\_\-size} & the size of the flow's data packets \\
+\hline
+{\em h} & the host that is the flow's source \\
+\hline
+{\em win\-Size} & the initial size of the flow's window (usually 1) \\
+\hline
+{\em ts} & the timestamp at which the flow begins \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classFlow_a1076308c9b3a11a1e0bdea4c7b4c2966}{\index{\-Flow@{\-Flow}!initialize@{initialize}}
+\index{initialize@{initialize}!Flow@{\-Flow}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Flow\-::initialize} (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)}}\label{classFlow_a1076308c9b3a11a1e0bdea4c7b4c2966}
+
+
+\-Start the data flow. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em time} & the time at which the data flow starts. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classFlow_a5a547ae4185337bf7790f9ace391ac48}{\index{\-Flow@{\-Flow}!send@{send}}
+\index{send@{send}!Flow@{\-Flow}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Flow\-::send} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Packet} $>$}]{pkt, }
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)}}\label{classFlow_a5a547ae4185337bf7790f9ace391ac48}
+
+
+\-Helper function for sending a packet from the flow's source to its destination. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em pkt} & the packet to be sent \\
+\hline
+{\em time} & the time at which it is sent \\
+\hline
+\end{DoxyParams}
+\hypertarget{classFlow_a2a9cb972dfe6f6f03543073b575d65c6}{\index{\-Flow@{\-Flow}!send\-And\-Queue\-Resend@{send\-And\-Queue\-Resend}}
+\index{send\-And\-Queue\-Resend@{send\-And\-Queue\-Resend}!Flow@{\-Flow}}
+\subsubsection[{send\-And\-Queue\-Resend}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Flow\-::send\-And\-Queue\-Resend} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Packet} $>$}]{pkt, }
+\item[{double}]{time, }
+\item[{float}]{delay}
+\end{DoxyParamCaption}
+)}}\label{classFlow_a2a9cb972dfe6f6f03543073b575d65c6}
+
+
+\-Sends a packet from the flow's source to its destination. 
+
+\-Also queues an \hyperlink{classUnackEvent}{\-Unack\-Event} in case an ack isn't received.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em pkt} & the packet to be sent \\
+\hline
+{\em time} & the time at which the packet it sent \\
+\hline
+{\em delay} & the delay after 'time' at which we consider the packet to have timed out \\
+\hline
+\end{DoxyParams}
+\hypertarget{classFlow_a792deb9bffc1a4020e09275f037fcc4c}{\index{\-Flow@{\-Flow}!send\-Many\-Packets@{send\-Many\-Packets}}
+\index{send\-Many\-Packets@{send\-Many\-Packets}!Flow@{\-Flow}}
+\subsubsection[{send\-Many\-Packets}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Flow\-::send\-Many\-Packets} (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)}}\label{classFlow_a792deb9bffc1a4020e09275f037fcc4c}
+
+
+\-Send as many packets as possible. 
+
+\-Every packet that has never been marked as being sent (i.\-e. every packet that is in unsent\-Packets) that also satisfies window\-Start $<$= sequence\-\_\-num $<$= window\-End will be sent. \-The ones that have already been sent (the ones not in unsent\-Packets) will not be resent.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em time} & the time at which the packets are sent. \\
+\hline
+\end{DoxyParams}
+
+
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Flow.\-h\item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Flow.\-cpp\end{DoxyCompactItemize}
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Flow.\-h\item 
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Flow.\-cpp\end{DoxyCompactItemize}

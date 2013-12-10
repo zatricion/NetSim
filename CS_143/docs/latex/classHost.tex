@@ -10,22 +10,35 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classHost_afde96dd6239594d91697006a850bea5b}{{\bfseries \-Host} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ host\-\_\-link, std\-::string host\-\_\-id)}\label{classHost_afde96dd6239594d91697006a850bea5b}
+\hyperlink{classHost_afde96dd6239594d91697006a850bea5b}{\-Host} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ host\-\_\-link, std\-::string host\-\_\-id)
+\begin{DoxyCompactList}\small\item\em \-Constructor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$) override
+\begin{DoxyCompactList}\small\item\em \-Receives an event. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a1386df4e48df0cf8e7252c55fa9e0f2b}{respond\-To} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Called when host receives a packet. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a15013b657e880635a087ce41d9bccaf8}{respond\-To} (\hyperlink{classFlowEvent}{\-Flow\-Event} flow\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Called when a flow\-\_\-event is received. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_af19765406b0fc694ec4122ef57d3bbb3}{respond\-To} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Called when there is a potentially unacknowledged packet. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a029c7f389a580fc7e53da38a698d0d9a}{send\-And\-Queue\-Resend} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time, float delay)
+\begin{DoxyCompactList}\small\item\em \-Queues a packet\-Event, and an unack event for the packet\-Event. \end{DoxyCompactList}\item 
+\hypertarget{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}{void {\bfseries send} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)}\label{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}
 
 \item 
-\hypertarget{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}{virtual void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$) override}\label{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}
+\hypertarget{classHost_a13a11214f204347c85388b28043459c2}{void {\bfseries respond\-To\-Syn\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)}\label{classHost_a13a11214f204347c85388b28043459c2}
 
 \item 
-void \hyperlink{classHost_a28da4a1168cd8ce7c396f0ba5ced1c66}{respond\-To} (\hyperlink{classPacketEvent}{\-Packet\-Event})
-\item 
-\hypertarget{classHost_adbd4abe19840d56b09499af1158d6081}{void {\bfseries respond\-To} (\hyperlink{classFlowEvent}{\-Flow\-Event})}\label{classHost_adbd4abe19840d56b09499af1158d6081}
+\hypertarget{classHost_a9f76466a0f9e8362f70c7990eae22641}{void {\bfseries respond\-To\-Fin\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)}\label{classHost_a9f76466a0f9e8362f70c7990eae22641}
 
 \item 
-void \hyperlink{classHost_a64221eb13d89a1bb84f1eb351bc45be4}{respond\-To} (\hyperlink{classUnackEvent}{\-Unack\-Event})
-\item 
-\hypertarget{classHost_aa807c50f690bd2018265504483440c7d}{std\-::string {\bfseries to\-String} ()}\label{classHost_aa807c50f690bd2018265504483440c7d}
+\hypertarget{classHost_a55abc101a34bd2bc1aff724883a85ecc}{void {\bfseries respond\-To\-Syn\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)}\label{classHost_a55abc101a34bd2bc1aff724883a85ecc}
 
-\end{DoxyCompactItemize}
+\item 
+\hypertarget{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}{void {\bfseries respond\-To\-Fin\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)}\label{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}
+
+\item 
+std\-::string \hyperlink{classHost_aa807c50f690bd2018265504483440c7d}{to\-String} ()
+\begin{DoxyCompactList}\small\item\em \-Get a string representing the host. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -36,27 +49,146 @@ void \hyperlink{classHost_a64221eb13d89a1bb84f1eb351bc45be4}{respond\-To} (\hype
 $<$ std\-::string, std\-::shared\-\_\-ptr\*
 $<$ \hyperlink{classFlow}{\-Flow} $>$ $>$ {\bfseries flows}}\label{classHost_a27e0ce48916f5882e8916f96ec1a6b1f}
 
+\item 
+\hypertarget{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}{std\-::unordered\-\_\-map\*
+$<$ std\-::string, std\-::pair\*
+$<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8e5905756bdacfb89df56f6bcb29d7ff}
+
 \end{DoxyCompactItemize}
 
 
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classHost_afde96dd6239594d91697006a850bea5b}{\index{\-Host@{\-Host}!\-Host@{\-Host}}
+\index{\-Host@{\-Host}!Host@{\-Host}}
+\subsubsection[{\-Host}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Host\-::\-Host} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Link} $>$}]{host\-\_\-link, }
+\item[{std\-::string}]{host\-\_\-id}
+\end{DoxyParamCaption}
+)}}\label{classHost_afde96dd6239594d91697006a850bea5b}
+
+
+\-Constructor. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em host\-\_\-link} & the link connecting the host to a router \\
+\hline
+{\em host\-\_\-id} & the unique id of the host \\
+\hline
+\end{DoxyParams}
+
+
 \subsection{\-Member \-Function \-Documentation}
-\hypertarget{classHost_a28da4a1168cd8ce7c396f0ba5ced1c66}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
+\hypertarget{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}{\index{\-Host@{\-Host}!give\-Event@{give\-Event}}
+\index{give\-Event@{give\-Event}!Host@{\-Host}}
+\subsubsection[{give\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::give\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Event} $>$}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}
+
+
+\-Receives an event. 
+
+\-Determines its type, and passes to a helper function.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em e} & the event to be processed \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classEventGenerator}{\-Event\-Generator}.
+
+\hypertarget{classHost_a1386df4e48df0cf8e7252c55fa9e0f2b}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
 \index{respond\-To@{respond\-To}!Host@{\-Host}}
 \subsubsection[{respond\-To}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To} (
 \begin{DoxyParamCaption}
 \item[{{\bf \-Packet\-Event}}]{new\-\_\-event}
 \end{DoxyParamCaption}
-)}}\label{classHost_a28da4a1168cd8ce7c396f0ba5ced1c66}
-\-Called when host receives any packet. \hypertarget{classHost_a64221eb13d89a1bb84f1eb351bc45be4}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
+)}}\label{classHost_a1386df4e48df0cf8e7252c55fa9e0f2b}
+
+
+\-Called when host receives a packet. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em new\-\_\-event} & the packet event received. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a15013b657e880635a087ce41d9bccaf8}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
+\index{respond\-To@{respond\-To}!Host@{\-Host}}
+\subsubsection[{respond\-To}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Flow\-Event}}]{flow\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a15013b657e880635a087ce41d9bccaf8}
+
+
+\-Called when a flow\-\_\-event is received. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em flow\-\_\-event} & the flow event received \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_af19765406b0fc694ec4122ef57d3bbb3}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
 \index{respond\-To@{respond\-To}!Host@{\-Host}}
 \subsubsection[{respond\-To}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To} (
 \begin{DoxyParamCaption}
 \item[{{\bf \-Unack\-Event}}]{unack\-\_\-event}
 \end{DoxyParamCaption}
-)}}\label{classHost_a64221eb13d89a1bb84f1eb351bc45be4}
+)}}\label{classHost_af19765406b0fc694ec4122ef57d3bbb3}
+
+
 \-Called when there is a potentially unacknowledged packet. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em unack\-\_\-event} & the \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet that might not have been acknowledged \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a029c7f389a580fc7e53da38a698d0d9a}{\index{\-Host@{\-Host}!send\-And\-Queue\-Resend@{send\-And\-Queue\-Resend}}
+\index{send\-And\-Queue\-Resend@{send\-And\-Queue\-Resend}!Host@{\-Host}}
+\subsubsection[{send\-And\-Queue\-Resend}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::send\-And\-Queue\-Resend} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Packet} $>$}]{pkt, }
+\item[{double}]{time, }
+\item[{float}]{delay}
+\end{DoxyParamCaption}
+)}}\label{classHost_a029c7f389a580fc7e53da38a698d0d9a}
+
+
+\-Queues a packet\-Event, and an unack event for the packet\-Event. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em pkt} & the packet for the \hyperlink{classPacketEvent}{\-Packet\-Event} \\
+\hline
+{\em time} & the time at which event is to be sent. \\
+\hline
+{\em delay} & the packet will be sent at time + delay \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_aa807c50f690bd2018265504483440c7d}{\index{\-Host@{\-Host}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!Host@{\-Host}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Host\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classHost_aa807c50f690bd2018265504483440c7d}
+
+
+\-Get a string representing the host. 
+
+\begin{DoxyReturn}{\-Returns}
+the string representing the host 
+\end{DoxyReturn}
+
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Host.\-h\item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Host.\-cpp\end{DoxyCompactItemize}
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Host.\-h\item 
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Host.\-cpp\end{DoxyCompactItemize}

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>NetSim: /home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/Flow.h Source File</title>
+<title>NetSim: /home/max/caltech/NetSim/CS_143/src/EventGenerators/Flow.h Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -75,94 +75,100 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/Flow.h</div>  </div>
+<div class="title">/home/max/caltech/NetSim/CS_143/src/EventGenerators/Flow.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __CS_143_Flow__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __CS_143_Flow__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;unordered_set&gt;</span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;set&gt;</span>
 <a name="l00005"></a>00005 <span class="preprocessor">#include &lt;memory&gt;</span>
 <a name="l00006"></a>00006 <span class="preprocessor">#include &lt;queue&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;memory&gt;</span>
-<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;../EventHandling/Packet.h&quot;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &quot;../EventHandling/Packet.h&quot;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;../Tools/Log.h&quot;</span>
 <a name="l00009"></a>00009 
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="keyword">class </span><a class="code" href="classCongestionAlg.html">CongestionAlg</a>;
-<a name="l00012"></a>00012 <span class="keyword">class </span><a class="code" href="classHost.html">Host</a>;
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="comment">// packet size is 100KB</span>
-<a name="l00015"></a>00015 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> DATA_PKT_SIZE = 100000;
-<a name="l00016"></a>00016 
-<a name="l00017"></a><a class="code" href="classFlow.html">00017</a> <span class="keyword">class </span><a class="code" href="classFlow.html">Flow</a>
-<a name="l00018"></a>00018 {
-<a name="l00019"></a>00019 <span class="keyword">public</span>:
-<a name="l00020"></a>00020     <span class="comment">// Host that owns the flow</span>
-<a name="l00021"></a>00021     std::shared_ptr&lt;Host&gt; host;
-<a name="l00022"></a>00022     
-<a name="l00023"></a>00023     <span class="comment">// shared id of the flow on the host.</span>
-<a name="l00024"></a>00024         std::string id;
-<a name="l00025"></a>00025     
-<a name="l00026"></a>00026         <span class="comment">// Source of the flow</span>
-<a name="l00027"></a>00027         std::string source;
-<a name="l00028"></a>00028     
-<a name="l00029"></a>00029         <span class="comment">// Destination of the flow</span>
-<a name="l00030"></a>00030         std::string destination;
-<a name="l00031"></a>00031     
-<a name="l00032"></a>00032         <span class="comment">// Congestion algorithm associated with the flow.</span>
-<a name="l00033"></a>00033         std::shared_ptr&lt;CongestionAlg&gt; a;
-<a name="l00034"></a>00034     
-<a name="l00035"></a>00035         <span class="comment">// Total number of packets</span>
-<a name="l00036"></a>00036         <span class="keywordtype">int</span> numPackets;
+<a name="l00010"></a>00010 <span class="keyword">class </span>CongestionAlg;
+<a name="l00011"></a>00011 <span class="keyword">class </span><a class="code" href="classHost.html">Host</a>;
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="keyword">enum</span> Phase {SYN, DATA, FIN, DONE};
+<a name="l00014"></a>00014 <span class="keyword">enum</span> TahoePhase {SLOWSTART, CONGESTIONAVOIDANCE};
+<a name="l00015"></a>00015 <span class="comment">// data packet size is 1KB</span>
+<a name="l00016"></a>00016 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> DATA_PKT_SIZE = 1024 * 8;
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 <span class="comment">// other packets are 64B</span>
+<a name="l00019"></a>00019 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> ACK_SIZE = 64 * 8;
+<a name="l00020"></a>00020 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> SYN_SIZE = 1024 * 8;
+<a name="l00021"></a>00021 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> FIN_SIZE = 64 * 8;
+<a name="l00022"></a>00022 
+<a name="l00023"></a><a class="code" href="classFlow.html">00023</a> <span class="keyword">class </span><a class="code" href="classFlow.html">Flow</a> {
+<a name="l00024"></a>00024 <span class="keyword">public</span>:
+<a name="l00025"></a>00025     <span class="keywordtype">int</span> windowStart;
+<a name="l00026"></a>00026     <span class="keywordtype">int</span> windowEnd;
+<a name="l00027"></a>00027     std::shared_ptr&lt;Host&gt; host;
+<a name="l00028"></a>00028     std::string id;
+<a name="l00029"></a>00029     std::string source;
+<a name="l00030"></a>00030     std::string destination;
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032     <span class="comment">// Total number of packets in the flow.</span>
+<a name="l00033"></a>00033     <span class="keywordtype">int</span> numPackets;
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035     <span class="comment">// How long the flow will wait before sending another packet.</span>
+<a name="l00036"></a>00036     <span class="keywordtype">double</span> waitTime;
 <a name="l00037"></a>00037 
-<a name="l00038"></a>00038     <span class="comment">// Set of all acknowledged packets.</span>
-<a name="l00039"></a>00039     std::unordered_set&lt;int&gt; acknowledgedPackets;
-<a name="l00040"></a>00040     
-<a name="l00041"></a>00041     <span class="comment">// Packets that represent the data flow.</span>
-<a name="l00042"></a>00042     std::queue&lt;Packet&gt; flow;
-<a name="l00043"></a>00043     
-<a name="l00044"></a>00044     <span class="comment">// How long the flow will wait before sending another packet.</span>
-<a name="l00045"></a>00045     <span class="keywordtype">float</span> waitTime;
-<a name="l00046"></a>00046     
-<a name="l00047"></a>00047     <span class="comment">// window size</span>
-<a name="l00048"></a>00048     <span class="keywordtype">int</span> windowSize;
-<a name="l00049"></a>00049     
-<a name="l00050"></a>00050     <span class="keywordtype">int</span> packetSize;
-<a name="l00051"></a>00051     
-<a name="l00052"></a>00052     <span class="comment">// Time when the flow is generated.  Used to create a small set</span>
-<a name="l00053"></a>00053     <span class="comment">// of Events.</span>
-<a name="l00054"></a>00054     <span class="keywordtype">float</span> timestamp;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056         <span class="comment">// Methods:</span>
-<a name="l00057"></a>00057     
-<a name="l00058"></a>00058         <span class="comment">// Constructor</span>
-<a name="l00059"></a>00059     <a class="code" href="classFlow.html">Flow</a>();
-<a name="l00060"></a>00060     <a class="code" href="classFlow.html">Flow</a>(std::string idval, std::string src, std::string dest,
-<a name="l00061"></a>00061              std::shared_ptr&lt;CongestionAlg&gt; alg, <span class="keywordtype">int</span> data_size, std::shared_ptr&lt;Host&gt; h,
-<a name="l00062"></a>00062              <span class="keywordtype">int</span> winSize, <span class="keywordtype">float</span> ts);
-<a name="l00063"></a>00063     
-<a name="l00064"></a>00064     <span class="comment">// Called when there is a potentially unacknowledged event.</span>
-<a name="l00065"></a>00065     <span class="comment">// I.e. when we send a packet, we add an UnackEvent to the event heap.  Then,</span>
-<a name="l00066"></a>00066     <span class="comment">// when the event is handled, we check to see if it has been acknowledged.</span>
-<a name="l00067"></a>00067     <span class="comment">// If so, we have a no-op.  If not, resend.</span>
-<a name="l00068"></a>00068     <span class="keywordtype">void</span> handleUnackEvent(std::shared_ptr&lt;Packet&gt; unacked, <span class="keywordtype">float</span> time);
-<a name="l00069"></a>00069     
-<a name="l00070"></a>00070     <span class="comment">// Called when an ack is received.</span>
-<a name="l00071"></a>00071     <span class="keywordtype">void</span> handleAck(std::shared_ptr&lt;Packet&gt; p, <span class="keywordtype">float</span> time);
+<a name="l00038"></a>00038     <span class="comment">// packet size</span>
+<a name="l00039"></a>00039     <span class="keywordtype">int</span> packetSize;
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041     <span class="comment">// Time when the flow is generated.</span>
+<a name="l00042"></a>00042     <span class="keywordtype">double</span> timestamp;
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044     <span class="comment">// The current phase we are in.</span>
+<a name="l00045"></a>00045     Phase phase;
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047     std::set&lt;int&gt; unSentPackets;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <span class="keywordtype">double</span> A;
+<a name="l00050"></a>00050     <span class="keywordtype">double</span> D;
+<a name="l00051"></a>00051     <span class="keywordtype">double</span> b;
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053     <span class="comment">// No constructors.</span>
+<a name="l00054"></a>00054     <a class="code" href="classFlow.html#ab7771ce5ed20e19fff6bf6ceb5d1adc4" title="Constructor for the flow.">Flow</a>(std::string idval, std::string dest,
+<a name="l00055"></a>00055          <span class="keywordtype">int</span> data_size, std::shared_ptr&lt;Host&gt; h,
+<a name="l00056"></a>00056          <span class="keywordtype">int</span> winSize, <span class="keywordtype">double</span> ts);
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059     <span class="comment">//</span>
+<a name="l00060"></a>00060     <span class="comment">// Called when there is a potentially unacknowledged event.</span>
+<a name="l00061"></a>00061     <span class="comment">// When we send a packet, we add an UnackEvent to the event heap.  Then,</span>
+<a name="l00062"></a>00062     <span class="comment">// when the event is handled, we check to see if it has been acknowledged.</span>
+<a name="l00063"></a>00063     <span class="comment">// If so, we have a no-op.  If not, resend.</span>
+<a name="l00064"></a>00064     <span class="keyword">virtual</span> <span class="keywordtype">void</span> handleUnackEvent(std::shared_ptr&lt;Packet&gt; unacked, <span class="keywordtype">double</span> time) = 0;
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066     <span class="comment">// Called when an ack is received.</span>
+<a name="l00067"></a>00067     <span class="keyword">virtual</span> <span class="keywordtype">void</span> handleAck(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time) = 0;
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069     <span class="keyword">virtual</span> std::string toString() = 0;
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966" title="Start the data flow.">initialize</a>(<span class="keywordtype">double</span> time);
 <a name="l00072"></a>00072 
-<a name="l00073"></a>00073     std::string toString();
-<a name="l00074"></a>00074         
-<a name="l00075"></a>00075     <span class="keywordtype">void</span> initialize();
-<a name="l00076"></a>00076 };
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143_Flow__) */</span>
+<a name="l00073"></a>00073     <span class="keyword">virtual</span> <span class="keywordtype">void</span> logFlowRTT(<span class="keywordtype">double</span> time, <span class="keywordtype">double</span> RTT) = 0;
+<a name="l00074"></a>00074     <span class="keyword">virtual</span> <span class="keywordtype">void</span> logFlowWindowSize(<span class="keywordtype">double</span> time, <span class="keywordtype">int</span> windowSize) = 0;
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076     <span class="keyword">virtual</span> <span class="keywordtype">void</span> openConnection(<span class="keywordtype">double</span> time) = 0;
+<a name="l00077"></a>00077     <span class="keyword">virtual</span> <span class="keywordtype">void</span> closeConnection(<span class="keywordtype">double</span> time) = 0;
+<a name="l00078"></a>00078     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6" title="Sends a packet from the flow&#39;s source to its destination.">sendAndQueueResend</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time, <span class="keywordtype">float</span> delay);
+<a name="l00079"></a>00079     <span class="keyword">virtual</span> <span class="keywordtype">void</span> respondToSynUnackEvent(<span class="keywordtype">double</span> time) = 0;
+<a name="l00080"></a>00080     <span class="keyword">virtual</span> <span class="keywordtype">void</span> respondToSynPacketEvent(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time) = 0;
+<a name="l00081"></a>00081     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a5a547ae4185337bf7790f9ace391ac48" title="Helper function for sending a packet from the flow&#39;s source to its destination.">send</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time);
+<a name="l00082"></a>00082     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c" title="Send as many packets as possible.">sendManyPackets</a>(<span class="keywordtype">double</span> time);
+<a name="l00083"></a>00083 };
+<a name="l00084"></a>00084 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -174,7 +180,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:24 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:39 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

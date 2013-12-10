@@ -10,10 +10,19 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classRouter_a0c8e76247f99d1ece5ab8368f30bcb9e}{void {\bfseries add\-Routing} (std\-::string targ\-\_\-host, std\-::string targ\-\_\-link)}\label{classRouter_a0c8e76247f99d1ece5ab8368f30bcb9e}
+\hypertarget{classRouter_a217136993163bb16e326d65443670197}{{\bfseries \-Router} (std\-::vector$<$ std\-::string $>$ host\-\_\-list, std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ $>$ neighboring\-\_\-links, std\-::string router\-\_\-id, std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ $>$ debug\-\_\-links)}\label{classRouter_a217136993163bb16e326d65443670197}
 
 \item 
-\hypertarget{classRouter_a07a2d8e8d3f8f2ce68178afa61bfe00c}{void {\bfseries add\-Link} (std\-::string link\-\_\-id)}\label{classRouter_a07a2d8e8d3f8f2ce68178afa61bfe00c}
+\hypertarget{classRouter_ae1435286d9572cbf0de11fa3c937ca9a}{void {\bfseries update\-Routing} (\-Packet\-::bf\-\_\-type, std\-::string, std\-::string, double)}\label{classRouter_ae1435286d9572cbf0de11fa3c937ca9a}
+
+\item 
+\hypertarget{classRouter_a0b106e96412284611079588b65721aa6}{void {\bfseries broadcast\-Table} (double timestamp)}\label{classRouter_a0b106e96412284611079588b65721aa6}
+
+\item 
+\hypertarget{classRouter_a923848a34881212d310a738032d31610}{void {\bfseries add\-Routing} (std\-::string targ\-\_\-host, std\-::shared\-\_\-ptr$<$ \hyperlink{classPath}{\-Path} $>$ path)}\label{classRouter_a923848a34881212d310a738032d31610}
+
+\item 
+\hypertarget{classRouter_aa28dfae66a6e2587d3c39da83059a866}{void {\bfseries add\-Link} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ link)}\label{classRouter_aa28dfae66a6e2587d3c39da83059a866}
 
 \item 
 \hypertarget{classRouter_a2c333b431ae61349b91277cda82a3f5e}{std\-::string {\bfseries get\-Routing} (std\-::string targ\-\_\-host)}\label{classRouter_a2c333b431ae61349b91277cda82a3f5e}
@@ -21,10 +30,19 @@
 \item 
 \hypertarget{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)}\label{classRouter_aed4bdd88f4fa09cb784c5c329c935688}
 
+\item 
+\hypertarget{classRouter_aa54f568dd950bcb0feae508e3c75889d}{std\-::string {\bfseries to\-String} ()}\label{classRouter_aa54f568dd950bcb0feae508e3c75889d}
+
+\item 
+\hypertarget{classRouter_a323a820ddc17ea36834cf3316510ec5c}{void {\bfseries update\-Table\-Weights} (\-Packet\-::bf\-\_\-type)}\label{classRouter_a323a820ddc17ea36834cf3316510ec5c}
+
+\item 
+\hypertarget{classRouter_a81641d4aac06367d991e3218151de515}{void {\bfseries print\-Routing} (\-Packet\-::bf\-\_\-type, std\-::string)}\label{classRouter_a81641d4aac06367d991e3218151de515}
+
 \end{DoxyCompactItemize}
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Router.\-h\item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Router.\-cpp\end{DoxyCompactItemize}
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Router.\-h\item 
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Router.\-cpp\end{DoxyCompactItemize}

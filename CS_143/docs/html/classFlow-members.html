@@ -82,31 +82,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 This is the complete list of members for <a class="el" href="classFlow.html">Flow</a>, including all inherited members.<table>
-  <tr bgcolor="#f0f0f0"><td><b>a</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>acknowledgedPackets</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>A</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>b</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>closeConnection</b>(double time)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>D</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>destination</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>flow</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>Flow</b>() (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>Flow</b>(std::string idval, std::string src, std::string dest, std::shared_ptr&lt; CongestionAlg &gt; alg, int data_size, std::shared_ptr&lt; Host &gt; h, int winSize, float ts) (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>handleAck</b>(std::shared_ptr&lt; Packet &gt; p, float time) (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>handleUnackEvent</b>(std::shared_ptr&lt; Packet &gt; unacked, float time) (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#ab7771ce5ed20e19fff6bf6ceb5d1adc4">Flow</a>(std::string idval, std::string dest, int data_size, std::shared_ptr&lt; Host &gt; h, int winSize, double ts)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>handleAck</b>(std::shared_ptr&lt; Packet &gt; pkt, double time)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>handleUnackEvent</b>(std::shared_ptr&lt; Packet &gt; unacked, double time)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>host</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>id</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>initialize</b>() (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966">initialize</a>(double time)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>logFlowRTT</b>(double time, double RTT)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>logFlowWindowSize</b>(double time, int windowSize)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>numPackets</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>openConnection</b>(double time)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>packetSize</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>phase</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>respondToSynPacketEvent</b>(std::shared_ptr&lt; Packet &gt; pkt, double time)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>respondToSynUnackEvent</b>(double time)=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a5a547ae4185337bf7790f9ace391ac48">send</a>(std::shared_ptr&lt; Packet &gt; pkt, double time)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6">sendAndQueueResend</a>(std::shared_ptr&lt; Packet &gt; pkt, double time, float delay)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c">sendManyPackets</a>(double time)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>source</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>timestamp</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>toString</b>() (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>toString</b>()=0 (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>unSentPackets</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>waitTime</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>windowSize</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>windowEnd</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>windowStart</b> (defined in <a class="el" href="classFlow.html">Flow</a>)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
 </table></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -118,7 +129,7 @@ This is the complete list of members for <a class="el" href="classFlow.html">Flo
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:40 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -89,7 +89,7 @@ Inheritance diagram for Link:</div>
  <div class="center">
   <img src="classLink.png" usemap="#Link_map" alt=""/>
   <map id="Link_map" name="Link_map">
-<area href="classEventGenerator.html" alt="EventGenerator" shape="rect" coords="0,0,101,24"/>
+<area href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators." alt="EventGenerator" shape="rect" coords="0,0,101,24"/>
 </map>
  </div></div>
 
@@ -97,14 +97,28 @@ Inheritance diagram for Link:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af193bb2a442252ada227fcb2c16c627d"></a><!-- doxytag: member="Link::Link" ref="af193bb2a442252ada227fcb2c16c627d" args="(float, float, float, std::string, std::string, std::string)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Link</b> (float, float, float, std::string, std::string, std::string)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0a6ae4d9767bacfb371f52a30441e64"></a><!-- doxytag: member="Link::Link" ref="af0a6ae4d9767bacfb371f52a30441e64" args="(double, float, float, std::string, std::string, std::string)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Link</b> (double, float, float, std::string, std::string, std::string)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd9466c4c2097329f4affd9b2eafbd7a"></a><!-- doxytag: member="Link::giveEvent" ref="abd9466c4c2097329f4affd9b2eafbd7a" args="(std::shared_ptr&lt; Event &gt;) override" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19a132f87f8028ccd5af2503084aac64"></a><!-- doxytag: member="Link::getTotalDelay" ref="a19a132f87f8028ccd5af2503084aac64" args="(std::string node)" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getTotalDelay</b> (std::string node)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa4e4c72a6384f118846765c296e5634"></a><!-- doxytag: member="Link::getOtherNode" ref="aaa4e4c72a6384f118846765c296e5634" args="(std::string node)" -->
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOtherNode</b> (std::string node)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e1ec62377102139e4acc14392e96c12"></a><!-- doxytag: member="Link::logLinkRate" ref="a0e1ec62377102139e4acc14392e96c12" args="(double time, std::string node)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>logLinkRate</b> (double time, std::string node)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af07994bcf90cd63abe9edab218a5d752"></a><!-- doxytag: member="Link::logBufferOccupancy" ref="af07994bcf90cd63abe9edab218a5d752" args="(double time, std::string node)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>logBufferOccupancy</b> (double time, std::string node)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94f034f0b3ebfbf4c08bcae80a5d9904"></a><!-- doxytag: member="Link::packetLoss" ref="a94f034f0b3ebfbf4c08bcae80a5d9904" args="(double)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>packetLoss</b> (double)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6349999e40910091ecea77e2a366aa46"></a><!-- doxytag: member="Link::getPropDelay" ref="a6349999e40910091ecea77e2a366aa46" args="()" -->
+double&#160;</td><td class="memItemRight" valign="bottom"><b>getPropDelay</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c768141c7ebf3b852bf978757f903be"></a><!-- doxytag: member="Link::toString" ref="a8c768141c7ebf3b852bf978757f903be" args="()" -->
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/<a class="el" href="Link_8h_source.html">Link.h</a></li>
-<li>/home/max/caltech/senior/NetSim/CS_143/src/EventGenerators/Link.cpp</li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Link_8h_source.html">Link.h</a></li>
+<li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Link.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -112,7 +126,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -124,7 +138,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 20:33:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 03:47:41 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

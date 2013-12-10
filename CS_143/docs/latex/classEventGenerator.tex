@@ -1,6 +1,15 @@
 \hypertarget{classEventGenerator}{\section{\-Event\-Generator \-Class \-Reference}
 \label{classEventGenerator}\index{\-Event\-Generator@{\-Event\-Generator}}
 }
+
+
+\-Superclass for \-Links, \-Hosts, \-Routers, and \-Flow\-Generators.  
+
+
+
+
+{\ttfamily \#include $<$\-Event\-Generator.\-h$>$}
+
 \-Inheritance diagram for \-Event\-Generator\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,46 +19,124 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classEventGenerator_a467b319c4317b83b9c16708c9815953d}{std\-::string {\bfseries get\-I\-D} () const }\label{classEventGenerator_a467b319c4317b83b9c16708c9815953d}
-
-\item 
+std\-::string \hyperlink{classEventGenerator_a467b319c4317b83b9c16708c9815953d}{get\-I\-D} () const 
+\begin{DoxyCompactList}\small\item\em \-Get the \-I\-D of the \hyperlink{classEventGenerator}{\-Event\-Generator}. \end{DoxyCompactList}\item 
+bool \hyperlink{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}{has\-Events} ()
+\begin{DoxyCompactList}\small\item\em \-Tells whether the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue has any events. \end{DoxyCompactList}\item 
 \hypertarget{classEventGenerator_a5d7d4625d7dc71a887cf39a144cc2efa}{virtual void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)=0}\label{classEventGenerator_a5d7d4625d7dc71a887cf39a144cc2efa}
 
 \item 
-\hypertarget{classEventGenerator_ab40fd3a0bf1aa974ba50feb443d81009}{std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ {\bfseries get\-Event} ()}\label{classEventGenerator_ab40fd3a0bf1aa974ba50feb443d81009}
-
-\item 
-\hypertarget{classEventGenerator_a20e80b412caa6e20244a111ad6e3a0c4}{float {\bfseries get\-Next\-Time} ()}\label{classEventGenerator_a20e80b412caa6e20244a111ad6e3a0c4}
-
-\item 
-\hypertarget{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}{bool {\bfseries has\-Events} ()}\label{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}
-
-\item 
-\hypertarget{classEventGenerator_a3487849484c9b521527d6acacee79e88}{void {\bfseries add\-Event\-To\-Local\-Queue} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ e)}\label{classEventGenerator_a3487849484c9b521527d6acacee79e88}
-
-\item 
-\hypertarget{classEventGenerator_a359bf18e456f0f6618c12c923cc65d1d}{long {\bfseries heap\-Size} ()}\label{classEventGenerator_a359bf18e456f0f6618c12c923cc65d1d}
-
-\item 
-\hypertarget{classEventGenerator_ac39a7ed01f67521ce0ccf2999bd4f7b4}{void {\bfseries print\-Heap\-Size} ()}\label{classEventGenerator_ac39a7ed01f67521ce0ccf2999bd4f7b4}
-
-\end{DoxyCompactItemize}
+std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ \hyperlink{classEventGenerator_ab40fd3a0bf1aa974ba50feb443d81009}{get\-Event} ()
+\begin{DoxyCompactList}\small\item\em \-Remove and return the lowest time event from the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue. \end{DoxyCompactList}\item 
+double \hyperlink{classEventGenerator_ac4b5ccdeaf232fe59854535bb13747a9}{get\-Next\-Time} ()
+\begin{DoxyCompactList}\small\item\em \-Get the lowest time in the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue. \end{DoxyCompactList}\item 
+void \hyperlink{classEventGenerator_a3487849484c9b521527d6acacee79e88}{add\-Event\-To\-Local\-Queue} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ e)
+\begin{DoxyCompactList}\small\item\em \-Add \hyperlink{classEvent}{\-Event} to local event\-Heap. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
+std\-::string \hyperlink{classEventGenerator_af4fa28d08ed4a3be31f9383cf72e0d2c}{uuid}
+\begin{DoxyCompactList}\small\item\em \-The unique id of the \hyperlink{classEventGenerator}{\-Event\-Generator}. \end{DoxyCompactList}\item 
 \hypertarget{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}{std\-::priority\-\_\-queue\*
 $<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$\*
 , std\-::vector$<$ std\-::shared\-\_\-ptr\*
 $<$ \hyperlink{classEvent}{\-Event} $>$ $>$, std\-::greater\*
-$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ $>$ $>$ {\bfseries event\-Heap}}\label{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}
+$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ $>$ $>$ \hyperlink{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}{event\-Heap}}\label{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}
 
-\item 
-\hypertarget{classEventGenerator_af4fa28d08ed4a3be31f9383cf72e0d2c}{std\-::string {\bfseries uuid}}\label{classEventGenerator_af4fa28d08ed4a3be31f9383cf72e0d2c}
+\begin{DoxyCompactList}\small\item\em \-The event\-Heap, which stores a list of events that the the \hyperlink{classEventGenerator}{\-Event\-Generator} will give to the \-Event\-Handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\end{DoxyCompactItemize}
+
+\subsection{\-Detailed \-Description}
+\-Superclass for \-Links, \-Hosts, \-Routers, and \-Flow\-Generators. 
+
+\-Event\-Generators each have their own event\-Heaps, which are ordered lists of events. \-The \-Event\-Handler will determine the \hyperlink{classEvent}{\-Event} in the event\-Heaps of the set of \-Event\-Generators with the minimum time, and handle the \hyperlink{classEvent}{\-Event}. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classEventGenerator_a3487849484c9b521527d6acacee79e88}{\index{\-Event\-Generator@{\-Event\-Generator}!add\-Event\-To\-Local\-Queue@{add\-Event\-To\-Local\-Queue}}
+\index{add\-Event\-To\-Local\-Queue@{add\-Event\-To\-Local\-Queue}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{add\-Event\-To\-Local\-Queue}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Event\-Generator\-::add\-Event\-To\-Local\-Queue} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Event} $>$}]{e}
+\end{DoxyParamCaption}
+)}}\label{classEventGenerator_a3487849484c9b521527d6acacee79e88}
+
+
+\-Add \hyperlink{classEvent}{\-Event} to local event\-Heap. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-E} & the \hyperlink{classEvent}{\-Event} to add \\
+\hline
+\end{DoxyParams}
+\hypertarget{classEventGenerator_ab40fd3a0bf1aa974ba50feb443d81009}{\index{\-Event\-Generator@{\-Event\-Generator}!get\-Event@{get\-Event}}
+\index{get\-Event@{get\-Event}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{get\-Event}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<$ {\bf \-Event} $>$ {\bf \-Event\-Generator\-::get\-Event} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classEventGenerator_ab40fd3a0bf1aa974ba50feb443d81009}
+
+
+\-Remove and return the lowest time event from the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue. 
+
+\begin{DoxyReturn}{\-Returns}
+a pointer to the removed \hyperlink{classEvent}{\-Event}. 
+\end{DoxyReturn}
+\hypertarget{classEventGenerator_a467b319c4317b83b9c16708c9815953d}{\index{\-Event\-Generator@{\-Event\-Generator}!get\-I\-D@{get\-I\-D}}
+\index{get\-I\-D@{get\-I\-D}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{get\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Event\-Generator\-::get\-I\-D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classEventGenerator_a467b319c4317b83b9c16708c9815953d}
+
+
+\-Get the \-I\-D of the \hyperlink{classEventGenerator}{\-Event\-Generator}. 
+
+\begin{DoxyReturn}{\-Returns}
+the \-I\-D as a string 
+\end{DoxyReturn}
+\hypertarget{classEventGenerator_ac4b5ccdeaf232fe59854535bb13747a9}{\index{\-Event\-Generator@{\-Event\-Generator}!get\-Next\-Time@{get\-Next\-Time}}
+\index{get\-Next\-Time@{get\-Next\-Time}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{get\-Next\-Time}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Event\-Generator\-::get\-Next\-Time} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classEventGenerator_ac4b5ccdeaf232fe59854535bb13747a9}
+
+
+\-Get the lowest time in the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue. 
+
+\begin{DoxyReturn}{\-Returns}
+the min time as a double 
+\end{DoxyReturn}
+\hypertarget{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}{\index{\-Event\-Generator@{\-Event\-Generator}!has\-Events@{has\-Events}}
+\index{has\-Events@{has\-Events}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{has\-Events}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Event\-Generator\-::has\-Events} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}
+
+
+\-Tells whether the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue has any events. 
+
+\begin{DoxyReturn}{\-Returns}
+bool is true if there are events 
+\end{DoxyReturn}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classEventGenerator_af4fa28d08ed4a3be31f9383cf72e0d2c}{\index{\-Event\-Generator@{\-Event\-Generator}!uuid@{uuid}}
+\index{uuid@{uuid}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{uuid}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Event\-Generator\-::uuid}}}\label{classEventGenerator_af4fa28d08ed4a3be31f9383cf72e0d2c}
+
+
+\-The unique id of the \hyperlink{classEventGenerator}{\-Event\-Generator}. 
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Event\-Generator.\-h\item 
-/home/max/caltech/senior/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Event\-Generator.\-cpp\end{DoxyCompactItemize}
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Event\-Generator.\-h\item 
+/home/max/caltech/\-Net\-Sim/\-C\-S\-\_\-143/src/\-Event\-Generators/\-Event\-Generator.\-cpp\end{DoxyCompactItemize}
