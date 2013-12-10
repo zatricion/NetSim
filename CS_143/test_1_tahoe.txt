@@ -37,6 +37,4 @@ router [host1 host2] [link3 link4 link5] router4
 # How to have congestion algorithm?
 # Could have a token...ehh.
 # don't use underscores!
-vegas flow1 host2 160000000 host1 1 0.5
-
-
+tahoe flow1 host2 160000000 host1 1 0.5
