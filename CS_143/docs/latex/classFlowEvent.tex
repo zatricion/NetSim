@@ -10,24 +10,103 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classFlowEvent_a9d97fae76b3d07e6de4db669b95c9d48}{{\bfseries \-Flow\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classFlow}{\-Flow} $>$ flowobj, std\-::string dest, std\-::string src, double ts)}\label{classFlowEvent_a9d97fae76b3d07e6de4db669b95c9d48}
-
-\item 
-\hypertarget{classFlowEvent_a9e52eec8275fc6639be057b7218d5f6f}{virtual std\-::string {\bfseries to\-String} () override}\label{classFlowEvent_a9e52eec8275fc6639be057b7218d5f6f}
-
-\item 
-\hypertarget{classFlowEvent_a6712fde91ba4bbe86918315e85dff998}{virtual std\-::string {\bfseries get\-Type} () override}\label{classFlowEvent_a6712fde91ba4bbe86918315e85dff998}
-
-\end{DoxyCompactItemize}
+\hyperlink{classFlowEvent_a9d97fae76b3d07e6de4db669b95c9d48}{\-Flow\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classFlow}{\-Flow} $>$ flowobj, std\-::string dest, std\-::string src, double ts)
+\begin{DoxyCompactList}\small\item\em \-Constructor for a \hyperlink{classFlowEvent}{\-Flow\-Event}. \end{DoxyCompactList}\item 
+virtual std\-::string \hyperlink{classFlowEvent_a9e52eec8275fc6639be057b7218d5f6f}{to\-String} () override
+\begin{DoxyCompactList}\small\item\em \-Get a string representing the \hyperlink{classFlowEvent}{\-Flow\-Event}. \end{DoxyCompactList}\item 
+virtual std\-::string \hyperlink{classFlowEvent_a6712fde91ba4bbe86918315e85dff998}{get\-Type} () override
+\begin{DoxyCompactList}\small\item\em \-Get the type of the \hyperlink{classFlowEvent}{\-Flow\-Event}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classFlowEvent_ae6010e994bd60eff8cb63478f1df0f40}{int {\bfseries data\-\_\-size}}\label{classFlowEvent_ae6010e994bd60eff8cb63478f1df0f40}
+int \hyperlink{classFlowEvent_ae6010e994bd60eff8cb63478f1df0f40}{data\-\_\-size}
+\begin{DoxyCompactList}\small\item\em \-The data size of the \hyperlink{classFlow}{\-Flow}. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{classFlow}{\-Flow} $>$ \hyperlink{classFlowEvent_a217afa55c409554f1dc37d15b559429f}{flow}
+\begin{DoxyCompactList}\small\item\em \-The flow. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classFlowEvent_ad0ecfc4035bbfcfaa16f87fcea1b90f2}{std\-::shared\-\_\-ptr$<$ \hyperlink{classFlow}{\-Flow} $>$ {\bfseries floww}}\label{classFlowEvent_ad0ecfc4035bbfcfaa16f87fcea1b90f2}
 
-\end{DoxyCompactItemize}
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classFlowEvent_a9d97fae76b3d07e6de4db669b95c9d48}{\index{\-Flow\-Event@{\-Flow\-Event}!\-Flow\-Event@{\-Flow\-Event}}
+\index{\-Flow\-Event@{\-Flow\-Event}!FlowEvent@{\-Flow\-Event}}
+\subsubsection[{\-Flow\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Flow\-Event\-::\-Flow\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Flow} $>$}]{flowobj, }
+\item[{std\-::string}]{dest, }
+\item[{std\-::string}]{src, }
+\item[{double}]{ts}
+\end{DoxyParamCaption}
+)}}\label{classFlowEvent_a9d97fae76b3d07e6de4db669b95c9d48}
+
+
+\-Constructor for a \hyperlink{classFlowEvent}{\-Flow\-Event}. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em flowobj} & the \hyperlink{classFlow}{\-Flow} held by the \hyperlink{classFlowEvent}{\-Flow\-Event}. \\
+\hline
+{\em dest} & the \hyperlink{classHost}{\-Host} that is the sending end of the \hyperlink{classFlow}{\-Flow}. \\
+\hline
+{\em src} & the \hyperlink{classFlowGenerator}{\-Flow\-Generator} holding the \hyperlink{classFlowEvent}{\-Flow\-Event}. \\
+\hline
+{\em ts} & the time at which the \hyperlink{classFlow}{\-Flow} will be passed to the \hyperlink{classHost}{\-Host} and start sending \-S\-Y\-N packets. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classFlowEvent_a6712fde91ba4bbe86918315e85dff998}{\index{\-Flow\-Event@{\-Flow\-Event}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!FlowEvent@{\-Flow\-Event}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Flow\-Event\-::get\-Type} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classFlowEvent_a6712fde91ba4bbe86918315e85dff998}
+
+
+\-Get the type of the \hyperlink{classFlowEvent}{\-Flow\-Event}. 
+
+\begin{DoxyReturn}{\-Returns}
+a string representing the \hyperlink{classFlowEvent}{\-Flow\-Event} type 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}{\-Event}.
+
+\hypertarget{classFlowEvent_a9e52eec8275fc6639be057b7218d5f6f}{\index{\-Flow\-Event@{\-Flow\-Event}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!FlowEvent@{\-Flow\-Event}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Flow\-Event\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classFlowEvent_a9e52eec8275fc6639be057b7218d5f6f}
+
+
+\-Get a string representing the \hyperlink{classFlowEvent}{\-Flow\-Event}. 
+
+\begin{DoxyReturn}{\-Returns}
+a string representing the \hyperlink{classFlowEvent}{\-Flow\-Event}. 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classEvent_a924194a887aa70888e08a04b69389bd6}{\-Event}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classFlowEvent_ae6010e994bd60eff8cb63478f1df0f40}{\index{\-Flow\-Event@{\-Flow\-Event}!data\-\_\-size@{data\-\_\-size}}
+\index{data\-\_\-size@{data\-\_\-size}!FlowEvent@{\-Flow\-Event}}
+\subsubsection[{data\-\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-Event\-::data\-\_\-size}}}\label{classFlowEvent_ae6010e994bd60eff8cb63478f1df0f40}
+
+
+\-The data size of the \hyperlink{classFlow}{\-Flow}. 
+
+\hypertarget{classFlowEvent_a217afa55c409554f1dc37d15b559429f}{\index{\-Flow\-Event@{\-Flow\-Event}!flow@{flow}}
+\index{flow@{flow}!FlowEvent@{\-Flow\-Event}}
+\subsubsection[{flow}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf \-Flow}$>$ {\bf \-Flow\-Event\-::flow}}}\label{classFlowEvent_a217afa55c409554f1dc37d15b559429f}
+
+
+\-The flow. 
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

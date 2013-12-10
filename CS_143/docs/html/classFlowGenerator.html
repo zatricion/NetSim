@@ -83,7 +83,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">FlowGenerator Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="FlowGenerator" --><!-- doxytag: inherits="EventGenerator" --><div class="dynheader">
+<!-- doxytag: class="FlowGenerator" --><!-- doxytag: inherits="EventGenerator" -->
+<p>An object used to store <a class="el" href="classFlow.html">Flow</a> objects until the data flow is ready to begin.  
+ <a href="classFlowGenerator.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="FlowGenerator_8h_source.html">FlowGenerator.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for FlowGenerator:</div>
 <div class="dyncontent">
  <div class="center">
@@ -97,11 +102,80 @@ Inheritance diagram for FlowGenerator:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae51c2e304770a911f9cc1d8e0d01310c"></a><!-- doxytag: member="FlowGenerator::FlowGenerator" ref="ae51c2e304770a911f9cc1d8e0d01310c" args="(std::vector&lt; std::shared_ptr&lt; Flow &gt; &gt; flows, std::string flow_id)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>FlowGenerator</b> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt; &gt; flows, std::string flow_id)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c4ac4997c37c524a7c1c8ab264eb882"></a><!-- doxytag: member="FlowGenerator::giveEvent" ref="a5c4ac4997c37c524a7c1c8ab264eb882" args="(std::shared_ptr&lt; Event &gt;)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowGenerator.html#ae51c2e304770a911f9cc1d8e0d01310c">FlowGenerator</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt; &gt; flows, std::string flow_id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a> object.  <a href="#ae51c2e304770a911f9cc1d8e0d01310c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowGenerator.html#a9fd8f79663c4af4ab229dde250bc258c">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt; e)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This method should never be called on the <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a>, since it cannot receive events.  <a href="#a9fd8f79663c4af4ab229dde250bc258c"></a><br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>An object used to store <a class="el" href="classFlow.html">Flow</a> objects until the data flow is ready to begin. </p>
+<p>It holds an eventHeap of FlowEvents that are passed to the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> when the data flow should begin. The <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> processes these FlowEvents, and creates a data flow on the proper <a class="el" href="classHost.html">Host</a>. </p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ae51c2e304770a911f9cc1d8e0d01310c"></a><!-- doxytag: member="FlowGenerator::FlowGenerator" ref="ae51c2e304770a911f9cc1d8e0d01310c" args="(std::vector&lt; std::shared_ptr&lt; Flow &gt; &gt; flows, std::string flow_id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFlowGenerator.html#ae51c2e304770a911f9cc1d8e0d01310c">FlowGenerator::FlowGenerator</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt; &gt;&#160;</td>
+          <td class="paramname"><em>flows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>flow_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Creates a <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a> object. </p>
+<p>The constructor takes in a list of flows, which is uses to populate its eventHeap with FlowEvents. These events are fired at the appropriate times by the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> to start the data flows.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flows</td><td>the list of flows. </td></tr>
+    <tr><td class="paramname">flow_id</td><td>the id of the flow generator. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a9fd8f79663c4af4ab229dde250bc258c"></a><!-- doxytag: member="FlowGenerator::giveEvent" ref="a9fd8f79663c4af4ab229dde250bc258c" args="(std::shared_ptr&lt; Event &gt; e)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFlowGenerator.html#a9fd8f79663c4af4ab229dde250bc258c">FlowGenerator::giveEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>This method should never be called on the <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a>, since it cannot receive events. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>the event given to the <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">EventGenerator</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="FlowGenerator_8h_source.html">FlowGenerator.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/FlowGenerator.cpp</li>
@@ -124,7 +198,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::s
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:45 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

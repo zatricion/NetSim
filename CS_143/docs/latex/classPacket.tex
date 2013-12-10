@@ -1,6 +1,15 @@
 \hypertarget{classPacket}{\section{\-Packet \-Class \-Reference}
 \label{classPacket}\index{\-Packet@{\-Packet}}
 }
+
+
+\-A class to represent \-Packets in the network.  
+
+
+
+
+{\ttfamily \#include $<$\-Packet.\-h$>$}
+
 \subsection*{\-Public \-Types}
 \begin{DoxyCompactItemize}
 \item 
@@ -12,58 +21,203 @@ $<$ \hyperlink{classPath}{\-Path} $>$ $>$ {\bfseries bf\-\_\-type}}\label{classP
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classPacket_a0467ca3fb88b9a8a6a41182aed61e5b3}{{\bfseries \-Packet} (std\-::string id, std\-::string fd, std\-::string src, int s, bool a, int seq, std\-::string flow\-\_\-id, bool sync, bool finish, double ts=-\/1.\-0, bool bf=false, bf\-\_\-type bf\-\_\-table=bf\-\_\-type())}\label{classPacket_a0467ca3fb88b9a8a6a41182aed61e5b3}
-
-\item 
-\hypertarget{classPacket_ae8d5dfea51fa7fe55e4705b176f326ec}{{\bfseries \-Packet} (const \hyperlink{classPacket}{\-Packet} \&other)}\label{classPacket_ae8d5dfea51fa7fe55e4705b176f326ec}
-
-\item 
-\hypertarget{classPacket_aa4f4ad4075cad5a29af1646c3e289399}{std\-::string {\bfseries to\-String} ()}\label{classPacket_aa4f4ad4075cad5a29af1646c3e289399}
-
-\end{DoxyCompactItemize}
+\hyperlink{classPacket_a0467ca3fb88b9a8a6a41182aed61e5b3}{\-Packet} (std\-::string id, std\-::string fd, std\-::string src, int s, bool a, int seq, std\-::string flow\-\_\-id, bool sync, bool finish, double ts=-\/1.\-0, bool bf=false, bf\-\_\-type \hyperlink{classPacket_ad19b836a6a6deab55ec66cb333642a5e}{bf\-\_\-table}=bf\-\_\-type())
+\begin{DoxyCompactList}\small\item\em \-Create a \hyperlink{classPacket}{\-Packet} object. \end{DoxyCompactList}\item 
+\hyperlink{classPacket_ae8d5dfea51fa7fe55e4705b176f326ec}{\-Packet} (const \hyperlink{classPacket}{\-Packet} \&other)
+\begin{DoxyCompactList}\small\item\em \-Copy constructor. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classPacket_aa4f4ad4075cad5a29af1646c3e289399}{to\-String} ()
+\begin{DoxyCompactList}\small\item\em \-String representation of the \hyperlink{classPacket}{\-Packet}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classPacket_acaefdb9f910265a1ff97b522a780f088}{std\-::string {\bfseries uuid}}\label{classPacket_acaefdb9f910265a1ff97b522a780f088}
+std\-::string \hyperlink{classPacket_acaefdb9f910265a1ff97b522a780f088}{uuid}
+\begin{DoxyCompactList}\small\item\em \-An id for the packet. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classPacket_a14d18bd9829ec1951730bc8bbadb570d}{final\-\_\-dest}
+\begin{DoxyCompactList}\small\item\em \-The destination. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classPacket_a9fdc30310ed4a548f4a51dc6c79442d9}{source}
+\begin{DoxyCompactList}\small\item\em \-The source. \end{DoxyCompactList}\item 
+int \hyperlink{classPacket_ad6c10fc808850949cd3f9b9a2ff018d5}{size}
+\begin{DoxyCompactList}\small\item\em \-Size of packet. \end{DoxyCompactList}\item 
+bool \hyperlink{classPacket_a1824b08ed28de1f329146d082b6d0dee}{ack}
+\begin{DoxyCompactList}\small\item\em \-True if \hyperlink{classPacket}{\-Packet} is an ack. \end{DoxyCompactList}\item 
+bool \hyperlink{classPacket_ad27cb1ca949aa1dece5a14d0cc734a8e}{syn}
+\begin{DoxyCompactList}\small\item\em \-True if \hyperlink{classPacket}{\-Packet} is a \-S\-Y\-N. \end{DoxyCompactList}\item 
+bool \hyperlink{classPacket_a2143fa46561ca6d5f5edd8678602ef6c}{fin}
+\begin{DoxyCompactList}\small\item\em \-True if \hyperlink{classPacket}{\-Packet} is a \-F\-I\-N. \end{DoxyCompactList}\item 
+bool \hyperlink{classPacket_ab3bb221061fb274a23f041e4b5e93ce7}{bf\-\_\-tbl\-\_\-bit}
+\begin{DoxyCompactList}\small\item\em \-True if \hyperlink{classPacket}{\-Packet} is a \-Bellman-\/\-Ford \hyperlink{classPacket}{\-Packet}. \end{DoxyCompactList}\item 
+\hypertarget{classPacket_ad19b836a6a6deab55ec66cb333642a5e}{bf\-\_\-type \hyperlink{classPacket_ad19b836a6a6deab55ec66cb333642a5e}{bf\-\_\-table}}\label{classPacket_ad19b836a6a6deab55ec66cb333642a5e}
 
-\item 
-\hypertarget{classPacket_a14d18bd9829ec1951730bc8bbadb570d}{std\-::string {\bfseries final\-\_\-dest}}\label{classPacket_a14d18bd9829ec1951730bc8bbadb570d}
+\begin{DoxyCompactList}\small\item\em \-A mapping from host\-\_\-id to path to that host, which is vector of node ids. \end{DoxyCompactList}\item 
+int \hyperlink{classPacket_a1dcc152b6caa339c9d6f86c0fcde1c52}{sequence\-\_\-num}
+\begin{DoxyCompactList}\small\item\em \-Sequence number of the \hyperlink{classPacket}{\-Packet}. \end{DoxyCompactList}\item 
+\hypertarget{classPacket_ad841c025e14798586e5a01dfb17a8e56}{std\-::string \hyperlink{classPacket_ad841c025e14798586e5a01dfb17a8e56}{flow\-I\-D}}\label{classPacket_ad841c025e14798586e5a01dfb17a8e56}
 
-\item 
-\hypertarget{classPacket_a9fdc30310ed4a548f4a51dc6c79442d9}{std\-::string {\bfseries source}}\label{classPacket_a9fdc30310ed4a548f4a51dc6c79442d9}
+\begin{DoxyCompactList}\small\item\em \-If the packet was generated from a \hyperlink{classFlow}{\-Flow} in a host, this is the \-I\-D of that flow. \end{DoxyCompactList}\item 
+double \hyperlink{classPacket_a3c6b8af8bd18da132511da84aaba3acb}{timestamp}
+\begin{DoxyCompactList}\small\item\em \-The timestamp of the \hyperlink{classPacket}{\-Packet}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classPacket_ad6c10fc808850949cd3f9b9a2ff018d5}{int {\bfseries size}}\label{classPacket_ad6c10fc808850949cd3f9b9a2ff018d5}
 
-\item 
-\hypertarget{classPacket_a1824b08ed28de1f329146d082b6d0dee}{bool {\bfseries ack}}\label{classPacket_a1824b08ed28de1f329146d082b6d0dee}
+\subsection{\-Detailed \-Description}
+\-A class to represent \-Packets in the network. 
 
-\item 
-\hypertarget{classPacket_ad27cb1ca949aa1dece5a14d0cc734a8e}{bool {\bfseries syn}}\label{classPacket_ad27cb1ca949aa1dece5a14d0cc734a8e}
+\-Only one \hyperlink{classPacket}{\-Packet} type is present, but the \hyperlink{classPacket}{\-Packet} contains flags to identify whether it is a \-S\-Y\-N, \-F\-I\-N, \-A\-C\-K, or \-Bellman-\/\-Ford packet. \-These flags are used instead of different types. 
 
-\item 
-\hypertarget{classPacket_a2143fa46561ca6d5f5edd8678602ef6c}{bool {\bfseries fin}}\label{classPacket_a2143fa46561ca6d5f5edd8678602ef6c}
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classPacket_a0467ca3fb88b9a8a6a41182aed61e5b3}{\index{\-Packet@{\-Packet}!\-Packet@{\-Packet}}
+\index{\-Packet@{\-Packet}!Packet@{\-Packet}}
+\subsubsection[{\-Packet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Packet\-::\-Packet} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{id, }
+\item[{std\-::string}]{fd, }
+\item[{std\-::string}]{src, }
+\item[{int}]{s, }
+\item[{bool}]{a, }
+\item[{int}]{seq, }
+\item[{std\-::string}]{flow\-\_\-id, }
+\item[{bool}]{sync, }
+\item[{bool}]{finish, }
+\item[{double}]{ts = {\ttfamily -\/1.0}, }
+\item[{bool}]{bf = {\ttfamily false}, }
+\item[{bf\-\_\-type}]{bf\-\_\-t = {\ttfamily bf\-\_\-type()}}
+\end{DoxyParamCaption}
+)}}\label{classPacket_a0467ca3fb88b9a8a6a41182aed61e5b3}
 
-\item 
-\hypertarget{classPacket_ab3bb221061fb274a23f041e4b5e93ce7}{bool {\bfseries bf\-\_\-tbl\-\_\-bit}}\label{classPacket_ab3bb221061fb274a23f041e4b5e93ce7}
 
-\item 
-\hypertarget{classPacket_ad19b836a6a6deab55ec66cb333642a5e}{bf\-\_\-type {\bfseries bf\-\_\-table}}\label{classPacket_ad19b836a6a6deab55ec66cb333642a5e}
+\-Create a \hyperlink{classPacket}{\-Packet} object. 
 
-\item 
-\hypertarget{classPacket_a1dcc152b6caa339c9d6f86c0fcde1c52}{int {\bfseries sequence\-\_\-num}}\label{classPacket_a1dcc152b6caa339c9d6f86c0fcde1c52}
 
-\item 
-\hypertarget{classPacket_ad841c025e14798586e5a01dfb17a8e56}{std\-::string {\bfseries flow\-I\-D}}\label{classPacket_ad841c025e14798586e5a01dfb17a8e56}
+\begin{DoxyParams}{\-Parameters}
+{\em id} & an \-I\-D representing the \hyperlink{classPacket}{\-Packet}. \\
+\hline
+{\em fd} & the destination of the \hyperlink{classPacket}{\-Packet}. \\
+\hline
+{\em src} & the source of the \hyperlink{classPacket}{\-Packet}. \\
+\hline
+{\em s} & the size of the \hyperlink{classPacket}{\-Packet}. \\
+\hline
+{\em a} & true if the \hyperlink{classPacket}{\-Packet} is an ack. \\
+\hline
+{\em flow\-\_\-id} & the id of the \hyperlink{classFlow}{\-Flow} from which the \hyperlink{classPacket}{\-Packet} was sent. \\
+\hline
+{\em sync} & true if the \hyperlink{classPacket}{\-Packet} is a \-S\-Y\-N \\
+\hline
+{\em finish} & true if the \hyperlink{classPacket}{\-Packet} is a \-F\-I\-N \\
+\hline
+{\em ts} & a timestamp associated with the \hyperlink{classPacket}{\-Packet}. \-For data packets, this will be the time at which the \hyperlink{classPacket}{\-Packet} is sent, but for acks, this will be the time at which the ack's data \hyperlink{classPacket}{\-Packet} was sent. \\
+\hline
+{\em bf} & true if the \hyperlink{classPacket}{\-Packet} is a bellman ford packet (\hyperlink{classRouter}{\-Router} use only). \\
+\hline
+{\em bf\-\_\-type} & a representation of the routing table, if bf=true. \-Empty otherwise. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classPacket_ae8d5dfea51fa7fe55e4705b176f326ec}{\index{\-Packet@{\-Packet}!\-Packet@{\-Packet}}
+\index{\-Packet@{\-Packet}!Packet@{\-Packet}}
+\subsubsection[{\-Packet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Packet\-::\-Packet} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-Packet} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classPacket_ae8d5dfea51fa7fe55e4705b176f326ec}
 
-\item 
-\hypertarget{classPacket_ab196846302b6d54c4b3a417308f34819}{std\-::set$<$ int $>$ {\bfseries ack\-Set}}\label{classPacket_ab196846302b6d54c4b3a417308f34819}
 
-\item 
-\hypertarget{classPacket_a3c6b8af8bd18da132511da84aaba3acb}{double {\bfseries timestamp}}\label{classPacket_a3c6b8af8bd18da132511da84aaba3acb}
+\-Copy constructor. 
 
-\end{DoxyCompactItemize}
 
+\begin{DoxyParams}{\-Parameters}
+{\em other} & \hyperlink{classPacket}{\-Packet} to copy. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classPacket_aa4f4ad4075cad5a29af1646c3e289399}{\index{\-Packet@{\-Packet}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!Packet@{\-Packet}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Packet\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPacket_aa4f4ad4075cad5a29af1646c3e289399}
+
+
+\-String representation of the \hyperlink{classPacket}{\-Packet}. 
+
+\begin{DoxyReturn}{\-Returns}
+the \hyperlink{classPacket}{\-Packet} as a string. 
+\end{DoxyReturn}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classPacket_a1824b08ed28de1f329146d082b6d0dee}{\index{\-Packet@{\-Packet}!ack@{ack}}
+\index{ack@{ack}!Packet@{\-Packet}}
+\subsubsection[{ack}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Packet\-::ack}}}\label{classPacket_a1824b08ed28de1f329146d082b6d0dee}
+
+
+\-True if \hyperlink{classPacket}{\-Packet} is an ack. 
+
+\hypertarget{classPacket_ab3bb221061fb274a23f041e4b5e93ce7}{\index{\-Packet@{\-Packet}!bf\-\_\-tbl\-\_\-bit@{bf\-\_\-tbl\-\_\-bit}}
+\index{bf\-\_\-tbl\-\_\-bit@{bf\-\_\-tbl\-\_\-bit}!Packet@{\-Packet}}
+\subsubsection[{bf\-\_\-tbl\-\_\-bit}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Packet\-::bf\-\_\-tbl\-\_\-bit}}}\label{classPacket_ab3bb221061fb274a23f041e4b5e93ce7}
+
+
+\-True if \hyperlink{classPacket}{\-Packet} is a \-Bellman-\/\-Ford \hyperlink{classPacket}{\-Packet}. 
+
+\hypertarget{classPacket_a2143fa46561ca6d5f5edd8678602ef6c}{\index{\-Packet@{\-Packet}!fin@{fin}}
+\index{fin@{fin}!Packet@{\-Packet}}
+\subsubsection[{fin}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Packet\-::fin}}}\label{classPacket_a2143fa46561ca6d5f5edd8678602ef6c}
+
+
+\-True if \hyperlink{classPacket}{\-Packet} is a \-F\-I\-N. 
+
+\hypertarget{classPacket_a14d18bd9829ec1951730bc8bbadb570d}{\index{\-Packet@{\-Packet}!final\-\_\-dest@{final\-\_\-dest}}
+\index{final\-\_\-dest@{final\-\_\-dest}!Packet@{\-Packet}}
+\subsubsection[{final\-\_\-dest}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Packet\-::final\-\_\-dest}}}\label{classPacket_a14d18bd9829ec1951730bc8bbadb570d}
+
+
+\-The destination. 
+
+\hypertarget{classPacket_a1dcc152b6caa339c9d6f86c0fcde1c52}{\index{\-Packet@{\-Packet}!sequence\-\_\-num@{sequence\-\_\-num}}
+\index{sequence\-\_\-num@{sequence\-\_\-num}!Packet@{\-Packet}}
+\subsubsection[{sequence\-\_\-num}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Packet\-::sequence\-\_\-num}}}\label{classPacket_a1dcc152b6caa339c9d6f86c0fcde1c52}
+
+
+\-Sequence number of the \hyperlink{classPacket}{\-Packet}. 
+
+\-Used for data packets. \hypertarget{classPacket_ad6c10fc808850949cd3f9b9a2ff018d5}{\index{\-Packet@{\-Packet}!size@{size}}
+\index{size@{size}!Packet@{\-Packet}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Packet\-::size}}}\label{classPacket_ad6c10fc808850949cd3f9b9a2ff018d5}
+
+
+\-Size of packet. 
+
+\hypertarget{classPacket_a9fdc30310ed4a548f4a51dc6c79442d9}{\index{\-Packet@{\-Packet}!source@{source}}
+\index{source@{source}!Packet@{\-Packet}}
+\subsubsection[{source}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Packet\-::source}}}\label{classPacket_a9fdc30310ed4a548f4a51dc6c79442d9}
+
+
+\-The source. 
+
+\hypertarget{classPacket_ad27cb1ca949aa1dece5a14d0cc734a8e}{\index{\-Packet@{\-Packet}!syn@{syn}}
+\index{syn@{syn}!Packet@{\-Packet}}
+\subsubsection[{syn}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Packet\-::syn}}}\label{classPacket_ad27cb1ca949aa1dece5a14d0cc734a8e}
+
+
+\-True if \hyperlink{classPacket}{\-Packet} is a \-S\-Y\-N. 
+
+\hypertarget{classPacket_a3c6b8af8bd18da132511da84aaba3acb}{\index{\-Packet@{\-Packet}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!Packet@{\-Packet}}
+\subsubsection[{timestamp}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Packet\-::timestamp}}}\label{classPacket_a3c6b8af8bd18da132511da84aaba3acb}
+
+
+\-The timestamp of the \hyperlink{classPacket}{\-Packet}. 
+
+\-If this is a data \hyperlink{classPacket}{\-Packet}, it's the time at which the \hyperlink{classPacket}{\-Packet} was sent. \-If it's an ack, it's the timestamp of the \hyperlink{classPacket}{\-Packet} that the ack is acking. \hypertarget{classPacket_acaefdb9f910265a1ff97b522a780f088}{\index{\-Packet@{\-Packet}!uuid@{uuid}}
+\index{uuid@{uuid}!Packet@{\-Packet}}
+\subsubsection[{uuid}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Packet\-::uuid}}}\label{classPacket_acaefdb9f910265a1ff97b522a780f088}
+
+
+\-An id for the packet. 
+
+\-Not necessarily globally unique. 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

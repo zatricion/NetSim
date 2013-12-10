@@ -1,42 +1,93 @@
 \hypertarget{classEvent}{\section{\-Event \-Class \-Reference}
 \label{classEvent}\index{\-Event@{\-Event}}
 }
+
+
+\-Abstract class representing a generic \hyperlink{classEvent}{\-Event} in our \hyperlink{classEvent}{\-Event} based simulation.  
+
+
+
+
+{\ttfamily \#include $<$\-Event.\-h$>$}
+
 \-Inheritance diagram for \-Event\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=1.059603cm]{classEvent}
+\includegraphics[height=1.483444cm]{classEvent}
 \end{center}
 \end{figure}
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classEvent_a2ff6ddc14b006baade2b5ab2a622835d}{{\bfseries \-Event} (std\-::string dest, std\-::string src, double ts)}\label{classEvent_a2ff6ddc14b006baade2b5ab2a622835d}
+\hyperlink{classEvent_a2ff6ddc14b006baade2b5ab2a622835d}{\-Event} (std\-::string dest, std\-::string src, double ts)
+\begin{DoxyCompactList}\small\item\em \-Constructor for a generic \hyperlink{classEvent}{\-Event}. \end{DoxyCompactList}\item 
+\hypertarget{classEvent_a79ba42604867e6f81ec29d9eaff0dc08}{double \hyperlink{classEvent_a79ba42604867e6f81ec29d9eaff0dc08}{event\-Time} () const }\label{classEvent_a79ba42604867e6f81ec29d9eaff0dc08}
 
-\item 
-\hypertarget{classEvent_a79ba42604867e6f81ec29d9eaff0dc08}{double {\bfseries event\-Time} () const }\label{classEvent_a79ba42604867e6f81ec29d9eaff0dc08}
+\begin{DoxyCompactList}\small\item\em \-Get the time of the \hyperlink{classEvent}{\-Event}. \end{DoxyCompactList}\item 
+\hypertarget{classEvent_a924194a887aa70888e08a04b69389bd6}{virtual std\-::string \hyperlink{classEvent_a924194a887aa70888e08a04b69389bd6}{to\-String} ()}\label{classEvent_a924194a887aa70888e08a04b69389bd6}
 
-\item 
-\hypertarget{classEvent_a924194a887aa70888e08a04b69389bd6}{virtual std\-::string {\bfseries to\-String} ()}\label{classEvent_a924194a887aa70888e08a04b69389bd6}
+\begin{DoxyCompactList}\small\item\em \-Get a string representing the \hyperlink{classEvent}{\-Event}. \end{DoxyCompactList}\item 
+\hypertarget{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}{virtual std\-::string \hyperlink{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}{get\-Type} ()}\label{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}
 
-\item 
-\hypertarget{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}{virtual std\-::string {\bfseries get\-Type} ()}\label{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}
-
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Get the type of the \hyperlink{classEvent}{\-Event}, as a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classEvent_aa28be1a89b2516ea9f570ff619f754bc}{std\-::string {\bfseries destination}}\label{classEvent_aa28be1a89b2516ea9f570ff619f754bc}
-
-\item 
-\hypertarget{classEvent_abc9c246c173d3433d2ffc0a4ed35bc01}{std\-::string {\bfseries source}}\label{classEvent_abc9c246c173d3433d2ffc0a4ed35bc01}
-
-\end{DoxyCompactItemize}
+std\-::string \hyperlink{classEvent_aa28be1a89b2516ea9f570ff619f754bc}{destination}
+\begin{DoxyCompactList}\small\item\em \-The destination of the \hyperlink{classEvent}{\-Event}. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classEvent_abc9c246c173d3433d2ffc0a4ed35bc01}{source}
+\begin{DoxyCompactList}\small\item\em \-The source of the \hyperlink{classEvent}{\-Event}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Protected \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classEvent_abf947fd0c5db2bf468373ee94ec190b4}{double {\bfseries timestamp}}\label{classEvent_abf947fd0c5db2bf468373ee94ec190b4}
 
 \end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Abstract class representing a generic \hyperlink{classEvent}{\-Event} in our \hyperlink{classEvent}{\-Event} based simulation. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classEvent_a2ff6ddc14b006baade2b5ab2a622835d}{\index{\-Event@{\-Event}!\-Event@{\-Event}}
+\index{\-Event@{\-Event}!Event@{\-Event}}
+\subsubsection[{\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Event\-::\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{dest, }
+\item[{std\-::string}]{src, }
+\item[{double}]{ts}
+\end{DoxyParamCaption}
+)}}\label{classEvent_a2ff6ddc14b006baade2b5ab2a622835d}
+
+
+\-Constructor for a generic \hyperlink{classEvent}{\-Event}. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em dest} & the destination of the \hyperlink{classEvent}{\-Event} (where the \hyperlink{classEvent}{\-Event} should land). \\
+\hline
+{\em src} & the creator of the \hyperlink{classEvent}{\-Event}. \\
+\hline
+{\em ts} & the time at which the event is fired \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classEvent_aa28be1a89b2516ea9f570ff619f754bc}{\index{\-Event@{\-Event}!destination@{destination}}
+\index{destination@{destination}!Event@{\-Event}}
+\subsubsection[{destination}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Event\-::destination}}}\label{classEvent_aa28be1a89b2516ea9f570ff619f754bc}
+
+
+\-The destination of the \hyperlink{classEvent}{\-Event}. 
+
+\hypertarget{classEvent_abc9c246c173d3433d2ffc0a4ed35bc01}{\index{\-Event@{\-Event}!source@{source}}
+\index{source@{source}!Event@{\-Event}}
+\subsubsection[{source}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Event\-::source}}}\label{classEvent_abc9c246c173d3433d2ffc0a4ed35bc01}
+
+
+\-The source of the \hyperlink{classEvent}{\-Event}. 
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

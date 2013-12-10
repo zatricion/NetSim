@@ -1,30 +1,105 @@
 \hypertarget{classHandler}{\section{\-Handler \-Class \-Reference}
 \label{classHandler}\index{\-Handler@{\-Handler}}
 }
+
+
+\hyperlink{classHandler}{\-Handler} that runs the \-Event-\/based simulation.  
+
+
+
+
+{\ttfamily \#include $<$\-Handler.\-h$>$}
+
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classHandler_aa93dcd4a5dc2d1e2f10cec2ebe3a9668}{double {\bfseries get\-Min\-Time} ()}\label{classHandler_aa93dcd4a5dc2d1e2f10cec2ebe3a9668}
+bool \hyperlink{classHandler_a4639718d2f590ebd22d0d949a239327d}{running} ()
+\begin{DoxyCompactList}\small\item\em \-Tells if the \hyperlink{classHandler}{\-Handler} is still running. \end{DoxyCompactList}\item 
+double \hyperlink{classHandler_aa93dcd4a5dc2d1e2f10cec2ebe3a9668}{get\-Min\-Time} ()
+\begin{DoxyCompactList}\small\item\em \-Get the lowest time from the distributed event\-Heap. \end{DoxyCompactList}\item 
+void \hyperlink{classHandler_abc28c961d70d462106f2f3be46330930}{populate\-Current\-Events} (double time)
+\begin{DoxyCompactList}\small\item\em \-Get a list of all events that should happen next. \end{DoxyCompactList}\item 
+\hypertarget{classHandler_ad67c5bf3357aba8c6b71fa76c5161d29}{void \hyperlink{classHandler_ad67c5bf3357aba8c6b71fa76c5161d29}{process\-Current\-Events} ()}\label{classHandler_ad67c5bf3357aba8c6b71fa76c5161d29}
 
-\item 
-\hypertarget{classHandler_abc28c961d70d462106f2f3be46330930}{void {\bfseries populate\-Current\-Events} (double time)}\label{classHandler_abc28c961d70d462106f2f3be46330930}
+\begin{DoxyCompactList}\small\item\em \-Handle all events in curr\-Events. \end{DoxyCompactList}\item 
+\hypertarget{classHandler_aa60626b419730f48a1bd5b91c9ade9d7}{void \hyperlink{classHandler_aa60626b419730f48a1bd5b91c9ade9d7}{step} ()}\label{classHandler_aa60626b419730f48a1bd5b91c9ade9d7}
 
-\item 
-\hypertarget{classHandler_ad67c5bf3357aba8c6b71fa76c5161d29}{void {\bfseries process\-Current\-Events} ()}\label{classHandler_ad67c5bf3357aba8c6b71fa76c5161d29}
+\begin{DoxyCompactList}\small\item\em \-Go through a single step of the simulation. \end{DoxyCompactList}\item 
+void \hyperlink{classHandler_a6d66a0dfe17658e9ba92080d506654ac}{add\-Generator} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEventGenerator}{\-Event\-Generator} $>$ gen)
+\begin{DoxyCompactList}\small\item\em \-Constructor for the event \hyperlink{classHandler}{\-Handler}. \end{DoxyCompactList}\item 
+\hypertarget{classHandler_a1f9bd53a9251f712c6ff20ca48122e6f}{void \hyperlink{classHandler_a1f9bd53a9251f712c6ff20ca48122e6f}{handle\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ event)}\label{classHandler_a1f9bd53a9251f712c6ff20ca48122e6f}
 
-\item 
-\hypertarget{classHandler_aa60626b419730f48a1bd5b91c9ade9d7}{void {\bfseries step} ()}\label{classHandler_aa60626b419730f48a1bd5b91c9ade9d7}
+\begin{DoxyCompactList}\small\item\em \-Handle a single \hyperlink{classEvent}{\-Event} by passing it to its destination, and allowing the destination object to do the rest of the work. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classHandler_a6d66a0dfe17658e9ba92080d506654ac}{void {\bfseries add\-Generator} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEventGenerator}{\-Event\-Generator} $>$ gen)}\label{classHandler_a6d66a0dfe17658e9ba92080d506654ac}
 
-\item 
-\hypertarget{classHandler_a1f9bd53a9251f712c6ff20ca48122e6f}{void {\bfseries handle\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ event)}\label{classHandler_a1f9bd53a9251f712c6ff20ca48122e6f}
+\subsection{\-Detailed \-Description}
+\hyperlink{classHandler}{\-Handler} that runs the \-Event-\/based simulation. 
 
-\item 
-\hypertarget{classHandler_a4639718d2f590ebd22d0d949a239327d}{bool {\bfseries running} ()}\label{classHandler_a4639718d2f590ebd22d0d949a239327d}
+\-Pulls \-Events from a list of \-Event\-Generators, and passes them to other \-Event\-Generators. 
 
-\end{DoxyCompactItemize}
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classHandler_a6d66a0dfe17658e9ba92080d506654ac}{\index{\-Handler@{\-Handler}!add\-Generator@{add\-Generator}}
+\index{add\-Generator@{add\-Generator}!Handler@{\-Handler}}
+\subsubsection[{add\-Generator}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Handler\-::add\-Generator} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Event\-Generator} $>$}]{gen}
+\end{DoxyParamCaption}
+)}}\label{classHandler_a6d66a0dfe17658e9ba92080d506654ac}
+
+
+\-Constructor for the event \hyperlink{classHandler}{\-Handler}. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em gen} & a map of all \-Event\-Generators, with keys as strings \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHandler_aa93dcd4a5dc2d1e2f10cec2ebe3a9668}{\index{\-Handler@{\-Handler}!get\-Min\-Time@{get\-Min\-Time}}
+\index{get\-Min\-Time@{get\-Min\-Time}!Handler@{\-Handler}}
+\subsubsection[{get\-Min\-Time}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Handler\-::get\-Min\-Time} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classHandler_aa93dcd4a5dc2d1e2f10cec2ebe3a9668}
+
+
+\-Get the lowest time from the distributed event\-Heap. 
+
+\begin{DoxyReturn}{\-Returns}
+the minimum time. 
+\end{DoxyReturn}
+\hypertarget{classHandler_abc28c961d70d462106f2f3be46330930}{\index{\-Handler@{\-Handler}!populate\-Current\-Events@{populate\-Current\-Events}}
+\index{populate\-Current\-Events@{populate\-Current\-Events}!Handler@{\-Handler}}
+\subsubsection[{populate\-Current\-Events}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Handler\-::populate\-Current\-Events} (
+\begin{DoxyParamCaption}
+\item[{double}]{min\-Time}
+\end{DoxyParamCaption}
+)}}\label{classHandler_abc28c961d70d462106f2f3be46330930}
+
+
+\-Get a list of all events that should happen next. 
+
+\-This list will often contain only 1 event, since it is unlikely that multiple \-Events will have the exact same timestamp.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em min\-Time} & the minimum \hyperlink{classEvent}{\-Event} time out of all \-Events in all the \hyperlink{classEventGenerator}{\-Event\-Generator} event\-Heaps \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHandler_a4639718d2f590ebd22d0d949a239327d}{\index{\-Handler@{\-Handler}!running@{running}}
+\index{running@{running}!Handler@{\-Handler}}
+\subsubsection[{running}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Handler\-::running} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classHandler_a4639718d2f590ebd22d0d949a239327d}
+
+
+\-Tells if the \hyperlink{classHandler}{\-Handler} is still running. 
+
+\begin{DoxyReturn}{\-Returns}
+true if it is still running 
+\end{DoxyReturn}
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

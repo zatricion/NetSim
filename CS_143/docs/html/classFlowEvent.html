@@ -90,7 +90,7 @@ Inheritance diagram for FlowEvent:</div>
  <div class="center">
   <img src="classFlowEvent.png" usemap="#FlowEvent_map" alt=""/>
   <map id="FlowEvent_map" name="FlowEvent_map">
-<area href="classEvent.html" alt="Event" shape="rect" coords="0,0,71,24"/>
+<area href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation." alt="Event" shape="rect" coords="0,0,71,24"/>
 </map>
  </div></div>
 
@@ -98,19 +98,144 @@ Inheritance diagram for FlowEvent:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d97fae76b3d07e6de4db669b95c9d48"></a><!-- doxytag: member="FlowEvent::FlowEvent" ref="a9d97fae76b3d07e6de4db669b95c9d48" args="(std::shared_ptr&lt; Flow &gt; flowobj, std::string dest, std::string src, double ts)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>FlowEvent</b> (std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt; flowobj, std::string dest, std::string src, double ts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e52eec8275fc6639be057b7218d5f6f"></a><!-- doxytag: member="FlowEvent::toString" ref="a9e52eec8275fc6639be057b7218d5f6f" args="() override" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () override</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6712fde91ba4bbe86918315e85dff998"></a><!-- doxytag: member="FlowEvent::getType" ref="a6712fde91ba4bbe86918315e85dff998" args="() override" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () override</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowEvent.html#a9d97fae76b3d07e6de4db669b95c9d48">FlowEvent</a> (std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt; flowobj, std::string dest, std::string src, double ts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a <a class="el" href="classFlowEvent.html">FlowEvent</a>.  <a href="#a9d97fae76b3d07e6de4db669b95c9d48"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowEvent.html#a9e52eec8275fc6639be057b7218d5f6f">toString</a> () override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representing the <a class="el" href="classFlowEvent.html">FlowEvent</a>.  <a href="#a9e52eec8275fc6639be057b7218d5f6f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowEvent.html#a6712fde91ba4bbe86918315e85dff998">getType</a> () override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the <a class="el" href="classFlowEvent.html">FlowEvent</a>.  <a href="#a6712fde91ba4bbe86918315e85dff998"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6010e994bd60eff8cb63478f1df0f40"></a><!-- doxytag: member="FlowEvent::data_size" ref="ae6010e994bd60eff8cb63478f1df0f40" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>data_size</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0ecfc4035bbfcfaa16f87fcea1b90f2"></a><!-- doxytag: member="FlowEvent::floww" ref="ad0ecfc4035bbfcfaa16f87fcea1b90f2" args="" -->
-std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>floww</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowEvent.html#ae6010e994bd60eff8cb63478f1df0f40">data_size</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The data size of the <a class="el" href="classFlow.html">Flow</a>.  <a href="#ae6010e994bd60eff8cb63478f1df0f40"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlowEvent.html#a217afa55c409554f1dc37d15b559429f">flow</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The flow.  <a href="#a217afa55c409554f1dc37d15b559429f"></a><br/></td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a9d97fae76b3d07e6de4db669b95c9d48"></a><!-- doxytag: member="FlowEvent::FlowEvent" ref="a9d97fae76b3d07e6de4db669b95c9d48" args="(std::shared_ptr&lt; Flow &gt; flowobj, std::string dest, std::string src, double ts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFlowEvent.html#a9d97fae76b3d07e6de4db669b95c9d48">FlowEvent::FlowEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt;&#160;</td>
+          <td class="paramname"><em>flowobj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor for a <a class="el" href="classFlowEvent.html">FlowEvent</a>. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flowobj</td><td>the <a class="el" href="classFlow.html">Flow</a> held by the <a class="el" href="classFlowEvent.html">FlowEvent</a>. </td></tr>
+    <tr><td class="paramname">dest</td><td>the <a class="el" href="classHost.html">Host</a> that is the sending end of the <a class="el" href="classFlow.html">Flow</a>. </td></tr>
+    <tr><td class="paramname">src</td><td>the <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a> holding the <a class="el" href="classFlowEvent.html">FlowEvent</a>. </td></tr>
+    <tr><td class="paramname">ts</td><td>the time at which the <a class="el" href="classFlow.html">Flow</a> will be passed to the <a class="el" href="classHost.html">Host</a> and start sending SYN packets. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a6712fde91ba4bbe86918315e85dff998"></a><!-- doxytag: member="FlowEvent::getType" ref="a6712fde91ba4bbe86918315e85dff998" args="() override" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classFlowEvent.html#a6712fde91ba4bbe86918315e85dff998">FlowEvent::getType</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [override, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the type of the <a class="el" href="classFlowEvent.html">FlowEvent</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a string representing the <a class="el" href="classFlowEvent.html">FlowEvent</a> type </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classEvent.html#a3e3dfee48cea1b42321adae3c51f82e2">Event</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9e52eec8275fc6639be057b7218d5f6f"></a><!-- doxytag: member="FlowEvent::toString" ref="a9e52eec8275fc6639be057b7218d5f6f" args="() override" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classFlowEvent.html#a9e52eec8275fc6639be057b7218d5f6f">FlowEvent::toString</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [override, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a string representing the <a class="el" href="classFlowEvent.html">FlowEvent</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a string representing the <a class="el" href="classFlowEvent.html">FlowEvent</a>. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classEvent.html#a924194a887aa70888e08a04b69389bd6">Event</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="ae6010e994bd60eff8cb63478f1df0f40"></a><!-- doxytag: member="FlowEvent::data_size" ref="ae6010e994bd60eff8cb63478f1df0f40" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classFlowEvent.html#ae6010e994bd60eff8cb63478f1df0f40">FlowEvent::data_size</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The data size of the <a class="el" href="classFlow.html">Flow</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a217afa55c409554f1dc37d15b559429f"></a><!-- doxytag: member="FlowEvent::flow" ref="a217afa55c409554f1dc37d15b559429f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classFlow.html">Flow</a>&gt; <a class="el" href="classFlowEvent.html#a217afa55c409554f1dc37d15b559429f">FlowEvent::flow</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The flow. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/<a class="el" href="FlowEvent_8h_source.html">FlowEvent.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/FlowEvent.cpp</li>
@@ -133,7 +258,7 @@ std::shared_ptr&lt; <a class="el" href="classFlow.html">Flow</a> &gt;&#160;</td>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:45 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

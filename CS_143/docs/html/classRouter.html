@@ -97,27 +97,280 @@ Inheritance diagram for Router:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a217136993163bb16e326d65443670197"></a><!-- doxytag: member="Router::Router" ref="a217136993163bb16e326d65443670197" args="(std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; Link &gt; &gt; neighboring_links, std::string router_id, std::vector&lt; std::shared_ptr&lt; Link &gt; &gt; debug_links)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Router</b> (std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt; neighboring_links, std::string router_id, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt; debug_links)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1435286d9572cbf0de11fa3c937ca9a"></a><!-- doxytag: member="Router::updateRouting" ref="ae1435286d9572cbf0de11fa3c937ca9a" args="(Packet::bf_type, std::string, std::string, double)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateRouting</b> (Packet::bf_type, std::string, std::string, double)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b106e96412284611079588b65721aa6"></a><!-- doxytag: member="Router::broadcastTable" ref="a0b106e96412284611079588b65721aa6" args="(double timestamp)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>broadcastTable</b> (double timestamp)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a923848a34881212d310a738032d31610"></a><!-- doxytag: member="Router::addRouting" ref="a923848a34881212d310a738032d31610" args="(std::string targ_host, std::shared_ptr&lt; Path &gt; path)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addRouting</b> (std::string targ_host, std::shared_ptr&lt; <a class="el" href="classPath.html">Path</a> &gt; path)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa28dfae66a6e2587d3c39da83059a866"></a><!-- doxytag: member="Router::addLink" ref="aa28dfae66a6e2587d3c39da83059a866" args="(std::shared_ptr&lt; Link &gt; link)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addLink</b> (std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; link)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c333b431ae61349b91277cda82a3f5e"></a><!-- doxytag: member="Router::getRouting" ref="a2c333b431ae61349b91277cda82a3f5e" args="(std::string targ_host)" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getRouting</b> (std::string targ_host)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed4bdd88f4fa09cb784c5c329c935688"></a><!-- doxytag: member="Router::giveEvent" ref="aed4bdd88f4fa09cb784c5c329c935688" args="(std::shared_ptr&lt; Event &gt;)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a161477ea1b51f59bcd03da20b5d25243">Router</a> (std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt; neighboring_links, std::string router_id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for instance of a <a class="el" href="classRouter.html">Router</a>.  <a href="#a161477ea1b51f59bcd03da20b5d25243"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a9517660547398a913aab151a3f058fbf">updateRouting</a> (Packet::bf_type, std::string, double)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the routing table of a router when it receives a bf_packet.  <a href="#a9517660547398a913aab151a3f058fbf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a0b106e96412284611079588b65721aa6">broadcastTable</a> (double timestamp)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts the routing table to all connected routers.  <a href="#a0b106e96412284611079588b65721aa6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a923848a34881212d310a738032d31610">addRouting</a> (std::string targ_host, std::shared_ptr&lt; <a class="el" href="classPath.html">Path</a> &gt; path)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a host_id -&gt; (next_link_id, dist, path) tuple indicating which link to route to given a host, along with bellman-ford info.  <a href="#a923848a34881212d310a738032d31610"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#aa28dfae66a6e2587d3c39da83059a866">addLink</a> (std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; link)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a link to the router's link vector.  <a href="#aa28dfae66a6e2587d3c39da83059a866"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a2c333b431ae61349b91277cda82a3f5e">getRouting</a> (std::string targ_host)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the proper link to route to given a host.  <a href="#a2c333b431ae61349b91277cda82a3f5e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#aed4bdd88f4fa09cb784c5c329c935688">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Give an event to the router.  <a href="#aed4bdd88f4fa09cb784c5c329c935688"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa54f568dd950bcb0feae508e3c75889d"></a><!-- doxytag: member="Router::toString" ref="aa54f568dd950bcb0feae508e3c75889d" args="()" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323a820ddc17ea36834cf3316510ec5c"></a><!-- doxytag: member="Router::updateTableWeights" ref="a323a820ddc17ea36834cf3316510ec5c" args="(Packet::bf_type)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateTableWeights</b> (Packet::bf_type)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81641d4aac06367d991e3218151de515"></a><!-- doxytag: member="Router::printRouting" ref="a81641d4aac06367d991e3218151de515" args="(Packet::bf_type, std::string)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printRouting</b> (Packet::bf_type, std::string)</td></tr>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#aa54f568dd950bcb0feae508e3c75889d">toString</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs a text representation of a router. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a323a820ddc17ea36834cf3316510ec5c">updateTableWeights</a> (Packet::bf_type)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the link delays in a routing table given a new table.  <a href="#a323a820ddc17ea36834cf3316510ec5c"></a><br/></td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a161477ea1b51f59bcd03da20b5d25243"></a><!-- doxytag: member="Router::Router" ref="a161477ea1b51f59bcd03da20b5d25243" args="(std::vector&lt; std::string &gt; host_list, std::vector&lt; std::shared_ptr&lt; Link &gt; &gt; neighboring_links, std::string router_id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classRouter.html#a161477ea1b51f59bcd03da20b5d25243">Router::Router</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>host_list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt; &gt;&#160;</td>
+          <td class="paramname"><em>neighboring_links</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>router_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor for instance of a <a class="el" href="classRouter.html">Router</a>. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host_list</td><td>a list of hosts the router connects to. </td></tr>
+    <tr><td class="paramname">neighboring_links</td><td>a list of pointers to connected links. </td></tr>
+    <tr><td class="paramname">router_id</td><td>the router name. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="aa28dfae66a6e2587d3c39da83059a866"></a><!-- doxytag: member="Router::addLink" ref="aa28dfae66a6e2587d3c39da83059a866" args="(std::shared_ptr&lt; Link &gt; link)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classRouter.html#aa28dfae66a6e2587d3c39da83059a866">Router::addLink</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classLink.html">Link</a> &gt;&#160;</td>
+          <td class="paramname"><em>link</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Adds a link to the router's link vector. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">link</td><td>a pointer to the link to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a923848a34881212d310a738032d31610"></a><!-- doxytag: member="Router::addRouting" ref="a923848a34881212d310a738032d31610" args="(std::string targ_host, std::shared_ptr&lt; Path &gt; path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classRouter.html#a923848a34881212d310a738032d31610">Router::addRouting</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>host_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classPath.html">Path</a> &gt;&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Adds a host_id -&gt; (next_link_id, dist, path) tuple indicating which link to route to given a host, along with bellman-ford info. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host_id</td><td>the name of the host to which the router is routing packets. </td></tr>
+    <tr><td class="paramname">path</td><td>a pointer to the path it will use to route packets. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0b106e96412284611079588b65721aa6"></a><!-- doxytag: member="Router::broadcastTable" ref="a0b106e96412284611079588b65721aa6" args="(double timestamp)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classRouter.html#a0b106e96412284611079588b65721aa6">Router::broadcastTable</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>timestamp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Broadcasts the routing table to all connected routers. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>the time at which the broadcast occurs. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2c333b431ae61349b91277cda82a3f5e"></a><!-- doxytag: member="Router::getRouting" ref="a2c333b431ae61349b91277cda82a3f5e" args="(std::string targ_host)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classRouter.html#a2c333b431ae61349b91277cda82a3f5e">Router::getRouting</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>targ_host</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns the proper link to route to given a host. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targ_host</td><td>the name of the host to which the router is routing packets. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the name of the next link in the path. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aed4bdd88f4fa09cb784c5c329c935688"></a><!-- doxytag: member="Router::giveEvent" ref="aed4bdd88f4fa09cb784c5c329c935688" args="(std::shared_ptr&lt; Event &gt;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classRouter.html#aed4bdd88f4fa09cb784c5c329c935688">Router::giveEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Give an event to the router. </p>
+<p>This method assumes it to be a packet event.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>the event to be processed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">EventGenerator</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9517660547398a913aab151a3f058fbf"></a><!-- doxytag: member="Router::updateRouting" ref="a9517660547398a913aab151a3f058fbf" args="(Packet::bf_type, std::string, double)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classRouter.html#a9517660547398a913aab151a3f058fbf">Router::updateRouting</a> </td>
+          <td>(</td>
+          <td class="paramtype">Packet::bf_type&#160;</td>
+          <td class="paramname"><em>bf_table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>link_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>now</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Updates the routing table of a router when it receives a bf_packet. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bf_table</td><td>the routing table received. </td></tr>
+    <tr><td class="paramname">link_id</td><td>the name of the link from which the packet was received. </td></tr>
+    <tr><td class="paramname">now</td><td>the timestamp of the packet event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a323a820ddc17ea36834cf3316510ec5c"></a><!-- doxytag: member="Router::updateTableWeights" ref="a323a820ddc17ea36834cf3316510ec5c" args="(Packet::bf_type)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classRouter.html#a323a820ddc17ea36834cf3316510ec5c">Router::updateTableWeights</a> </td>
+          <td>(</td>
+          <td class="paramtype">Packet::bf_type&#160;</td>
+          <td class="paramname"><em>other_table</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Updates the link delays in a routing table given a new table. </p>
+<p>The link delays only change if they see a more current delay in the new table.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other_table</td><td>the table with new information about link delays </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Router_8h_source.html">Router.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Router.cpp</li>
@@ -140,7 +393,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printRouting</b> (Pac
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:46 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

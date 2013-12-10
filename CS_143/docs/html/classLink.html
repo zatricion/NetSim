@@ -99,8 +99,8 @@ Inheritance diagram for Link:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0a6ae4d9767bacfb371f52a30441e64"></a><!-- doxytag: member="Link::Link" ref="af0a6ae4d9767bacfb371f52a30441e64" args="(double, float, float, std::string, std::string, std::string)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>Link</b> (double, float, float, std::string, std::string, std::string)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd9466c4c2097329f4affd9b2eafbd7a"></a><!-- doxytag: member="Link::giveEvent" ref="abd9466c4c2097329f4affd9b2eafbd7a" args="(std::shared_ptr&lt; Event &gt;) override" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLink.html#abd9466c4c2097329f4affd9b2eafbd7a">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;) override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Hands an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> for processing.  <a href="#abd9466c4c2097329f4affd9b2eafbd7a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19a132f87f8028ccd5af2503084aac64"></a><!-- doxytag: member="Link::getTotalDelay" ref="a19a132f87f8028ccd5af2503084aac64" args="(std::string node)" -->
 double&#160;</td><td class="memItemRight" valign="bottom"><b>getTotalDelay</b> (std::string node)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa4e4c72a6384f118846765c296e5634"></a><!-- doxytag: member="Link::getOtherNode" ref="aaa4e4c72a6384f118846765c296e5634" args="(std::string node)" -->
@@ -116,6 +116,34 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>getPropDelay</b> ()
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c768141c7ebf3b852bf978757f903be"></a><!-- doxytag: member="Link::toString" ref="a8c768141c7ebf3b852bf978757f903be" args="()" -->
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
 </table>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="abd9466c4c2097329f4affd9b2eafbd7a"></a><!-- doxytag: member="Link::giveEvent" ref="abd9466c4c2097329f4affd9b2eafbd7a" args="(std::shared_ptr&lt; Event &gt;) override" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classLink.html#abd9466c4c2097329f4affd9b2eafbd7a">Link::giveEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td><code> [override, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Hands an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> for processing. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to be processed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">EventGenerator</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/<a class="el" href="Link_8h_source.html">Link.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventGenerators/Link.cpp</li>
@@ -138,7 +166,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:46 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

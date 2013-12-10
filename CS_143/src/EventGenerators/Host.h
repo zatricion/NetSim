@@ -12,9 +12,7 @@ class Flow;
 #include "Flow.h"
 #include "VegasFlow.h"
 #include "../EventHandling/UnackEvent.h"
-#include "../EventHandling/TCPRenoUpdateEvent.h"
 #include "../EventHandling/TCPVegasUpdateEvent.h"
-#include "../EventHandling/TimeoutEvent.h"
 #include <unordered_set>
 #include <unordered_map>
 #include <string>

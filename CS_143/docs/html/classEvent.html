@@ -85,19 +85,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Event Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Event" --><div class="dynheader">
+<!-- doxytag: class="Event" -->
+<p>Abstract class representing a generic <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> in our <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> based simulation.  
+ <a href="classEvent.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Event_8h_source.html">Event.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for Event:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classEvent.png" usemap="#Event_map" alt=""/>
   <map id="Event_map" name="Event_map">
-<area href="classBFResendEvent.html" alt="BFResendEvent" shape="rect" coords="0,56,143,80"/>
+<area href="classBFResendEvent.html" title="A BFResendEvent will be used to Routers to resend their information for Bellman-Ford." alt="BFResendEvent" shape="rect" coords="0,56,143,80"/>
 <area href="classFlowEvent.html" alt="FlowEvent" shape="rect" coords="153,56,296,80"/>
-<area href="classPacketEvent.html" alt="PacketEvent" shape="rect" coords="306,56,449,80"/>
-<area href="classTCPRenoUpdateEvent.html" alt="TCPRenoUpdateEvent" shape="rect" coords="459,56,602,80"/>
-<area href="classTCPVegasUpdateEvent.html" alt="TCPVegasUpdateEvent" shape="rect" coords="612,56,755,80"/>
-<area href="classTimeoutEvent.html" alt="TimeoutEvent" shape="rect" coords="765,56,908,80"/>
-<area href="classUnackEvent.html" alt="UnackEvent" shape="rect" coords="918,56,1061,80"/>
+<area href="classPacketEvent.html" title="A wrapper for the Packet class." alt="PacketEvent" shape="rect" coords="306,56,449,80"/>
+<area href="classTCPVegasUpdateEvent.html" title="A mechanism by which VegasFlow algorithms are called to update their window sizes." alt="TCPVegasUpdateEvent" shape="rect" coords="459,56,602,80"/>
+<area href="classUnackEvent.html" title="An UnackEvent is called when an Event times out." alt="UnackEvent" shape="rect" coords="612,56,755,80"/>
 </map>
  </div></div>
 
@@ -105,25 +108,105 @@ Inheritance diagram for Event:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ff6ddc14b006baade2b5ab2a622835d"></a><!-- doxytag: member="Event::Event" ref="a2ff6ddc14b006baade2b5ab2a622835d" args="(std::string dest, std::string src, double ts)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Event</b> (std::string dest, std::string src, double ts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvent.html#a2ff6ddc14b006baade2b5ab2a622835d">Event</a> (std::string dest, std::string src, double ts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a generic <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>.  <a href="#a2ff6ddc14b006baade2b5ab2a622835d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79ba42604867e6f81ec29d9eaff0dc08"></a><!-- doxytag: member="Event::eventTime" ref="a79ba42604867e6f81ec29d9eaff0dc08" args="() const " -->
-double&#160;</td><td class="memItemRight" valign="bottom"><b>eventTime</b> () const </td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvent.html#a79ba42604867e6f81ec29d9eaff0dc08">eventTime</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the time of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a924194a887aa70888e08a04b69389bd6"></a><!-- doxytag: member="Event::toString" ref="a924194a887aa70888e08a04b69389bd6" args="()" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
+virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvent.html#a924194a887aa70888e08a04b69389bd6">toString</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representing the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e3dfee48cea1b42321adae3c51f82e2"></a><!-- doxytag: member="Event::getType" ref="a3e3dfee48cea1b42321adae3c51f82e2" args="()" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> ()</td></tr>
+virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvent.html#a3e3dfee48cea1b42321adae3c51f82e2">getType</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>, as a string. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa28be1a89b2516ea9f570ff619f754bc"></a><!-- doxytag: member="Event::destination" ref="aa28be1a89b2516ea9f570ff619f754bc" args="" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>destination</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc9c246c173d3433d2ffc0a4ed35bc01"></a><!-- doxytag: member="Event::source" ref="abc9c246c173d3433d2ffc0a4ed35bc01" args="" -->
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>source</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvent.html#aa28be1a89b2516ea9f570ff619f754bc">destination</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The destination of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>.  <a href="#aa28be1a89b2516ea9f570ff619f754bc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvent.html#abc9c246c173d3433d2ffc0a4ed35bc01">source</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The source of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>.  <a href="#abc9c246c173d3433d2ffc0a4ed35bc01"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf947fd0c5db2bf468373ee94ec190b4"></a><!-- doxytag: member="Event::timestamp" ref="abf947fd0c5db2bf468373ee94ec190b4" args="" -->
 double&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>Abstract class representing a generic <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> in our <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> based simulation. </p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a2ff6ddc14b006baade2b5ab2a622835d"></a><!-- doxytag: member="Event::Event" ref="a2ff6ddc14b006baade2b5ab2a622835d" args="(std::string dest, std::string src, double ts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEvent.html#a2ff6ddc14b006baade2b5ab2a622835d">Event::Event</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor for a generic <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dest</td><td>the destination of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> (where the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> should land). </td></tr>
+    <tr><td class="paramname">src</td><td>the creator of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. </td></tr>
+    <tr><td class="paramname">ts</td><td>the time at which the event is fired </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="aa28be1a89b2516ea9f570ff619f754bc"></a><!-- doxytag: member="Event::destination" ref="aa28be1a89b2516ea9f570ff619f754bc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classEvent.html#aa28be1a89b2516ea9f570ff619f754bc">Event::destination</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The destination of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="abc9c246c173d3433d2ffc0a4ed35bc01"></a><!-- doxytag: member="Event::source" ref="abc9c246c173d3433d2ffc0a4ed35bc01" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classEvent.html#abc9c246c173d3433d2ffc0a4ed35bc01">Event::source</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The source of the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/<a class="el" href="Event_8h_source.html">Event.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/Event.cpp</li>
@@ -146,7 +229,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>timestamp</b></td><
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:24 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:45 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

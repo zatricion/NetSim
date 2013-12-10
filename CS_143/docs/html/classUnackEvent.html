@@ -84,13 +84,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">UnackEvent Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="UnackEvent" --><!-- doxytag: inherits="Event" --><div class="dynheader">
+<!-- doxytag: class="UnackEvent" --><!-- doxytag: inherits="Event" -->
+<p>An <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> is called when an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> times out.  
+ <a href="classUnackEvent.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="UnackEvent_8h_source.html">UnackEvent.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for UnackEvent:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classUnackEvent.png" usemap="#UnackEvent_map" alt=""/>
   <map id="UnackEvent_map" name="UnackEvent_map">
-<area href="classEvent.html" alt="Event" shape="rect" coords="0,0,79,24"/>
+<area href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation." alt="Event" shape="rect" coords="0,0,79,24"/>
 </map>
  </div></div>
 
@@ -98,17 +103,130 @@ Inheritance diagram for UnackEvent:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9ed3cfe7027d641ceddbd7a2ce560c7"></a><!-- doxytag: member="UnackEvent::UnackEvent" ref="af9ed3cfe7027d641ceddbd7a2ce560c7" args="(std::shared_ptr&lt; Packet &gt; pkt, std::string dest, std::string src, double ts)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>UnackEvent</b> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, std::string dest, std::string src, double ts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7be801da20ad826acf9ebfeaa6ee8536"></a><!-- doxytag: member="UnackEvent::toString" ref="a7be801da20ad826acf9ebfeaa6ee8536" args="() override" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () override</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56ca06731117d1fff95a1601abed02e8"></a><!-- doxytag: member="UnackEvent::getType" ref="a56ca06731117d1fff95a1601abed02e8" args="() override" -->
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () override</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnackEvent.html#af9ed3cfe7027d641ceddbd7a2ce560c7">UnackEvent</a> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, std::string dest, std::string src, double ts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>.  <a href="#af9ed3cfe7027d641ceddbd7a2ce560c7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnackEvent.html#a7be801da20ad826acf9ebfeaa6ee8536">toString</a> () override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representing the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>.  <a href="#a7be801da20ad826acf9ebfeaa6ee8536"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnackEvent.html#a56ca06731117d1fff95a1601abed02e8">getType</a> () override</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string representing the type of an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>.  <a href="#a56ca06731117d1fff95a1601abed02e8"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9d09191d5ee31c15c554e797a708f7d"></a><!-- doxytag: member="UnackEvent::packet" ref="ad9d09191d5ee31c15c554e797a708f7d" args="" -->
-std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>packet</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUnackEvent.html#ad9d09191d5ee31c15c554e797a708f7d">packet</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The packet that may not have been acked.  <a href="#ad9d09191d5ee31c15c554e797a708f7d"></a><br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>An <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> is called when an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> times out. </p>
+<p>For example, if a data <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> is sent, we queue an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> for the data <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. If the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> still hasn't been acked when the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> is called, it is resent. </p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="af9ed3cfe7027d641ceddbd7a2ce560c7"></a><!-- doxytag: member="UnackEvent::UnackEvent" ref="af9ed3cfe7027d641ceddbd7a2ce560c7" args="(std::shared_ptr&lt; Packet &gt; pkt, std::string dest, std::string src, double ts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUnackEvent.html#af9ed3cfe7027d641ceddbd7a2ce560c7">UnackEvent::UnackEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;</td>
+          <td class="paramname"><em>pkt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Create an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pkt</td><td>the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a> that may not have been acked. </td></tr>
+    <tr><td class="paramname">dest</td><td>the destination of the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. For example, for a data <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>, this should be the <a class="el" href="classHost.html">Host</a> that attempted to send the <a class="el" href="classPacket.html" title="A class to represent Packets in the network.">Packet</a>. </td></tr>
+    <tr><td class="paramname">src</td><td>the source of the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. Should be same as destination. </td></tr>
+    <tr><td class="paramname">ts</td><td>the time at which the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> is fired. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a56ca06731117d1fff95a1601abed02e8"></a><!-- doxytag: member="UnackEvent::getType" ref="a56ca06731117d1fff95a1601abed02e8" args="() override" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classUnackEvent.html#a56ca06731117d1fff95a1601abed02e8">UnackEvent::getType</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [override, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a string representing the type of an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the string representing the type of the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classEvent.html#a3e3dfee48cea1b42321adae3c51f82e2">Event</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7be801da20ad826acf9ebfeaa6ee8536"></a><!-- doxytag: member="UnackEvent::toString" ref="a7be801da20ad826acf9ebfeaa6ee8536" args="() override" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classUnackEvent.html#a7be801da20ad826acf9ebfeaa6ee8536">UnackEvent::toString</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [override, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a string representing the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a string representing the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classEvent.html#a924194a887aa70888e08a04b69389bd6">Event</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="ad9d09191d5ee31c15c554e797a708f7d"></a><!-- doxytag: member="UnackEvent::packet" ref="ad9d09191d5ee31c15c554e797a708f7d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classPacket.html">Packet</a>&gt; <a class="el" href="classUnackEvent.html#ad9d09191d5ee31c15c554e797a708f7d">UnackEvent::packet</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>The packet that may not have been acked. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/<a class="el" href="UnackEvent_8h_source.html">UnackEvent.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/UnackEvent.cpp</li>
@@ -131,7 +249,7 @@ std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt;&#160;<
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:26 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:47 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
