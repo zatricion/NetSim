@@ -1,9 +1,6 @@
-#include <iostream>
 #include "NetInput.h"
 
-Handler& read_input() {
-  //std::cout << "Running test\n";
-
-  return parse(std::cin);
+Handler& read_input(std::ifstream file) {
+  return parse(file);
 }
 
