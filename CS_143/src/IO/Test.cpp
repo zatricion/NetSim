@@ -58,6 +58,7 @@ void io() {
     sim_plotter.plotFlowRTT(runtime);
     sim_plotter.plotFlowWindowSize(runtime);
     sim_plotter.plotPacketLoss(runtime);
+    sim_plotter.plotFlowRate(runtime);
 
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }   

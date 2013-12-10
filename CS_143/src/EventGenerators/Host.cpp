@@ -280,6 +280,14 @@ void Host::respondTo(PacketEvent new_event) {
             // we do nothing.
         }
         if (!pkt->ack) {
+            // Log the flow rate
+            flow_received[pkt->flowID] += pkt->size;
+            if (time - last_flow_log[pkt->flowID] > 0.1) {
+                logFlowRate(time, pkt->flowID);
+                last_flow_log[pkt->flowID] = time;
+                last_flow_received[pkt->flowID] = flow_received[pkt->flowID];
+            }
+            
             // We received a packet.  Send an acknowledgment.
             recvd[pkt->flowID].first.insert(pkt->sequence_num);
             
@@ -343,3 +351,19 @@ void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time,
     auto uEV = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
     addEventToLocalQueue(uEV);
 }
+
+/**
+* Logs the flow rate by looking at the number of bits received for each flow
+* in the time between logs for that flow.
+*
+* @param time the time at which the data is logged.
+* @param flowID the name of the flow
+*/
+void Host::logFlowRate(double time, std::string flowID) {
+    double bits_received = flow_received[flowID] - last_flow_received[flowID];
+    double flow_rate = bits_received / (time - last_flow_log[flowID]);
+    sim_plotter.logFlowRate(flowID, std::make_tuple(time, flow_rate));
+}
+
+
+
