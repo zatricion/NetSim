@@ -16,6 +16,9 @@
 #include <set>
 #include <memory>
 #include <unordered_map>
+#include <iostream>
+#include <string>
+#include <sstream>
 #include "../EventGenerators/Path.h"
 
 

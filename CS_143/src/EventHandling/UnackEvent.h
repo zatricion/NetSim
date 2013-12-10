@@ -9,11 +9,11 @@
 #define __CS_143__UnackEvent__
 
 
-#include "../EventGenerators/EventGenerator.h"
-#include "Event.h"
-#include "Packet.h"
 #include <string>
 #include <sstream>
+#include "Event.h"
+#include "Packet.h"
+#include "../EventGenerators/EventGenerator.h"
 
 
 class UnackEvent : public Event {

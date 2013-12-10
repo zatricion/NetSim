@@ -1,7 +1,4 @@
 #include "EventGenerator.h"
-#include "../Tools/Log.h"
-#include <cassert>
-#include <iostream>
 
 
 /**

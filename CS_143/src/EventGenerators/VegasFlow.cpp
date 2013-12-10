@@ -1,9 +1,4 @@
-#include "Flow.h"
 #include "VegasFlow.h"
-#include "Host.h"
-#include <cassert>
-#include <math.h>
-#include "../Tools/Log.h"
 
 
 /**

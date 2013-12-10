@@ -108,10 +108,5 @@ build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 src/IO/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o src/IO/NetInput.o
 
-
-# Tests the objects by running the runtest executable.
-test: clean runtest
-	./runtest
-
 clean:
 	rm build/*.o src/IO/*.o src/IO/lexer.yy.cpp src/IO/parser.tab.cpp src/IO/parser.tab.hpp

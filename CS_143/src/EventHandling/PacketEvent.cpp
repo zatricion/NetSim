@@ -1,5 +1,4 @@
 #include "PacketEvent.h"
-#include <sstream>
 
 
 /**

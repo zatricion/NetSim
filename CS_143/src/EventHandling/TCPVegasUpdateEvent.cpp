@@ -1,5 +1,4 @@
 #include "TCPVegasUpdateEvent.h"
-#include <sstream>
 
 
 /**

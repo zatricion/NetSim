@@ -9,15 +9,15 @@
 
 
 #include <iostream>
+#include <list>
+#include <cassert>
+#include <algorithm>
+#include <sstream>
+#include <unordered_map>
 #include "EventGenerator.h"
 #include "../EventHandling/PacketEvent.h"
-#include <list>
 #include "../IO/Plotter.h"
-#include <cassert>
-#include <algorithm> // std::max
-#include <sstream>
 #include "../Tools/Log.h"
-#include <unordered_map>
 
 
 class Link : public EventGenerator {

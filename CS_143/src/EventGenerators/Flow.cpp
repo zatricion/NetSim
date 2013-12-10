@@ -1,8 +1,5 @@
 #include "Flow.h"
-#include "Host.h"
-#include <cassert>
-#include <math.h>
-#include "../Tools/Log.h"
+#include "Host.h" // Must include here because circular dependency.
 
 
 /**

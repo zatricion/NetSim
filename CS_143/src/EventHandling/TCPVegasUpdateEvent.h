@@ -9,6 +9,7 @@
 
 
 #include <string>
+#include <sstream>
 #include "Event.h"
 
 

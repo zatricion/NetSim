@@ -10,12 +10,15 @@
 #define __CS_143__EventGenerator__
 
 
-#include "../Tools/deref_comp.h"
+#include <cassert>
+#include <iostream>
 #include <string>
-#include "../EventHandling/Event.h" 
 #include <queue>
 #include <map>
 #include <memory>
+#include "../Tools/deref_comp.h"
+#include "../Tools/Log.h"
+#include "../EventHandling/Event.h" 
 
 
 class EventGenerator {

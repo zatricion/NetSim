@@ -4,9 +4,12 @@
 #include <set>
 #include <memory>
 #include <queue>
+#include <math.h>
+#include <cassert>
+#include "Flow.h"
+#include "Host.h"
 #include "../EventHandling/Packet.h"
 #include "../Tools/Log.h"
-#include "Flow.h"
 
 
 class VegasFlow : public Flow {

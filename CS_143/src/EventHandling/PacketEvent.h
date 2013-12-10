@@ -8,9 +8,10 @@
 #define __CS_143__PacketEvent__
 
 
-#include "../EventGenerators/EventGenerator.h"
-#include "Packet.h"
 #include <string>
+#include <sstream>
+#include "Packet.h"
+#include "../EventGenerators/EventGenerator.h"
 
 class PacketEvent : public Event {
 

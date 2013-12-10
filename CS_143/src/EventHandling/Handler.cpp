@@ -1,7 +1,4 @@
 #include "Handler.h"
-#include "PacketEvent.h"
-#include <iostream>
-#include <cassert>
 
 
 /**

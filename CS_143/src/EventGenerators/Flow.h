@@ -11,6 +11,8 @@
 #include <set>
 #include <memory>
 #include <queue>
+#include <cassert>
+#include <math.h>
 #include "../EventHandling/Packet.h"
 #include "../Tools/Log.h"
 

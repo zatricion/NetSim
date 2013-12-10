@@ -9,9 +9,13 @@
 #include <set>
 #include <memory>
 #include <queue>
+#include <cassert>
+#include <math.h>
+#include <climits>
+#include "Flow.h"
+#include "Host.h"
 #include "../EventHandling/Packet.h"
 #include "../Tools/Log.h"
-#include "Flow.h"
 
 
 /**
