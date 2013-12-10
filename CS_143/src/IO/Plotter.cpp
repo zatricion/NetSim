@@ -10,30 +10,35 @@
 Plotter sim_plotter = Plotter();
 
 void Plotter::logLinkRate(std::string name,
-                          std::tuple<double, float> rate_data) {
-    linkRate[name].push_back(rate_data);
+                          std::tuple<double, double> rate_data) {
+    link_rate[name].push_back(rate_data);
     
 }
 
 void Plotter::logBufferOccupancy(std::string name,
-                          std::tuple<double, float> rate_data) {
-    BufferOccupancy[name].push_back(rate_data);
+                          std::tuple<double, double> rate_data) {
+    buffer_occupancy[name].push_back(rate_data);
     
 }
 
 void Plotter::logFlowRTT(std::string name,
-                         std::tuple<double, float> rate_data) {
-    flowRTT[name].push_back(rate_data);
+                         std::tuple<double, double> rate_data) {
+    flow_RTT[name].push_back(rate_data);
+}
+
+void Plotter::logFlowRate(std::string name,
+                         std::tuple<double, double> rate_data) {
+    flow_rate[name].push_back(rate_data);
 }
 
 void Plotter::logFlowWindowSize(std::string name,
-                         std::tuple<double, float> rate_data) {
-    flowWindowSize[name].push_back(rate_data);
+                         std::tuple<double, double> rate_data) {
+    flow_window_size[name].push_back(rate_data);
 }
 
 void Plotter::logPacketLoss(std::string name,
-                             std::tuple<double, float> rate_data) {
-    packetLoss[name].push_back(rate_data);
+                             std::tuple<double, double> rate_data) {
+    packet_loss[name].push_back(rate_data);
 }
 
 void Plotter::plot(plot_data data,
@@ -76,31 +81,37 @@ void Plotter::plot(plot_data data,
 }
 
 void Plotter::plotLinkRate(double runtime) {
-    Plotter::plot(linkRate,
+    Plotter::plot(link_rate,
                   runtime,
                   "Link Rate", "Time (s)", "Link Rate (bps)", "lines");
 }
 
 void Plotter::plotBufferOccupancy(double runtime) {
-    Plotter::plot(BufferOccupancy,
+    Plotter::plot(buffer_occupancy,
                   runtime,
                   "Buffer Occupancy", "Time (s)", "Queue Size (bits)", "lines");
 }
 
 void Plotter::plotFlowRTT(double runtime) {
-    Plotter::plot(flowRTT,
+    Plotter::plot(flow_RTT,
                   runtime,
                   "Flow RTT", "Time (s)", "RTT (s)", "lines");
 }
 
+void Plotter::plotFlowRate(double runtime) {
+    Plotter::plot(flow_rate,
+                  runtime,
+                  "Flow Rate", "Time (s)", "Rate (bps)", "lines");
+}
+
 void Plotter::plotFlowWindowSize(double runtime) {
-    Plotter::plot(flowWindowSize,
+    Plotter::plot(flow_window_size,
                   runtime,
                   "Window Size", "Time (s)", "Window Size (pkts)", "lines");
 }
 
 void Plotter::plotPacketLoss(double runtime) {
-    Plotter::plot(packetLoss,
+    Plotter::plot(packet_loss,
                   runtime,
                   "Packet Loss", "Time (s)", "Number of Packets", "lines");
 }

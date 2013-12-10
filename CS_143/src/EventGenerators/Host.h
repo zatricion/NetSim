@@ -49,6 +49,19 @@ public:
     void respondToFinUnackEvent(UnackEvent unack_event);
     void respondToSynPacketEvent(PacketEvent new_event);
     void respondToFinPacketEvent(PacketEvent new_event);
+    
+    // Log flow rate
+    void logFlowRate(double time, std::string flowID);
+
+private:
+    // Flow received in bits for each flow
+    std::unordered_map<std::string, double> flow_received;
+    
+    // Flow received in bits at the last time the flow was logged
+    std::unordered_map<std::string, double> last_flow_received;
+    
+    // Last time the flow was logged for each flow
+    std::unordered_map<std::string, double> last_flow_log;
 };
 
 #endif /* defined(__CS_143__Host__) */
