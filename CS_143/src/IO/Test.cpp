@@ -45,6 +45,9 @@ void io() {
     handler = parse(myfile);
     myfile.close();
     
+    // hide the cursor
+    printf("\e[?25l");
+    
     double currTime = handler.getMinTime();
     // set precision so won't flail around too much
     std::cout.precision(3);
@@ -55,6 +58,9 @@ void io() {
 	currTime = handler.getMinTime();
     }
     std::cout << std::endl;
+    
+    // show the cursor
+    printf("\e[?25h");
     
     // output plots
     sim_plotter.plotLinkRate(runtime);
