@@ -14,8 +14,8 @@ int main()
     FILELog::ReportingLevel() = logDEBUG; //logDEBUG;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
-    //io();
-    simTest2();
+    io();
+    //simTest2();
     return 0;
     /*packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
@@ -92,9 +92,14 @@ void io() {
     handler = read_input();
  
     FILE_LOG(logDEBUG) << "Running simulation.";
-    double runtime = 50.0;
-    while(handler.getMinTime() < runtime)     {
+    double runtime = 10.0;
+    double currTime = handler.getMinTime();
+    // set precision so won't flail around too much
+    std::cout.precision(3);
+    while(currTime < runtime)     {
+        std::cout << "\rTime: " << currTime << " / " << runtime << std::flush;
         handler.step();
+	currTime = handler.getMinTime();
     }
     
     // output plots
