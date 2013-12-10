@@ -9,8 +9,7 @@
 // @MaxHorton TODO:
 // This method will contain unit tests for each of the objects.
 // It will be implemented as the network objects are created.
-int main()
-{
+int main() {
     // Set most verbose logging.
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
@@ -50,7 +49,7 @@ void io() {
     // set precision so won't flail around too much
     std::cout.precision(3);
     runtime = std::atof(input.c_str());
-    while(currTime < runtime)     {
+    while(currTime < runtime && handler.running()) {
         std::cout << "\rTime: " << currTime << " / " << runtime << "             ";
         handler.step();
 	currTime = handler.getMinTime();
@@ -66,4 +65,3 @@ void io() {
 
     FILE_LOG(logINFO) << "Simulator passed tests!";
 }   
-

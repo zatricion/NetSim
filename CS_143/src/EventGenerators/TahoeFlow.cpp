@@ -117,14 +117,10 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         double RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
-        waitTime = 1.5 * A + 4 * D + .01; // If you just use A, there are some packets that BARELY don't make it.
-        // Seems wrong to use just A.  //TODO better comments.
+        updateWaitTime();
 
-        FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
-
        
-        FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
         if (seqNum < windowStart) { return; }
 
         if (seqNum == numPackets) {
@@ -137,7 +133,6 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             windowStart = seqNum;
             windowEnd = seqNum;
 
-            FILE_LOG(logDEBUG1) << "DONE WITH DATA FLOW.";
             phase = FIN;
             // We need to send a FIN to the other host.
             auto fin = std::make_shared<Packet>("FIN", destination,
@@ -147,8 +142,6 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             host->addEventToLocalQueue(finEvent);
             
         }
-
-    // Handle each case separately, depending on which phase of Reno we're in.
 
         if (tahoePhase == SLOWSTART) {
             FILE_LOG(logDEBUG) << "In SLOWSTART";
@@ -174,10 +167,9 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             }
 
             if (multiplicity > 3) {
-                // We have received triple acks.  Do a fast resend, then timeout.
+                // We have received triple duplicate acks.
                 multiplicity = 0;
 
-                FILE_LOG(logDEBUG) << "TRIPLICATE ACKS FOR " << pkt->toString();
                 auto retrans = std::make_shared<Packet>(
                     std::to_string(pkt->sequence_num),
                     pkt->source,
@@ -187,6 +179,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
                     pkt->sequence_num,
                     pkt->flowID,
                     false, false, time);
+                // To timeout, just call handleUnackEvent!
                 handleUnackEvent(retrans, time);
             }
 
@@ -195,32 +188,25 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
                 // after adjusting the window bounds.
                 int windowSize = windowEnd - windowStart + 1;
 
-                double wOverFlow = winOverFlow;
-
                 assert(tahoePhase == CONGESTIONAVOIDANCE);
-                FILE_LOG(logDEBUG) << "windowSize=" << windowSize;
-                wOverFlow += 1.0 / (windowSize);
-                windowSize += (int) wOverFlow;
-                wOverFlow -= (int) wOverFlow;
-                FILE_LOG(logDEBUG) << "windowSize=" << windowSize << ", winOverFlow=" << wOverFlow;
+                winOverFlow += 1.0 / (windowSize);
+                windowSize += (int) winOverFlow;
+                winOverFlow -= (int) winOverFlow;
 
-                winOverFlow = wOverFlow;
                 windowStart = seqNum;
                 windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
                 sendManyPackets(time);
             }
         } // end CONGESTIONAVOIDANCE block;
-
         logFlowWindowSize(time, windowEnd - windowStart + 1);
-    }
-    // Otherwise (if phase is not data), do nothing.
+    } // end phase == DATA block. If phase is not data, do nothing.
 }
 
 
 /**
- * Represent the packet as a string.
+ * Represent the Flow as a string.
  *
- * @return a string representing the packet
+ * @return a string representing the Flow.
  */
 std::string TahoeFlow::toString() {
     std::stringstream fmt;
@@ -241,11 +227,13 @@ std::string TahoeFlow::toString() {
 }
 
 
-void TahoeFlow::closeConnection(double time) {
-    return;
-}
-
-
+/**
+ * Called when a SYN PacketEvent for this flow reaches the host that the flow
+ * lives on.  It ends the SYN handshake and starts the data flow.
+ *
+ * @param pkt the Packet from the PacketEvent.
+ * @param time the time at which the PacketEvent arrives.
+ */
 void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) {
     // If we receive a SYN, it better be a SYNACK.
     assert(pkt->ack && pkt->syn);
@@ -273,7 +261,20 @@ void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         double RTT = time - pkt->timestamp;
         A = RTT;
         D = RTT;
-        waitTime = 4 * RTT + RTT;
+        updateWaitTime();
     }
     // If we're not in the SYN phase, do nothing.
+}
+
+
+/**
+ * Updates the wait time using a simple formula.
+ * Uses a slightly modified version of the formula A + 4 * D.
+ * Using A + 4 * D produces much more packet loss, because D becomes
+ * small very quickly in the simulation, making the waitTime variable
+ * very unforgiving.
+ */
+void TahoeFlow::updateWaitTime() {
+
+    waitTime = 1.5 * A + 4 * D + .01;
 }
