@@ -11,12 +11,12 @@ int main()
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
     // TODO is it okay to change this later?  Preprocessor...
-    FILELog::ReportingLevel() = logINFO; //logDEBUG;
+    FILELog::ReportingLevel() = logDEBUG; //logDEBUG;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
     packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
-    simTest2();
+    simTest0();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
 }
@@ -43,15 +43,15 @@ void simTest0()
     Handler handler = Handler();
     
     // add link1
-    auto link1 = std::make_shared<Link>((300 * 8 * 1024.0), // buffer size
+    auto link1 = std::make_shared<Link>((100 * 8 * 1024.0), // buffer size
                                         0.01, // propagation delay
                                         pow(10, 7), // capacity
                                         "host1", "host2", "link1");
     
     auto host1 = std::make_shared<Host>(link1, "host1");
     auto host2 = std::make_shared<Host>(link1, "host2");
-    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                      (9000 * 8 * 1024), host1, 1, 1.0);
+    auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
+                      (36000 * 8 * 1024), host1, 1, 1.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);
@@ -112,7 +112,7 @@ void simTest1()
     std::vector<std::string> host_list;
     host_list.push_back(host1->getID());
     host_list.push_back(host2->getID());
-    
+
     // create routers
     auto router1 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link0, link1, link2}, "router1", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
     auto router2 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link1, link3}, "router2", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
@@ -120,8 +120,8 @@ void simTest1()
     auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link4, link5}, "router4", std::vector<std::shared_ptr<Link> > {link0, link1, link2, link3, link4, link5});
     
     // add flow
-    auto flow1 = std::make_shared<VegasFlow>("flow1", "host2",
-                                        (20 * 8 * pow(10, 6)), host1, 1, 0.5);
+    auto flow1 = std::make_shared<TahoeFlow>("flow1", "host2",
+                                        (20 * 8 * pow(10, 6)), host1, 1, 5.5);
     
     std::vector<std::shared_ptr<Flow> > flow_list;
     flow_list.push_back(flow1);

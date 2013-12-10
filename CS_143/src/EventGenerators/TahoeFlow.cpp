@@ -30,6 +30,7 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest,
  */
 void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
+    // TODO logFlowWindowSize
 
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
@@ -45,25 +46,30 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
         validUnackTime = time;
         // For go back N, just retransmit, as long as the packet is within
         // the window.
-        FILE_LOG(logDEBUG1) << "Packet unacknowledged.  Better resend.";
-        FILE_LOG(logDEBUG1) << "Packet was:" << unacked->toString() <<
-            ", time=" << time;
+        for (int i = windowStart + 1; i <= windowEnd; i++) {
+            unSentPackets.insert(i);
+        }
 
-        FILE_LOG(logDEBUG1) << "HANDLINGUNACK: " << toString();
-        FILE_LOG(logDEBUG1) << "NUM=" << unacked->sequence_num;
+        //TODO isn't this kind of dangerous?
+        //unacked->timestamp = time;
 
-        unacked->timestamp = time;
+        // New way:
+        auto unAcked2 = std::make_shared<Packet>(*unacked);
+        unAcked2->timestamp = time;
+
+
+
         // If in slowstart or cong av, go to slow start windowsize->1
         // change ssthresh to half previous win size.
         // 
-        FILE_LOG(logDEBUG) << "TIMEOUT";
+        FILE_LOG(logDEBUG) << "TIMEOUT at " << time;
         tahoePhase = SLOWSTART;
         ssthresh = (windowEnd - windowStart + 1) / 2;
 
         // Set the window size to 1.
         windowEnd = windowStart;
 
-        sendAndQueueResend(unacked, time, waitTime);
+        sendAndQueueResend(unAcked2, time, waitTime);
         FILE_LOG(logDEBUG) << "Handled UnackEvent.  Flow " << toString();
 
     }
@@ -84,17 +90,36 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
     FILE_LOG(logDEBUG) << "Flow is handleAck";
     assert(pkt->ack);
     if (phase == DATA) {
+        int seqNum = pkt->sequence_num;
+
+        if (seqNum < windowStart) {
+            // We need to make sure the ack number is in the acceptable range.  Or at least above 0.  But do we need to? // TODO
+            // This ack should probably just be ignored.
+            FILE_LOG(logDEBUG) << "I DONT BELONG HERE.";
+            //return;
+            return;
+        }
+
+        // For now, let's just ignore all acks that we receive that were made before the last timeout.
+        // eventually, we should consider them, but only change multiplicity if they came after the timeout.
+        // TODO
+        if (pkt->timestamp < validUnackTime) {
+            FILE_LOG(logDEBUG) << "IM AN UNFAIR mult changer, potentially.";
+            return;
+        }
+
         // Update the A, D, waitTime;
         double RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
-        waitTime = A + 4 * D;
+        waitTime = 1.5 * A + 4 * D + .01; // If you just use A, there are some packets that BARELY don't make it.
+        // Seems wrong to use just A.  //TODO better comments.
+
         FILE_LOG(logDEBUG) << "RTT=" << RTT << ", A=" << A << ", D=" << D << ", waitTime=" << waitTime;
         logFlowRTT(time, RTT);
 
        
         FILE_LOG(logDEBUG1) << "Handling an ack.  Packet " << pkt->toString();
-        int seqNum = pkt->sequence_num;
         if (seqNum < windowStart) { return; }
 
         if (seqNum == numPackets) {
