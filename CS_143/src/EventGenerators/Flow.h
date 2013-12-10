@@ -125,7 +125,7 @@ public:
     virtual std::string toString() = 0;
 
     /**
-     * TODO no longer virtual.
+     * Respond to the receipt of a SYN for this flow.
      */
     virtual void respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time) = 0;
    
