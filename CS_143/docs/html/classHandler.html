@@ -84,25 +84,126 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="Handler" -->
+<p><a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> that runs the Event-based simulation.  
+ <a href="classHandler.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Handler_8h_source.html">Handler.h</a>&gt;</code></p>
+
 <p><a href="classHandler-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa93dcd4a5dc2d1e2f10cec2ebe3a9668"></a><!-- doxytag: member="Handler::getMinTime" ref="aa93dcd4a5dc2d1e2f10cec2ebe3a9668" args="()" -->
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getMinTime</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc28c961d70d462106f2f3be46330930"></a><!-- doxytag: member="Handler::populateCurrentEvents" ref="abc28c961d70d462106f2f3be46330930" args="(double time)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>populateCurrentEvents</b> (double time)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#a4639718d2f590ebd22d0d949a239327d">running</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> is still running.  <a href="#a4639718d2f590ebd22d0d949a239327d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#aa93dcd4a5dc2d1e2f10cec2ebe3a9668">getMinTime</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the lowest time from the distributed eventHeap.  <a href="#aa93dcd4a5dc2d1e2f10cec2ebe3a9668"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#abc28c961d70d462106f2f3be46330930">populateCurrentEvents</a> (double time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of all events that should happen next.  <a href="#abc28c961d70d462106f2f3be46330930"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad67c5bf3357aba8c6b71fa76c5161d29"></a><!-- doxytag: member="Handler::processCurrentEvents" ref="ad67c5bf3357aba8c6b71fa76c5161d29" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>processCurrentEvents</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#ad67c5bf3357aba8c6b71fa76c5161d29">processCurrentEvents</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle all events in currEvents. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa60626b419730f48a1bd5b91c9ade9d7"></a><!-- doxytag: member="Handler::step" ref="aa60626b419730f48a1bd5b91c9ade9d7" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d66a0dfe17658e9ba92080d506654ac"></a><!-- doxytag: member="Handler::addGenerator" ref="a6d66a0dfe17658e9ba92080d506654ac" args="(std::shared_ptr&lt; EventGenerator &gt; gen)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addGenerator</b> (std::shared_ptr&lt; <a class="el" href="classEventGenerator.html">EventGenerator</a> &gt; gen)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#aa60626b419730f48a1bd5b91c9ade9d7">step</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Go through a single step of the simulation. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#a6d66a0dfe17658e9ba92080d506654ac">addGenerator</a> (std::shared_ptr&lt; <a class="el" href="classEventGenerator.html">EventGenerator</a> &gt; gen)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the event <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a>.  <a href="#a6d66a0dfe17658e9ba92080d506654ac"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f9bd53a9251f712c6ff20ca48122e6f"></a><!-- doxytag: member="Handler::handleEvent" ref="a1f9bd53a9251f712c6ff20ca48122e6f" args="(std::shared_ptr&lt; Event &gt; event)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>handleEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt; event)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4639718d2f590ebd22d0d949a239327d"></a><!-- doxytag: member="Handler::running" ref="a4639718d2f590ebd22d0d949a239327d" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#a1f9bd53a9251f712c6ff20ca48122e6f">handleEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt; event)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a single <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> by passing it to its destination, and allowing the destination object to do the rest of the work. <br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> that runs the Event-based simulation. </p>
+<p>Pulls Events from a list of EventGenerators, and passes them to other EventGenerators. </p>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a6d66a0dfe17658e9ba92080d506654ac"></a><!-- doxytag: member="Handler::addGenerator" ref="a6d66a0dfe17658e9ba92080d506654ac" args="(std::shared_ptr&lt; EventGenerator &gt; gen)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHandler.html#a6d66a0dfe17658e9ba92080d506654ac">Handler::addGenerator</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEventGenerator.html">EventGenerator</a> &gt;&#160;</td>
+          <td class="paramname"><em>gen</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor for the event <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a>. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gen</td><td>a map of all EventGenerators, with keys as strings </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa93dcd4a5dc2d1e2f10cec2ebe3a9668"></a><!-- doxytag: member="Handler::getMinTime" ref="aa93dcd4a5dc2d1e2f10cec2ebe3a9668" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classHandler.html#aa93dcd4a5dc2d1e2f10cec2ebe3a9668">Handler::getMinTime</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the lowest time from the distributed eventHeap. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the minimum time. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abc28c961d70d462106f2f3be46330930"></a><!-- doxytag: member="Handler::populateCurrentEvents" ref="abc28c961d70d462106f2f3be46330930" args="(double time)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classHandler.html#abc28c961d70d462106f2f3be46330930">Handler::populateCurrentEvents</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>minTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list of all events that should happen next. </p>
+<p>This list will often contain only 1 event, since it is unlikely that multiple Events will have the exact same timestamp.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minTime</td><td>the minimum <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> time out of all Events in all the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> eventHeaps </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4639718d2f590ebd22d0d949a239327d"></a><!-- doxytag: member="Handler::running" ref="a4639718d2f590ebd22d0d949a239327d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classHandler.html#a4639718d2f590ebd22d0d949a239327d">Handler::running</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Tells if the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> is still running. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it is still running </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/<a class="el" href="Handler_8h_source.html">Handler.h</a></li>
 <li>/home/max/caltech/NetSim/CS_143/src/EventHandling/Handler.cpp</li>
@@ -125,7 +226,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b> ()</td></
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:25 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:45 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

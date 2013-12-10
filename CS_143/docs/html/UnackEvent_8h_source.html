@@ -78,28 +78,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">/home/max/caltech/NetSim/CS_143/src/EventHandling/UnackEvent.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __CS_143__UnackEvent__</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __CS_143__UnackEvent__</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &quot;../EventGenerators/EventGenerator.h&quot;</span>
-<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;Event.h&quot;</span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;Packet.h&quot;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;sstream&gt;</span>
-<a name="l00009"></a>00009 
-<a name="l00010"></a><a class="code" href="classUnackEvent.html">00010</a> <span class="keyword">class </span><a class="code" href="classUnackEvent.html">UnackEvent</a> : <span class="keyword">public</span> <a class="code" href="classEvent.html">Event</a> {
-<a name="l00011"></a>00011 <span class="keyword">public</span>:
-<a name="l00012"></a>00012     <a class="code" href="classUnackEvent.html">UnackEvent</a>(std::shared_ptr&lt;Packet&gt; pkt,
-<a name="l00013"></a>00013                std::string dest, std::string src,
-<a name="l00014"></a>00014                <span class="keywordtype">double</span> ts);
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016     std::shared_ptr&lt;Packet&gt; packet;
-<a name="l00017"></a>00017     
-<a name="l00018"></a>00018     <span class="keyword">virtual</span> std::string toString() <span class="keyword">override</span>;
-<a name="l00019"></a>00019     <span class="keyword">virtual</span> std::string getType() <span class="keyword">override</span>;
-<a name="l00020"></a>00020 };
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143__UnackEvent__) */</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00008"></a>00008 <span class="preprocessor">#ifndef __CS_143__UnackEvent__</span>
+<a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define __CS_143__UnackEvent__</span>
+<a name="l00010"></a>00010 <span class="preprocessor"></span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;../EventGenerators/EventGenerator.h&quot;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;Event.h&quot;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;Packet.h&quot;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 
+<a name="l00019"></a><a class="code" href="classUnackEvent.html">00019</a> <span class="keyword">class </span><a class="code" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> : <span class="keyword">public</span> <a class="code" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> {
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021 <span class="keyword">public</span>:
+<a name="l00022"></a>00022     <span class="comment">// Fields</span>
+<a name="l00024"></a><a class="code" href="classUnackEvent.html#ad9d09191d5ee31c15c554e797a708f7d">00024</a> <span class="comment"></span>    std::shared_ptr&lt;Packet&gt; <a class="code" href="classUnackEvent.html#ad9d09191d5ee31c15c554e797a708f7d" title="The packet that may not have been acked.">packet</a>;
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026     <span class="comment">// Constructors</span>
+<a name="l00027"></a>00027     <a class="code" href="classUnackEvent.html#af9ed3cfe7027d641ceddbd7a2ce560c7" title="Create an UnackEvent.">UnackEvent</a>(std::shared_ptr&lt;Packet&gt; pkt,
+<a name="l00028"></a>00028                std::string dest, std::string src,
+<a name="l00029"></a>00029                <span class="keywordtype">double</span> ts);
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031     <span class="comment">// Accessors</span>
+<a name="l00032"></a>00032     <span class="keyword">virtual</span> std::string <a class="code" href="classUnackEvent.html#a7be801da20ad826acf9ebfeaa6ee8536" title="Get a string representing the UnackEvent.">toString</a>() <span class="keyword">override</span>;
+<a name="l00033"></a>00033     <span class="keyword">virtual</span> std::string <a class="code" href="classUnackEvent.html#a56ca06731117d1fff95a1601abed02e8" title="Get a string representing the type of an UnackEvent.">getType</a>() <span class="keyword">override</span>;
+<a name="l00034"></a>00034 };
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143__UnackEvent__) */</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -118,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:23 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:44 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

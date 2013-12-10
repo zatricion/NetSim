@@ -22,7 +22,9 @@ class Host;
 class FlowEvent : public Event {
 public:
     // Fields
+    /** The data size of the Flow. */
     int data_size;
+    /** The flow. */
     std::shared_ptr<Flow> flow;
 
     // Constructor

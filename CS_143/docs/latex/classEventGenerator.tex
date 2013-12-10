@@ -21,11 +21,10 @@
 \item 
 std\-::string \hyperlink{classEventGenerator_a467b319c4317b83b9c16708c9815953d}{get\-I\-D} () const 
 \begin{DoxyCompactList}\small\item\em \-Get the \-I\-D of the \hyperlink{classEventGenerator}{\-Event\-Generator}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ e)=0
+\begin{DoxyCompactList}\small\item\em \-Hands an \hyperlink{classEvent}{\-Event} to the \hyperlink{classEventGenerator}{\-Event\-Generator} for processing. \end{DoxyCompactList}\item 
 bool \hyperlink{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}{has\-Events} ()
 \begin{DoxyCompactList}\small\item\em \-Tells whether the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue has any events. \end{DoxyCompactList}\item 
-\hypertarget{classEventGenerator_a5d7d4625d7dc71a887cf39a144cc2efa}{virtual void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)=0}\label{classEventGenerator_a5d7d4625d7dc71a887cf39a144cc2efa}
-
-\item 
 std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ \hyperlink{classEventGenerator_ab40fd3a0bf1aa974ba50feb443d81009}{get\-Event} ()
 \begin{DoxyCompactList}\small\item\em \-Remove and return the lowest time event from the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue. \end{DoxyCompactList}\item 
 double \hyperlink{classEventGenerator_ac4b5ccdeaf232fe59854535bb13747a9}{get\-Next\-Time} ()
@@ -110,6 +109,26 @@ the \-I\-D as a string
 \begin{DoxyReturn}{\-Returns}
 the min time as a double 
 \end{DoxyReturn}
+\hypertarget{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{\index{\-Event\-Generator@{\-Event\-Generator}!give\-Event@{give\-Event}}
+\index{give\-Event@{give\-Event}!EventGenerator@{\-Event\-Generator}}
+\subsubsection[{give\-Event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf \-Event\-Generator\-::give\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Event} $>$}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}
+
+
+\-Hands an \hyperlink{classEvent}{\-Event} to the \hyperlink{classEventGenerator}{\-Event\-Generator} for processing. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em e} & the \hyperlink{classEvent}{\-Event} to be processed. \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{\-Router}, \hyperlink{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}{\-Host}, \hyperlink{classFlowGenerator_a9fd8f79663c4af4ab229dde250bc258c}{\-Flow\-Generator}, and \hyperlink{classLink_abd9466c4c2097329f4affd9b2eafbd7a}{\-Link}.
+
 \hypertarget{classEventGenerator_a1fd7fdcaa263115e89a9fc69b85eca22}{\index{\-Event\-Generator@{\-Event\-Generator}!has\-Events@{has\-Events}}
 \index{has\-Events@{has\-Events}!EventGenerator@{\-Event\-Generator}}
 \subsubsection[{has\-Events}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Event\-Generator\-::has\-Events} (

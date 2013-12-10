@@ -12,7 +12,9 @@ class Event {
 
 public:
     // Fields
+    /** The destination of the Event. */
     std::string destination;
+    /** The source of the Event. */
     std::string source;
 
     // Constructor

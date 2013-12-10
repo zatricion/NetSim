@@ -107,20 +107,13 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when an ack is received for a data packet that this flow sent out.  <a href="#ab75994d89f53573e60a1650dcaeddabb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#aa74099113ee1c2298874b85ade05be98">toString</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A string representing the <a class="el" href="classFlow.html">Flow</a> object.  <a href="#aa74099113ee1c2298874b85ade05be98"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a4e819e83edb2b9b90f647e6c43e28b8e">logFlowRTT</a> (double time, double RTT)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classLog.html">Log</a> the RTT for a received packet.  <a href="#a4e819e83edb2b9b90f647e6c43e28b8e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a777477d26afb220c96de8495e85e73ef">logFlowWindowSize</a> (double time, int windowSize)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classLog.html">Log</a> the window size of the flow.  <a href="#a777477d26afb220c96de8495e85e73ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#aedfba46ffa2ea5e12ed953174d29380f">openConnection</a> (double time)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins the data transfer for the flow by sending a SYN.  <a href="#aedfba46ffa2ea5e12ed953174d29380f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a8ebd328c963fef5e538a3d6ea91ee317">closeConnection</a> (double time)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the data transfer for the flow by sending a FIN.  <a href="#a8ebd328c963fef5e538a3d6ea91ee317"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c3884b1b36915274c3c15934f7e6d2a"></a><!-- doxytag: member="Flow::respondToSynUnackEvent" ref="a3c3884b1b36915274c3c15934f7e6d2a" args="(double time)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a3c3884b1b36915274c3c15934f7e6d2a">respondToSynUnackEvent</a> (double time)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO no longer virtual. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b9f70de92594ba82c5a1b16298f3811"></a><!-- doxytag: member="Flow::respondToSynPacketEvent" ref="a1b9f70de92594ba82c5a1b16298f3811" args="(std::shared_ptr&lt; Packet &gt; pkt, double time)=0" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a1b9f70de92594ba82c5a1b16298f3811">respondToSynPacketEvent</a> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO no longer virtual. <br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Respond to the receipt of a SYN for this flow. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a11e680564ffab501382cf02ed511668a">logFlowWindowSize</a> (double time, int windowSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Log the window size of the flow.  <a href="#a11e680564ffab501382cf02ed511668a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#abda1a17915ccd01b4f31597ad962b3ab">openConnection</a> (double time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins the data transfer for the flow by sending a SYN.  <a href="#abda1a17915ccd01b4f31597ad962b3ab"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966">initialize</a> (double time)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the data flow.  <a href="#a1076308c9b3a11a1e0bdea4c7b4c2966"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6">sendAndQueueResend</a> (std::shared_ptr&lt; <a class="el" href="classPacket.html">Packet</a> &gt; pkt, double time, float delay)</td></tr>
@@ -129,6 +122,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for sending a packet from the flow's source to its destination.  <a href="#a5a547ae4185337bf7790f9ace391ac48"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c">sendManyPackets</a> (double time)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send as many packets as possible.  <a href="#a792deb9bffc1a4020e09275f037fcc4c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a04338dbf3a16eeedeef168c9ee8ee6a6">logFlowRTT</a> (double time, double RTT)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Log the RTT for a received packet.  <a href="#a04338dbf3a16eeedeef168c9ee8ee6a6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a969e962a3ed0349fbb45af508f923069">respondToSynUnackEvent</a> (double time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Respond to an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> from a SYN packet.  <a href="#a969e962a3ed0349fbb45af508f923069"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlow.html#a1c04de60a81b02750673806906701a76">windowStart</a></td></tr>
@@ -229,33 +226,6 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a8ebd328c963fef5e538a3d6ea91ee317"></a><!-- doxytag: member="Flow::closeConnection" ref="a8ebd328c963fef5e538a3d6ea91ee317" args="(double time)=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void <a class="el" href="classFlow.html#a8ebd328c963fef5e538a3d6ea91ee317">Flow::closeConnection</a> </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>time</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Ends the data transfer for the flow by sending a FIN. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">time</td><td>the time at which the data transfer ends. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classVegasFlow.html#a2dc0caf384bbc3c34286b82c21721708">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#a7319ce2db783abf4fc2c8b6c65b4a02f">TahoeFlow</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="ab75994d89f53573e60a1650dcaeddabb"></a><!-- doxytag: member="Flow::handleAck" ref="ab75994d89f53573e60a1650dcaeddabb" args="(std::shared_ptr&lt; Packet &gt; pkt, double time)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -290,7 +260,7 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classVegasFlow.html#a553016260475751bafea44d3d9456f5b">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#a3713acca3636e32cf01b03a4adb779a9">TahoeFlow</a>.</p>
+<p>Implemented in <a class="el" href="classTahoeFlow.html#a3713acca3636e32cf01b03a4adb779a9">TahoeFlow</a>, and <a class="el" href="classVegasFlow.html#a553016260475751bafea44d3d9456f5b">VegasFlow</a>.</p>
 
 </div>
 </div>
@@ -323,13 +293,13 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
 <p>Some fields are checked to determine whether or not the packet has been acked. An action is taken based on the result.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">unacked</td><td>the packed that may or may not have been acknowledged. the packet represents the packet inside of an <a class="el" href="classUnackEvent.html">UnackEvent</a>. </td></tr>
-    <tr><td class="paramname">time</td><td>the time at which the <a class="el" href="classUnackEvent.html">UnackEvent</a> is occurring. </td></tr>
+    <tr><td class="paramname">unacked</td><td>the packed that may or may not have been acknowledged. the packet represents the packet inside of an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a>. </td></tr>
+    <tr><td class="paramname">time</td><td>the time at which the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> is occurring. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classVegasFlow.html#a7e744f06f8a1236ae22837ea8a98b7a4">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#a2a5ac120c184604b0b7b03831e28c059">TahoeFlow</a>.</p>
+<p>Implemented in <a class="el" href="classTahoeFlow.html#a2a5ac120c184604b0b7b03831e28c059">TahoeFlow</a>, and <a class="el" href="classVegasFlow.html#a7e744f06f8a1236ae22837ea8a98b7a4">VegasFlow</a>.</p>
 
 </div>
 </div>
@@ -358,12 +328,12 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
 
 </div>
 </div>
-<a class="anchor" id="a4e819e83edb2b9b90f647e6c43e28b8e"></a><!-- doxytag: member="Flow::logFlowRTT" ref="a4e819e83edb2b9b90f647e6c43e28b8e" args="(double time, double RTT)=0" -->
+<a class="anchor" id="a04338dbf3a16eeedeef168c9ee8ee6a6"></a><!-- doxytag: member="Flow::logFlowRTT" ref="a04338dbf3a16eeedeef168c9ee8ee6a6" args="(double time, double RTT)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classFlow.html#a4e819e83edb2b9b90f647e6c43e28b8e">Flow::logFlowRTT</a> </td>
+          <td class="memname">void <a class="el" href="classFlow.html#a04338dbf3a16eeedeef168c9ee8ee6a6">Flow::logFlowRTT</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>, </td>
@@ -377,13 +347,13 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td><code> [pure virtual]</code></td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p><a class="el" href="classLog.html">Log</a> the RTT for a received packet. </p>
+<p>Log the RTT for a received packet. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>the time at which the packet is received. </td></tr>
@@ -392,16 +362,14 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classVegasFlow.html#ad6f472a4c695353c399d78f5212b358c">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#a5c22dafdd48bff94ff731e0966426905">TahoeFlow</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a777477d26afb220c96de8495e85e73ef"></a><!-- doxytag: member="Flow::logFlowWindowSize" ref="a777477d26afb220c96de8495e85e73ef" args="(double time, int windowSize)=0" -->
+<a class="anchor" id="a11e680564ffab501382cf02ed511668a"></a><!-- doxytag: member="Flow::logFlowWindowSize" ref="a11e680564ffab501382cf02ed511668a" args="(double time, int windowSize)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classFlow.html#a777477d26afb220c96de8495e85e73ef">Flow::logFlowWindowSize</a> </td>
+          <td class="memname">void <a class="el" href="classFlow.html#a11e680564ffab501382cf02ed511668a">Flow::logFlowWindowSize</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em>, </td>
@@ -415,35 +383,33 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td><code> [pure virtual]</code></td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p><a class="el" href="classLog.html">Log</a> the window size of the flow. </p>
+<p>Log the window size of the flow. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">time</td><td>the time at which the packet is received. </td></tr>
-    <tr><td class="paramname">windowSize</td><td>the window size to be logged. </td></tr>
+    <tr><td class="paramname">time</td><td>the time at which the window size is logged </td></tr>
+    <tr><td class="paramname">windowSize</td><td>the window size </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classVegasFlow.html#ab21ed64a66d2b491b487e1bb814284d0">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#a8b3fde2dbeb3273d4e390f33319e0861">TahoeFlow</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="aedfba46ffa2ea5e12ed953174d29380f"></a><!-- doxytag: member="Flow::openConnection" ref="aedfba46ffa2ea5e12ed953174d29380f" args="(double time)=0" -->
+<a class="anchor" id="abda1a17915ccd01b4f31597ad962b3ab"></a><!-- doxytag: member="Flow::openConnection" ref="abda1a17915ccd01b4f31597ad962b3ab" args="(double time)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classFlow.html#aedfba46ffa2ea5e12ed953174d29380f">Flow::openConnection</a> </td>
+          <td class="memname">void <a class="el" href="classFlow.html#abda1a17915ccd01b4f31597ad962b3ab">Flow::openConnection</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -457,7 +423,30 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classVegasFlow.html#acb26061bc3e5a2c6996f881b0201801b">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#ac04c8e3f32989bcc7f511a7bcaf4c33c">TahoeFlow</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a969e962a3ed0349fbb45af508f923069"></a><!-- doxytag: member="Flow::respondToSynUnackEvent" ref="a969e962a3ed0349fbb45af508f923069" args="(double time)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classFlow.html#a969e962a3ed0349fbb45af508f923069">Flow::respondToSynUnackEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Respond to an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> from a SYN packet. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>the time at which the <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> is received. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -529,7 +518,7 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
 <div class="memdoc">
 
 <p>Sends a packet from the flow's source to its destination. </p>
-<p>Also queues an <a class="el" href="classUnackEvent.html">UnackEvent</a> in case an ack isn't received.</p>
+<p>Also queues an <a class="el" href="classUnackEvent.html" title="An UnackEvent is called when an Event times out.">UnackEvent</a> in case an ack isn't received.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">pkt</td><td>the packet to be sent </td></tr>
@@ -584,7 +573,7 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
 <p>A string representing the <a class="el" href="classFlow.html">Flow</a> object. </p>
 <p>Used mainly for debugging. </p>
 
-<p>Implemented in <a class="el" href="classVegasFlow.html#a1317fffc95555ef997389831a7be8160">VegasFlow</a>, and <a class="el" href="classTahoeFlow.html#a909ca813661c4ab08dee03a3985a16c9">TahoeFlow</a>.</p>
+<p>Implemented in <a class="el" href="classTahoeFlow.html#a909ca813661c4ab08dee03a3985a16c9">TahoeFlow</a>, and <a class="el" href="classVegasFlow.html#a1317fffc95555ef997389831a7be8160">VegasFlow</a>.</p>
 
 </div>
 </div>
@@ -829,7 +818,7 @@ std::shared_ptr&lt; <a class="el" href="classHost.html">Host</a> &gt;&#160;</td>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:24 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:45 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

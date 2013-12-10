@@ -13,32 +13,25 @@
 \hyperlink{classHost_afde96dd6239594d91697006a850bea5b}{\-Host} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ host\-\_\-link, std\-::string host\-\_\-id)
 \begin{DoxyCompactList}\small\item\em \-Constructor. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$) override
-\begin{DoxyCompactList}\small\item\em \-Receives an event. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Give an event to the \hyperlink{classHost}{\-Host}. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a1386df4e48df0cf8e7252c55fa9e0f2b}{respond\-To} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)
 \begin{DoxyCompactList}\small\item\em \-Called when host receives a packet. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a15013b657e880635a087ce41d9bccaf8}{respond\-To} (\hyperlink{classFlowEvent}{\-Flow\-Event} flow\-\_\-event)
-\begin{DoxyCompactList}\small\item\em \-Called when a flow\-\_\-event is received. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Called when a \hyperlink{classFlowEvent}{\-Flow\-Event} is received. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_af19765406b0fc694ec4122ef57d3bbb3}{respond\-To} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
-\begin{DoxyCompactList}\small\item\em \-Called when there is a potentially unacknowledged packet. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Called when the host receives an \hyperlink{classUnackEvent}{\-Unack\-Event}. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a029c7f389a580fc7e53da38a698d0d9a}{send\-And\-Queue\-Resend} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time, float delay)
-\begin{DoxyCompactList}\small\item\em \-Queues a packet\-Event, and an unack event for the packet\-Event. \end{DoxyCompactList}\item 
-\hypertarget{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}{void {\bfseries send} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)}\label{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}
-
-\item 
-\hypertarget{classHost_a13a11214f204347c85388b28043459c2}{void {\bfseries respond\-To\-Syn\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)}\label{classHost_a13a11214f204347c85388b28043459c2}
-
-\item 
-\hypertarget{classHost_a9f76466a0f9e8362f70c7990eae22641}{void {\bfseries respond\-To\-Fin\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)}\label{classHost_a9f76466a0f9e8362f70c7990eae22641}
-
-\item 
-\hypertarget{classHost_a55abc101a34bd2bc1aff724883a85ecc}{void {\bfseries respond\-To\-Syn\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)}\label{classHost_a55abc101a34bd2bc1aff724883a85ecc}
-
-\item 
-\hypertarget{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}{void {\bfseries respond\-To\-Fin\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)}\label{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}
-
-\item 
-std\-::string \hyperlink{classHost_aa807c50f690bd2018265504483440c7d}{to\-String} ()
-\begin{DoxyCompactList}\small\item\em \-Get a string representing the host. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Queues a \hyperlink{classPacketEvent}{\-Packet\-Event} in the event\-Heap, as well as an \hyperlink{classUnackEvent}{\-Unack\-Event} for the \hyperlink{classPacketEvent}{\-Packet\-Event}. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}{send} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)
+\begin{DoxyCompactList}\small\item\em \-Sends a packet by creating a \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet and placing the \hyperlink{classPacketEvent}{\-Packet\-Event} on the event\-Heap. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a13a11214f204347c85388b28043459c2}{respond\-To\-Syn\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Helper function called when an \hyperlink{classUnackEvent}{\-Unack\-Event} for a \-S\-Y\-N is received. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a9f76466a0f9e8362f70c7990eae22641}{respond\-To\-Fin\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Helper function called when an \hyperlink{classUnackEvent}{\-Unack\-Event} for a \-F\-I\-N is received. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a55abc101a34bd2bc1aff724883a85ecc}{respond\-To\-Syn\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-S\-Y\-N. \end{DoxyCompactList}\item 
+void \hyperlink{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}{respond\-To\-Fin\-Packet\-Event} (\hyperlink{classPacketEvent}{\-Packet\-Event} new\-\_\-event)
+\begin{DoxyCompactList}\small\item\em \-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-F\-I\-N. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -89,9 +82,9 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 )\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classHost_a658a8bee30dfb9e6ff7abc26620f88ff}
 
 
-\-Receives an event. 
+\-Give an event to the \hyperlink{classHost}{\-Host}. 
 
-\-Determines its type, and passes to a helper function.
+\-This method determines the type of the event, then hands it to the appropriate helper function.
 
 
 \begin{DoxyParams}{\-Parameters}
@@ -100,7 +93,7 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 \end{DoxyParams}
 
 
-\-Implements \hyperlink{classEventGenerator}{\-Event\-Generator}.
+\-Implements \hyperlink{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{\-Event\-Generator}.
 
 \hypertarget{classHost_a1386df4e48df0cf8e7252c55fa9e0f2b}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
 \index{respond\-To@{respond\-To}!Host@{\-Host}}
@@ -127,11 +120,11 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 )}}\label{classHost_a15013b657e880635a087ce41d9bccaf8}
 
 
-\-Called when a flow\-\_\-event is received. 
+\-Called when a \hyperlink{classFlowEvent}{\-Flow\-Event} is received. 
 
 
 \begin{DoxyParams}{\-Parameters}
-{\em flow\-\_\-event} & the flow event received \\
+{\em flow\-\_\-event} & the \hyperlink{classFlowEvent}{\-Flow\-Event} received. \\
 \hline
 \end{DoxyParams}
 \hypertarget{classHost_af19765406b0fc694ec4122ef57d3bbb3}{\index{\-Host@{\-Host}!respond\-To@{respond\-To}}
@@ -143,11 +136,94 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 )}}\label{classHost_af19765406b0fc694ec4122ef57d3bbb3}
 
 
-\-Called when there is a potentially unacknowledged packet. 
+\-Called when the host receives an \hyperlink{classUnackEvent}{\-Unack\-Event}. 
 
 
 \begin{DoxyParams}{\-Parameters}
 {\em unack\-\_\-event} & the \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet that might not have been acknowledged \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}{\index{\-Host@{\-Host}!respond\-To\-Fin\-Packet\-Event@{respond\-To\-Fin\-Packet\-Event}}
+\index{respond\-To\-Fin\-Packet\-Event@{respond\-To\-Fin\-Packet\-Event}!Host@{\-Host}}
+\subsubsection[{respond\-To\-Fin\-Packet\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To\-Fin\-Packet\-Event} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Packet\-Event}}]{new\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a6f3523a2e00b6aae6f5e9fa14b0f0e0f}
+
+
+\-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-F\-I\-N. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em new\-\_\-event} & the \hyperlink{classPacketEvent}{\-Packet\-Event}. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a9f76466a0f9e8362f70c7990eae22641}{\index{\-Host@{\-Host}!respond\-To\-Fin\-Unack\-Event@{respond\-To\-Fin\-Unack\-Event}}
+\index{respond\-To\-Fin\-Unack\-Event@{respond\-To\-Fin\-Unack\-Event}!Host@{\-Host}}
+\subsubsection[{respond\-To\-Fin\-Unack\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To\-Fin\-Unack\-Event} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Unack\-Event}}]{unack\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a9f76466a0f9e8362f70c7990eae22641}
+
+
+\-Helper function called when an \hyperlink{classUnackEvent}{\-Unack\-Event} for a \-F\-I\-N is received. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em unack\-\_\-event} & the \hyperlink{classUnackEvent}{\-Unack\-Event}. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a55abc101a34bd2bc1aff724883a85ecc}{\index{\-Host@{\-Host}!respond\-To\-Syn\-Packet\-Event@{respond\-To\-Syn\-Packet\-Event}}
+\index{respond\-To\-Syn\-Packet\-Event@{respond\-To\-Syn\-Packet\-Event}!Host@{\-Host}}
+\subsubsection[{respond\-To\-Syn\-Packet\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To\-Syn\-Packet\-Event} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Packet\-Event}}]{new\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a55abc101a34bd2bc1aff724883a85ecc}
+
+
+\-Helper function called when the host receives a \hyperlink{classPacketEvent}{\-Packet\-Event} corresponding to a \-S\-Y\-N. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em new\-\_\-event} & the \hyperlink{classPacketEvent}{\-Packet\-Event}. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a13a11214f204347c85388b28043459c2}{\index{\-Host@{\-Host}!respond\-To\-Syn\-Unack\-Event@{respond\-To\-Syn\-Unack\-Event}}
+\index{respond\-To\-Syn\-Unack\-Event@{respond\-To\-Syn\-Unack\-Event}!Host@{\-Host}}
+\subsubsection[{respond\-To\-Syn\-Unack\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::respond\-To\-Syn\-Unack\-Event} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Unack\-Event}}]{unack\-\_\-event}
+\end{DoxyParamCaption}
+)}}\label{classHost_a13a11214f204347c85388b28043459c2}
+
+
+\-Helper function called when an \hyperlink{classUnackEvent}{\-Unack\-Event} for a \-S\-Y\-N is received. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em unack\-\_\-event} & the \hyperlink{classUnackEvent}{\-Unack\-Event}. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}{\index{\-Host@{\-Host}!send@{send}}
+\index{send@{send}!Host@{\-Host}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Host\-::send} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Packet} $>$}]{pkt, }
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)}}\label{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}
+
+
+\-Sends a packet by creating a \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet and placing the \hyperlink{classPacketEvent}{\-Packet\-Event} on the event\-Heap. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em pkt} & the \hyperlink{classPacket}{\-Packet} to be sent. \\
+\hline
+{\em time} & the time at which the \hyperlink{classPacket}{\-Packet} should be sent. \\
 \hline
 \end{DoxyParams}
 \hypertarget{classHost_a029c7f389a580fc7e53da38a698d0d9a}{\index{\-Host@{\-Host}!send\-And\-Queue\-Resend@{send\-And\-Queue\-Resend}}
@@ -161,7 +237,7 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 )}}\label{classHost_a029c7f389a580fc7e53da38a698d0d9a}
 
 
-\-Queues a packet\-Event, and an unack event for the packet\-Event. 
+\-Queues a \hyperlink{classPacketEvent}{\-Packet\-Event} in the event\-Heap, as well as an \hyperlink{classUnackEvent}{\-Unack\-Event} for the \hyperlink{classPacketEvent}{\-Packet\-Event}. 
 
 
 \begin{DoxyParams}{\-Parameters}
@@ -169,23 +245,9 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ {\bfseries recvd}}\label{classHost_a8
 \hline
 {\em time} & the time at which event is to be sent. \\
 \hline
-{\em delay} & the packet will be sent at time + delay \\
+{\em delay} & the \hyperlink{classUnackEvent}{\-Unack\-Event} will trigger at time + delay \\
 \hline
 \end{DoxyParams}
-\hypertarget{classHost_aa807c50f690bd2018265504483440c7d}{\index{\-Host@{\-Host}!to\-String@{to\-String}}
-\index{to\-String@{to\-String}!Host@{\-Host}}
-\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Host\-::to\-String} (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classHost_aa807c50f690bd2018265504483440c7d}
-
-
-\-Get a string representing the host. 
-
-\begin{DoxyReturn}{\-Returns}
-the string representing the host 
-\end{DoxyReturn}
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

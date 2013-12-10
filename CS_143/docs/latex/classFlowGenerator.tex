@@ -1,6 +1,15 @@
 \hypertarget{classFlowGenerator}{\section{\-Flow\-Generator \-Class \-Reference}
 \label{classFlowGenerator}\index{\-Flow\-Generator@{\-Flow\-Generator}}
 }
+
+
+\-An object used to store \hyperlink{classFlow}{\-Flow} objects until the data flow is ready to begin.  
+
+
+
+
+{\ttfamily \#include $<$\-Flow\-Generator.\-h$>$}
+
 \-Inheritance diagram for \-Flow\-Generator\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,12 +19,62 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classFlowGenerator_ae51c2e304770a911f9cc1d8e0d01310c}{{\bfseries \-Flow\-Generator} (std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classFlow}{\-Flow} $>$ $>$ flows, std\-::string flow\-\_\-id)}\label{classFlowGenerator_ae51c2e304770a911f9cc1d8e0d01310c}
+\hyperlink{classFlowGenerator_ae51c2e304770a911f9cc1d8e0d01310c}{\-Flow\-Generator} (std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classFlow}{\-Flow} $>$ $>$ flows, std\-::string flow\-\_\-id)
+\begin{DoxyCompactList}\small\item\em \-Creates a \hyperlink{classFlowGenerator}{\-Flow\-Generator} object. \end{DoxyCompactList}\item 
+void \hyperlink{classFlowGenerator_a9fd8f79663c4af4ab229dde250bc258c}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ e)
+\begin{DoxyCompactList}\small\item\em \-This method should never be called on the \hyperlink{classFlowGenerator}{\-Flow\-Generator}, since it cannot receive events. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classFlowGenerator_a5c4ac4997c37c524a7c1c8ab264eb882}{void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)}\label{classFlowGenerator_a5c4ac4997c37c524a7c1c8ab264eb882}
 
-\end{DoxyCompactItemize}
+\subsection{\-Detailed \-Description}
+\-An object used to store \hyperlink{classFlow}{\-Flow} objects until the data flow is ready to begin. 
+
+\-It holds an event\-Heap of \-Flow\-Events that are passed to the \hyperlink{classHandler}{\-Handler} when the data flow should begin. \-The \hyperlink{classHandler}{\-Handler} processes these \-Flow\-Events, and creates a data flow on the proper \hyperlink{classHost}{\-Host}. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classFlowGenerator_ae51c2e304770a911f9cc1d8e0d01310c}{\index{\-Flow\-Generator@{\-Flow\-Generator}!\-Flow\-Generator@{\-Flow\-Generator}}
+\index{\-Flow\-Generator@{\-Flow\-Generator}!FlowGenerator@{\-Flow\-Generator}}
+\subsubsection[{\-Flow\-Generator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Flow\-Generator\-::\-Flow\-Generator} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ std\-::shared\-\_\-ptr$<$ {\bf \-Flow} $>$ $>$}]{flows, }
+\item[{std\-::string}]{flow\-\_\-id}
+\end{DoxyParamCaption}
+)}}\label{classFlowGenerator_ae51c2e304770a911f9cc1d8e0d01310c}
+
+
+\-Creates a \hyperlink{classFlowGenerator}{\-Flow\-Generator} object. 
+
+\-The constructor takes in a list of flows, which is uses to populate its event\-Heap with \-Flow\-Events. \-These events are fired at the appropriate times by the \hyperlink{classHandler}{\-Handler} to start the data flows.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em flows} & the list of flows. \\
+\hline
+{\em flow\-\_\-id} & the id of the flow generator. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classFlowGenerator_a9fd8f79663c4af4ab229dde250bc258c}{\index{\-Flow\-Generator@{\-Flow\-Generator}!give\-Event@{give\-Event}}
+\index{give\-Event@{give\-Event}!FlowGenerator@{\-Flow\-Generator}}
+\subsubsection[{give\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Flow\-Generator\-::give\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Event} $>$}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classFlowGenerator_a9fd8f79663c4af4ab229dde250bc258c}
+
+
+\-This method should never be called on the \hyperlink{classFlowGenerator}{\-Flow\-Generator}, since it cannot receive events. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em e} & the event given to the \hyperlink{classFlowGenerator}{\-Flow\-Generator}. \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{\-Event\-Generator}.
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

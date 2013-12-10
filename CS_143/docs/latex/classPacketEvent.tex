@@ -1,6 +1,15 @@
 \hypertarget{classPacketEvent}{\section{\-Packet\-Event \-Class \-Reference}
 \label{classPacketEvent}\index{\-Packet\-Event@{\-Packet\-Event}}
 }
+
+
+\-A wrapper for the \hyperlink{classPacket}{\-Packet} class.  
+
+
+
+
+{\ttfamily \#include $<$\-Packet\-Event.\-h$>$}
+
 \-Inheritance diagram for \-Packet\-Event\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,21 +19,99 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classPacketEvent_a3e70db575746c33aed7bb62b0ad62c85}{{\bfseries \-Packet\-Event} (std\-::string dest, std\-::string src, double ts, std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt)}\label{classPacketEvent_a3e70db575746c33aed7bb62b0ad62c85}
-
-\item 
-\hypertarget{classPacketEvent_a4e863687bff18562aed034422393295c}{virtual std\-::string {\bfseries to\-String} () override}\label{classPacketEvent_a4e863687bff18562aed034422393295c}
-
-\item 
-\hypertarget{classPacketEvent_a7dfa4c479200db12df64a12bc39d22d8}{virtual std\-::string {\bfseries get\-Type} () override}\label{classPacketEvent_a7dfa4c479200db12df64a12bc39d22d8}
-
-\end{DoxyCompactItemize}
+\hyperlink{classPacketEvent_a3e70db575746c33aed7bb62b0ad62c85}{\-Packet\-Event} (std\-::string dest, std\-::string src, double ts, std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt)
+\begin{DoxyCompactList}\small\item\em \-Constructor. \end{DoxyCompactList}\item 
+virtual std\-::string \hyperlink{classPacketEvent_a4e863687bff18562aed034422393295c}{to\-String} () override
+\begin{DoxyCompactList}\small\item\em \-Get the \hyperlink{classPacketEvent}{\-Packet\-Event} as a string. \end{DoxyCompactList}\item 
+virtual std\-::string \hyperlink{classPacketEvent_a7dfa4c479200db12df64a12bc39d22d8}{get\-Type} () override
+\begin{DoxyCompactList}\small\item\em \-Get a string representing the type of the \hyperlink{classPacketEvent}{\-Packet\-Event}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classPacketEvent_ac3390dfb095c14e0b5c078b51dd914cf}{std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ {\bfseries packet}}\label{classPacketEvent_ac3390dfb095c14e0b5c078b51dd914cf}
+std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ \hyperlink{classPacketEvent_ac3390dfb095c14e0b5c078b51dd914cf}{packet}
+\begin{DoxyCompactList}\small\item\em \-The \hyperlink{classPacket}{\-Packet} being sent. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\end{DoxyCompactItemize}
+
+\subsection{\-Detailed \-Description}
+\-A wrapper for the \hyperlink{classPacket}{\-Packet} class. 
+
+\-Used to pass \-Packets between \-Event\-Generators. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classPacketEvent_a3e70db575746c33aed7bb62b0ad62c85}{\index{\-Packet\-Event@{\-Packet\-Event}!\-Packet\-Event@{\-Packet\-Event}}
+\index{\-Packet\-Event@{\-Packet\-Event}!PacketEvent@{\-Packet\-Event}}
+\subsubsection[{\-Packet\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Packet\-Event\-::\-Packet\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{dest, }
+\item[{std\-::string}]{src, }
+\item[{double}]{ts, }
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Packet} $>$}]{pkt}
+\end{DoxyParamCaption}
+)}}\label{classPacketEvent_a3e70db575746c33aed7bb62b0ad62c85}
+
+
+\-Constructor. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em dest} & the destination of the \hyperlink{classEvent}{\-Event} (i.\-e. the \hyperlink{classLink}{\-Link}, \hyperlink{classHost}{\-Host}, or \hyperlink{classRouter}{\-Router} that the \hyperlink{classPacket}{\-Packet} is being sent to) \\
+\hline
+{\em src} & the source of the \hyperlink{classEvent}{\-Event} (previous \hyperlink{classEventGenerator}{\-Event\-Generator} that held \hyperlink{classPacket}{\-Packet}) \\
+\hline
+{\em ts} & the time at which the \hyperlink{classPacket}{\-Packet} is passed \\
+\hline
+{\em pkt} & the \hyperlink{classPacket}{\-Packet} to be passed \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classPacketEvent_a7dfa4c479200db12df64a12bc39d22d8}{\index{\-Packet\-Event@{\-Packet\-Event}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!PacketEvent@{\-Packet\-Event}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Packet\-Event\-::get\-Type} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classPacketEvent_a7dfa4c479200db12df64a12bc39d22d8}
+
+
+\-Get a string representing the type of the \hyperlink{classPacketEvent}{\-Packet\-Event}. 
+
+\begin{DoxyReturn}{\-Returns}
+a string representing the type 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}{\-Event}.
+
+\hypertarget{classPacketEvent_a4e863687bff18562aed034422393295c}{\index{\-Packet\-Event@{\-Packet\-Event}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!PacketEvent@{\-Packet\-Event}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Packet\-Event\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classPacketEvent_a4e863687bff18562aed034422393295c}
+
+
+\-Get the \hyperlink{classPacketEvent}{\-Packet\-Event} as a string. 
+
+\begin{DoxyReturn}{\-Returns}
+a string representing the \hyperlink{classPacketEvent}{\-Packet\-Event}. 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classEvent_a924194a887aa70888e08a04b69389bd6}{\-Event}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classPacketEvent_ac3390dfb095c14e0b5c078b51dd914cf}{\index{\-Packet\-Event@{\-Packet\-Event}!packet@{packet}}
+\index{packet@{packet}!PacketEvent@{\-Packet\-Event}}
+\subsubsection[{packet}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf \-Packet}$>$ {\bf \-Packet\-Event\-::packet}}}\label{classPacketEvent_ac3390dfb095c14e0b5c078b51dd914cf}
+
+
+\-The \hyperlink{classPacket}{\-Packet} being sent. 
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

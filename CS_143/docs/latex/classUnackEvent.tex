@@ -1,6 +1,15 @@
 \hypertarget{classUnackEvent}{\section{\-Unack\-Event \-Class \-Reference}
 \label{classUnackEvent}\index{\-Unack\-Event@{\-Unack\-Event}}
 }
+
+
+\-An \hyperlink{classUnackEvent}{\-Unack\-Event} is called when an \hyperlink{classEvent}{\-Event} times out.  
+
+
+
+
+{\ttfamily \#include $<$\-Unack\-Event.\-h$>$}
+
 \-Inheritance diagram for \-Unack\-Event\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,21 +19,99 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classUnackEvent_af9ed3cfe7027d641ceddbd7a2ce560c7}{{\bfseries \-Unack\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, std\-::string dest, std\-::string src, double ts)}\label{classUnackEvent_af9ed3cfe7027d641ceddbd7a2ce560c7}
-
-\item 
-\hypertarget{classUnackEvent_a7be801da20ad826acf9ebfeaa6ee8536}{virtual std\-::string {\bfseries to\-String} () override}\label{classUnackEvent_a7be801da20ad826acf9ebfeaa6ee8536}
-
-\item 
-\hypertarget{classUnackEvent_a56ca06731117d1fff95a1601abed02e8}{virtual std\-::string {\bfseries get\-Type} () override}\label{classUnackEvent_a56ca06731117d1fff95a1601abed02e8}
-
-\end{DoxyCompactItemize}
+\hyperlink{classUnackEvent_af9ed3cfe7027d641ceddbd7a2ce560c7}{\-Unack\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, std\-::string dest, std\-::string src, double ts)
+\begin{DoxyCompactList}\small\item\em \-Create an \hyperlink{classUnackEvent}{\-Unack\-Event}. \end{DoxyCompactList}\item 
+virtual std\-::string \hyperlink{classUnackEvent_a7be801da20ad826acf9ebfeaa6ee8536}{to\-String} () override
+\begin{DoxyCompactList}\small\item\em \-Get a string representing the \hyperlink{classUnackEvent}{\-Unack\-Event}. \end{DoxyCompactList}\item 
+virtual std\-::string \hyperlink{classUnackEvent_a56ca06731117d1fff95a1601abed02e8}{get\-Type} () override
+\begin{DoxyCompactList}\small\item\em \-Get a string representing the type of an \hyperlink{classUnackEvent}{\-Unack\-Event}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classUnackEvent_ad9d09191d5ee31c15c554e797a708f7d}{std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ {\bfseries packet}}\label{classUnackEvent_ad9d09191d5ee31c15c554e797a708f7d}
+std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ \hyperlink{classUnackEvent_ad9d09191d5ee31c15c554e797a708f7d}{packet}
+\begin{DoxyCompactList}\small\item\em \-The packet that may not have been acked. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\end{DoxyCompactItemize}
+
+\subsection{\-Detailed \-Description}
+\-An \hyperlink{classUnackEvent}{\-Unack\-Event} is called when an \hyperlink{classEvent}{\-Event} times out. 
+
+\-For example, if a data \hyperlink{classPacket}{\-Packet} is sent, we queue an \hyperlink{classUnackEvent}{\-Unack\-Event} for the data \hyperlink{classPacket}{\-Packet}. \-If the \hyperlink{classPacket}{\-Packet} still hasn't been acked when the \hyperlink{classUnackEvent}{\-Unack\-Event} is called, it is resent. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classUnackEvent_af9ed3cfe7027d641ceddbd7a2ce560c7}{\index{\-Unack\-Event@{\-Unack\-Event}!\-Unack\-Event@{\-Unack\-Event}}
+\index{\-Unack\-Event@{\-Unack\-Event}!UnackEvent@{\-Unack\-Event}}
+\subsubsection[{\-Unack\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Unack\-Event\-::\-Unack\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Packet} $>$}]{pkt, }
+\item[{std\-::string}]{dest, }
+\item[{std\-::string}]{src, }
+\item[{double}]{ts}
+\end{DoxyParamCaption}
+)}}\label{classUnackEvent_af9ed3cfe7027d641ceddbd7a2ce560c7}
+
+
+\-Create an \hyperlink{classUnackEvent}{\-Unack\-Event}. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em pkt} & the \hyperlink{classPacket}{\-Packet} that may not have been acked. \\
+\hline
+{\em dest} & the destination of the \hyperlink{classUnackEvent}{\-Unack\-Event}. \-For example, for a data \hyperlink{classPacket}{\-Packet}, this should be the \hyperlink{classHost}{\-Host} that attempted to send the \hyperlink{classPacket}{\-Packet}. \\
+\hline
+{\em src} & the source of the \hyperlink{classUnackEvent}{\-Unack\-Event}. \-Should be same as destination. \\
+\hline
+{\em ts} & the time at which the \hyperlink{classUnackEvent}{\-Unack\-Event} is fired. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classUnackEvent_a56ca06731117d1fff95a1601abed02e8}{\index{\-Unack\-Event@{\-Unack\-Event}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!UnackEvent@{\-Unack\-Event}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Unack\-Event\-::get\-Type} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classUnackEvent_a56ca06731117d1fff95a1601abed02e8}
+
+
+\-Get a string representing the type of an \hyperlink{classUnackEvent}{\-Unack\-Event}. 
+
+\begin{DoxyReturn}{\-Returns}
+the string representing the type of the \hyperlink{classUnackEvent}{\-Unack\-Event}. 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classEvent_a3e3dfee48cea1b42321adae3c51f82e2}{\-Event}.
+
+\hypertarget{classUnackEvent_a7be801da20ad826acf9ebfeaa6ee8536}{\index{\-Unack\-Event@{\-Unack\-Event}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!UnackEvent@{\-Unack\-Event}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Unack\-Event\-::to\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}override, virtual\mbox{]}}}}\label{classUnackEvent_a7be801da20ad826acf9ebfeaa6ee8536}
+
+
+\-Get a string representing the \hyperlink{classUnackEvent}{\-Unack\-Event}. 
+
+\begin{DoxyReturn}{\-Returns}
+a string representing the \hyperlink{classUnackEvent}{\-Unack\-Event}. 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classEvent_a924194a887aa70888e08a04b69389bd6}{\-Event}.
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classUnackEvent_ad9d09191d5ee31c15c554e797a708f7d}{\index{\-Unack\-Event@{\-Unack\-Event}!packet@{packet}}
+\index{packet@{packet}!UnackEvent@{\-Unack\-Event}}
+\subsubsection[{packet}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf \-Packet}$>$ {\bf \-Unack\-Event\-::packet}}}\label{classUnackEvent_ad9d09191d5ee31c15c554e797a708f7d}
+
+
+\-The packet that may not have been acked. 
+
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

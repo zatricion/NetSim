@@ -10,36 +10,185 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classRouter_a217136993163bb16e326d65443670197}{{\bfseries \-Router} (std\-::vector$<$ std\-::string $>$ host\-\_\-list, std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ $>$ neighboring\-\_\-links, std\-::string router\-\_\-id, std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ $>$ debug\-\_\-links)}\label{classRouter_a217136993163bb16e326d65443670197}
+\hyperlink{classRouter_a161477ea1b51f59bcd03da20b5d25243}{\-Router} (std\-::vector$<$ std\-::string $>$ host\-\_\-list, std\-::vector$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ $>$ neighboring\-\_\-links, std\-::string router\-\_\-id)
+\begin{DoxyCompactList}\small\item\em \-Constructor for instance of a \hyperlink{classRouter}{\-Router}. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_a9517660547398a913aab151a3f058fbf}{update\-Routing} (\-Packet\-::bf\-\_\-type, std\-::string, double)
+\begin{DoxyCompactList}\small\item\em \-Updates the routing table of a router when it receives a bf\-\_\-packet. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_a0b106e96412284611079588b65721aa6}{broadcast\-Table} (double timestamp)
+\begin{DoxyCompactList}\small\item\em \-Broadcasts the routing table to all connected routers. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_a923848a34881212d310a738032d31610}{add\-Routing} (std\-::string targ\-\_\-host, std\-::shared\-\_\-ptr$<$ \hyperlink{classPath}{\-Path} $>$ path)
+\begin{DoxyCompactList}\small\item\em \-Adds a host\-\_\-id -\/$>$ (next\-\_\-link\-\_\-id, dist, path) tuple indicating which link to route to given a host, along with bellman-\/ford info. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_aa28dfae66a6e2587d3c39da83059a866}{add\-Link} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ link)
+\begin{DoxyCompactList}\small\item\em \-Adds a link to the router's link vector. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classRouter_a2c333b431ae61349b91277cda82a3f5e}{get\-Routing} (std\-::string targ\-\_\-host)
+\begin{DoxyCompactList}\small\item\em \-Returns the proper link to route to given a host. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)
+\begin{DoxyCompactList}\small\item\em \-Give an event to the router. \end{DoxyCompactList}\item 
+\hypertarget{classRouter_aa54f568dd950bcb0feae508e3c75889d}{std\-::string \hyperlink{classRouter_aa54f568dd950bcb0feae508e3c75889d}{to\-String} ()}\label{classRouter_aa54f568dd950bcb0feae508e3c75889d}
 
-\item 
-\hypertarget{classRouter_ae1435286d9572cbf0de11fa3c937ca9a}{void {\bfseries update\-Routing} (\-Packet\-::bf\-\_\-type, std\-::string, std\-::string, double)}\label{classRouter_ae1435286d9572cbf0de11fa3c937ca9a}
+\begin{DoxyCompactList}\small\item\em \-Outputs a text representation of a router. \end{DoxyCompactList}\item 
+void \hyperlink{classRouter_a323a820ddc17ea36834cf3316510ec5c}{update\-Table\-Weights} (\-Packet\-::bf\-\_\-type)
+\begin{DoxyCompactList}\small\item\em \-Updates the link delays in a routing table given a new table. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classRouter_a0b106e96412284611079588b65721aa6}{void {\bfseries broadcast\-Table} (double timestamp)}\label{classRouter_a0b106e96412284611079588b65721aa6}
 
-\item 
-\hypertarget{classRouter_a923848a34881212d310a738032d31610}{void {\bfseries add\-Routing} (std\-::string targ\-\_\-host, std\-::shared\-\_\-ptr$<$ \hyperlink{classPath}{\-Path} $>$ path)}\label{classRouter_a923848a34881212d310a738032d31610}
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classRouter_a161477ea1b51f59bcd03da20b5d25243}{\index{\-Router@{\-Router}!\-Router@{\-Router}}
+\index{\-Router@{\-Router}!Router@{\-Router}}
+\subsubsection[{\-Router}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Router\-::\-Router} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ std\-::string $>$}]{host\-\_\-list, }
+\item[{std\-::vector$<$ std\-::shared\-\_\-ptr$<$ {\bf \-Link} $>$ $>$}]{neighboring\-\_\-links, }
+\item[{std\-::string}]{router\-\_\-id}
+\end{DoxyParamCaption}
+)}}\label{classRouter_a161477ea1b51f59bcd03da20b5d25243}
 
-\item 
-\hypertarget{classRouter_aa28dfae66a6e2587d3c39da83059a866}{void {\bfseries add\-Link} (std\-::shared\-\_\-ptr$<$ \hyperlink{classLink}{\-Link} $>$ link)}\label{classRouter_aa28dfae66a6e2587d3c39da83059a866}
 
-\item 
-\hypertarget{classRouter_a2c333b431ae61349b91277cda82a3f5e}{std\-::string {\bfseries get\-Routing} (std\-::string targ\-\_\-host)}\label{classRouter_a2c333b431ae61349b91277cda82a3f5e}
+\-Constructor for instance of a \hyperlink{classRouter}{\-Router}. 
 
-\item 
-\hypertarget{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{void {\bfseries give\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$)}\label{classRouter_aed4bdd88f4fa09cb784c5c329c935688}
 
-\item 
-\hypertarget{classRouter_aa54f568dd950bcb0feae508e3c75889d}{std\-::string {\bfseries to\-String} ()}\label{classRouter_aa54f568dd950bcb0feae508e3c75889d}
+\begin{DoxyParams}{\-Parameters}
+{\em host\-\_\-list} & a list of hosts the router connects to. \\
+\hline
+{\em neighboring\-\_\-links} & a list of pointers to connected links. \\
+\hline
+{\em router\-\_\-id} & the router name. \\
+\hline
+\end{DoxyParams}
 
-\item 
-\hypertarget{classRouter_a323a820ddc17ea36834cf3316510ec5c}{void {\bfseries update\-Table\-Weights} (\-Packet\-::bf\-\_\-type)}\label{classRouter_a323a820ddc17ea36834cf3316510ec5c}
 
-\item 
-\hypertarget{classRouter_a81641d4aac06367d991e3218151de515}{void {\bfseries print\-Routing} (\-Packet\-::bf\-\_\-type, std\-::string)}\label{classRouter_a81641d4aac06367d991e3218151de515}
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classRouter_aa28dfae66a6e2587d3c39da83059a866}{\index{\-Router@{\-Router}!add\-Link@{add\-Link}}
+\index{add\-Link@{add\-Link}!Router@{\-Router}}
+\subsubsection[{add\-Link}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::add\-Link} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Link} $>$}]{link}
+\end{DoxyParamCaption}
+)}}\label{classRouter_aa28dfae66a6e2587d3c39da83059a866}
 
-\end{DoxyCompactItemize}
+
+\-Adds a link to the router's link vector. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em link} & a pointer to the link to add. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classRouter_a923848a34881212d310a738032d31610}{\index{\-Router@{\-Router}!add\-Routing@{add\-Routing}}
+\index{add\-Routing@{add\-Routing}!Router@{\-Router}}
+\subsubsection[{add\-Routing}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::add\-Routing} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{host\-\_\-id, }
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Path} $>$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classRouter_a923848a34881212d310a738032d31610}
+
+
+\-Adds a host\-\_\-id -\/$>$ (next\-\_\-link\-\_\-id, dist, path) tuple indicating which link to route to given a host, along with bellman-\/ford info. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em host\-\_\-id} & the name of the host to which the router is routing packets. \\
+\hline
+{\em path} & a pointer to the path it will use to route packets. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classRouter_a0b106e96412284611079588b65721aa6}{\index{\-Router@{\-Router}!broadcast\-Table@{broadcast\-Table}}
+\index{broadcast\-Table@{broadcast\-Table}!Router@{\-Router}}
+\subsubsection[{broadcast\-Table}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::broadcast\-Table} (
+\begin{DoxyParamCaption}
+\item[{double}]{timestamp}
+\end{DoxyParamCaption}
+)}}\label{classRouter_a0b106e96412284611079588b65721aa6}
+
+
+\-Broadcasts the routing table to all connected routers. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em timestamp} & the time at which the broadcast occurs. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classRouter_a2c333b431ae61349b91277cda82a3f5e}{\index{\-Router@{\-Router}!get\-Routing@{get\-Routing}}
+\index{get\-Routing@{get\-Routing}!Router@{\-Router}}
+\subsubsection[{get\-Routing}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-Router\-::get\-Routing} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{targ\-\_\-host}
+\end{DoxyParamCaption}
+)}}\label{classRouter_a2c333b431ae61349b91277cda82a3f5e}
+
+
+\-Returns the proper link to route to given a host. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em targ\-\_\-host} & the name of the host to which the router is routing packets. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the name of the next link in the path. 
+\end{DoxyReturn}
+\hypertarget{classRouter_aed4bdd88f4fa09cb784c5c329c935688}{\index{\-Router@{\-Router}!give\-Event@{give\-Event}}
+\index{give\-Event@{give\-Event}!Router@{\-Router}}
+\subsubsection[{give\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::give\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf \-Event} $>$}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classRouter_aed4bdd88f4fa09cb784c5c329c935688}
+
+
+\-Give an event to the router. 
+
+\-This method assumes it to be a packet event.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em e} & the event to be processed \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classEventGenerator_a7448c87e533a9b38c20d914fa6a13c8e}{\-Event\-Generator}.
+
+\hypertarget{classRouter_a9517660547398a913aab151a3f058fbf}{\index{\-Router@{\-Router}!update\-Routing@{update\-Routing}}
+\index{update\-Routing@{update\-Routing}!Router@{\-Router}}
+\subsubsection[{update\-Routing}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::update\-Routing} (
+\begin{DoxyParamCaption}
+\item[{\-Packet\-::bf\-\_\-type}]{bf\-\_\-table, }
+\item[{std\-::string}]{link\-\_\-id, }
+\item[{double}]{now}
+\end{DoxyParamCaption}
+)}}\label{classRouter_a9517660547398a913aab151a3f058fbf}
+
+
+\-Updates the routing table of a router when it receives a bf\-\_\-packet. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em bf\-\_\-table} & the routing table received. \\
+\hline
+{\em link\-\_\-id} & the name of the link from which the packet was received. \\
+\hline
+{\em now} & the timestamp of the packet event. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classRouter_a323a820ddc17ea36834cf3316510ec5c}{\index{\-Router@{\-Router}!update\-Table\-Weights@{update\-Table\-Weights}}
+\index{update\-Table\-Weights@{update\-Table\-Weights}!Router@{\-Router}}
+\subsubsection[{update\-Table\-Weights}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Router\-::update\-Table\-Weights} (
+\begin{DoxyParamCaption}
+\item[{\-Packet\-::bf\-\_\-type}]{other\-\_\-table}
+\end{DoxyParamCaption}
+)}}\label{classRouter_a323a820ddc17ea36834cf3316510ec5c}
+
+
+\-Updates the link delays in a routing table given a new table. 
+
+\-The link delays only change if they see a more current delay in the new table.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em other\-\_\-table} & the table with new information about link delays \\
+\hline
+\end{DoxyParams}
 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

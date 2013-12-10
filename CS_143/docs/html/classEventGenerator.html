@@ -95,7 +95,7 @@ Inheritance diagram for EventGenerator:</div>
  <div class="center">
   <img src="classEventGenerator.png" usemap="#EventGenerator_map" alt=""/>
   <map id="EventGenerator_map" name="EventGenerator_map">
-<area href="classFlowGenerator.html" alt="FlowGenerator" shape="rect" coords="0,56,101,80"/>
+<area href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin." alt="FlowGenerator" shape="rect" coords="0,56,101,80"/>
 <area href="classHost.html" alt="Host" shape="rect" coords="111,56,212,80"/>
 <area href="classLink.html" alt="Link" shape="rect" coords="222,56,323,80"/>
 <area href="classRouter.html" alt="Router" shape="rect" coords="333,56,434,80"/>
@@ -108,16 +108,16 @@ Inheritance diagram for EventGenerator:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#a467b319c4317b83b9c16708c9815953d">getID</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the ID of the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a>.  <a href="#a467b319c4317b83b9c16708c9815953d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">giveEvent</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt; e)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Hands an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> for processing.  <a href="#a7448c87e533a9b38c20d914fa6a13c8e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#a1fd7fdcaa263115e89a9fc69b85eca22">hasEvents</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells whether the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a>'s priority queue has any events.  <a href="#a1fd7fdcaa263115e89a9fc69b85eca22"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d7d4625d7dc71a887cf39a144cc2efa"></a><!-- doxytag: member="EventGenerator::giveEvent" ref="a5d7d4625d7dc71a887cf39a144cc2efa" args="(std::shared_ptr&lt; Event &gt;)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>giveEvent</b> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;)=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#ab40fd3a0bf1aa974ba50feb443d81009">getEvent</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove and return the lowest time event from the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a>'s priority queue.  <a href="#ab40fd3a0bf1aa974ba50feb443d81009"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#ac4b5ccdeaf232fe59854535bb13747a9">getNextTime</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the lowest time in the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a>'s priority queue.  <a href="#ac4b5ccdeaf232fe59854535bb13747a9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#a3487849484c9b521527d6acacee79e88">addEventToLocalQueue</a> (std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt; e)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <a class="el" href="classEvent.html">Event</a> to local eventHeap.  <a href="#a3487849484c9b521527d6acacee79e88"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to local eventHeap.  <a href="#a3487849484c9b521527d6acacee79e88"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventGenerator.html#af4fa28d08ed4a3be31f9383cf72e0d2c">uuid</a></td></tr>
@@ -132,7 +132,7 @@ std::priority_queue<br class="typebreak"/>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Superclass for Links, Hosts, Routers, and FlowGenerators. </p>
-<p>EventGenerators each have their own eventHeaps, which are ordered lists of events. The EventHandler will determine the <a class="el" href="classEvent.html">Event</a> in the eventHeaps of the set of EventGenerators with the minimum time, and handle the <a class="el" href="classEvent.html">Event</a>. </p>
+<p>EventGenerators each have their own eventHeaps, which are ordered lists of events. The EventHandler will determine the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> in the eventHeaps of the set of EventGenerators with the minimum time, and handle the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. </p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a3487849484c9b521527d6acacee79e88"></a><!-- doxytag: member="EventGenerator::addEventToLocalQueue" ref="a3487849484c9b521527d6acacee79e88" args="(std::shared_ptr&lt; Event &gt; e)" -->
 <div class="memitem">
@@ -149,10 +149,10 @@ std::priority_queue<br class="typebreak"/>
 </div>
 <div class="memdoc">
 
-<p>Add <a class="el" href="classEvent.html">Event</a> to local eventHeap. </p>
+<p>Add <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to local eventHeap. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">E</td><td>the <a class="el" href="classEvent.html">Event</a> to add </td></tr>
+    <tr><td class="paramname">E</td><td>the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to add </td></tr>
   </table>
   </dd>
 </dl>
@@ -174,7 +174,7 @@ std::priority_queue<br class="typebreak"/>
 <div class="memdoc">
 
 <p>Remove and return the lowest time event from the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a>'s priority queue. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to the removed <a class="el" href="classEvent.html">Event</a>. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to the removed <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a>. </dd></dl>
 
 </div>
 </div>
@@ -213,6 +213,33 @@ std::priority_queue<br class="typebreak"/>
 
 <p>Get the lowest time in the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a>'s priority queue. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the min time as a double </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7448c87e533a9b38c20d914fa6a13c8e"></a><!-- doxytag: member="EventGenerator::giveEvent" ref="a7448c87e533a9b38c20d914fa6a13c8e" args="(std::shared_ptr&lt; Event &gt; e)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classEventGenerator.html#a7448c87e533a9b38c20d914fa6a13c8e">EventGenerator::giveEvent</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEvent.html">Event</a> &gt;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Hands an <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> for processing. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>the <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> to be processed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classRouter.html#aed4bdd88f4fa09cb784c5c329c935688">Router</a>, <a class="el" href="classHost.html#a658a8bee30dfb9e6ff7abc26620f88ff">Host</a>, <a class="el" href="classFlowGenerator.html#a9fd8f79663c4af4ab229dde250bc258c">FlowGenerator</a>, and <a class="el" href="classLink.html#abd9466c4c2097329f4affd9b2eafbd7a">Link</a>.</p>
 
 </div>
 </div>
@@ -273,7 +300,7 @@ std::priority_queue<br class="typebreak"/>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 04:38:24 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 13:23:45 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
