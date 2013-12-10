@@ -1,19 +1,9 @@
-// Tests basic use cases of objects.
 #include "Test.h"
-#include <cassert>
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <fstream>
 
-// @MaxHorton TODO:
-// This method will contain unit tests for each of the objects.
-// It will be implemented as the network objects are created.
 int main() {
     // Set most verbose logging.
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
-    // TODO is it okay to change this later?  Preprocessor...
     FILELog::ReportingLevel() = logINFO; //logDEBUG;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";

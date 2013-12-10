@@ -19,15 +19,15 @@
 #include "../EventHandling/Handler.h"
 #include <cassert>
 #include <cmath>
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <fstream>
 #include "../Tools/Log.h"
 #include "../IO/Plotter.h"
 #include "../IO/NetInput.h"
 
 int main();
-void packetTest();
-void simTest0();
-void simTest1();
-void simTest2();
 void io();
 
 #endif
