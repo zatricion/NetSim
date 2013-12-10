@@ -2,8 +2,7 @@ CC=g++
 CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o #src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o 
-#build/parser.tab.o build/lexer.yy.o build/NetInput.o
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o #build/parser.tab.o build/lexer.yy.o build/NetInput.o
 SOURCE = src/IO/Test.cpp
 
 all: simulator 
@@ -87,7 +86,7 @@ src/IO/parser.tab.cpp src/IO/parser.tab.hpp: src/IO/parser.ypp
 	mv parser.tab.cpp src/IO/parser.tab.cpp
 	mv parser.tab.hpp src/IO/parser.tab.hpp	
 
-#build/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
+build/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
 src/IO/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
 	#$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
 	$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
@@ -96,14 +95,14 @@ src/IO/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
 src/IO/lexer.yy.cpp: src/IO/lexer.lex
 	flex -+ -o src/IO/lexer.yy.cpp src/IO/lexer.lex
 
-#build/lexer.yy.o: src/IO/lexer.yy.cpp
+build/lexer.yy.o: src/IO/lexer.yy.cpp
 src/IO/lexer.yy.o: src/IO/lexer.yy.cpp
 	#$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
 	$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
 	# ew
 	#mv src/IO/lexer.yy.o build/lexer.yy.o
 
-#build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
+build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 src/IO/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o src/IO/NetInput.o
 

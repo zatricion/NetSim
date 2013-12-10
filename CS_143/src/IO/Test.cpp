@@ -14,11 +14,15 @@ int main()
     FILELog::ReportingLevel() = logDEBUG; //logDEBUG;
     FILE_LOG(logINFO) << "Preparing to test objects.";
     FILE_LOG(logINFO) << "Testing Object constructors.";
-    packetTest();
+    //io();
+    simTest2();
+    return 0;
+    /*packetTest();
     FILE_LOG(logINFO) << "Testing Simulation.";
     simTest2();
     FILE_LOG(logINFO) << "Simulation Successful.";
     return 0;
+*/
 }
 
 /**
@@ -82,6 +86,26 @@ void simTest0()
     sim_plotter.plotPacketLoss(runtime);
  
 }
+
+void io() {
+    Handler handler;
+    handler = read_input();
+ 
+    FILE_LOG(logDEBUG) << "Running simulation.";
+    double runtime = 50.0;
+    while(handler.getMinTime() < runtime)     {
+        handler.step();
+    }
+    
+    // output plots
+    sim_plotter.plotLinkRate(runtime);
+    sim_plotter.plotBufferOccupancy(runtime);
+    sim_plotter.plotFlowRTT(runtime);
+    sim_plotter.plotFlowWindowSize(runtime);
+    sim_plotter.plotPacketLoss(runtime);
+
+    FILE_LOG(logINFO) << "Simulator passed tests!";
+}   
 
 void simTest1()
 {
@@ -224,11 +248,11 @@ void simTest2()
     auto router4 = std::make_shared<Router>(host_list, std::vector<std::shared_ptr<Link> > {link3, link8, link9}, "router4", std::vector<std::shared_ptr<Link> > {link1, link2, link3, link4, link5, link6, link7, link8, link9});
     
     // add flow
-    auto flow1 = std::make_shared<TahoeFlow>("flow1", "destination1",
+    auto flow1 = std::make_shared<VegasFlow>("flow1", "destination1",
                                         (35 * 8 * pow(10, 6)), source1, 1, 0.5);
-    auto flow2 = std::make_shared<TahoeFlow>("flow2", "destination2",
+    auto flow2 = std::make_shared<VegasFlow>("flow2", "destination2",
                                         (15 * 8 * pow(10, 6)), source2, 1, 10.0);
-    auto flow3 = std::make_shared<TahoeFlow>("flow3", "destination3",
+    auto flow3 = std::make_shared<VegasFlow>("flow3", "destination3",
                                         (30 * 8 * pow(10, 6)), source3, 1, 20.0);
     
     std::vector<std::shared_ptr<Flow> > flow_list;

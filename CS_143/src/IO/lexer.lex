@@ -11,9 +11,10 @@
 host         return HOSTTOK;
 router       return ROUTERTOK;
 link         return LINKTOK;
-flow         return FLOWTOK;
 "["          return LBRACK;
 "]"          return RBRACK;
+vegas        return VEGASFLOWTOK;
+tahoe        return TAHOEFLOWTOK;
 
 [A-Za-z]+[0-9]* {yylval.strval = yytext;
                  return STR;}

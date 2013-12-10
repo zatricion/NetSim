@@ -9,13 +9,13 @@
 #include <map>
 #include <iostream>
 #include "../EventGenerators/Flow.h"
+#include "../EventGenerators/VegasFlow.h"
+#include "../EventGenerators/TahoeFlow.h"
 #include "../EventGenerators/FlowGenerator.h"
 #include "../EventGenerators/Router.h"
 #include "../EventGenerators/Host.h"
 #include "../EventGenerators/Link.h"
 #include "../EventHandling/Handler.h"
-#include "../EventGenerators/TCPReno.h"
-#include "../EventGenerators/TCPVegas.h"
 #include "NetInput.h"
 
 int yyerror(const char *s);
@@ -45,7 +45,8 @@ static Handler h;
 %token HOSTTOK
 %token ROUTERTOK
 %token LINKTOK
-%token FLOWTOK
+%token VEGASFLOWTOK
+%token TAHOEFLOWTOK
 %token LBRACK
 %token RBRACK
 
@@ -132,41 +133,74 @@ link: LINKTOK FLOAT FLOAT FLOAT string string string {
   h.addGenerator(link);
 };
 
-// Flow(string ID, 
+// VegasFlow(string ID, 
 //      string dest, 
-//      shared_ptr<CongestionAlg> alg, 
 //      int data_size, 
 //      shared_ptr<Host> host, 
 //      int windowSize, 
 //      float timestamp)
-flow: FLOWTOK string string string FLOAT string FLOAT FLOAT {
+flow: VEGASFLOWTOK string string FLOAT string FLOAT FLOAT {
   // retrieve strings
-  std::string s4 = str_list[str_list.size()-1];
-  std::string s3 = str_list[str_list.size()-2];
-  std::string s2 = str_list[str_list.size()-3];
-  std::string s1 = str_list[str_list.size()-4];
-  if(debug) std::cout << "FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
+  std::string s3 = str_list[str_list.size()-1]; // host
+  std::string s2 = str_list[str_list.size()-2]; // dest
+  std::string s1 = str_list[str_list.size()-3]; // ID
+  //if(debug) std::cout << "FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
   std::string ID = s1;
   std::string dest = s2;
   //std::shared_ptr<CongestionAlg> alg;
-  std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
+  //std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
   //if ($4 == "VEGAS") {
   //  alg = std::make_shared<TCPVegas>();
   //} else {
   //  alg = std::make_shared<TCPReno>();
   //}
-  int data_size = (int) $5;
-  std::shared_ptr<Host> host = host_map[s4];
-  int windowSize = (int) $7;
-  float timestamp = $8;
-  auto flow = std::make_shared<Flow>(ID, dest, alg, data_size, host, 
+  int data_size = (int) $4;
+  std::shared_ptr<Host> host = host_map[s3];
+  int windowSize = (int) $6;
+  float timestamp = $7;
+  auto flow = std::make_shared<VegasFlow>(ID, dest, data_size, host, 
                                      windowSize, timestamp);
   std::vector<std::shared_ptr<Flow> > flow_list;
   flow_list.push_back(flow);  
-  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g");
+  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g"); // TODO magic string
   // give to handler
   h.addGenerator(flow_g);
 };
+
+// TahoeFlow(string ID, 
+//      string dest, 
+//      int data_size, 
+//      shared_ptr<Host> host, 
+//      int windowSize, 
+//      float timestamp)
+flow: TAHOEFLOWTOK string string FLOAT string FLOAT FLOAT {
+  // retrieve strings
+  std::string s3 = str_list[str_list.size()-1]; // host
+  std::string s2 = str_list[str_list.size()-2]; // dest
+  std::string s1 = str_list[str_list.size()-3]; // ID
+  //if(debug) std::cout << "FLOW: " << s1 << ' ' << s2 << ' ' << s3 << ' ' << $5 << ' ' << s4 << ' ' << $7 << ' ' << $8 << std::endl;
+  std::string ID = s1;
+  std::string dest = s2;
+  //std::shared_ptr<CongestionAlg> alg;
+  //std::shared_ptr<CongestionAlg> alg = std::make_shared<TCPVegas>();
+  //if ($4 == "VEGAS") {
+  //  alg = std::make_shared<TCPVegas>();
+  //} else {
+  //  alg = std::make_shared<TCPReno>();
+  //}
+  int data_size = (int) $4;
+  std::shared_ptr<Host> host = host_map[s3];
+  int windowSize = (int) $6;
+  float timestamp = $7;
+  auto flow = std::make_shared<TahoeFlow>(ID, dest, data_size, host, 
+                                     windowSize, timestamp);
+  std::vector<std::shared_ptr<Flow> > flow_list;
+  flow_list.push_back(flow);  
+  auto flow_g = std::make_shared<FlowGenerator>(flow_list, "flow_g"); // TODO magic string
+  // give to handler
+  h.addGenerator(flow_g);
+};
+
 
 %%
 
