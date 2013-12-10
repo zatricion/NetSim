@@ -7,7 +7,7 @@ CFLAGS=-std=c++0x -g -Wall
 LDFLAGS=-lm -lboost_iostreams -lboost_system -lboost_filesystem
  
 # List of objects to be built; stored in build/ directory.
-OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TCPRenoUpdateEvent.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o
+OBJECTS = build/Test.o build/Packet.o build/Path.o build/Flow.o build/Event.o build/UnackEvent.o build/FlowEvent.o build/PacketEvent.o build/EventGenerator.o build/FlowGenerator.o build/Router.o build/Host.o build/Link.o build/Handler.o build/deref_comp.o build/TimeoutEvent.o build/Plotter.o build/TCPVegasUpdateEvent.o build/BFResendEvent.o build/VegasFlow.o build/TahoeFlow.o src/IO/parser.tab.o src/IO/lexer.yy.o src/IO/NetInput.o
 
 # Source file
 SOURCE = src/IO/Test.cpp
@@ -63,9 +63,6 @@ build/Handler.o: src/EventHandling/Handler.cpp src/EventHandling/Handler.h src/E
 
 build/deref_comp.o: src/Tools/deref_comp.cpp src/Tools/deref_comp.h src/EventHandling/Event.h
 	$(CC) $(CFLAGS) -c $< -o build/deref_comp.o
-
-build/TCPRenoUpdateEvent.o: src/EventHandling/TCPRenoUpdateEvent.cpp src/EventHandling/TCPRenoUpdateEvent.h
-	$(CC) $(CFLAGS) -c $< -o build/TCPRenoUpdateEvent.o
 
 build/TimeoutEvent.o: src/EventHandling/TimeoutEvent.cpp src/EventHandling/TimeoutEvent.h
 	$(CC) $(CFLAGS) -c $< -o build/TimeoutEvent.o
