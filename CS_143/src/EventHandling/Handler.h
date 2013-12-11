@@ -23,10 +23,10 @@ class Handler {
 private:
     // Fields
     /** Container for current events. */
-    std::vector<std::shared_ptr<Event> > currEvents;
+    std::vector<std::shared_ptr<Event> > curr_events;
 
     /** Map from generator ID to EventGenerators. */
-    std::unordered_map<std::string, std::shared_ptr<EventGenerator> > genMap;
+    std::unordered_map<std::string, std::shared_ptr<EventGenerator> > gen_map;
     
     /** Is the simulation finished? */
     bool not_done = true;
