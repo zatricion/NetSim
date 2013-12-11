@@ -19,7 +19,7 @@ simulator: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Individual object dependencies
-build/Simulator.o: src/IO/Simulator.cpp src/IO/Simulator.h src/EventHandling/UnackEvent.h src/EventHandling/FlowEvent.h src/EventHandling/FlowEvent.h src/EventHandling/PacketEvent.h src/EventHandling/Handler.h src/EventGenerators/Flow.h src/EventGenerators/VegasFlow.h src/EventGenerators/TahoeFlow.h src/EventGenerators/EventGenerator.h src/EventGenerators/FlowGenerator.h src/EventGenerators/Router.h src/EventGenerators/Host.h src/EventGenerators/Link.h src/Tools/Log.h src/IO/Plotter.h src/IO/NetInput.h
+build/Simulator.o: src/IO/Simulator.cpp src/IO/Simulator.h src/IO/Plotter.h src/IO/NetInput.h src/EventHandling/Handler.h
 	$(CC) $(CFLAGS) -c $< -o build/Simulator.o 
 
 build/Path.o: src/EventGenerators/Path.cpp src/EventGenerators/Path.h
@@ -88,22 +88,17 @@ src/IO/parser.tab.cpp src/IO/parser.tab.hpp: src/IO/parser.ypp
 
 build/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
 src/IO/parser.tab.o: src/IO/parser.tab.cpp src/IO/parser.tab.hpp
-	#$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
 	$(CC) $(CFLAGS) -c $< -o src/IO/parser.tab.o
-	#mv parser.tab.o build/parser.tab.o
 
 src/IO/lexer.yy.cpp: src/IO/lexer.lex
 	flex -+ -o src/IO/lexer.yy.cpp src/IO/lexer.lex
 
 build/lexer.yy.o: src/IO/lexer.yy.cpp
 src/IO/lexer.yy.o: src/IO/lexer.yy.cpp
-	#$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
 	$(CC) $(CFLAGS) -c $< -o src/IO/lexer.yy.o
-	# ew
-	#mv src/IO/lexer.yy.o build/lexer.yy.o
 
-# Build program.
 build/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
+
 src/IO/NetInput.o: src/IO/NetInput.cpp src/IO/NetInput.h
 	$(CC) $(CFLAGS) -c $< -o src/IO/NetInput.o
 

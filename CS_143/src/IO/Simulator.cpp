@@ -7,7 +7,10 @@
  * @return 0
  */
 int main() {
-    // Set most verbose logging.
+    // Note: this file log was used extensively for debugging.  We have removed
+    // Logging statements in most functions to improve runtime.  However, we
+    // leave these lines here as an indicator to the reader how logging can
+    // be done.  Most files also include the src/Tools/Log.h file already.
     FILE *log = fopen("test.log", "w");
     Output2FILE::Stream() = log;
     FILELog::ReportingLevel() = logINFO;
