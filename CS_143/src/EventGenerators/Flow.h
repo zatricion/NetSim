@@ -60,10 +60,10 @@ public:
     std::string destination;
 
     /** The total number of data packets in the flow. */
-    int numPackets;
+    int num_packets;
 
     /** The time a flow waits until a packet has timed out. */
-    double waitTime;
+    double wait_time;
 
     /** The size of packets in the flow. */
     int packetSize;
@@ -80,7 +80,7 @@ public:
 
     /**
      * A list of packets that the flow hasn't sent yet.  Initially, this will
-     * be the set {0, 1, ..., numPackets - 1}.
+     * be the set {0, 1, ..., num_packets - 1}.
      */
     std::set<int> unSentPackets;
 

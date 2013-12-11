@@ -87,7 +87,7 @@ void Host::respondToFinUnackEvent(UnackEvent unack_event) {
     // the state of our host.  If the flow is marked as DONE, then we
     // don't need to resend the FIN.
     if (flows.count(p->flowID) && flows[p->flowID]->phase != DONE) {
-        sendAndQueueResend(p, time, flows[p->flowID]->waitTime);
+        sendAndQueueResend(p, time, flows[p->flowID]->wait_time);
     }
     else if (recvd.count(p->flowID) && recvd[p->flowID].second != DONE) {
         // There are no wait times associated with the receiving end of a flow.

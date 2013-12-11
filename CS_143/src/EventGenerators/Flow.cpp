@@ -20,24 +20,24 @@ Flow::Flow(std::string idval, std::string dest, int data_size,
     id = idval;
     source = h->getID();
     destination = dest;
-    numPackets = ceil(1.0 * data_size / DATA_PKT_SIZE);
+    num_packets = ceil(1.0 * data_size / DATA_PKT_SIZE);
 
-    // Default wait time is set to .5 seconds.  The waitTime will be updated
+    // Default wait time is set to .5 seconds.  The wait_time will be updated
     // upon reception of acks.
-    waitTime = .5;
+    wait_time = .5;
     phase = SYN;
     unSentPackets = std::set<int>();
     
     // Populate unSentPackets with every packet.
-    for (int i = 0; i < numPackets; i++) {
+    for (int i = 0; i < num_packets; i++) {
         unSentPackets.insert(i);
     }
 
     windowStart = 0;
     windowEnd = winSize - 1;
 
-    A = waitTime;
-    D = waitTime;
+    A = wait_time;
+    D = wait_time;
     b = .1;
 }
 
@@ -75,7 +75,7 @@ void Flow::sendManyPackets(double time) {
             auto pkt = std::make_shared<Packet>(std::to_string(i), destination,
                 source, DATA_PKT_SIZE, false, i, id, false, false,
                 time + cpuTime);
-            host->sendAndQueueResend(pkt, time + cpuTime, waitTime);
+            host->sendAndQueueResend(pkt, time + cpuTime, wait_time);
         }
     }
 }
@@ -150,7 +150,7 @@ void Flow::openConnection(double time) {
                                         false, // bf packet?
                                         time);
 
-    sendAndQueueResend(syn, time, waitTime);
+    sendAndQueueResend(syn, time, wait_time);
 }
 
 

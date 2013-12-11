@@ -29,9 +29,9 @@ double EventGenerator::getNextTime() {
  * @return a pointer to the removed Event.
  */
 std::shared_ptr<Event> EventGenerator::getEvent() {
-    std::shared_ptr<Event> nextEvent = std::move(event_heap.top());
+    std::shared_ptr<Event> next_event = std::move(event_heap.top());
     event_heap.pop();
-    return nextEvent;
+    return next_event;
 }
 
 

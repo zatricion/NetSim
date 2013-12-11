@@ -29,7 +29,7 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest, int data_size,
  * 
  * @param unacked the potentially unacknowledged packet
  * @param time the time at which the event is thrown.  This should be roughly
- * waitTime after the initial packet was sent.
+ * wait_time after the initial packet was sent.
  */
 void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
@@ -74,7 +74,7 @@ void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
         // Set the window size to 1.
         windowEnd = windowStart;
 
-        sendAndQueueResend(sendMe, time, waitTime);
+        sendAndQueueResend(sendMe, time, wait_time);
     }
 }
 
@@ -107,7 +107,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             return;
         }
 
-        // Update the A, D, waitTime, according to algorithm explained in Flow.
+        // Update the A, D, wait_time, according to algorithm explained in Flow.
         double RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
@@ -117,7 +117,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
        
         if (seqNum < windowStart) { return; }
 
-        if (seqNum == numPackets) {
+        if (seqNum == num_packets) {
             // We received an ack that requests a nonexistent packet.  I.e. we sent
             // the 100th packet (with seqNum 99), and this ack says "100", but there
             // is no 100th packet to send.  So we're done.
@@ -143,7 +143,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
             // increase window size by 1, then readjust window and send packets.
             windowSize += 1;
             windowStart = seqNum;
-            windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
+            windowEnd = std::min(seqNum + windowSize - 1, num_packets - 1);
             sendManyPackets(time);
             if (windowSize > ssthresh) {
                 FILE_LOG(logDEBUG) << "Entering CONGESTIONAVOIDANCE";
@@ -188,7 +188,7 @@ void TahoeFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
                 winOverFlow -= (int) winOverFlow;
 
                 windowStart = seqNum;
-                windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
+                windowEnd = std::min(seqNum + windowSize - 1, num_packets - 1);
                 sendManyPackets(time);
             }
         } // end CONGESTIONAVOIDANCE block;
@@ -214,8 +214,8 @@ std::string TahoeFlow::toString() {
     std::string setElems = setString.str();// setString.str();
 
     fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << 
-        destination << ", numPackets=" << numPackets << ", waitTime=" << 
-        waitTime << ", " << "packetSize=" << packetSize << ", " << setElems <<
+        destination << ", num_packets=" << num_packets << ", wait_time=" << 
+        wait_time << ", " << "packetSize=" << packetSize << ", " << setElems <<
         ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
     return fmt.str();
 }
@@ -265,10 +265,9 @@ void TahoeFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
  * Updates the wait time using a simple formula.
  * Uses a slightly modified version of the formula A + 4 * D.
  * Using A + 4 * D produces much more packet loss, because D becomes
- * small very quickly in the simulation, making the waitTime variable
+ * small very quickly in the simulation, making the wait_time variable
  * very unforgiving.
  */
 void TahoeFlow::updateWaitTime() {
-
-    waitTime = 1.5 * A + 4 * D + .01;
+    wait_time = 1.5 * A + 4 * D + .01;
 }

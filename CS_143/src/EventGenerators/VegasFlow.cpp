@@ -22,7 +22,7 @@ VegasFlow::VegasFlow(std::string idval, std::string dest, int data_size,
  * 
  * @param unacked the unacknowledged packet
  * @param time the time at which the event is thrown.  This should be roughly
- * waitTime after the initial packet was sent.
+ * wait_time after the initial packet was sent.
  */
 void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
@@ -35,7 +35,7 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
         // the window.
         auto resend = std::make_shared<Packet>(*unacked);
         resend->timestamp = time;
-        sendAndQueueResend(resend, time, waitTime);
+        sendAndQueueResend(resend, time, wait_time);
     }
 }
 
@@ -52,7 +52,7 @@ void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
 void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
     assert(pkt->ack);
     if (phase == DATA) {
-        // Update the A, D, waitTime;
+        // Update the A, D, wait_time;
         RTT = time - pkt->timestamp;
         A = A * (1.0 - b) + b * RTT;
         D = (1.0 - b) * D + b * abs(RTT - A);
@@ -62,7 +62,7 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
 
         int seqNum = pkt->sequence_num;
 
-        if (seqNum == numPackets) {
+        if (seqNum == num_packets) {
             // We received an ack for a nonexistent packet.  I.e. we sent
             // the 100th packet (with seqNum 99), and this ack says "100", but
             // there is no 100th packet to send.  So we're done.
@@ -86,7 +86,7 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         
         // Set windowStart to the current packet's sequence number
         windowStart = seqNum;
-        windowEnd = std::min(seqNum + windowSize - 1, numPackets - 1);
+        windowEnd = std::min(seqNum + windowSize - 1, num_packets - 1);
         sendManyPackets(time);
     } // Otherwise, do nothing.
     logFlowWindowSize(time, windowEnd - windowStart + 1);
@@ -111,7 +111,7 @@ std::string VegasFlow::toString() {
     // std::string setElems = setString.str();
     std::string setElems = "";
 
-    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", numPackets=" << numPackets << ", waitTime=" << waitTime << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", num_packets=" << num_packets << ", wait_time=" << wait_time << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
     return fmt.str();
 }
 
@@ -146,7 +146,7 @@ void VegasFlow::handleVegasUpdate(double time) {
     // schedule another update
     auto update = std::make_shared<TCPVegasUpdateEvent>(source,
                                                         source,
-                                                        time + waitTime,
+                                                        time + wait_time,
                                                         id);
     host->addEventToLocalQueue(update);
 
@@ -195,7 +195,7 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         minRTT = RTT;
 
         auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, source,
-                                                             time + waitTime,
+                                                             time + wait_time,
                                                              id);
         host->addEventToLocalQueue(vUpdate);
     } // If we're not in the SYN phase, do nothing.
@@ -203,9 +203,9 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
 
 
 /**
- * Updates the waitTime for Vegas.  A slightly modified version of A + 4D is
+ * Updates the wait_time for Vegas.  A slightly modified version of A + 4D is
  * used, because D rapidly becomes very small.
  */
 void VegasFlow::updateWaitTime() {
-    waitTime = A + 4 * D + .01;
+    wait_time = A + 4 * D + .01;
 }

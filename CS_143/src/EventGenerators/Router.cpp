@@ -34,7 +34,7 @@ Router::Router(std::vector<std::string> host_list, std::vector<std::shared_ptr<L
     broadcastTable(0.0);
 
     wait_time = 0.0;
-    FILE_LOG(logDEBUG) << "waitTime=" << wait_time;
+    FILE_LOG(logDEBUG) << "wait_time=" << wait_time;
     auto b = std::make_shared<BFResendEvent>(uuid, uuid, wait_time);
     wait_time = std::min(BF_WAIT, wait_time + 0.1);
     addEventToLocalQueue(b);
