@@ -3,7 +3,7 @@
 
 /**
  * Creates a FlowGenerator object.  The constructor takes in a list of flows, 
- * which is uses to populate its eventHeap with FlowEvents.  These events are
+ * which is uses to populate its event_heap with FlowEvents.  These events are
  * fired at the appropriate times by the Handler to start the data flows.
  *
  * @param flows the list of flows.
@@ -14,7 +14,7 @@ FlowGenerator::FlowGenerator(std::vector<std::shared_ptr<Flow> > flows,
     for (auto it : flows) {
         auto flow_event = std::make_shared<FlowEvent>(it, it->destination, 
             it->source, it->timestamp);
-        eventHeap.push(flow_event);
+        event_heap.push(flow_event);
     }
     uuid = flow_id;
 }

@@ -70,7 +70,7 @@ void Router::broadcastTable(double timestamp) {
                                             true,
                                             routing_table);
         auto bf_event = std::make_shared<PacketEvent>(it.first, this->getID(), timestamp, pkt);
-        eventHeap.push(bf_event);
+        event_heap.push(bf_event);
     }
 }
 
@@ -194,7 +194,7 @@ void Router::giveEvent(std::shared_ptr<Event> e) {
             auto new_event = std::make_shared<PacketEvent>(dest, this->getID(),
                 packet_event.eventTime(), pkt);
             // put on event heap
-            eventHeap.push(new_event);
+            event_heap.push(new_event);
         }
     }
 }

@@ -141,7 +141,7 @@ void Link::giveEvent(std::shared_ptr<Event> e)
         // Add an event to the Link priority queue
         auto packetEvent = std::make_shared<PacketEvent>(
             other_node, uuid, timestamp, packet_event.packet);
-        eventHeap.push(packetEvent);
+        event_heap.push(packetEvent);
         
         // Add packet to packets_on_link
         packets_on_link[source].push_back(std::make_tuple(

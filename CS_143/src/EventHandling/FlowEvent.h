@@ -1,5 +1,5 @@
 /** 
- * A FlowEvent contains a Flow, and lives in the FlowGenerator's eventHeap
+ * A FlowEvent contains a Flow, and lives in the FlowGenerator's event_heap
  * until the Flow should start.  Then, the FlowEvent passes the flow to the
  * correct Host.
  */

@@ -12,7 +12,7 @@ void Handler::addGenerator(std::shared_ptr<EventGenerator> gen) {
 
 
 /**
- * Get the lowest time from the distributed eventHeap.
+ * Get the lowest time from the distributed event_heap.
  *
  * @return the minimum time.
  */
@@ -39,7 +39,7 @@ double Handler::getMinTime() {
  * the exact same timestamp.
  *
  * @param minTime the minimum Event time out of all Events in all the
- * EventGenerator eventHeaps
+ * EventGenerator event_heaps
  */
 void Handler::populateCurrentEvents(double minTime) {
     currEvents.clear();

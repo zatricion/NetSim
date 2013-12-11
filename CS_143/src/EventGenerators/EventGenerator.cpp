@@ -18,7 +18,7 @@ std::string EventGenerator::getID() const {
  */
 double EventGenerator::getNextTime() {
     assert(hasEvents());
-    return eventHeap.top()->eventTime();
+    return event_heap.top()->eventTime();
 }
 
 
@@ -29,8 +29,8 @@ double EventGenerator::getNextTime() {
  * @return a pointer to the removed Event.
  */
 std::shared_ptr<Event> EventGenerator::getEvent() {
-    std::shared_ptr<Event> nextEvent = std::move(eventHeap.top());
-    eventHeap.pop();
+    std::shared_ptr<Event> nextEvent = std::move(event_heap.top());
+    event_heap.pop();
     return nextEvent;
 }
 
@@ -41,15 +41,15 @@ std::shared_ptr<Event> EventGenerator::getEvent() {
  * @return bool is true if there are events
  */
 bool EventGenerator::hasEvents() {
-    return !eventHeap.empty();
+    return !event_heap.empty();
 }
 
 
 /**
- * Add Event to local eventHeap.
+ * Add Event to local event_heap.
  *
  * @param e the Event to add
  */
 void EventGenerator::addEventToLocalQueue(std::shared_ptr<Event> e) {
-    eventHeap.push(e);
+    event_heap.push(e);
 }

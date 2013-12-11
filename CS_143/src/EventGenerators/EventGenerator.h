@@ -1,7 +1,7 @@
 /**
  * Superclass for Links, Hosts, Routers, and FlowGenerators.  EventGenerators 
- * each have their own eventHeaps, which are ordered lists of events.  The
- * EventHandler will determine the Event in the eventHeaps of the set of
+ * each have their own event_heaps, which are ordered lists of events.  The
+ * EventHandler will determine the Event in the event_heaps of the set of
  * EventGenerators with the minimum time, and handle the Event.
  */
 
@@ -28,12 +28,12 @@ public:
     /** The unique id of the EventGenerator. */
     std::string uuid;
     /**
-     * The eventHeap, which stores a list of events that the the 
+     * The event_heap, which stores a list of events that the the 
      * EventGenerator will give to the EventHandler.
      */
     std::priority_queue<std::shared_ptr<Event>,
                         std::vector<std::shared_ptr<Event> >,
-                        std::greater<std::shared_ptr<Event>> > eventHeap;
+                        std::greater<std::shared_ptr<Event>> > event_heap;
 
     // Constructors:
 

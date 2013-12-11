@@ -317,7 +317,7 @@ void Host::respondTo(PacketEvent new_event) {
 
 /**
  * Sends a packet by creating a PacketEvent for the packet and placing the
- * PacketEvent on the eventHeap.
+ * PacketEvent on the event_heap.
  *
  * @param pkt the Packet to be sent.
  * @param time the time at which the Packet should be sent.
@@ -330,7 +330,7 @@ void Host::send(std::shared_ptr<Packet> pkt, double time) {
 
 
 /**
- * Queues a PacketEvent in the eventHeap, as well as an UnackEvent for the 
+ * Queues a PacketEvent in the event_heap, as well as an UnackEvent for the 
  * PacketEvent.
  *
  * @param pkt the packet for the PacketEvent

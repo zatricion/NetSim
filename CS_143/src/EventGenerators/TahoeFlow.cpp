@@ -34,7 +34,7 @@ TahoeFlow::TahoeFlow(std::string idval, std::string dest, int data_size,
 void TahoeFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
     int seqNum = unacked->sequence_num;
     
-    // If we have a timeout, we want to effectively clear the Host's eventHeap
+    // If we have a timeout, we want to effectively clear the Host's event_heap
     // of all UnackEvents for this Flow, because we don't want to repeat the
     // timeout.  As a proxy for dequeueing these events, we keep a variable
     // called validUnackTime.  The variable remembers when the last timeout

@@ -1,6 +1,6 @@
 /**
  * An object used to store Flow objects until the data flow is ready to begin.
- * It holds an eventHeap of FlowEvents that are passed to the Handler when the
+ * It holds an event_heap of FlowEvents that are passed to the Handler when the
  * data flow should begin.  The Handler processes these FlowEvents, and creates
  * a data flow on the proper Host.
  */
