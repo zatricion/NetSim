@@ -108,8 +108,7 @@ $$ w(t + 1) = \begin{cases} w + 1, & \gamma < \alpha / minRTT \\ w, & alpha \le 
 where RTT is the most recent RTT.
 
 \subsection{TahoeFlow}
-
-
+The Tahoe flow resets to slow start on receipt of three duplicate acks, or on a timeout.  If a such a reset occurs, the time of the reset is stored.  Any potential timeouts that would be triggered by an event generated before this time are ignored (to prevent the algorithm from being bombarded by timeouts).  Similarly, we ignore the duplicity of acks for packets with timestamps from before our most recent reset (because otherwise, the algorithm would be bombarded by a barrage of resets).  During slow start, the window size increases by one with every ack until the ssthresh is met.  In congestion avoidance, window size increases by $1/w$ with every ack.
 
 \subsection{Input}
 1) Input
