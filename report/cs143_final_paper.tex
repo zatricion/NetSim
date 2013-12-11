@@ -94,11 +94,20 @@ The main challenge we faced with routers was that old routing tables were being 
 
 
 \subsection{Host}
-TODO
-\subsection{TCP Vaggis}
-TODO
-\subsection{TCP Tahoe}
-TODO
+The host receives PacketEvents from the handler through its giveEvent() function.  This function is split into several cases that are handled by helper functions.  The most common case is that a PacketEvent is received by the host.  In this case, the host is either at the sending or the receiving end of the flow.  To determine this, the host has two maps: ``flows'' and ``recvd''.  The former associates flow ids with the Flow objects whose sending ends are rooted at the host.  The latter associates flow ids with a list of received packets.  Since flow ids must be globally unique, we can determine whether a the host is at the sending end or receiving end of the flow with which the packet is associated.  (We can also use the information on whether the packet is an ack to do this).
+\\\\
+When a data packet is received, if it is an ACK, the host performs the appropriate action using the ``recvd'' object.  If it is not an ACK, the host passes the event to the appropriate Flow in ``flows'' using the flow id field of the packet.  Non-data packets (i.e. SYNs and FINs) are handled separately.
+
+\subsection{Flow}
+The Flow object handles many of the basic operations generic to Vegas and Tahoe.  It contains methods for opening connections, sending packets / adjusting window sizes, etc.
+
+\subsection{VegasFlow}
+Our implementation of Vegas updates on a timer set to fire once every RTT.  To do so, a VegasUpdateEvent is generated when the Flow connection is opened (i.e. when the SYNACK is received).  When the VegasUpdateEvent reaches the Host on which the VegasFlow object lives, it is passed to the VegasFlow to be handled.  To handle the VegasUpdateEvent, the window size is adjusted according to:
+$$ w(t + 1) = \begin{cases} w + 1, & \gamma < \alpha / minRTT \\ w, & alpha \le \gamma \le \beta \\ w - 1, & \beta < \gamma \end{cases}, \gamma = \dfrac{w}{minRTT} - \dfrac{w}{RTT} $$,
+\\\\
+where RTT is the most recent RTT.
+
+\subsection{TahoeFlow}
 
 
 
