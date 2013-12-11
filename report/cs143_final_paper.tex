@@ -47,64 +47,57 @@ The event-driven simulation paradigm ended up working well for our group. While 
 
 \subsection{Links}
 
-Links are bi-directional with each side of a link having the same buffer-size and capacity. Links keep adding packets to their buffer until it has reached its maximum buffer occupancy, at which point it drops all subsequent packets until its buffer occupancy has dropped below the maximum. This is a short description of the procedure the link utilizes to update its link size and capacity:
+Links are bi-directional.  Each direction of the link has the same buffer-size and capacity. Links add packets that they are passed to their buffers until they reached their maximum buffer occupancy, at which point they drop all subsequent packets until their buffer occupancy has dropped. Below is a short description of the procedure the link utilizes to update its link size and capacity:
 
 \begin{enumerate}
-\item Link gets an event – finds the difference between the packet event and its own internal clock
+\item Link gets an event, and finds the difference between the packet event time and its own internal timestamp
 \item Decreases buffer occupancy by the difference in time multiplied by capacity
-\item If $buffer occupancy + packet size$ is smaller than max buffer occupancy, add packet to its buffer
-\item Update queue delay, buffer size and internal clock (based on event time)
-\item Add an event to its priority queue that essentially tells the handler to send the packet to the adjacent network object at the appropriate time
-\item $(event time + propagation delay + queue delay)$
+\item If $(\text{buffer occupancy} + \text{packet size})$ is smaller than max buffer occupancy, add packet to the buffer
+\item Update queue delay, buffer size and internal timestamp (based on event time)
+\item Add an event to the priority queue that tells the handler to send the packet to the adjacent network object at $\text{time} = (\text{event time} + \text{propagation delay} + \text{queue delay})$
 \end{enumerate}
 
 \subsection*{Reflection on Links}
 
-Links were relatively straightforward to write. A conceptual error we made at the start was that we gave a link a single buffer, which had packets added to it simultaneously from both sides of the link. We managed to rectify this error relatively quickly. Logging was particularly difficult for links as we had to estimate the instantaneous link rate for a link based only on the information we get when a link receives an event. This procedure has been described in the segment of the report dealing with plotting. 
-
-
-
-
+Links were relatively straightforward to write. A conceptual error we made at the start was that we gave bidirectional links a single buffer, which had packets added to it simultaneously from both sides of the link. We managed to rectify this error quickly. Logging was particularly difficult for links, as we had to estimate the instantaneous link rate for a link based only on the information we get when a link receives an event. This procedure has been described in the segment of the report dealing with plotting. 
 
 \subsection{Routers}
 
-Routers run a distributed bellman-ford algorithm to find the shortest path between any pair of hosts. Each router has a routing table that is uses to figure out which neighboring link it should send information down for each flow. The routing table is implemented as an unordered map with the key being the host ID and the value a path from that router to that host.
+Routers run a distributed Bellman-Ford algorithm to find the shortest path between any pair of hosts. Each router has a routing table that it uses to decide which neighboring link it should route packets through. The routing table is implemented as an unordered map with the host ID as the key and the path from the router to that particular host as the value.
  
-A path is a vector of 3-tuples. The elements on the 3-tuple are the link ID, the delay on that link, and the most recent time the router updated the delay for that specific link. So a path from router to a host gives the exact set of links that will be traversed to get to that host and the total delay to that host.
+A path is a vector of 3-tuples. The elements on the 3-tuple are the link ID, the delay on that link, and the most recent time the router updated the delay for that specific link. So, a path from a router to a host gives the exact set of links that will be traversed to get to that host and the total delay to that host.
  
-At specified time intervals, a router will broadcast its routing table to all adjacent routers. Before broadcasting its table, it will find the most recent link delay for every neighboring links and update each path it has with the correct delay and update time. The time a router waits between broadcasting its routing table is given by the following formula: 
+At specified time intervals, a router will broadcast its routing table to all adjacent routers. Before broadcasting its table, it will find the most recent link delay for every neighboring link and update each path it has with the correct delay and update time. The time a router waits between broadcasting its routing table is given by the following formula: 
 % make this mathy!
 $$waitTime = min(5.0, waitTime + 0.1)$$
 
-When a router receives a routing table from a neighboring router, it first updates all the relevant link weights in every path that it has if the link update time in the neighbor router’s, routing table is more recent.
+When a router receives a routing table, it checks the most recent update times for each link in the newly received routing table.  It updates those links for which the received routing table has more recent information.
 
-It then executes the following procedure to check whether it should update the shortest path it has to each host. For each host in neighbors routing table, it checks if two conditions are met:
-\begin{enumerate}
-\item (Link delay between two hosts ink delay between two hosts + Total delay on other router’s path to host) < current distance of router to host
-\item The path between the specified host and the neighbors router and current router do not form a cycle
+It then executes the following procedure to check whether it should update the path it has to each host. For each host in the newly received routing table, it checks if two conditions are met:
+\begin{enumerate} \item $\text{Link delay between two routers} + \text{Total delay on other router’s path to host} < \text{current distance of router to host} $
+\item The path from the router to the specified host through the neighboring router does not contain the router itself (except at the beginning).
 \end{enumerate}
-If both conditions are met, then it updates its routing table with the neighboring router’s path to that host (and appending the link between the two routers to that path).
+If both conditions are met, then it updates its routing table with the neighboring router’s path to that host (and appends the link between the two routers to that path).
 
 
 \subsection*{Reflection on routers}
  
-The main challenge we faced with routers was that old routing tables were being bounced around the network. The reason for this was that routers were initially not checking to see how old the routing table information they were getting was. Hence a router did not have an accurate estimation for what the actual link delay on a link was. The change we made to rectify this was that each link in a path was a given a most recent update time attribute. This allowed us to easily enforce that each link delay in a path in a router was only updated if information it received was recent enough. An assumption made with routers is that there is no delay between them receiving a data packet and sending it down the correct link
-
+The main challenge we faced with routers was that old routing tables were being bounced around the network. This was because routers were not initially checking to see how old the routing table information they were getting was. Hence a router did not have an accurate estimation for what the actual link delay on a link was. The change we made to rectify this was that each link in a path was a given a most recent update time attribute. This allowed us to easily enforce that each link delay in a path in a router was only updated if information it received was recent enough. An assumption made with routers is that there is no delay between them receiving a data packet and sending it down the correct link
 
 
 \subsection{Host}
 The host receives PacketEvents from the handler through its giveEvent() function.  This function is split into several cases that are handled by helper functions.  The most common case is that a PacketEvent is received by the host.  In this case, the host is either at the sending or the receiving end of the flow.  To determine this, the host has two maps: ``flows'' and ``recvd''.  The former associates flow ids with the Flow objects whose sending ends are rooted at the host.  The latter associates flow ids with a list of received packets.  Since flow ids must be globally unique, we can determine whether a the host is at the sending end or receiving end of the flow with which the packet is associated.  (We can also use the information on whether the packet is an ack to do this).
 \\\\
-When a data packet is received, if it is an ACK, the host performs the appropriate action using the ``recvd'' object.  If it is not an ACK, the host passes the event to the appropriate Flow in ``flows'' using the flow id field of the packet.  Non-data packets (i.e. SYNs and FINs) are handled separately.
+When a data packet is received, if it is an ack, the host performs the appropriate action using the ``recvd'' object.  If it is not an ack, the host passes the event to the appropriate Flow in ``flows'' using the flow id field of the packet.  Non-data packets (i.e. SYNs and FINs) are handled separately.
 
 \subsection{Flow}
 The Flow object handles many of the basic operations generic to Vegas and Tahoe.  It contains methods for opening connections, sending packets / adjusting window sizes, etc.
 
 \subsection{VegasFlow}
 Our implementation of Vegas updates on a timer set to fire once every RTT.  To do so, a VegasUpdateEvent is generated when the Flow connection is opened (i.e. when the SYNACK is received).  When the VegasUpdateEvent reaches the Host on which the VegasFlow object lives, it is passed to the VegasFlow to be handled.  To handle the VegasUpdateEvent, the window size is adjusted according to:
-$$ w(t + 1) = \begin{cases} w + 1, & \gamma < \alpha / minRTT \\ w, & alpha \le \gamma \le \beta \\ w - 1, & \beta < \gamma \end{cases}, \gamma = \dfrac{w}{minRTT} - \dfrac{w}{RTT} $$,
+$$ w(t + 1) = \begin{cases} w + 1, & \gamma < \alpha / minRTT \\ w, & \alpha/minRTT \le \gamma \le \beta/minRTT \\ w - 1, & \beta / minRTT < \gamma \end{cases}$$
 \\\\
-where RTT is the most recent RTT.
+where $\gamma = \dfrac{w}{minRTT} - \dfrac{w}{RTT}$, and RTT is the most recent round trip time.
 
 \subsection{TahoeFlow}
 The Tahoe flow resets to slow start on receipt of three duplicate acks, or on a timeout.  If a such a reset occurs, the time of the reset is stored.  Any potential timeouts that would be triggered by an event generated before this time are ignored (to prevent the algorithm from being bombarded by timeouts).  Similarly, we ignore the duplicity of acks for packets with timestamps from before our most recent reset (because otherwise, the algorithm would be bombarded by a barrage of resets).  During slow start, the window size increases by one with every ack until the ssthresh is met.  In congestion avoidance, window size increases by $1/w$ with every ack.
@@ -142,12 +135,12 @@ After we settled on a simple format for the network description files, writing t
 
 \subsection{Output}
 
-Network output is logged by each network object through calls to a logging library. Each call to the logger is ‘self-documenting’ in the sense that the calling network object can pass its own label to the logger such that the logger can appropriately tag the passed data for easier plotting at a later point in time.
+Network output is logged by each network object through calls to a logging library. Each call to the logger is ‘self-documenting’ in the sense that the calling network object can pass its own label to the logger. Then, the logger can appropriately tag the passed data for easy plotting at a later point in time.
 
 Plotting is accomplished using Gnuplot-iostream, which allows for plotting with Gnuplot in C++ through simply writing data to the standard output stream.
 
 \subsection*{Reflection on Output}
-One significant annoyance with the output code stemmed from the event-based nature of our simulation - it’s simple to get logging data from network objects when they’re sending or receiving events, but getting them to log data when no events are being passed is relatively more difficult. This is not a major problem, as interesting things are happening primarily when events are being passed, but was still a slight problem.
+One significant annoyance with the output code stemmed from the event-based nature of our simulation - it’s simple to get logging data from network objects when they’re sending or receiving events, but getting them to log data when no events are being passed is more difficult. This is not a major problem, as interesting things are happening primarily when events are being passed.
 
 
 \section{Analysis}
@@ -172,7 +165,7 @@ The TCP Vegas algorithm we follow is:
     W & \quad \text{otherwise}\\
   \end{array} \right.\]
 
-We begin by making the following simplifcation of steady state:
+We begin by making the following approximation of steady state:
 
 $$ \frac{W^*}{\tau_{min}} - \frac{W^*}{\tau^*} = \frac{\frac{\alpha + \beta}{2}}{\tau_{min}} $$
 
@@ -180,8 +173,7 @@ Where
 \begin{itemize}
 \item $\alpha$ is $1.5$,
 \item $\beta$ is $2.5$,
-\item $W^*$ and $\tau^*$ are window sizes,
-\item RTT is in equilibrium
+\item $W^*$ and $\tau^*$ are window sizes and RTT at equilibrium
 \item $\tau_{min}$ is the min RTT experienced
 \end{itemize}
 
@@ -192,13 +184,14 @@ The flow rate (traffic throughput), $x$, can be written as $$x=\frac{WP}{\tau}$$
 \item $\tau$ is the round-trip-time
 \end{itemize}
 
-At steady state, $x=C^*$ which refers to the minimum link capacity a data\_pkt experiences in the entire path from source to destination. We can think of $C^*$ as the bottleneck link capacity.
-
-Hence in stead-state, $$\frac{C^*}{P} = \frac{W^*}{\tau^*} $$
+At steady state, $x=C^*$, where $C^*$ is the minimum link capacity a data packet experiences in the entire path from source to destination. We can think of $C^*$ as the bottleneck link capacity.
+\\\\
+Hence in steady-state, $$\frac{C^*}{P} = \frac{W^*}{\tau^*} $$
 $$\implies \frac{W^*}{\tau_{min} - \frac{W^*}{\tau^*} = \frac{2}{\tau_{min}}}$$
 $$\implies W^* = 2 + \frac{W^*}{\tau^*}(\tau_{min}) = 2 + \frac{C^*}{P}(\tau_{min}) $$
-
-So for any flow, at stead-state, 
+where $P$ is the data packet size.
+\\\\
+So for any flow, at steady-state, 
 \begin{itemize}
 \item flow rate $= C^*$ where $C^*$ is the bottle-neck capacity.
 \item $W^*=2 + \frac{C^*}{P}(\tau_{min})$
@@ -206,17 +199,17 @@ So for any flow, at stead-state,
 
 
 $$\tau_{min}=\sum_{l=1}^{l=num\_links} (prop\_delay + transmission\_delay)$$
-There is no queue delay. The time taken to go from source to destination is different compared to destination to sources, as for src $\rightarrow$ dest, data\_packet\_size is 1kb; for dest $\rightarrow$ src, data\_packet\_size is 64kb.
-
+$\tau_{min}$ does not include any queue delay. The time taken to go from source to destination is different than the the time from destination to source.  This is because for src $\rightarrow$ dest, data\_packet\_size is 1kB; for dest $\rightarrow$ src, ack\_packet\_size is 64B.
+\\\\
+Flow 1 has to go through 3 links of capacity 10 Mbps and 2 links of capacity 12.5 Mbps.
+Flow 2,3 has to go through 1 link of capacity 10 Mbps and 2 links of capacity 12.5 Mbps.  Hence, 
 
 $$\tau_{min_{flow\_1}} = [5*10 ms + 3*\frac{1024*8}{10^7} + 2*\frac{1024*8}{1.25*10^7}] + [5*10 ms + 3*\frac{64*8}{10^7} + 2*\frac{64*8}{1.25*10^7}] = 0.104 s$$ 
 
-$$\tau_{min_{flow\_2}} = [30 ms + 1*\frac{1024*8}{10^7} + 2*\frac{1024*8}{1.25*10^7}] + [30 ms + 1*\frac{64*8}{10^7} + 2*\frac{64*8}{1.25*10^7}] = 0.0623 s$$ 
+$$\tau_{min_{flow\_2}} = [3 * 10 ms + 1*\frac{1024*8}{10^7} + 2*\frac{1024*8}{1.25*10^7}] + [3*10 ms + 1*\frac{64*8}{10^7} + 2*\frac{64*8}{1.25*10^7}] = 0.0623 s$$ 
 
-$$\tau_{min_{flow\_3}} = \tau_{min_{flow\_2}}$$
+$\tau_{min_{flow\_3}} = \tau_{min_{flow\_2}}$
 
-Flow 1 has to go through 3 links of capacity 10 Mbps and 2 links of capacity 12.5 Mbps.
-Flow 2,3 has to go through 1 link of capacity 10 Mbps and 2 links of capacity 12.5 Mbps.
 
 
 \subsubsection*{Phase 1}
@@ -224,21 +217,25 @@ Only flow 1 present. $C^*$ will be the link capacity of L1/L2/L3 which has capac
 Flow 1: $C^* = 10 mbps$
 Flow 1: $W^* = 2 + \frac{C^*}{P}(\tau_{min_{link1}})=128.96 $
 
-\subsection*{Phase 2}
-Flow 1 and Flow 2 are present. The only change in the formulation of the state is that $C^*$ changes. Now the bottleneck link is L1 as both hosts must share the capacity of the link. Hence each host gets exactly half of link 1's capacity, leading to $$ C^* = \frac{capacity\_of\_link1}{2} = 0.5*10^7 bits $$
+\subsubsection*{Phase 2}
+Flow 1 and Flow 2 are present. The only change in the formulation of the steady-state is that $C^*$ changes. Now the bottleneck link is L1 as both hosts must share the capacity of the link. Hence each host gets exactly half of link 1's capacity, leading to $$ C^* = \frac{capacity\_of\_link1}{2} = 0.5*10^7 bits $$
 
-Flow 1: $C^*$ = Flow\_rate of link 2 = $0.5*10^7$ bits
+Flow 1: $C^*$ = $0.5*10^7$ bits
 
-Flow 1: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$, half of phase 1
+Flow 1: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$ (which is half of phase 1 value for flow 1)
 
 Flow 2: $C^*$ = Flow\_rate of flow 1 = $0.5*10^7$ bits
 
 Flow 2: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$
 
 
-\subsection*{Phase 3}
-Flows 1, 2, and 3 present. Now bottleneck link in flow2 remains link1 as it shares half of the link capacity with flow 1. Hence $C^*$ for flow2 is the same as in phase 2. Thus flow rate and $C^*$ are the same.
-Flow\_rate of flow 1 = Flow\_rate of link 2 = $0.5*10^7$ bits
+\subsubsection*{Phase 3}
+Flows 1, 2, and 3 present. Now, the bottleneck link for flow2 remains link1 as it shares half of the link capacity with flow 1. Hence $C^*$ for flow2 is the same as in phase 2.
+\\\\
+Flow 1's bottleneck is either link1 or link 2, it shares each link's capacity equally with flow 2 and flow 3 respetively. Hence it's $C^*$ and $\tau_{min}$ is the same as in phase 2.
+\\\\
+Flow 3 shares link 3 with flow 1 in the same way flow 2 shares link 2 with flow 1. Hence $C^*$ for flow 3 is the same as that for flow 2 since $\tau_{min_{flow3}}=\tau_{min_{flow2}}$. Thus flow rate and $W^*$ the same as for flow 2.
+\\\\
 All flows: $C^* = 0.5*10^7$ bits
 
 Flow 1 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$, same as phase 2
@@ -247,14 +244,10 @@ Flow 2 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as phase 2
 
 Flow 3 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as flow 2
 
-Flow 3 shares link 3 with flow 1 in the same way flow 2 shares link 2 with flow 1. Hence $C^*$ for flow 3 is the same as that for flow 2 since $\tau_{min_{flow3}}=\tau_{min_{flow2}}$. Thus flow rate and $W^*$ the same as for flow 2.
-
-Flow 1's bottle neck is either link1 or link 2, it shares each link's capacity equally with flow 2 and flow 3 respetively. Hence it's $C^*$ and $\tau_{min}$ is the same as in phase 2.
-
-
 \subsection*{Phase 4}
 Flow 1 and 3 present.
-Now flow 2 has ended and flow 1 and 3 share link 3's capcity equally. This is an equivalent structure to phase 2 except we replacer link 1 with link 3 and flow 2 with flow 3. Hence flow 1's $C^*$ and $W^*$ same as they are in phase 2; flow 3's $C^*$ and $W^*$ are same as phase 2's value for flow 2.
+Now flow 2 has ended and flow 1 and 3 share link 3's capcity equally. This is an equivalent structure to phase 2 except we replaced link 1 with link 3 and flow 2 with flow 3. Hence flow 1's $C^*$ and $W^*$ same as they are in phase 2; flow 3's $C^*$ and $W^*$ are same as phase 2's value for flow 2.
+\\\\
 All flows: $C^* = 0.5*10^7$ bits
 
 Flow 1: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$, same as phase 2
@@ -264,7 +257,7 @@ Flow 3: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as flow 2 in ph
 
 \subsection{Comparison of Analytical and Simulation results}
 %insert a figure
-We reran the simulation with an increment such that the flows reach a steady state more quickly. We also increased the time when flow 2 and flow 3 started, which allowed each flow to reach their steady state. But none of these changes affected the capacity or flow rate at steady state for any flow.
+We reran the simulation with an larger increment such that the flows reach a steady state more quickly. We also increased the time when flow 2 and flow 3 started, which allowed each flow to reach their steady state. But none of these changes affected the capacity or flow rate at steady state for any flow.
 
 As you can see from REFERENCE FIGURE, our simulation follows analytical results almost exactly. The reason that the simulation has a slightly smaller window size is due to the small artificial delay that we add at the host when it sends a packet (which ensures that link buffers do not reorder packets due to having the same timestamp).
 
