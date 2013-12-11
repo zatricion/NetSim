@@ -155,37 +155,37 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Tahoe/buffer_occ.png}
-\caption{Examples of cells of the retina.}
+\caption{Buffer occupancy follows the same pattern for the same reasons as Flow RTT.}
 \label{fig:test0_tahoe_buffer_occ}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Tahoe/flow_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{The flow rate quickly reaches the bound imposed by our link capacities, then stays at that level until the flow is complete. Downward spikes correspond to returns to slow start.}
 \label{fig:test0_tahoe_flow_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Tahoe/flow_rtt.png}
-\caption{Examples of cells of the retina.}
+\caption{The round trip time seen by the flow rises with the window size as more packets are introduced to the system.  Thus, queue delays increase.}
 \label{fig:test0_tahoe_flow_rtt}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Tahoe/link_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{We see that link rate reaches the link capacity and stays there until the flow is complete. Again, downward spikes occur due to returns to slow start.}
 \label{fig:test0_tahoe_link_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Tahoe/packet_loss.png}
-\caption{Examples of cells of the retina.}
+\caption{Some packets are lost towards the beginning of the test, but most packets get through as Tahoe adjusts. Triple duplicate acknowledgment packets account for most of the returns to slow start, which explains why there is so little packet lost in spite of returning to slow start.}
 \label{fig:test0_tahoe_packet_loss}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Tahoe/window_size.png}
-\caption{Examples of cells of the retina.}
+\caption{Window sizes rise exponentially in slow start until they reach untenable heights. Tahoe returns the window size to one, and sets the slow start threshold to begin congestion avoidance at half of the largest window size seen before the return to slow start.}
 \label{fig:test0_tahoe_windnow_size}
 \end{figure}
 
@@ -197,31 +197,31 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Vegas/buffer_occ.png}
-\caption{Examples of cells of the retina.}
+\caption{Buffer occupancy tops out at around 20000 bits.}
 \label{fig:test0_vegas_buffer_occ}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Vegas/flow_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{Vegas sees a smooth increase in flow rate to capacity with no disruptions.}
 \label{fig:test0_vegas_flow_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Vegas/flow_rtt.png}
-\caption{Examples of cells of the retina.}
+\caption{The round trip time seen by the flow is a bit noisy at first as the window size increases, but soon reaches a constant value of about 22ms.}
 \label{fig:test0_vegas_flow_rtt}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Vegas/link_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{The link rate quickly climaxes and remains steady at the link capacity.  }
 \label{fig:test0_vegas_link_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test0_Vegas/window_size.png}
-\caption{Examples of cells of the retina.}
+\caption{The window size increases until the round trip time falls within the range specified by the tuning parameters, then remains constant at around 25 packets.}
 \label{fig:test0_vegas_window_size}
 \end{figure}
 
@@ -234,37 +234,37 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Tahoe/buffer_occ.png}
-\caption{Examples of cells of the retina.}
+\caption{We see that buffer occupancy increases as the window size approaches the limit of what the system can handle before packet loss becomes an issue. The switching happens because the routers are updating at five second intervals. Oscillatory behavior of the system has already been explained in the problem sets.}
 \label{fig:test1_tahoe_buffer_occ}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Tahoe/flow_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{The flow rate for this test is quite a bit more jittery. The spikes at the beginning are due to the inital setting of the slow start threshold. The first return to slow start did not achieve a low enough threshold, so the process repeated itself, resulting in two spikes.}
 \label{fig:test1_tahoe_flow_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Tahoe/flow_rtt.png}
-\caption{Examples of cells of the retina.}
+\caption{The round trip time of the flow roughly follows the pattern of window size, with disturbances at the router update times.}
 \label{fig:test1_tahoe_flow_rtt}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Tahoe/link_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{The link rate also follows this trend, reaching capacity when the window size is near optimal but dropping at returns to slow start.}
 \label{fig:test1_tahoe_link_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Tahoe/packet_loss.png}
-\caption{Examples of cells of the retina.}
+\caption{At the beginning, packet loss is relatively high, but once the congestion avoidance phase starts at a lower threshold it begins to decrease.}
 \label{fig:test1_tahoe_packet_loss}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Tahoe/window_size.png}
-\caption{Examples of cells of the retina.}
+\caption{The window size drops four times. The first two peaks occur because of the high slow start threshold. Then the congestion avoidance phase begins earlier, allowing window size to rise gradually for much of the time before it becomes too high once again and returns to slow start.}
 \label{fig:test1_tahoe_window_size}
 \end{figure}
 
@@ -276,31 +276,31 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Vegas/buffer_occ.png}
-\caption{Examples of cells of the retina.}
+\caption{The spikes in buffer occupancy occur due to the dumping of packets onto empty links after a routing table update switches the path chosen by router one.}
 \label{fig:test1_vegas_buffer_occ}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Vegas/flow_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{The flow rate is slow to reach the bound imposed by link capacities. This is because of vegas updates are less frequent due to greater round trip times. Vegas uses round trip times to schedule updates.}
 \label{fig:test1_vegas_flow_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Vegas/flow_rtt.png}
-\caption{Examples of cells of the retina.}
+\caption{Once the flow reaches capacity, the routers start oscillating as the top and bottom links fill up with packets. This explains the short deviations in the round trip time.}
 \label{fig:test1_vegas_flow_rtt}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Vegas/link_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{Links rates of links one and two operate at capacity in the time intervals between the routing table updates at router one.}
 \label{fig:test1_vegas_link_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test1_Vegas/window_size.png}
-\caption{Examples of cells of the retina.}
+\caption{The same behavior as flow rate can be seen in the gradual increase in window size to around 100 packets.}
 \label{fig:test1_vegas_window_size}
 \end{figure}
 
@@ -314,37 +314,37 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Tahoe/buffer_occ.png}
-\caption{Examples of cells of the retina.}
+\caption{Buffer occupancy spikes on link 1 as Tahoe sets its slow start threshold.  The occupancy drops as the timeout occurs.  We can see the flow on link3 disrupt the characteristic rise and fall pattern as data transmission starts.  Link 2’s buffer occupancy never climbs, because there is no competition for its buffer.  Links 1 and 3 limit the flow through buffer 2, so that its queue doesn’t fill.}
 \label{fig:test2_tahoe_buffer_occ}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Tahoe/flow_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{Flow rate for flow1 follows its Tahoe pattern until flow 2 starts.  The, we reach a steady state, with two flows competing for link 1.  As the third flow starts, the first flow’s rate drops, because it’s competing with 2 other flows (and flows 2 and 3 are each only competing with 1).  In the end, flow 3 takes control of the third link, and uses most of the capacity while flow 1 waits for flow 3 to end.}
 \label{fig:test2_tahoe_flow_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Tahoe/flow_rtt.png}
-\caption{Examples of cells of the retina.}
+\caption{We can see spikes in RTT as each flow begins.  The spikes and drops in flows 1 and 2 match up, because the flows travel in the same direction on the link (meaning timeouts happen at the same time).  When the third flow starts, it has a low RTT.  As flow 2 ends, flow 3 and flow 1 have matching RTTs since only flow 3 is limiting flow 1’s transmission rate at this point.  The RTTs drop at the same time, as before.  The RTT for flow 1 is always larger, since flow3 has control of most of the link3.  }
 \label{fig:test2_tahoe_flow_rtt}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Tahoe/link_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{Link rate climbs on all three links, since flow 1 uses all three links.  In the steady state, link 2 is saturated as data flow 2 starts, and link 3 is saturated as data flow 3 starts.  Again, link 2’s link rate is lower since only 1 flow is every using it.}
 \label{fig:test2_tahoe_link_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Tahoe/packet_loss.png}
-\caption{Examples of cells of the retina.}
+\caption{Packet loss on link 1 increases, then packet loss on link 2 spikes as flow3 competes with flow 1 for control of the link.}
 \label{fig:test2_tahoe_packet_loss}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Tahoe/window_size.png}
-\caption{Examples of cells of the retina.}
+\caption{All flows show the characteristic Tahoe shape for their window sizes.  The third flow has a larger window size since it outcompetes the first for link 3 (since its window sizes is larger, and Tahoe doesn’t permit sharing very well).}
 \label{fig:test2_tahoe_window_size}
 \end{figure}
 
@@ -356,31 +356,33 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Vegas/buffer_occ.png}
-\caption{Examples of cells of the retina.}
+\caption{Link 2’s buffer occupancy has to strictly be zero as it has no additional data being streamed into it other than what comes to it from Link 1. Hence, the queue size is only built up in Link 1 and by the time the data packets arrive at Link 2, they are correctly spaced from each other in time.
+Link 1’s buffer occupancy drops when Flow 3 is introduced as Flow 1 reacts by halving its window size. Hence Link 1 now receives less data at any point of time, when all three flows are present. Once Flow 2 stops, Flow 1 increases its window size slightly due to the lack of congestion on Link 1, but its window size is still less than when only Flow 1 was present. This reduced window size means less data is being sent down Link 1 at any point of time compared to when only Flow 1 was present, leading to a drop in buffer occupancy.
+Link 3’s buffer occupancy remains high as it receives data packets from both Flow 1 and Flow 3.  }
 \label{fig:test2_vegas_buffer_occ}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Vegas/flow_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{Description of flow rate and window size are explained during the comparison of the simulation and analytical results. }
 \label{fig:test2_vegas_flow_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Vegas/flow_rtt.png}
-\caption{Examples of cells of the retina.}
+\caption{Flow RTT of Flow 1 is significantly higher than that of Flow 2 and 3 since it has to traverse an additional two links to get to its destination.  We see that when flow 2 begins sending data, there is an expected spike in Flow 1’s RTT due to an increase in queue delay in link 1. Similarly, when Flow 3 starts sending data, there is a further jump in Flow 1’s RTT due to an increase in delay in link 3. Flow 2 is unaffected, as it shares no links in common with flow 3.}
 \label{fig:test2_vegas_flow_rtt}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Vegas/link_rate.png}
-\caption{Examples of cells of the retina.}
+\caption{Link rate of Link 2 gets halved of its capacity due to the bottleneck present at link 1. Since Flow 1 and Flow 2 are sharing Link 1, the queue delay at Link leads to less data sent to Link 2 at any point. Link rate of Link 3 remains at capacity as it gets an additional stream of data from Flow 3 along with the data it is receiving from Flow 1. Once Flow 2 stops, Link rate for Link 1 drops as well. The reason being that Flow 1 still has a smaller window size than it originally had when it was the only flow in the simulator, as it has to avoid congestion at Link 3 due to Flow 3. }
 \label{fig:test2_vegas_link_rate}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/Test2_Vegas/window_size.png}
-\caption{Examples of cells of the retina.}
+\caption{Description of flow rate and window size are explained during the comparison of the simulation and analytical results. }
 \label{fig:test2_vegas_window_size}
 \end{figure}
 
