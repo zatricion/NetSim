@@ -32,19 +32,18 @@
 
 
 \subsection{Event-Driven Simulation}
-An event-based simulation was used. All network objects (hosts, links, routers and flows) were children of the same parent class named event-generators. Every event-generator had its own priority queue that it could throw events on. The ordering of the priority queue was by the timestamp of the events that each event-generator generated. There was a global handler that checked the minimum timestamp of each network object in each loop and processed the event with the smallest overall timestamp in the simulation in the loop. Processing an event essentially means giving that event to the destination specified in the event itself (the source and destination of events have to necessarily be adjacent in the network topology or the source and destination must be the same). 
+An event-based simulation was used. All network objects (hosts, links, routers and flows) are children of the same parent class named EventGenerators. Every EventGenerator has its own priority queue that it can throw events on. The priority queue is ordered by the timestamp of the events. There is a global handler that checks the minimum timestamp of each network object in each loop and processes the event with the smallest overall timestamp in the simulation in the loop. Processing an event means giving that event to the destination specified in the event itself (the source and destination of events have to necessarily be adjacent in the network topology, or the source and destination must be the same). 
 
 Provided below is a high level description of what happens in each simulation loop:
 \begin{enumerate}
-\item Global handler iterates over Event Generators
-\item Generators report their internal event queues (\emph{events are deterministic -> know when they should trigger})
-\item Simulator collects set of most-immediate events and sends them to their respective destination
+\item Global handler iterates over EventGenerators
+\item EventGenerators report their internal event queues (\emph{events are deterministic and know when they should trigger})
+\item Simulator collects set of most-immediate events and sends them to their respective destinations.
 \item Generators that have been given events react and generate new events with a later timestamp that they push onto their respective priority queues
 \end{enumerate}
 
 \subsection*{Reflection on event-based simulation}
 The event-driven simulation paradigm ended up working well for our group. While it may initially be less intuitive than a continuous simulation, and plotting was sometimes difficult (as data is typically only logged for times where interesting things are happening), an event-based simulation is particularly well-suited for simulating networks, and was fairly simple to implement.
-
 
 \subsection{Links}
 
@@ -161,11 +160,11 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 
 \subsection{Analytical Analysis}
-\subsubsection{Test Case 2 - Vaggis}
+\subsubsection{Test Case 2 - Vegas}
 
 %insert network image for test case 2
 
-The TCP Vaggis algorithm we follow is:
+The TCP Vegas algorithm we follow is:
 \[ W \leftarrow \left\{
   \begin{array}{l l}
     W+1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} < \frac{\alpha}{\tau_{min}}\\
