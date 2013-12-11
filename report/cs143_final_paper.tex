@@ -23,7 +23,7 @@
 \section{Introduction}
 
 \begin{figure}[t]
-\centering \includegraphics[scale=.35]{figures/flow_rate.jpg}
+\centering \includegraphics[scale=1.]{figures/testcase2.png}
 \caption{Examples of cells of the retina.}
 \label{fig:test}
 \end{figure}
@@ -164,7 +164,14 @@ One significant annoyance with the output code stemmed from the event-based natu
 \subsubsection{Test Case 2 - Vaggis}
 
 %insert network image for test case 2
-%insert thing for W from bottom pg 9 sol set 2 - say something like ``the tcp vaggis algorithm we follow is....''
+
+The TCP Vaggis algorithm we follow is:
+\[ W \leftarrow \left\{
+  \begin{array}{l l}
+    W+1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} < \frac{\alpha}{\tau_{min}}\\
+    W-1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} > \frac{\beta}{\tau_{min}}\\
+    W & \quad \text{otherwise}\\
+  \end{array} \right.\]
 
 We begin by making the following simplifcation of steady state:
 
@@ -215,36 +222,52 @@ Flow 2,3 has to go through 1 link of capacity 10 Mbps and 2 links of capacity 12
 
 \subsubsection*{Phase 1}
 Only flow 1 present. $C^*$ will be the link capacity of L1/L2/L3 which has capacity 10 mbps as all other links have link capacity 12.5 mbps. Hence 
-$$flow\_rate = 10 mbps$$
-$$W^* = 2 + \frac{C^*}{P}(\tau_{min_{link1}})=128 $$
+Flow 1: $C^* = 10 mbps$
+Flow 1: $W^* = 2 + \frac{C^*}{P}(\tau_{min_{link1}})=128.96 $
 
 \subsection*{Phase 2}
 Flow 1 and Flow 2 are present. The only change in the formulation of the state is that $C^*$ changes. Now the bottleneck link is L1 as both hosts must share the capacity of the link. Hence each host gets exactly half of link 1's capacity, leading to $$ C^* = \frac{capacity\_of\_link1}{2} = 0.5*10^7 bits $$
-Flow\_rate of flow 1 = Flow\_rate of link 2 = $0.5*10^7$ bits
-Flow 2 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64$, half of phase 2
-Flow 2 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38$, half of phase 2
+
+Flow 1: $C^*$ = Flow\_rate of link 2 = $0.5*10^7$ bits
+
+Flow 1: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$, half of phase 1
+
+Flow 2: $C^*$ = Flow\_rate of flow 1 = $0.5*10^7$ bits
+
+Flow 2: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$
 
 
 \subsection*{Phase 3}
-Flows 1, 2, and 3 present. Now bottleneck link in flow2 remains link1 as it shares half of the link capacity with flow 1. Hence $C^*$ for flow2 is the same as in phase 2. Thus flow rate and $C^*$ are the same. (Copy what is in phase 2??)
+Flows 1, 2, and 3 present. Now bottleneck link in flow2 remains link1 as it shares half of the link capacity with flow 1. Hence $C^*$ for flow2 is the same as in phase 2. Thus flow rate and $C^*$ are the same.
+Flow\_rate of flow 1 = Flow\_rate of link 2 = $0.5*10^7$ bits
+All flows: $C^* = 0.5*10^7$ bits
+
+Flow 1 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$, same as phase 2
+
+Flow 2 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as phase 2
+
+Flow 3 $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as flow 2
 
 Flow 3 shares link 3 with flow 1 in the same way flow 2 shares link 2 with flow 1. Hence $C^*$ for flow 3 is the same as that for flow 2 since $\tau_{min_{flow3}}=\tau_{min_{flow2}}$. Thus flow rate and $W^*$ the same as for flow 2.
 
-Flow 1's bottle neck is either link1 or link 2, it shares each link's capacity equally with flow 2 and flow 3 respetively. Hence it's $C^*$ and $\tau_{min}$ is the same as in phase 2. (Copy flow 1's rate in phase 2??????)
+Flow 1's bottle neck is either link1 or link 2, it shares each link's capacity equally with flow 2 and flow 3 respetively. Hence it's $C^*$ and $\tau_{min}$ is the same as in phase 2.
 
 
 \subsection*{Phase 4}
 Flow 1 and 3 present.
-Now flow 2 has ended and flow 1 and 3 share link 3's capcity equally. This is an equivalent structure to phase 2 excpet we replacer link 1 with link 3 and flow 2 with flow 3. Hence flow 1's $C^*$ and $W^*$ same as phase 1; flow 3's $C^*$ and $W^*$ are same as phase 2's value for flow 2.
+Now flow 2 has ended and flow 1 and 3 share link 3's capcity equally. This is an equivalent structure to phase 2 except we replacer link 1 with link 3 and flow 2 with flow 3. Hence flow 1's $C^*$ and $W^*$ same as they are in phase 2; flow 3's $C^*$ and $W^*$ are same as phase 2's value for flow 2.
+All flows: $C^* = 0.5*10^7$ bits
+
+Flow 1: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link1}}) = 64.48$, same as phase 2
+
+Flow 3: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as flow 2 in phase 2
 
 
-The TCP Vaggis algorithm we follow is:
-\[ W \leftarrow \left\{
-  \begin{array}{l l}
-    W+1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} < \frac{\alpha}{\tau_{min}}\\
-    W-1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} > \frac{\beta}{\tau_{min}}\\
-    W & \quad \text{otherwise}\\
-  \end{array} \right.\]
+\subsection{Comparison of Analytical and Simulation results}
+%insert a figure
+We reran the simulation with an increment such that the flows reach a steady state more quickly. We also increased the time when flow 2 and flow 3 started, which allowed each flow to reach their steady state. But none of these changes affected the capacity or flow rate at steady state for any flow.
+
+As you can see from REFERENCE FIGURE, our simulation follows analytical results almost exactly. The reason that the simulation has a slightly smaller window size is due to the small artificial delay that we add at the host when it sends a packet (which ensures that link buffers do not reorder packets due to having the same timestamp).
 
 \section{Difficulties}
 
