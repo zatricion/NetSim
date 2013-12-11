@@ -269,7 +269,38 @@ We reran the simulation with an increment such that the flows reach a steady sta
 
 As you can see from REFERENCE FIGURE, our simulation follows analytical results almost exactly. The reason that the simulation has a slightly smaller window size is due to the small artificial delay that we add at the host when it sends a packet (which ensures that link buffers do not reorder packets due to having the same timestamp).
 
-\section{Difficulties}
+\section{Project Process}
+\subsection{Succeses}
+\subsection*{Github}
+
+For version control on this project we ended up using GitHub, which (aside from some headache caused by beginner’s
+mistakes) worked very well. Specifically, we used the “Git Flow” branching strategy for developing features and merging 
+them with a variety of ‘base’ branches. Basically, Git Flow consists of two to three branches - one master and one 
+develop branch, optionally with an extra ‘hotfix’ branch. The master branch contains the latest production release; 
+develop contains the most recent functional build of development code; hotfix can be used in the case where broken 
+code is put into production. The real usefulness of Git Flow comes from feature development - whenever a new feature is 
+to be included in the project, a branch off of develop can be made (usually called ``feature/FEATURE\_NAME'') wherein 
+the new feature will be developed. After the feature is added, it can be merged back into the develop branch. This allows for the convenient and easy addition of multiple features from multiple developers to a code base, and definitely helped us during the course of the project (despite failing to maintain strict Git Flow discipline at numerous points).
+
+
+\subsection*{Smart pointers}
+
+Another feature which ended up being helpful (after a lot of initial annoyance) was the use of smart pointers rather than regular pointers and references in our C++ code. Smart pointers, in the context of our project, are abstract data types meant to assist in managing pointers to dynamically-allocated memory. Without smart pointers, it is typically the job of the memory allocator to determine when the allocated memory should be freed, usually when the data contained in that memory is no longer used. Freeing memory at undesired times, or not freeing it at all, can be the source of some of the most irritating bugs in a somewhat low-level language like C++. Smart pointers are meant to help alleviate some of theses problems by defining a condition in which memory will be freed - typically in the case when nothing in code references that memory. That is, smart pointers keep track of the number of references to a particular place in memory, and when nothing in the code cares anymore, that memory is freed.
+
+
+\subsection{Issues}
+
+\subsection*{Tests}
+
+One of the most-regretted decisions (or non-decision) we made during the course of the project was not to more aggressively create tests for the code. A huge amount of time has been spent in the last weeks of the project checking (and very likely re-checking) various aspects of the code that could be considered basic “sanity tests” - things that could easily be encapsulated as unit tests if we had only focused on that from the start. Overall, this probably would have been the single thing that would have saved us the most time in the later debugging stages of the project.
+
+\subsection*{Better code review}
+
+In addition to testing, a major part of the typical “large code project” process that the group didn’t spend much time on was code review. Frequently there was only one set of eyes on any given part of code until it became clear that code didn’t work, at which point someone would go back and try to fix it, often having to familiarize or refamiliarize themselves with chunks of code they’ve never seen before. Code review would not only have reduced bugs and improved code quality, but would mean more people were familiar with larger portions of the code, which probably would have further aided in debugging efforts. More consistent and more thorough code review would have saved us almost as much time as thorough tests.
+
+\subsection*{Distribution of labor}
+
+While group members more or less pulled their own weight, our initial distribution of labor was seriously imbalanced. For example, half of the group was working on a part of the project that, while important, only took an evening to finish. While the distribution of labor naturally re-balanced to accommodate available work, it might have been smart to formally redistribute tasks after more was known about how long each part would take. This would have had a variety of advantages - for example, if specific people formally ‘owned’ portions of the project, it would have been easier to know exactly who to consult when a bug with a specific portion of the code arose, rather than expecting everyone to spend a lot of time understanding all parts of the code in depth.
 
 
 
