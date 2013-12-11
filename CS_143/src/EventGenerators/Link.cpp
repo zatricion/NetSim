@@ -152,7 +152,9 @@ void Link::giveEvent(std::shared_ptr<Event> e)
     }
     
     else {
-        if (this->getID() == "link1" || this->getID() == "link2"){
+        if ((this->getID() == "link1") ||
+            (this->getID() == "link2") || 
+            (this->getID() == "link3")) {
             // Packet has been dropped
             num_dropped[source]++;
             if (now - dropped_time[source] > 0.1) {
