@@ -495,7 +495,19 @@ Flow 3: $W^* = 2+\frac{C^*}{P}(\tau_{min_{link2}}) = 38.0$, same as flow 2 in ph
 %insert a figure
 We reran the simulation with an increment such that the flows reach a steady state more quickly. We also increased the time when flow 2 and flow 3 started, which allowed each flow to reach their steady state. But none of these changes affected the capacity or flow rate at steady state for any flow.
 
-As you can see from REFERENCE FIGURE, our simulation follows analytical results almost exactly. The reason that the simulation has a slightly smaller window size is due to the small artificial delay that we add at the host when it sends a packet (which ensures that link buffers do not reorder packets due to having the same timestamp).
+As you can see from Figures \ref{fig:flow_rate_comparison} and \ref{fig:window_size_comparison}, our simulation follows analytical results almost exactly. The reason that the simulation has a slightly smaller window size is due to the small artificial delay that we add at the host when it sends a packet (which ensures that link buffers do not reorder packets due to having the same timestamp).
+
+\begin{figure}[!ht]
+\centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/flow_rate_comparison.png}
+\caption{Flow rate of spaced-out test case 2.}
+\label{fig:flow_rate_comparison}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering \includegraphics[bb= 0 0 1300 250, scale=.35]{figures/window_size_comparison.png}
+\caption{Window size of spaced-out test case 2.}
+\label{fig:window_size_comparison}
+\end{figure}
 
 \section{Project Process}
 \subsection{Succeses}
