@@ -23,7 +23,7 @@
 \section{Introduction}
 
 \begin{figure}[t]
-\centering \includegraphics[scale=1.]{figures/cells_2.jpg}
+\centering \includegraphics[scale=.35]{figures/flow_rate.jpg}
 \caption{Examples of cells of the retina.}
 \label{fig:test}
 \end{figure}
@@ -53,10 +53,10 @@ Links are bi-directional with each side of a link having the same buffer-size an
 \begin{enumerate}
 \item Link gets an event – finds the difference between the packet event and its own internal clock
 \item Decreases buffer occupancy by the difference in time multiplied by capacity
-\item If buffer occupancy + packet size is smaller than max buffer occupancy, add packet to its buffer
+\item If $buffer occupancy + packet size$ is smaller than max buffer occupancy, add packet to its buffer
 \item Update queue delay, buffer size and internal clock (based on event time)
 \item Add an event to its priority queue that essentially tells the handler to send the packet to the adjacent network object at the appropriate time
-\item (event time + propagation delay + queue delay)
+\item $(event time + propagation delay + queue delay)$
 \end{enumerate}
 
 \subsection*{Reflection on Links}
@@ -144,11 +144,56 @@ One significant annoyance with the output code stemmed from the event-based natu
 
 
 \section{Analysis}
-\subsection{Test Case 0}
-\subsection{Test Case 1}
-\subsection{Test Case 2}
+
+
+\subsection{Simulation Analysis}
+\subsubsection{Test Case 0}
+\subsubsection{Test Case 1}
+\subsubsection{Test Case 2}
+
+
+\subsection{Analytical Analysis}
+\subsubsection{Test Case 2 - Vaggis}
+
+%insert network image for test case 2
+%insert thing for W from bottom pg 9 sol set 2 - say something like ``the tcp vaggis algorithm we follow is....''
+
+We begin by making the following simplifcation of steady state:
+
+$$ \frac{W^*}{\tau_{min}} - \frac{W^*}{\tau^*} = \frac{\frac{\alpha + \beta}{2}}{\tau_{min}} $$
+
+Where 
+\begin{itemize}
+\item $\alpha$ is $1.5$,
+\item $\beta$ is $2.5$,
+\item $W^*$ and $\tau^*$ are window sizes,
+\item RTT is in equilibrium
+\item $\tau_{min}$ is the min RTT experienced
+\end{itemize}
+
+blablabla
+
+
+The TCP Vaggis algorithm we follow is:
+\[ W \leftarrow \left\{
+  \begin{array}{l l}
+    W+1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} < \frac{\alpha}{\tau_{min}}\\
+    W-1 & \quad \text{if }\frac{W}{\tau_{min}} - \frac{W}{\tau} > \frac{\beta}{\tau_{min}}\\
+    W & \quad \text{otherwise}\\
+  \end{array} \right.\]
+
 \section{Difficulties}
+
+
+
 \appendix
 \section{Instructions on Compiling and Input}
+
+\subsection{Compiling}
+How to compile stuff
+
+
+\subsection{Input Specification}
+How to write network spec files
 
 \end{document}
