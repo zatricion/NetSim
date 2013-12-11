@@ -30,25 +30,25 @@ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ \hyperlink{classEv
 double \hyperlink{classEventGenerator_ac4b5ccdeaf232fe59854535bb13747a9}{get\-Next\-Time} ()
 \begin{DoxyCompactList}\small\item\em \-Get the lowest time in the \hyperlink{classEventGenerator}{\-Event\-Generator}'s priority queue. \end{DoxyCompactList}\item 
 void \hyperlink{classEventGenerator_a3487849484c9b521527d6acacee79e88}{add\-Event\-To\-Local\-Queue} (std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ e)
-\begin{DoxyCompactList}\small\item\em \-Add \hyperlink{classEvent}{\-Event} to local event\-Heap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Add \hyperlink{classEvent}{\-Event} to local event\-\_\-heap. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
 std\-::string \hyperlink{classEventGenerator_af4fa28d08ed4a3be31f9383cf72e0d2c}{uuid}
 \begin{DoxyCompactList}\small\item\em \-The unique id of the \hyperlink{classEventGenerator}{\-Event\-Generator}. \end{DoxyCompactList}\item 
-\hypertarget{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}{std\-::priority\-\_\-queue\*
+\hypertarget{classEventGenerator_a45a8eafc85e9b023411a3ec090528462}{std\-::priority\-\_\-queue\*
 $<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$\*
 , std\-::vector$<$ std\-::shared\-\_\-ptr\*
 $<$ \hyperlink{classEvent}{\-Event} $>$ $>$, std\-::greater\*
-$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ $>$ $>$ \hyperlink{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}{event\-Heap}}\label{classEventGenerator_a3e9a33f75d9861bece6c30b5249c9d39}
+$<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ $>$ $>$ \hyperlink{classEventGenerator_a45a8eafc85e9b023411a3ec090528462}{event\-\_\-heap}}\label{classEventGenerator_a45a8eafc85e9b023411a3ec090528462}
 
-\begin{DoxyCompactList}\small\item\em \-The event\-Heap, which stores a list of events that the the \hyperlink{classEventGenerator}{\-Event\-Generator} will give to the \-Event\-Handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-The event\-\_\-heap, which stores a list of events that the the \hyperlink{classEventGenerator}{\-Event\-Generator} will give to the \-Event\-Handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
 \-Superclass for \-Links, \-Hosts, \-Routers, and \-Flow\-Generators. 
 
-\-Event\-Generators each have their own event\-Heaps, which are ordered lists of events. \-The \-Event\-Handler will determine the \hyperlink{classEvent}{\-Event} in the event\-Heaps of the set of \-Event\-Generators with the minimum time, and handle the \hyperlink{classEvent}{\-Event}. 
+\-Event\-Generators each have their own event\-\_\-heaps, which are ordered lists of events. \-The \-Event\-Handler will determine the \hyperlink{classEvent}{\-Event} in the event\-\_\-heaps of the set of \-Event\-Generators with the minimum time, and handle the \hyperlink{classEvent}{\-Event}. 
 
 \subsection{\-Member \-Function \-Documentation}
 \hypertarget{classEventGenerator_a3487849484c9b521527d6acacee79e88}{\index{\-Event\-Generator@{\-Event\-Generator}!add\-Event\-To\-Local\-Queue@{add\-Event\-To\-Local\-Queue}}
@@ -60,7 +60,7 @@ $<$ std\-::shared\-\_\-ptr$<$ \hyperlink{classEvent}{\-Event} $>$ $>$ $>$ \hyper
 )}}\label{classEventGenerator_a3487849484c9b521527d6acacee79e88}
 
 
-\-Add \hyperlink{classEvent}{\-Event} to local event\-Heap. 
+\-Add \hyperlink{classEvent}{\-Event} to local event\-\_\-heap. 
 
 
 \begin{DoxyParams}{\-Parameters}

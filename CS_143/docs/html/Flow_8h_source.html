@@ -105,9 +105,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039 <span class="keyword">public</span>:
 <a name="l00040"></a>00040     <span class="comment">// Fields</span>
-<a name="l00042"></a><a class="code" href="classFlow.html#a1c04de60a81b02750673806906701a76">00042</a> <span class="comment"></span>    <span class="keywordtype">int</span> <a class="code" href="classFlow.html#a1c04de60a81b02750673806906701a76" title="The start of the send window.">windowStart</a>;
+<a name="l00042"></a><a class="code" href="classFlow.html#a0ef05b40ea27e2fecabb44d20219a40a">00042</a> <span class="comment"></span>    <span class="keywordtype">int</span> <a class="code" href="classFlow.html#a0ef05b40ea27e2fecabb44d20219a40a" title="The start of the send window.">window_start</a>;
 <a name="l00043"></a>00043 
-<a name="l00045"></a><a class="code" href="classFlow.html#a8ffd0d6dd0bf1c2c2b97ac164890715f">00045</a>     <span class="keywordtype">int</span> <a class="code" href="classFlow.html#a8ffd0d6dd0bf1c2c2b97ac164890715f" title="The end of the send window.">windowEnd</a>;
+<a name="l00045"></a><a class="code" href="classFlow.html#afdc42d6ad08298dd64a8b85e933dbac6">00045</a>     <span class="keywordtype">int</span> <a class="code" href="classFlow.html#afdc42d6ad08298dd64a8b85e933dbac6" title="The end of the send window.">window_end</a>;
 <a name="l00046"></a>00046 
 <a name="l00051"></a><a class="code" href="classFlow.html#af45cdc7b3609577eb08cb072e9631809">00051</a>     std::shared_ptr&lt;Host&gt; <a class="code" href="classFlow.html#af45cdc7b3609577eb08cb072e9631809" title="A pointer to the host that represents the sending end of the data transfer.">host</a>;
 <a name="l00052"></a>00052 
@@ -117,51 +117,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058 
 <a name="l00060"></a><a class="code" href="classFlow.html#a536685c38def6cf8b61d0fb0d7e8372d">00060</a>     std::string <a class="code" href="classFlow.html#a536685c38def6cf8b61d0fb0d7e8372d" title="The destination of the flow.">destination</a>;
 <a name="l00061"></a>00061 
-<a name="l00063"></a><a class="code" href="classFlow.html#a78d725176506b21ce2355b3742ab8c17">00063</a>     <span class="keywordtype">int</span> <a class="code" href="classFlow.html#a78d725176506b21ce2355b3742ab8c17" title="The total number of data packets in the flow.">numPackets</a>;
+<a name="l00063"></a><a class="code" href="classFlow.html#a35a58ba8cc58bb4ae0c94eb240f53eda">00063</a>     <span class="keywordtype">int</span> <a class="code" href="classFlow.html#a35a58ba8cc58bb4ae0c94eb240f53eda" title="The total number of data packets in the flow.">num_packets</a>;
 <a name="l00064"></a>00064 
-<a name="l00066"></a><a class="code" href="classFlow.html#a47968d3d4596ad50ce090a0c352a89f5">00066</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a47968d3d4596ad50ce090a0c352a89f5" title="The time a flow waits until a packet has timed out.">waitTime</a>;
+<a name="l00066"></a><a class="code" href="classFlow.html#a6187616182361456eec5e91ff0480db6">00066</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a6187616182361456eec5e91ff0480db6" title="The time a flow waits until a packet has timed out.">wait_time</a>;
 <a name="l00067"></a>00067 
-<a name="l00069"></a><a class="code" href="classFlow.html#ac5af37a8637ec606977ebc1e33a0c59b">00069</a>     <span class="keywordtype">int</span> <a class="code" href="classFlow.html#ac5af37a8637ec606977ebc1e33a0c59b" title="The size of packets in the flow.">packetSize</a>;
+<a name="l00069"></a><a class="code" href="classFlow.html#a502b4455d485a1a0325d21d246183bb1">00069</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a502b4455d485a1a0325d21d246183bb1" title="The time at which the flow begins.">timestamp</a>;
 <a name="l00070"></a>00070 
-<a name="l00072"></a><a class="code" href="classFlow.html#a502b4455d485a1a0325d21d246183bb1">00072</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a502b4455d485a1a0325d21d246183bb1" title="The time at which the flow begins.">timestamp</a>;
-<a name="l00073"></a>00073 
-<a name="l00079"></a><a class="code" href="classFlow.html#a56615b49301aaddf4cab4fa3f878c5a7">00079</a>     Phase <a class="code" href="classFlow.html#a56615b49301aaddf4cab4fa3f878c5a7" title="The current phase of the flow.">phase</a>;
-<a name="l00080"></a>00080 
-<a name="l00085"></a><a class="code" href="classFlow.html#aef2aa1abe7872f9f75f24c482c5f20f9">00085</a>     std::set&lt;int&gt; <a class="code" href="classFlow.html#aef2aa1abe7872f9f75f24c482c5f20f9" title="A list of packets that the flow hasn&#39;t sent yet.">unSentPackets</a>;
-<a name="l00086"></a>00086 
-<a name="l00091"></a><a class="code" href="classFlow.html#a9cb60750432baab4af8b8481fd97aa31">00091</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a9cb60750432baab4af8b8481fd97aa31" title="The time-averaged RTT.">A</a>;
+<a name="l00076"></a><a class="code" href="classFlow.html#a56615b49301aaddf4cab4fa3f878c5a7">00076</a>     Phase <a class="code" href="classFlow.html#a56615b49301aaddf4cab4fa3f878c5a7" title="The current phase of the flow.">phase</a>;
+<a name="l00077"></a>00077 
+<a name="l00082"></a><a class="code" href="classFlow.html#a1ba2d0548e0c0af4e587d5b8d00f90fc">00082</a>     std::set&lt;int&gt; <a class="code" href="classFlow.html#a1ba2d0548e0c0af4e587d5b8d00f90fc" title="A list of packets that the flow hasn&#39;t sent yet.">unsent_packets</a>;
+<a name="l00083"></a>00083 
+<a name="l00088"></a><a class="code" href="classFlow.html#a9cb60750432baab4af8b8481fd97aa31">00088</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a9cb60750432baab4af8b8481fd97aa31" title="The time-averaged RTT.">A</a>;
+<a name="l00089"></a>00089 
+<a name="l00091"></a><a class="code" href="classFlow.html#a6ffa8765220cfbfcf8b358bcbfd8bc4d">00091</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a6ffa8765220cfbfcf8b358bcbfd8bc4d" title="A measure of the variation of A.">D</a>;
 <a name="l00092"></a>00092 
-<a name="l00094"></a><a class="code" href="classFlow.html#a6ffa8765220cfbfcf8b358bcbfd8bc4d">00094</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a6ffa8765220cfbfcf8b358bcbfd8bc4d" title="A measure of the variation of A.">D</a>;
-<a name="l00095"></a>00095 
-<a name="l00099"></a><a class="code" href="classFlow.html#a22a30218ebecf663beea5902199a5453">00099</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a22a30218ebecf663beea5902199a5453" title="A weighting factor used in calculations of A and D.">b</a>;
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="comment">// Constructors</span>
-<a name="l00102"></a>00102     <a class="code" href="classFlow.html#ab7771ce5ed20e19fff6bf6ceb5d1adc4" title="Constructor for the flow.">Flow</a>(std::string idval, std::string dest,
-<a name="l00103"></a>00103          <span class="keywordtype">int</span> data_size, std::shared_ptr&lt;Host&gt; h,
-<a name="l00104"></a>00104          <span class="keywordtype">int</span> winSize, <span class="keywordtype">double</span> ts);
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106     <span class="comment">// Methods</span>
-<a name="l00116"></a>00116 <span class="comment"></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a8a45fd871502fad3fb23987ac773a0ab" title="Called when a packet may have timed out.">handleUnackEvent</a>(std::shared_ptr&lt;Packet&gt; unacked, 
-<a name="l00117"></a>00117                                   <span class="keywordtype">double</span> time) = 0;
-<a name="l00118"></a>00118 
-<a name="l00125"></a>00125     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFlow.html#ab75994d89f53573e60a1650dcaeddabb" title="Called when an ack is received for a data packet that this flow sent out.">handleAck</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time) = 0;
-<a name="l00126"></a>00126 
-<a name="l00130"></a>00130     <span class="keyword">virtual</span> std::string <a class="code" href="classFlow.html#aa74099113ee1c2298874b85ade05be98" title="A string representing the Flow object.">toString</a>() = 0;
-<a name="l00131"></a>00131 
-<a name="l00135"></a>00135     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a1b9f70de92594ba82c5a1b16298f3811" title="Respond to the receipt of a SYN for this flow.">respondToSynPacketEvent</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time) = 0;
-<a name="l00136"></a>00136    
-<a name="l00137"></a>00137     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a11e680564ffab501382cf02ed511668a" title="Log the window size of the flow.">logFlowWindowSize</a>(<span class="keywordtype">double</span> time, <span class="keywordtype">int</span> windowSize);
-<a name="l00138"></a>00138     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#abda1a17915ccd01b4f31597ad962b3ab" title="Begins the data transfer for the flow by sending a SYN.">openConnection</a>(<span class="keywordtype">double</span> time);
-<a name="l00139"></a>00139     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966" title="Start the data flow.">initialize</a>(<span class="keywordtype">double</span> time);
-<a name="l00140"></a>00140     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6" title="Sends a packet from the flow&#39;s source to its destination.">sendAndQueueResend</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time, <span class="keywordtype">float</span> delay);
-<a name="l00141"></a>00141     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a5a547ae4185337bf7790f9ace391ac48" title="Helper function for sending a packet from the flow&#39;s source to its destination.">send</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time);
-<a name="l00142"></a>00142     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c" title="Send as many packets as possible.">sendManyPackets</a>(<span class="keywordtype">double</span> time);
-<a name="l00143"></a>00143     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a04338dbf3a16eeedeef168c9ee8ee6a6" title="Log the RTT for a received packet.">logFlowRTT</a>(<span class="keywordtype">double</span> time, <span class="keywordtype">double</span> RTT);
-<a name="l00144"></a>00144     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a969e962a3ed0349fbb45af508f923069" title="Respond to an UnackEvent from a SYN packet.">respondToSynUnackEvent</a>(<span class="keywordtype">double</span> time);
-<a name="l00145"></a>00145 };
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148 <span class="preprocessor">#endif</span>
+<a name="l00096"></a><a class="code" href="classFlow.html#a22a30218ebecf663beea5902199a5453">00096</a>     <span class="keywordtype">double</span> <a class="code" href="classFlow.html#a22a30218ebecf663beea5902199a5453" title="A weighting factor used in calculations of A and D.">b</a>;
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098     <span class="comment">// Constructors</span>
+<a name="l00099"></a>00099     <a class="code" href="classFlow.html#a3328ae5f608e4e9b23635617bea6f016" title="Constructor for the flow.">Flow</a>(std::string idval, std::string dest,
+<a name="l00100"></a>00100          <span class="keywordtype">int</span> data_size, std::shared_ptr&lt;Host&gt; h,
+<a name="l00101"></a>00101          <span class="keywordtype">int</span> win_size, <span class="keywordtype">double</span> ts);
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103     <span class="comment">// Methods</span>
+<a name="l00113"></a>00113 <span class="comment"></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a8a45fd871502fad3fb23987ac773a0ab" title="Called when a packet may have timed out.">handleUnackEvent</a>(std::shared_ptr&lt;Packet&gt; unacked, 
+<a name="l00114"></a>00114                                   <span class="keywordtype">double</span> time) = 0;
+<a name="l00115"></a>00115 
+<a name="l00122"></a>00122     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFlow.html#ab75994d89f53573e60a1650dcaeddabb" title="Called when an ack is received for a data packet that this flow sent out.">handleAck</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time) = 0;
+<a name="l00123"></a>00123 
+<a name="l00127"></a>00127     <span class="keyword">virtual</span> std::string <a class="code" href="classFlow.html#aa74099113ee1c2298874b85ade05be98" title="A string representing the Flow object.">toString</a>() = 0;
+<a name="l00128"></a>00128 
+<a name="l00132"></a>00132     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a1b9f70de92594ba82c5a1b16298f3811" title="Respond to the receipt of a SYN for this flow.">respondToSynPacketEvent</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time) = 0;
+<a name="l00133"></a>00133    
+<a name="l00134"></a>00134     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a11e680564ffab501382cf02ed511668a" title="Log the window size of the flow.">logFlowWindowSize</a>(<span class="keywordtype">double</span> time, <span class="keywordtype">int</span> windowSize);
+<a name="l00135"></a>00135     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#abda1a17915ccd01b4f31597ad962b3ab" title="Begins the data transfer for the flow by sending a SYN.">openConnection</a>(<span class="keywordtype">double</span> time);
+<a name="l00136"></a>00136     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966" title="Start the data flow.">initialize</a>(<span class="keywordtype">double</span> time);
+<a name="l00137"></a>00137     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a2a9cb972dfe6f6f03543073b575d65c6" title="Sends a packet from the flow&#39;s source to its destination.">sendAndQueueResend</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time, <span class="keywordtype">float</span> delay);
+<a name="l00138"></a>00138     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a5a547ae4185337bf7790f9ace391ac48" title="Helper function for sending a packet from the flow&#39;s source to its destination.">send</a>(std::shared_ptr&lt;Packet&gt; pkt, <span class="keywordtype">double</span> time);
+<a name="l00139"></a>00139     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a792deb9bffc1a4020e09275f037fcc4c" title="Send as many packets as possible.">sendManyPackets</a>(<span class="keywordtype">double</span> time);
+<a name="l00140"></a>00140     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a04338dbf3a16eeedeef168c9ee8ee6a6" title="Log the RTT for a received packet.">logFlowRTT</a>(<span class="keywordtype">double</span> time, <span class="keywordtype">double</span> RTT);
+<a name="l00141"></a>00141     <span class="keywordtype">void</span> <a class="code" href="classFlow.html#a969e962a3ed0349fbb45af508f923069" title="Respond to an UnackEvent from a SYN packet.">respondToSynUnackEvent</a>(<span class="keywordtype">double</span> time);
+<a name="l00142"></a>00142 };
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -180,7 +178,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 16:35:22 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 19:15:55 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -21,9 +21,9 @@ void \hyperlink{classHost_a15013b657e880635a087ce41d9bccaf8}{respond\-To} (\hype
 void \hyperlink{classHost_af19765406b0fc694ec4122ef57d3bbb3}{respond\-To} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
 \begin{DoxyCompactList}\small\item\em \-Called when the host receives an \hyperlink{classUnackEvent}{\-Unack\-Event}. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a029c7f389a580fc7e53da38a698d0d9a}{send\-And\-Queue\-Resend} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time, float delay)
-\begin{DoxyCompactList}\small\item\em \-Queues a \hyperlink{classPacketEvent}{\-Packet\-Event} in the event\-Heap, as well as an \hyperlink{classUnackEvent}{\-Unack\-Event} for the \hyperlink{classPacketEvent}{\-Packet\-Event}. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Queues a \hyperlink{classPacketEvent}{\-Packet\-Event} in the event\-\_\-heap, as well as an \hyperlink{classUnackEvent}{\-Unack\-Event} for the \hyperlink{classPacketEvent}{\-Packet\-Event}. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}{send} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ pkt, double time)
-\begin{DoxyCompactList}\small\item\em \-Sends a packet by creating a \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet and placing the \hyperlink{classPacketEvent}{\-Packet\-Event} on the event\-Heap. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \-Sends a packet by creating a \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet and placing the \hyperlink{classPacketEvent}{\-Packet\-Event} on the event\-\_\-heap. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a13a11214f204347c85388b28043459c2}{respond\-To\-Syn\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
 \begin{DoxyCompactList}\small\item\em \-Helper function called when an \hyperlink{classUnackEvent}{\-Unack\-Event} for a \-S\-Y\-N is received. \end{DoxyCompactList}\item 
 void \hyperlink{classHost_a9f76466a0f9e8362f70c7990eae22641}{respond\-To\-Fin\-Unack\-Event} (\hyperlink{classUnackEvent}{\-Unack\-Event} unack\-\_\-event)
@@ -235,7 +235,7 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ \hyperlink{classHost_a8e5905756bdacfb
 )}}\label{classHost_a7aeac15cbcd5d64ff8c2af090d8db0c4}
 
 
-\-Sends a packet by creating a \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet and placing the \hyperlink{classPacketEvent}{\-Packet\-Event} on the event\-Heap. 
+\-Sends a packet by creating a \hyperlink{classPacketEvent}{\-Packet\-Event} for the packet and placing the \hyperlink{classPacketEvent}{\-Packet\-Event} on the event\-\_\-heap. 
 
 
 \begin{DoxyParams}{\-Parameters}
@@ -255,7 +255,7 @@ $<$ std\-::set$<$ int $>$, \-Phase $>$ $>$ \hyperlink{classHost_a8e5905756bdacfb
 )}}\label{classHost_a029c7f389a580fc7e53da38a698d0d9a}
 
 
-\-Queues a \hyperlink{classPacketEvent}{\-Packet\-Event} in the event\-Heap, as well as an \hyperlink{classUnackEvent}{\-Unack\-Event} for the \hyperlink{classPacketEvent}{\-Packet\-Event}. 
+\-Queues a \hyperlink{classPacketEvent}{\-Packet\-Event} in the event\-\_\-heap, as well as an \hyperlink{classUnackEvent}{\-Unack\-Event} for the \hyperlink{classPacketEvent}{\-Packet\-Event}. 
 
 
 \begin{DoxyParams}{\-Parameters}

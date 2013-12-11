@@ -10,7 +10,7 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classFlow_ab7771ce5ed20e19fff6bf6ceb5d1adc4}{\-Flow} (std\-::string idval, std\-::string dest, int data\-\_\-size, std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ h, int win\-Size, double ts)
+\hyperlink{classFlow_a3328ae5f608e4e9b23635617bea6f016}{\-Flow} (std\-::string idval, std\-::string dest, int data\-\_\-size, std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ h, int win\-\_\-size, double ts)
 \begin{DoxyCompactList}\small\item\em \-Constructor for the flow. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classFlow_a8a45fd871502fad3fb23987ac773a0ab}{handle\-Unack\-Event} (std\-::shared\-\_\-ptr$<$ \hyperlink{classPacket}{\-Packet} $>$ unacked, double time)=0
 \begin{DoxyCompactList}\small\item\em \-Called when a packet may have timed out. \end{DoxyCompactList}\item 
@@ -40,9 +40,9 @@ void \hyperlink{classFlow_a969e962a3ed0349fbb45af508f923069}{respond\-To\-Syn\-U
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{classFlow_a1c04de60a81b02750673806906701a76}{window\-Start}
+int \hyperlink{classFlow_a0ef05b40ea27e2fecabb44d20219a40a}{window\-\_\-start}
 \begin{DoxyCompactList}\small\item\em \-The start of the send window. \end{DoxyCompactList}\item 
-int \hyperlink{classFlow_a8ffd0d6dd0bf1c2c2b97ac164890715f}{window\-End}
+int \hyperlink{classFlow_afdc42d6ad08298dd64a8b85e933dbac6}{window\-\_\-end}
 \begin{DoxyCompactList}\small\item\em \-The end of the send window. \end{DoxyCompactList}\item 
 \hypertarget{classFlow_af45cdc7b3609577eb08cb072e9631809}{std\-::shared\-\_\-ptr$<$ \hyperlink{classHost}{\-Host} $>$ \hyperlink{classFlow_af45cdc7b3609577eb08cb072e9631809}{host}}\label{classFlow_af45cdc7b3609577eb08cb072e9631809}
 
@@ -53,17 +53,15 @@ std\-::string \hyperlink{classFlow_a36eb3e23b0804647c30be41835b790b3}{source}
 \begin{DoxyCompactList}\small\item\em \-The source of the flow. \end{DoxyCompactList}\item 
 std\-::string \hyperlink{classFlow_a536685c38def6cf8b61d0fb0d7e8372d}{destination}
 \begin{DoxyCompactList}\small\item\em \-The destination of the flow. \end{DoxyCompactList}\item 
-int \hyperlink{classFlow_a78d725176506b21ce2355b3742ab8c17}{num\-Packets}
+int \hyperlink{classFlow_a35a58ba8cc58bb4ae0c94eb240f53eda}{num\-\_\-packets}
 \begin{DoxyCompactList}\small\item\em \-The total number of data packets in the flow. \end{DoxyCompactList}\item 
-double \hyperlink{classFlow_a47968d3d4596ad50ce090a0c352a89f5}{wait\-Time}
+double \hyperlink{classFlow_a6187616182361456eec5e91ff0480db6}{wait\-\_\-time}
 \begin{DoxyCompactList}\small\item\em \-The time a flow waits until a packet has timed out. \end{DoxyCompactList}\item 
-int \hyperlink{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}{packet\-Size}
-\begin{DoxyCompactList}\small\item\em \-The size of packets in the flow. \end{DoxyCompactList}\item 
 double \hyperlink{classFlow_a502b4455d485a1a0325d21d246183bb1}{timestamp}
 \begin{DoxyCompactList}\small\item\em \-The time at which the flow begins. \end{DoxyCompactList}\item 
 \-Phase \hyperlink{classFlow_a56615b49301aaddf4cab4fa3f878c5a7}{phase}
 \begin{DoxyCompactList}\small\item\em \-The current phase of the flow. \end{DoxyCompactList}\item 
-std\-::set$<$ int $>$ \hyperlink{classFlow_aef2aa1abe7872f9f75f24c482c5f20f9}{un\-Sent\-Packets}
+std\-::set$<$ int $>$ \hyperlink{classFlow_a1ba2d0548e0c0af4e587d5b8d00f90fc}{unsent\-\_\-packets}
 \begin{DoxyCompactList}\small\item\em \-A list of packets that the flow hasn't sent yet. \end{DoxyCompactList}\item 
 double \hyperlink{classFlow_a9cb60750432baab4af8b8481fd97aa31}{\-A}
 \begin{DoxyCompactList}\small\item\em \-The time-\/averaged \-R\-T\-T. \end{DoxyCompactList}\item 
@@ -74,7 +72,7 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 
 
 \subsection{\-Constructor \& \-Destructor \-Documentation}
-\hypertarget{classFlow_ab7771ce5ed20e19fff6bf6ceb5d1adc4}{\index{\-Flow@{\-Flow}!\-Flow@{\-Flow}}
+\hypertarget{classFlow_a3328ae5f608e4e9b23635617bea6f016}{\index{\-Flow@{\-Flow}!\-Flow@{\-Flow}}
 \index{\-Flow@{\-Flow}!Flow@{\-Flow}}
 \subsubsection[{\-Flow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Flow\-::\-Flow} (
 \begin{DoxyParamCaption}
@@ -82,10 +80,10 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 \item[{std\-::string}]{dest, }
 \item[{int}]{data\-\_\-size, }
 \item[{std\-::shared\-\_\-ptr$<$ {\bf \-Host} $>$}]{h, }
-\item[{int}]{win\-Size, }
+\item[{int}]{win\-\_\-size, }
 \item[{double}]{ts}
 \end{DoxyParamCaption}
-)}}\label{classFlow_ab7771ce5ed20e19fff6bf6ceb5d1adc4}
+)}}\label{classFlow_a3328ae5f608e4e9b23635617bea6f016}
 
 
 \-Constructor for the flow. 
@@ -100,7 +98,7 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 \hline
 {\em h} & the host that is the flow's source \\
 \hline
-{\em win\-Size} & the initial size of the flow's window (usually 1) \\
+{\em win\-\_\-size} & the initial size of the flow's window (usually 1) \\
 \hline
 {\em ts} & the timestamp at which the flow begins \\
 \hline
@@ -196,7 +194,7 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 \subsubsection[{log\-Flow\-Window\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Flow\-::log\-Flow\-Window\-Size} (
 \begin{DoxyParamCaption}
 \item[{double}]{time, }
-\item[{int}]{window\-Size}
+\item[{int}]{window\-\_\-size}
 \end{DoxyParamCaption}
 )}}\label{classFlow_a11e680564ffab501382cf02ed511668a}
 
@@ -207,7 +205,7 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 \begin{DoxyParams}{\-Parameters}
 {\em time} & the time at which the window size is logged \\
 \hline
-{\em window\-Size} & the window size \\
+{\em window\-\_\-size} & the window size \\
 \hline
 \end{DoxyParams}
 \hypertarget{classFlow_abda1a17915ccd01b4f31597ad962b3ab}{\index{\-Flow@{\-Flow}!open\-Connection@{open\-Connection}}
@@ -296,7 +294,7 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 
 \-Send as many packets as possible. 
 
-\-Every packet that has never been marked as being sent (i.\-e. every packet that is in unsent\-Packets) that also satisfies window\-Start $<$= sequence\-\_\-num $<$= window\-End will be sent. \-The ones that have already been sent (the ones not in unsent\-Packets) will not be resent.
+\-Every packet that has never been marked as being sent (i.\-e. every packet that is in unsent\-Packets) that also satisfies window\-\_\-start $<$= sequence\-\_\-num $<$= window\-\_\-end will be sent. \-The ones that have already been sent (the ones not in unsent\-Packets) will not be resent.
 
 
 \begin{DoxyParams}{\-Parameters}
@@ -357,19 +355,12 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 
 \-The \-I\-D of the flow. 
 
-\-I\-Ds must be globally unique. \hypertarget{classFlow_a78d725176506b21ce2355b3742ab8c17}{\index{\-Flow@{\-Flow}!num\-Packets@{num\-Packets}}
-\index{num\-Packets@{num\-Packets}!Flow@{\-Flow}}
-\subsubsection[{num\-Packets}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::num\-Packets}}}\label{classFlow_a78d725176506b21ce2355b3742ab8c17}
+\-I\-Ds must be globally unique. \hypertarget{classFlow_a35a58ba8cc58bb4ae0c94eb240f53eda}{\index{\-Flow@{\-Flow}!num\-\_\-packets@{num\-\_\-packets}}
+\index{num\-\_\-packets@{num\-\_\-packets}!Flow@{\-Flow}}
+\subsubsection[{num\-\_\-packets}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::num\-\_\-packets}}}\label{classFlow_a35a58ba8cc58bb4ae0c94eb240f53eda}
 
 
 \-The total number of data packets in the flow. 
-
-\hypertarget{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}{\index{\-Flow@{\-Flow}!packet\-Size@{packet\-Size}}
-\index{packet\-Size@{packet\-Size}!Flow@{\-Flow}}
-\subsubsection[{packet\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::packet\-Size}}}\label{classFlow_ac5af37a8637ec606977ebc1e33a0c59b}
-
-
-\-The size of packets in the flow. 
 
 \hypertarget{classFlow_a56615b49301aaddf4cab4fa3f878c5a7}{\index{\-Flow@{\-Flow}!phase@{phase}}
 \index{phase@{phase}!Flow@{\-Flow}}
@@ -392,30 +383,30 @@ double \hyperlink{classFlow_a22a30218ebecf663beea5902199a5453}{b}
 
 \-The time at which the flow begins. 
 
-\hypertarget{classFlow_aef2aa1abe7872f9f75f24c482c5f20f9}{\index{\-Flow@{\-Flow}!un\-Sent\-Packets@{un\-Sent\-Packets}}
-\index{un\-Sent\-Packets@{un\-Sent\-Packets}!Flow@{\-Flow}}
-\subsubsection[{un\-Sent\-Packets}]{\setlength{\rightskip}{0pt plus 5cm}std\-::set$<$int$>$ {\bf \-Flow\-::un\-Sent\-Packets}}}\label{classFlow_aef2aa1abe7872f9f75f24c482c5f20f9}
+\hypertarget{classFlow_a1ba2d0548e0c0af4e587d5b8d00f90fc}{\index{\-Flow@{\-Flow}!unsent\-\_\-packets@{unsent\-\_\-packets}}
+\index{unsent\-\_\-packets@{unsent\-\_\-packets}!Flow@{\-Flow}}
+\subsubsection[{unsent\-\_\-packets}]{\setlength{\rightskip}{0pt plus 5cm}std\-::set$<$int$>$ {\bf \-Flow\-::unsent\-\_\-packets}}}\label{classFlow_a1ba2d0548e0c0af4e587d5b8d00f90fc}
 
 
 \-A list of packets that the flow hasn't sent yet. 
 
-\-Initially, this will be the set \{0, 1, ..., num\-Packets -\/ 1\}. \hypertarget{classFlow_a47968d3d4596ad50ce090a0c352a89f5}{\index{\-Flow@{\-Flow}!wait\-Time@{wait\-Time}}
-\index{wait\-Time@{wait\-Time}!Flow@{\-Flow}}
-\subsubsection[{wait\-Time}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Flow\-::wait\-Time}}}\label{classFlow_a47968d3d4596ad50ce090a0c352a89f5}
+\-Initially, this will be the set \{0, 1, ..., num\-\_\-packets -\/ 1\}. \hypertarget{classFlow_a6187616182361456eec5e91ff0480db6}{\index{\-Flow@{\-Flow}!wait\-\_\-time@{wait\-\_\-time}}
+\index{wait\-\_\-time@{wait\-\_\-time}!Flow@{\-Flow}}
+\subsubsection[{wait\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf \-Flow\-::wait\-\_\-time}}}\label{classFlow_a6187616182361456eec5e91ff0480db6}
 
 
 \-The time a flow waits until a packet has timed out. 
 
-\hypertarget{classFlow_a8ffd0d6dd0bf1c2c2b97ac164890715f}{\index{\-Flow@{\-Flow}!window\-End@{window\-End}}
-\index{window\-End@{window\-End}!Flow@{\-Flow}}
-\subsubsection[{window\-End}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::window\-End}}}\label{classFlow_a8ffd0d6dd0bf1c2c2b97ac164890715f}
+\hypertarget{classFlow_afdc42d6ad08298dd64a8b85e933dbac6}{\index{\-Flow@{\-Flow}!window\-\_\-end@{window\-\_\-end}}
+\index{window\-\_\-end@{window\-\_\-end}!Flow@{\-Flow}}
+\subsubsection[{window\-\_\-end}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::window\-\_\-end}}}\label{classFlow_afdc42d6ad08298dd64a8b85e933dbac6}
 
 
 \-The end of the send window. 
 
-\hypertarget{classFlow_a1c04de60a81b02750673806906701a76}{\index{\-Flow@{\-Flow}!window\-Start@{window\-Start}}
-\index{window\-Start@{window\-Start}!Flow@{\-Flow}}
-\subsubsection[{window\-Start}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::window\-Start}}}\label{classFlow_a1c04de60a81b02750673806906701a76}
+\hypertarget{classFlow_a0ef05b40ea27e2fecabb44d20219a40a}{\index{\-Flow@{\-Flow}!window\-\_\-start@{window\-\_\-start}}
+\index{window\-\_\-start@{window\-\_\-start}!Flow@{\-Flow}}
+\subsubsection[{window\-\_\-start}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Flow\-::window\-\_\-start}}}\label{classFlow_a0ef05b40ea27e2fecabb44d20219a40a}
 
 
 \-The start of the send window. 

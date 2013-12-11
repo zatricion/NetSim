@@ -86,7 +86,7 @@ This is the complete list of members for <a class="el" href="classFlow.html">Flo
   <tr class="memlist"><td><a class="el" href="classFlow.html#a22a30218ebecf663beea5902199a5453">b</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a6ffa8765220cfbfcf8b358bcbfd8bc4d">D</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a536685c38def6cf8b61d0fb0d7e8372d">destination</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#ab7771ce5ed20e19fff6bf6ceb5d1adc4">Flow</a>(std::string idval, std::string dest, int data_size, std::shared_ptr&lt; Host &gt; h, int winSize, double ts)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a3328ae5f608e4e9b23635617bea6f016">Flow</a>(std::string idval, std::string dest, int data_size, std::shared_ptr&lt; Host &gt; h, int win_size, double ts)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#ab75994d89f53573e60a1650dcaeddabb">handleAck</a>(std::shared_ptr&lt; Packet &gt; pkt, double time)=0</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a8a45fd871502fad3fb23987ac773a0ab">handleUnackEvent</a>(std::shared_ptr&lt; Packet &gt; unacked, double time)=0</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#af45cdc7b3609577eb08cb072e9631809">host</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
@@ -94,9 +94,8 @@ This is the complete list of members for <a class="el" href="classFlow.html">Flo
   <tr class="memlist"><td><a class="el" href="classFlow.html#a1076308c9b3a11a1e0bdea4c7b4c2966">initialize</a>(double time)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a04338dbf3a16eeedeef168c9ee8ee6a6">logFlowRTT</a>(double time, double RTT)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a11e680564ffab501382cf02ed511668a">logFlowWindowSize</a>(double time, int windowSize)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#a78d725176506b21ce2355b3742ab8c17">numPackets</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a35a58ba8cc58bb4ae0c94eb240f53eda">num_packets</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#abda1a17915ccd01b4f31597ad962b3ab">openConnection</a>(double time)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#ac5af37a8637ec606977ebc1e33a0c59b">packetSize</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a56615b49301aaddf4cab4fa3f878c5a7">phase</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a1b9f70de92594ba82c5a1b16298f3811">respondToSynPacketEvent</a>(std::shared_ptr&lt; Packet &gt; pkt, double time)=0</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a969e962a3ed0349fbb45af508f923069">respondToSynUnackEvent</a>(double time)</td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
@@ -106,10 +105,10 @@ This is the complete list of members for <a class="el" href="classFlow.html">Flo
   <tr class="memlist"><td><a class="el" href="classFlow.html#a36eb3e23b0804647c30be41835b790b3">source</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#a502b4455d485a1a0325d21d246183bb1">timestamp</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classFlow.html#aa74099113ee1c2298874b85ade05be98">toString</a>()=0</td><td><a class="el" href="classFlow.html">Flow</a></td><td><code> [pure virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#aef2aa1abe7872f9f75f24c482c5f20f9">unSentPackets</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#a47968d3d4596ad50ce090a0c352a89f5">waitTime</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#a8ffd0d6dd0bf1c2c2b97ac164890715f">windowEnd</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classFlow.html#a1c04de60a81b02750673806906701a76">windowStart</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a1ba2d0548e0c0af4e587d5b8d00f90fc">unsent_packets</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a6187616182361456eec5e91ff0480db6">wait_time</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#afdc42d6ad08298dd64a8b85e933dbac6">window_end</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classFlow.html#a0ef05b40ea27e2fecabb44d20219a40a">window_start</a></td><td><a class="el" href="classFlow.html">Flow</a></td><td></td></tr>
 </table></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -128,7 +127,7 @@ This is the complete list of members for <a class="el" href="classFlow.html">Flo
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 16:35:23 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 19:15:56 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

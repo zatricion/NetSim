@@ -1,7 +1,7 @@
 var searchData=
 [
   ['unackevent',['UnackEvent',['../classUnackEvent.html',1,'UnackEvent'],['../classUnackEvent.html#af9ed3cfe7027d641ceddbd7a2ce560c7',1,'UnackEvent::UnackEvent()']]],
-  ['unsentpackets',['unSentPackets',['../classFlow.html#aef2aa1abe7872f9f75f24c482c5f20f9',1,'Flow']]],
+  ['unsent_5fpackets',['unsent_packets',['../classFlow.html#a1ba2d0548e0c0af4e587d5b8d00f90fc',1,'Flow']]],
   ['updateall',['updateAll',['../classPath.html#aa29b280c8e94a7e872d699325a177d59',1,'Path']]],
   ['updatelinkweight',['updateLinkWeight',['../classPath.html#a89e0f4361f978e2f10208c45c6c63a4d',1,'Path']]],
   ['updaterouting',['updateRouting',['../classRouter.html#a9517660547398a913aab151a3f058fbf',1,'Router']]],

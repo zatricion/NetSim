@@ -96,12 +96,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#a4639718d2f590ebd22d0d949a239327d">running</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> is still running.  <a href="#a4639718d2f590ebd22d0d949a239327d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#aa93dcd4a5dc2d1e2f10cec2ebe3a9668">getMinTime</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the lowest time from the distributed eventHeap.  <a href="#aa93dcd4a5dc2d1e2f10cec2ebe3a9668"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the lowest time from the distributed event_heap.  <a href="#aa93dcd4a5dc2d1e2f10cec2ebe3a9668"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#abc28c961d70d462106f2f3be46330930">populateCurrentEvents</a> (double time)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of all events that should happen next.  <a href="#abc28c961d70d462106f2f3be46330930"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad67c5bf3357aba8c6b71fa76c5161d29"></a><!-- doxytag: member="Handler::processCurrentEvents" ref="ad67c5bf3357aba8c6b71fa76c5161d29" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#ad67c5bf3357aba8c6b71fa76c5161d29">processCurrentEvents</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle all events in currEvents. <br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle all events in curr_events. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa60626b419730f48a1bd5b91c9ade9d7"></a><!-- doxytag: member="Handler::step" ref="aa60626b419730f48a1bd5b91c9ade9d7" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHandler.html#aa60626b419730f48a1bd5b91c9ade9d7">step</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Go through a single step of the simulation. <br/></td></tr>
@@ -154,7 +154,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 <div class="memdoc">
 
-<p>Get the lowest time from the distributed eventHeap. </p>
+<p>Get the lowest time from the distributed event_heap. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the minimum time. </dd></dl>
 
 </div>
@@ -167,7 +167,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">void <a class="el" href="classHandler.html#abc28c961d70d462106f2f3be46330930">Handler::populateCurrentEvents</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>minTime</em></td><td>)</td>
+          <td class="paramname"><em>min_time</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -178,7 +178,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>This list will often contain only 1 event, since it is unlikely that multiple Events will have the exact same timestamp.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">minTime</td><td>the minimum <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> time out of all Events in all the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> eventHeaps </td></tr>
+    <tr><td class="paramname">min_time</td><td>the minimum <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> time out of all Events in all the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> event_heaps </td></tr>
   </table>
   </dd>
 </dl>
@@ -226,7 +226,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 16:35:23 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 19:15:56 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

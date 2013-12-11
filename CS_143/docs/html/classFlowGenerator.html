@@ -109,7 +109,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>An object used to store <a class="el" href="classFlow.html">Flow</a> objects until the data flow is ready to begin. </p>
-<p>It holds an eventHeap of FlowEvents that are passed to the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> when the data flow should begin. The <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> processes these FlowEvents, and creates a data flow on the proper <a class="el" href="classHost.html">Host</a>. </p>
+<p>It holds an event_heap of FlowEvents that are passed to the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> when the data flow should begin. The <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> processes these FlowEvents, and creates a data flow on the proper <a class="el" href="classHost.html">Host</a>. </p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ae51c2e304770a911f9cc1d8e0d01310c"></a><!-- doxytag: member="FlowGenerator::FlowGenerator" ref="ae51c2e304770a911f9cc1d8e0d01310c" args="(std::vector&lt; std::shared_ptr&lt; Flow &gt; &gt; flows, std::string flow_id)" -->
 <div class="memitem">
@@ -137,7 +137,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Creates a <a class="el" href="classFlowGenerator.html" title="An object used to store Flow objects until the data flow is ready to begin.">FlowGenerator</a> object. </p>
-<p>The constructor takes in a list of flows, which is uses to populate its eventHeap with FlowEvents. These events are fired at the appropriate times by the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> to start the data flows.</p>
+<p>The constructor takes in a list of flows, which is uses to populate its event_heap with FlowEvents. These events are fired at the appropriate times by the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> to start the data flows.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">flows</td><td>the list of flows. </td></tr>
@@ -198,7 +198,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 16:35:23 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 19:15:56 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
