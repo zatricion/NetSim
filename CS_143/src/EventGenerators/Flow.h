@@ -39,10 +39,10 @@ class Flow {
 public:
     // Fields
     /** The start of the send window. */
-    int windowStart;
+    int window_start;
 
     /** The end of the send window. */
-    int windowEnd;
+    int window_end;
 
     /**
      * A pointer to the host that represents the sending end of the data
@@ -65,9 +65,6 @@ public:
     /** The time a flow waits until a packet has timed out. */
     double wait_time;
 
-    /** The size of packets in the flow. */
-    int packetSize;
-
     /** The time at which the flow begins. */
     double timestamp;
 
@@ -82,7 +79,7 @@ public:
      * A list of packets that the flow hasn't sent yet.  Initially, this will
      * be the set {0, 1, ..., num_packets - 1}.
      */
-    std::set<int> unSentPackets;
+    std::set<int> unsent_packets;
 
     /** 
       * The time-averaged RTT.  See page 92 of "Communication Networks: A 
@@ -101,7 +98,7 @@ public:
     // Constructors
     Flow(std::string idval, std::string dest,
          int data_size, std::shared_ptr<Host> h,
-         int winSize, double ts);
+         int win_size, double ts);
 
     // Methods
     /**

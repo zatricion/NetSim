@@ -9,11 +9,11 @@
  * @param dest the destination of the data flow
  * @param data_size the size of the flow's data packets
  * @param h the host that is the flow's source
- * @param winSize the initial size of the flow's window (usually 1)
+ * @param win_size the initial size of the flow's window (usually 1)
  * @param ts the timestamp at which the flow begins
  */
 Flow::Flow(std::string idval, std::string dest, int data_size,
-           std::shared_ptr<Host> h, int winSize, double ts) {
+           std::shared_ptr<Host> h, int win_size, double ts) {
     // Set fields.
     timestamp = ts;
     host = h;
@@ -26,15 +26,15 @@ Flow::Flow(std::string idval, std::string dest, int data_size,
     // upon reception of acks.
     wait_time = .5;
     phase = SYN;
-    unSentPackets = std::set<int>();
+    unsent_packets = std::set<int>();
     
-    // Populate unSentPackets with every packet.
+    // Populate unsent_packets with every packet.
     for (int i = 0; i < num_packets; i++) {
-        unSentPackets.insert(i);
+        unsent_packets.insert(i);
     }
 
-    windowStart = 0;
-    windowEnd = winSize - 1;
+    window_start = 0;
+    window_end = win_size - 1;
 
     A = wait_time;
     D = wait_time;
@@ -55,27 +55,27 @@ void Flow::initialize(double time) {
 /**
  * Send as many packets as possible.  Every packet that has never been marked
  * as being sent (i.e. every packet that is in unsentPackets) that also
- * satisfies windowStart <= sequence_num <= windowEnd will be sent.  The ones
+ * satisfies window_start <= sequence_num <= window_end will be sent.  The ones
  * that have already been sent (the ones not in unsentPackets) will not be
  * resent.
  *
  * @param time the time at which the packets are sent.
  */
 void Flow::sendManyPackets(double time) {
-    for (int i = windowStart; i <= windowEnd; i++) {
-        if (unSentPackets.count(i) == 1) {
+    for (int i = window_start; i <= window_end; i++) {
+        if (unsent_packets.count(i) == 1) {
             // Packet i has not been sent before.  Send it, and queue a resend.
-            unSentPackets.erase(i);
+            unsent_packets.erase(i);
 
             // We want the packets to have slightly different timestamps, so
             // that their order is retained.  So, we add a small number to each
             // packet time.  This will be smaller than any realistic network
             // delay.
-            double cpuTime = i / 10000000000.0;
+            double cpu_time = i / 10000000000.0;
             auto pkt = std::make_shared<Packet>(std::to_string(i), destination,
                 source, DATA_PKT_SIZE, false, i, id, false, false,
-                time + cpuTime);
-            host->sendAndQueueResend(pkt, time + cpuTime, wait_time);
+                time + cpu_time);
+            host->sendAndQueueResend(pkt, time + cpu_time, wait_time);
         }
     }
 }
@@ -124,12 +124,11 @@ void Flow::logFlowRTT(double time, double RTT) {
  * Log the window size of the flow.
  *
  * @param time the time at which the window size is logged
- * @param windowSize the window size
+ * @param window_size the window size
  */
-void Flow::logFlowWindowSize(double time, int windowSize) {
-    FILE_LOG(logDEBUG) << "logFlowWindowSize: " << time << ", " << (double) windowSize;
+void Flow::logFlowWindowSize(double time, int window_size) {
     sim_plotter.logFlowWindowSize(id,
-        std::make_tuple(time, (double) windowSize));
+        std::make_tuple(time, (double) window_size));
 }
 
 
@@ -162,7 +161,6 @@ void Flow::openConnection(double time) {
 void Flow::respondToSynUnackEvent(double time) {
     // Check if synack has been received.
     if (phase == SYN) {
-        FILE_LOG(logDEBUG) << "SYNACK not received.  Resending SYN.";
         openConnection(time);
     }
 }

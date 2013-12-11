@@ -30,7 +30,7 @@ class TahoeFlow : public Flow {
 public:
     // Fields
     /** The phase that the TCP Tahoe alg. is in. */
-    TahoePhase tahoePhase;
+    TahoePhase tahoe_phase;
 
     /** The SLOWSTART threshold. */
     int ssthresh;
@@ -39,10 +39,10 @@ public:
     int multiplicity;
 
     /** A variable to hold the overflow in window size from updates. */ 
-    double winOverFlow;
+    double win_over_flow;
 
     /** The time of the last timeout.  See handleAck for details. */
-    double validUnackTime;
+    double valid_unack_time;
 
     // Constructors
     TahoeFlow(std::string idval, std::string dest, int data_size,

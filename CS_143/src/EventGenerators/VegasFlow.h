@@ -17,9 +17,9 @@ class VegasFlow : public Flow {
 public:
     // Fields
     /** The lower bound used in Vegas. */
-    double vegasConstAlpha;
+    double vegas_alpha;
     /** The upper bound used in Vegas. */
-    double vegasConstBeta;
+    double vegas_beta;
     /** The minimumm RTT that has been encountered thus far. */
     double minRTT;
     /** The most recent RTT. */
@@ -28,7 +28,7 @@ public:
     // Constructors
     VegasFlow(std::string idval, std::string dest,
              int data_size, std::shared_ptr<Host> h,
-             int winSize, double ts);
+             int win_size, double ts);
 
     // Methods
     virtual void handleUnackEvent(std::shared_ptr<Packet> unacked, double time)

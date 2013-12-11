@@ -8,12 +8,12 @@
  * @param dest the destination of the flow.
  * @param data_size the size of the data transfer.
  * @param h the host on which the flow is generated.
- * @param winSize the initial window size (usually 1).
+ * @param win_size the initial window size (usually 1).
  * @param ts the timestamp at which the flow is generated.
  */
 VegasFlow::VegasFlow(std::string idval, std::string dest, int data_size,
-                     std::shared_ptr<Host> h, int winSize, double ts) :
-                     Flow(idval, dest, data_size, h, winSize, ts) {
+                     std::shared_ptr<Host> h, int win_size, double ts) :
+                     Flow(idval, dest, data_size, h, win_size, ts) {
 }
 
 
@@ -25,12 +25,12 @@ VegasFlow::VegasFlow(std::string idval, std::string dest, int data_size,
  * wait_time after the initial packet was sent.
  */
 void VegasFlow::handleUnackEvent(std::shared_ptr<Packet> unacked, double time) {
-    int seqNum = unacked->sequence_num;
+    int seq_num = unacked->sequence_num;
     // If the packet has not been acknowledged...
     // Note that it is in fact possible to receive a legitimate unackEvent where
-    // the seqNum is > the windowEnd, if we shrink the window size.  So, we must
+    // the seq_num is > the window_end, if we shrink the window size.  So, we 
     // check the upper bound and lower bound.
-    if (seqNum >= windowStart && seqNum <= windowEnd) {
+    if (seq_num >= window_start && seq_num <= window_end) {
         // For go back N, just retransmit, as long as the packet is within
         // the window.
         auto resend = std::make_shared<Packet>(*unacked);
@@ -60,17 +60,17 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         logFlowRTT(time, RTT);
         minRTT = std::min(minRTT, RTT);
 
-        int seqNum = pkt->sequence_num;
+        int seq_num = pkt->sequence_num;
 
-        if (seqNum == num_packets) {
+        if (seq_num == num_packets) {
             // We received an ack for a nonexistent packet.  I.e. we sent
-            // the 100th packet (with seqNum 99), and this ack says "100", but
+            // the 100th packet (with seq_num 99), and this ack says "100", but
             // there is no 100th packet to send.  So we're done.
 
             // We're done sending packets.  Move the window outside of the bounds
             // of the packets.
-            windowStart = seqNum;
-            windowEnd = seqNum;
+            window_start = seq_num;
+            window_end = seq_num;
 
             phase = FIN;
             // We need to send a FIN to the other host.
@@ -82,14 +82,14 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
         }
 
         // If we're not done, update window and send packets.
-        int windowSize = windowEnd - windowStart + 1;
+        int window_size = window_end - window_start + 1;
         
-        // Set windowStart to the current packet's sequence number
-        windowStart = seqNum;
-        windowEnd = std::min(seqNum + windowSize - 1, num_packets - 1);
+        // Set window_start to the current packet's sequence number
+        window_start = seq_num;
+        window_end = std::min(seq_num + window_size - 1, num_packets - 1);
         sendManyPackets(time);
     } // Otherwise, do nothing.
-    logFlowWindowSize(time, windowEnd - windowStart + 1);
+    logFlowWindowSize(time, window_end - window_start + 1);
 }
 
 
@@ -101,17 +101,19 @@ void VegasFlow::handleAck(std::shared_ptr<Packet> pkt, double time) {
 std::string VegasFlow::toString() {
 
     std::stringstream fmt;
-    std::stringstream setString;
-    setString << "{unSentPackets: ";
-    for (auto it = unSentPackets.begin(); it != unSentPackets.end(); it++) {
-        setString << *it << ", ";
-        if (*it % 20 == 0) { setString << "\n"; }
+    std::stringstream set_string;
+    set_string << "{unsent_packets: ";
+    for (auto it = unsent_packets.begin(); it != unsent_packets.end(); it++) {
+        set_string << *it << ", ";
+        if (*it % 20 == 0) { set_string << "\n"; }
     }
-    setString << "}";
-    // std::string setElems = setString.str();
-    std::string setElems = "";
+    set_string << "}";
+    std::string set_elems = set_string.str();
 
-    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << destination << ", num_packets=" << num_packets << ", wait_time=" << wait_time << ", " << "packetSize=" << packetSize << ", " << setElems << ", " << "windowStart=" << windowStart << ", windowEnd=" << windowEnd << "}";
+    fmt << "{FLOW: id=" << id << ", source=" << source << ", destination=" << 
+        destination << ", num_packets=" << num_packets << ", wait_time=" << 
+        wait_time << ", " << ", " << set_elems << ", " << "window_start=" << 
+        window_start << ", window_end=" << window_end << "}";
     return fmt.str();
 }
 
@@ -127,19 +129,19 @@ void VegasFlow::handleVegasUpdate(double time) {
         return;
     }
 
-    int windowSize = windowEnd - windowStart + 1;
+    int window_size = window_end - window_start + 1;
 
-    double testValue = (windowSize / minRTT) - (windowSize / RTT);
+    double test_value = (window_size / minRTT) - (window_size / RTT);
 
-    if (testValue < (vegasConstAlpha / minRTT)) {
-        windowSize++;
+    if (test_value < (vegas_alpha / minRTT)) {
+        window_size++;
     }
-    else if (testValue > (vegasConstBeta / minRTT)) {
-        windowSize--;
+    else if (test_value > (vegas_beta / minRTT)) {
+        window_size--;
     }
 
-    windowEnd = windowSize + windowStart - 1;
-    assert(windowEnd >= windowStart); // Make sure it's after or at windowStart
+    window_end = window_size + window_start - 1;
+    assert(window_end >= window_start);
 
     sendManyPackets(time);
 
@@ -150,8 +152,8 @@ void VegasFlow::handleVegasUpdate(double time) {
                                                         id);
     host->addEventToLocalQueue(update);
 
-    windowSize = windowEnd - windowStart + 1;
-    logFlowWindowSize(time, windowSize);
+    window_size = window_end - window_start + 1;
+    logFlowWindowSize(time, window_size);
 }
 
 
@@ -190,8 +192,8 @@ void VegasFlow::respondToSynPacketEvent(std::shared_ptr<Packet> pkt, double time
         D = RTT;
         updateWaitTime();
         // Our choices of constants for Vegas.
-        vegasConstAlpha = 1.5;
-        vegasConstBeta = 2.5;
+        vegas_alpha = 1.5;
+        vegas_beta = 2.5;
         minRTT = RTT;
 
         auto vUpdate = std::make_shared<TCPVegasUpdateEvent>(source, source,

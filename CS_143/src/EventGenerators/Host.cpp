@@ -65,9 +65,9 @@ void Host::respondTo(FlowEvent flow_event) {
  * @param unack_event the UnackEvent.
  */
 void Host::respondToSynUnackEvent(UnackEvent unack_event) {
-    std::string flowString = unack_event.packet->flowID;
-    assert(flows.count(flowString) > 0);
-    flows[flowString]->respondToSynUnackEvent(unack_event.eventTime());
+    std::string flow_string = unack_event.packet->flowID;
+    assert(flows.count(flow_string) > 0);
+    flows[flow_string]->respondToSynUnackEvent(unack_event.eventTime());
 }
 
 
@@ -79,17 +79,17 @@ void Host::respondToSynUnackEvent(UnackEvent unack_event) {
 void Host::respondToFinUnackEvent(UnackEvent unack_event) {
     auto p = unack_event.packet;
     double time = unack_event.eventTime();
-    std::string flowString = p->flowID;
+    std::string flow_string = p->flowID;
     assert(p->fin);
     assert(!p->ack); //  We don't reschedule the sending of an ack.
 
     // Our FIN might not have been received by the other host.  Check
     // the state of our host.  If the flow is marked as DONE, then we
     // don't need to resend the FIN.
-    if (flows.count(p->flowID) && flows[p->flowID]->phase != DONE) {
-        sendAndQueueResend(p, time, flows[p->flowID]->wait_time);
+    if (flows.count(flow_string) && flows[flow_string]->phase != DONE) {
+        sendAndQueueResend(p, time, flows[flow_string]->wait_time);
     }
-    else if (recvd.count(p->flowID) && recvd[p->flowID].second != DONE) {
+    else if (recvd.count(flow_string) && recvd[flow_string].second != DONE) {
         // There are no wait times associated with the receiving end of a flow.
         // It isn't really worth storing any, since timeouts for a flow are
         // only used when a FIN is sent.  So, we will just pick a reasonable 
@@ -108,7 +108,6 @@ void Host::respondToFinUnackEvent(UnackEvent unack_event) {
 void Host::respondTo(UnackEvent unack_event) {
     auto p = unack_event.packet;
     double time = unack_event.eventTime();
-    std::string flowString = p->flowID;
 
     if (p->syn) {
         respondToSynUnackEvent(unack_event);
@@ -324,8 +323,8 @@ void Host::respondTo(PacketEvent new_event) {
  */
 void Host::send(std::shared_ptr<Packet> pkt, double time) {
     assert(time > 0);
-    auto pEV = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
-    addEventToLocalQueue(pEV);
+    auto p_ev = std::make_shared<PacketEvent>(my_link->getID(), uuid, time, pkt);
+    addEventToLocalQueue(p_ev);
 }
 
 
@@ -344,8 +343,8 @@ void Host::sendAndQueueResend(std::shared_ptr<Packet> pkt, double time,
     assert(delay > 0);
 
     send(pkt, time);
-    auto uEV = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
-    addEventToLocalQueue(uEV);
+    auto u_ev = std::make_shared<UnackEvent>(pkt, uuid, uuid, time + delay);
+    addEventToLocalQueue(u_ev);
 }
 
 /**
@@ -360,6 +359,3 @@ void Host::logFlowRate(double time, std::string flowID) {
     double flow_rate = bits_received / (time - last_flow_log[flowID]);
     sim_plotter.logFlowRate(flowID, std::make_tuple(time, flow_rate));
 }
-
-
-
