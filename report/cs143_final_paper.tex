@@ -386,7 +386,8 @@ Link 3’s buffer occupancy remains high as it receives data packets from both F
 \label{fig:test2_vegas_window_size}
 \end{figure}
 
-\newpage
+\clearpage
+
 
 \subsection{Analytical Analysis}
 \subsubsection{Test Case 2 - Vegas}
@@ -423,11 +424,11 @@ The flow rate (traffic throughput), $x$, can be written as $$x=\frac{WP}{\tau}$$
 
 At steady state, $x=C^*$ which refers to the minimum link capacity a data\_pkt experiences in the entire path from source to destination. We can think of $C^*$ as the bottleneck link capacity.
 
-Hence in stead-state, $$\frac{C^*}{P} = \frac{W^*}{\tau^*} $$
+Hence in steady state, $$\frac{C^*}{P} = \frac{W^*}{\tau^*} $$
 $$\implies \frac{W^*}{\tau_{min} - \frac{W^*}{\tau^*} = \frac{2}{\tau_{min}}}$$
 $$\implies W^* = 2 + \frac{W^*}{\tau^*}(\tau_{min}) = 2 + \frac{C^*}{P}(\tau_{min}) $$
 
-So for any flow, at stead-state, 
+So for any flow, at steady state, 
 \begin{itemize}
 \item flow rate $= C^*$ where $C^*$ is the bottle-neck capacity.
 \item $W^*=2 + \frac{C^*}{P}(\tau_{min})$
