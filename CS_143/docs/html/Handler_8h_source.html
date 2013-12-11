@@ -83,42 +83,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define __CS_143__Handler__</span>
 <a name="l00009"></a>00009 <span class="preprocessor"></span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;../EventGenerators/EventGenerator.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;Event.h&quot;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;cassert&gt;</span>
 <a name="l00013"></a>00013 <span class="preprocessor">#include &lt;unordered_map&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;../Tools/Log.h&quot;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;memory&gt;</span>
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 
-<a name="l00018"></a><a class="code" href="classHandler.html">00018</a> <span class="keyword">class </span><a class="code" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> {
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;memory&gt;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;Event.h&quot;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;PacketEvent.h&quot;</span>
+<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;../EventGenerators/EventGenerator.h&quot;</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &quot;../Tools/Log.h&quot;</span>
 <a name="l00019"></a>00019 
-<a name="l00020"></a>00020 <span class="keyword">private</span>:
-<a name="l00021"></a>00021     <span class="comment">// Fields</span>
-<a name="l00023"></a>00023 <span class="comment"></span>    std::vector&lt;std::shared_ptr&lt;Event&gt; &gt; currEvents;
-<a name="l00024"></a>00024 
-<a name="l00026"></a>00026     std::unordered_map&lt;std::string, std::shared_ptr&lt;EventGenerator&gt; &gt; genMap;
-<a name="l00027"></a>00027     
-<a name="l00029"></a>00029     <span class="keywordtype">bool</span> not_done = <span class="keyword">true</span>;
+<a name="l00020"></a>00020 
+<a name="l00021"></a><a class="code" href="classHandler.html">00021</a> <span class="keyword">class </span><a class="code" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> {
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023 <span class="keyword">private</span>:
+<a name="l00024"></a>00024     <span class="comment">// Fields</span>
+<a name="l00026"></a>00026 <span class="comment"></span>    std::vector&lt;std::shared_ptr&lt;Event&gt; &gt; currEvents;
+<a name="l00027"></a>00027 
+<a name="l00029"></a>00029     std::unordered_map&lt;std::string, std::shared_ptr&lt;EventGenerator&gt; &gt; genMap;
 <a name="l00030"></a>00030     
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">public</span>:
-<a name="l00033"></a>00033     <span class="comment">// Constructor</span>
-<a name="l00034"></a>00034     <a class="code" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a>() {};
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036     <span class="comment">// Accessors</span>
-<a name="l00037"></a>00037     <span class="keywordtype">bool</span> <a class="code" href="classHandler.html#a4639718d2f590ebd22d0d949a239327d" title="Tells if the Handler is still running.">running</a>();
+<a name="l00032"></a>00032     <span class="keywordtype">bool</span> not_done = <span class="keyword">true</span>;
+<a name="l00033"></a>00033     
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="keyword">public</span>:
+<a name="l00036"></a>00036     <span class="comment">// Constructor</span>
+<a name="l00037"></a>00037     <a class="code" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a>() {};
 <a name="l00038"></a>00038 
-<a name="l00039"></a>00039     <span class="comment">// Methods</span>
-<a name="l00040"></a>00040     <span class="keywordtype">double</span> <a class="code" href="classHandler.html#aa93dcd4a5dc2d1e2f10cec2ebe3a9668" title="Get the lowest time from the distributed eventHeap.">getMinTime</a>();
-<a name="l00041"></a>00041     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#abc28c961d70d462106f2f3be46330930" title="Get a list of all events that should happen next.">populateCurrentEvents</a>(<span class="keywordtype">double</span> time);
-<a name="l00042"></a>00042     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#ad67c5bf3357aba8c6b71fa76c5161d29" title="Handle all events in currEvents.">processCurrentEvents</a>();
-<a name="l00043"></a>00043     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#aa60626b419730f48a1bd5b91c9ade9d7" title="Go through a single step of the simulation.">step</a>();
-<a name="l00044"></a>00044     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#a6d66a0dfe17658e9ba92080d506654ac" title="Constructor for the event Handler.">addGenerator</a>(std::shared_ptr&lt;EventGenerator&gt; gen);
-<a name="l00045"></a>00045     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#a1f9bd53a9251f712c6ff20ca48122e6f" title="Handle a single Event by passing it to its destination, and allowing the destination object to do the...">handleEvent</a>(std::shared_ptr&lt;Event&gt; event);
-<a name="l00046"></a>00046 };
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143__Handler__) */</span>
+<a name="l00039"></a>00039     <span class="comment">// Accessors</span>
+<a name="l00040"></a>00040     <span class="keywordtype">bool</span> <a class="code" href="classHandler.html#a4639718d2f590ebd22d0d949a239327d" title="Tells if the Handler is still running.">running</a>();
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     <span class="comment">// Methods</span>
+<a name="l00043"></a>00043     <span class="keywordtype">double</span> <a class="code" href="classHandler.html#aa93dcd4a5dc2d1e2f10cec2ebe3a9668" title="Get the lowest time from the distributed eventHeap.">getMinTime</a>();
+<a name="l00044"></a>00044     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#abc28c961d70d462106f2f3be46330930" title="Get a list of all events that should happen next.">populateCurrentEvents</a>(<span class="keywordtype">double</span> time);
+<a name="l00045"></a>00045     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#ad67c5bf3357aba8c6b71fa76c5161d29" title="Handle all events in currEvents.">processCurrentEvents</a>();
+<a name="l00046"></a>00046     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#aa60626b419730f48a1bd5b91c9ade9d7" title="Go through a single step of the simulation.">step</a>();
+<a name="l00047"></a>00047     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#a6d66a0dfe17658e9ba92080d506654ac" title="Constructor for the event Handler.">addGenerator</a>(std::shared_ptr&lt;EventGenerator&gt; gen);
+<a name="l00048"></a>00048     <span class="keywordtype">void</span> <a class="code" href="classHandler.html#a1f9bd53a9251f712c6ff20ca48122e6f" title="Handle a single Event by passing it to its destination, and allowing the destination object to do the...">handleEvent</a>(std::shared_ptr&lt;Event&gt; event);
+<a name="l00049"></a>00049 };
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143__Handler__) */</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -137,7 +140,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 15:12:36 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 16:35:22 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

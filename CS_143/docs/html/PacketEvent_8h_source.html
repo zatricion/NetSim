@@ -83,26 +83,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define __CS_143__PacketEvent__</span>
 <a name="l00009"></a>00009 <span class="preprocessor"></span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;../EventGenerators/EventGenerator.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;Packet.h&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00014"></a>00014 
-<a name="l00015"></a><a class="code" href="classPacketEvent.html">00015</a> <span class="keyword">class </span><a class="code" href="classPacketEvent.html" title="A wrapper for the Packet class.">PacketEvent</a> : <span class="keyword">public</span> <a class="code" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> {
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="keyword">public</span>:
-<a name="l00018"></a>00018     <span class="comment">// Fields</span>
-<a name="l00020"></a><a class="code" href="classPacketEvent.html#ac3390dfb095c14e0b5c078b51dd914cf">00020</a> <span class="comment"></span>    std::shared_ptr&lt;Packet&gt; <a class="code" href="classPacketEvent.html#ac3390dfb095c14e0b5c078b51dd914cf" title="The Packet being sent.">packet</a>;
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022     <span class="comment">// Constructor.</span>
-<a name="l00023"></a>00023     <a class="code" href="classPacketEvent.html#a3e70db575746c33aed7bb62b0ad62c85" title="Constructor.">PacketEvent</a>(std::string dest, std::string src, <span class="keywordtype">double</span> ts, std::shared_ptr&lt;Packet&gt; pkt);
-<a name="l00024"></a>00024     
-<a name="l00025"></a>00025     <span class="comment">// Accessors.</span>
-<a name="l00026"></a>00026     <span class="keyword">virtual</span> std::string <a class="code" href="classPacketEvent.html#a4e863687bff18562aed034422393295c" title="Get the PacketEvent as a string.">toString</a>() <span class="keyword">override</span>;
-<a name="l00027"></a>00027     <span class="keyword">virtual</span> std::string <a class="code" href="classPacketEvent.html#a7dfa4c479200db12df64a12bc39d22d8" title="Get a string representing the type of the PacketEvent.">getType</a>() <span class="keyword">override</span>;
-<a name="l00028"></a>00028 };
-<a name="l00029"></a>00029 
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;Packet.h&quot;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;../EventGenerators/EventGenerator.h&quot;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a><a class="code" href="classPacketEvent.html">00016</a> <span class="keyword">class </span><a class="code" href="classPacketEvent.html" title="A wrapper for the Packet class.">PacketEvent</a> : <span class="keyword">public</span> <a class="code" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> {
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 <span class="keyword">public</span>:
+<a name="l00019"></a>00019     <span class="comment">// Fields</span>
+<a name="l00021"></a><a class="code" href="classPacketEvent.html#ac3390dfb095c14e0b5c078b51dd914cf">00021</a> <span class="comment"></span>    std::shared_ptr&lt;Packet&gt; <a class="code" href="classPacketEvent.html#ac3390dfb095c14e0b5c078b51dd914cf" title="The Packet being sent.">packet</a>;
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023     <span class="comment">// Constructor.</span>
+<a name="l00024"></a>00024     <a class="code" href="classPacketEvent.html#a3e70db575746c33aed7bb62b0ad62c85" title="Constructor.">PacketEvent</a>(std::string dest, std::string src, <span class="keywordtype">double</span> ts, std::shared_ptr&lt;Packet&gt; pkt);
+<a name="l00025"></a>00025     
+<a name="l00026"></a>00026     <span class="comment">// Accessors.</span>
+<a name="l00027"></a>00027     <span class="keyword">virtual</span> std::string <a class="code" href="classPacketEvent.html#a4e863687bff18562aed034422393295c" title="Get the PacketEvent as a string.">toString</a>() <span class="keyword">override</span>;
+<a name="l00028"></a>00028     <span class="keyword">virtual</span> std::string <a class="code" href="classPacketEvent.html#a7dfa4c479200db12df64a12bc39d22d8" title="Get a string representing the type of the PacketEvent.">getType</a>() <span class="keyword">override</span>;
+<a name="l00029"></a>00029 };
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143__PacketEvent__) */</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="preprocessor">#endif </span><span class="comment">/* defined(__CS_143__PacketEvent__) */</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -121,7 +122,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 15:12:36 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 16:35:22 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

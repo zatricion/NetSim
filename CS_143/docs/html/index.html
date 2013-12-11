@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>NetSim: Main Page</title>
+<title>NetSim: Network Simulator Documentation</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -70,10 +70,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">NetSim Documentation</div>  </div>
+<div class="title">Network Simulator Documentation </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><h2><a class="anchor" id="intro_sec"></a>
+Introduction</h2>
+<p>Code developed by Group 4 for CS 143 (fall 2013) at Caltech. Written and developed by Max Horton, Alex Jose, Michael Lauria, Anish Agarwal, and Johno Ikpeazu.</p>
+<p>This is an event based simulation. The <a class="el" href="classEvent.html" title="Abstract class representing a generic Event in our Event based simulation.">Event</a> objects, as well as the <a class="el" href="classHandler.html" title="Handler that runs the Event-based simulation.">Handler</a> for Events, are found in src/EventHandling. The network objects (Hosts, Links, and Routers) are part of the <a class="el" href="classEventGenerator.html" title="Superclass for Links, Hosts, Routers, and FlowGenerators.">EventGenerator</a> class, and can be found in src/EventGenerators.</p>
+<p>Implementation details can be found in the 'Classes' and 'Files' tabs.</p>
+<h2><a class="anchor" id="install_sec"></a>
+Installation</h2>
+<h3><a class="anchor" id="pkg"></a>
+Required Software:</h3>
+<p>C++11, Boost version 1.48, bison, flex, gnuplot</p>
+<h3><a class="anchor" id="obt"></a>
+Obtaining the Code</h3>
+<p>Code can be found at: <a href="https://github.com/zatricion/NetSim.git">https://github.com/zatricion/NetSim.git</a></p>
+<h2><a class="anchor" id="running"></a>
+Usage</h2>
+<h3><a class="anchor" id="requirements"></a>
+Input Requirements:</h3>
+<p>Invalid inputs can prevent the network simulation from functioning properly. A few reasonable assumptions were made regarding input. Specifically, DO NOT create any flows with negative timestamps. Also, please ensure that the names of flows are globally unique. If two flows have the same name, one may intercept packets from the other. Similarly, names of Hosts, Links, and Routers must be globally unique.</p>
+<h3><a class="anchor" id="running"></a>
+Usage</h3>
+<p>Sample configuration files for test cases 0, 1, and 2 can be found in NetSim/test_cases. They demonstrate how the flows, links, routers, and hosts can be specified. To run the code, use:</p>
+<p>./simulator Enter a time (in seconds) for the simulation to run: 20 Enter the name of the file that specifies the test case: test_cases/test_1_tahoe.txt </p>
+</div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -91,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 10 2013 15:12:38 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 16:35:24 for NetSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
